@@ -223,7 +223,7 @@ export default function PerformanceResults() {
                             y={rowMidY - 12}
                             width={channelPillW}
                             height={24}
-                            rx={50}
+                            rx={12}
                             fill="rgba(255,255,255,0.06)"
                             stroke="rgba(255,255,255,0.12)"
                             strokeWidth={1}
@@ -240,41 +240,43 @@ export default function PerformanceResults() {
                             {row.channel}
                           </text>
 
-                          {/* Connecting line from channel pill to metric pills */}
-                          <line
-                            x1={channelX + channelPillW}
-                            y1={rowMidY}
-                            x2={metricX}
-                            y2={rowMidY}
-                            stroke={statusFill[row.status]}
-                            strokeWidth={2}
-                            opacity={0.5}
-                          />
-
-                          {/* Metric pills */}
+                          {/* Metric pills with curved connecting lines */}
                           {row.metrics.map((m, mi) => {
                             const pillY = y + rowPadding + mi * (metricPillH + metricGap);
                             const pillMidY = pillY + metricPillH / 2;
+                            const startX = channelX + channelPillW;
+                            const endX = metricX;
+                            const midX = startX + (endX - startX) / 2;
+                            const r = 10;
+
+                            // Curved path from channel pill to metric pill
+                            let pathD: string;
+                            if (pillMidY === rowMidY) {
+                              // Straight horizontal
+                              pathD = `M ${startX} ${rowMidY} L ${endX} ${rowMidY}`;
+                            } else {
+                              // Elbow with rounded corner
+                              const dir = pillMidY > rowMidY ? 1 : -1;
+                              const cornerX = startX + 12;
+                              const clampedR = Math.min(r, Math.abs(pillMidY - rowMidY));
+                              pathD = `M ${startX} ${rowMidY} L ${cornerX - clampedR} ${rowMidY} Q ${cornerX} ${rowMidY} ${cornerX} ${rowMidY + dir * clampedR} L ${cornerX} ${pillMidY} L ${endX} ${pillMidY}`;
+                            }
+
                             return (
                               <g key={mi}>
-                                {/* Vertical connector to each metric pill if multiple */}
-                                {row.metrics.length > 1 && (
-                                  <line
-                                    x1={metricX}
-                                    y1={rowMidY}
-                                    x2={metricX}
-                                    y2={pillMidY}
-                                    stroke={statusFill[row.status]}
-                                    strokeWidth={2}
-                                    opacity={0.5}
-                                  />
-                                )}
+                                <path
+                                  d={pathD}
+                                  stroke={statusFill[row.status]}
+                                  strokeWidth={2}
+                                  fill="none"
+                                  opacity={0.5}
+                                />
                                 <rect
                                   x={metricX}
                                   y={pillY}
                                   width={145}
                                   height={metricPillH}
-                                  rx={50}
+                                  rx={10}
                                   fill={statusBg[row.status]}
                                   stroke={statusFill[row.status]}
                                   strokeWidth={1}
