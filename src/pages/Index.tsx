@@ -7,8 +7,10 @@ import { CampaignSection, CampaignChartPage, NorthAmericaChart, NorthAmericaExtr
 import AlwaysOnSection from "@/components/report/AlwaysOnSection";
 import PodcastSection from "@/components/report/PodcastSection";
 import EventsSection from "@/components/report/EventsSection";
+import IPhoneMockup from "@/components/report/IPhoneMockup";
 import { reportData } from "@/data/igneo-report";
 import railImage from "@/assets/rail-to-runway-us-backbone.jpg";
+import naPhoneImage from "@/assets/na-campaign-phone.png";
 
 const Index = () => {
   const d = reportData;
@@ -31,6 +33,7 @@ const Index = () => {
         formats={d.campaigns.northAmerica.formats}
         keyResults={d.campaigns.northAmerica.keyResults}
         variant="dark"
+        phoneImage={<IPhoneMockup imageSrc={naPhoneImage} alt="North America campaign preview" />}
       />
       {/* North America — Page 2: Charts & Data */}
       <CampaignChartPage id="north-america" title={d.campaigns.northAmerica.title} variant="dark" backgroundImage={railImage}>

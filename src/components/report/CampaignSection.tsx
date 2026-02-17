@@ -18,6 +18,7 @@ interface CampaignProps {
   formats: string[];
   keyResults: KpiItem[];
   variant: "dark" | "cream";
+  phoneImage?: React.ReactNode;
 }
 
 interface CampaignChartPageProps {
@@ -28,7 +29,7 @@ interface CampaignChartPageProps {
 }
 
 /* ── Page 1: Info ── */
-export function CampaignSection({ id, title, stage, subtitle, description, goals, formats, keyResults, variant }: CampaignProps) {
+export function CampaignSection({ id, title, stage, subtitle, description, goals, formats, keyResults, variant, phoneImage }: CampaignProps) {
   const isDark = variant === "dark";
   return (
     <section id={id} className={`${isDark ? "section-dark" : "section-cream"} py-20`}>
@@ -80,8 +81,10 @@ export function CampaignSection({ id, title, stage, subtitle, description, goals
             </div>
           </div>
 
-          {/* Right column: empty for now, reserved for images */}
-          <div />
+          {/* Right column: phone mockup */}
+          <div className="flex items-center justify-center">
+            {phoneImage}
+          </div>
         </div>
       </div>
     </section>
