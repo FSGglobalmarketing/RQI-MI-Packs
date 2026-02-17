@@ -51,7 +51,7 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
                 <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Activities</h4>
                 <div className="flex flex-wrap gap-2">
                   {activities.map((a) => (
-                    <span key={a} className={`text-xs px-4 py-1.5 rounded-full border ${isDark ? "border-border text-muted-foreground" : "border-secondary-foreground/20 text-secondary-foreground/70"}`}>{a}</span>
+                    <span key={a} className={isDark ? "glass-pill-dark" : "glass-pill-cream"}>{a}</span>
                   ))}
                 </div>
               </div>
@@ -59,7 +59,7 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
           </div>
 
           <div className="space-y-6">
-            <div className={`rounded-xl p-6 ${isDark ? "bg-card border border-border" : "bg-background/5 border border-secondary-foreground/10"}`}>
+            <div className={isDark ? "glass-card-dark" : "glass-card-cream"}>
               <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Areas of focus in Q4</h4>
               <ul className="space-y-2">
                 {focusQ4.map((f) => (
@@ -71,7 +71,7 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
               </ul>
             </div>
 
-            <div className={`rounded-xl p-6 ${isDark ? "bg-card border border-border" : "bg-background/5 border border-secondary-foreground/10"}`}>
+            <div className={isDark ? "glass-card-dark" : "glass-card-cream"}>
               <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Areas to focus in Q1</h4>
               <ul className="space-y-2">
                 {focusQ1.map((f) => (

@@ -168,7 +168,7 @@ export default function SearchVisibility() {
               <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Focus Areas</h4>
               <div className="flex flex-wrap gap-2">
                 {s.focusAreas.map((f) => (
-                  <span key={f} className="text-xs px-4 py-1.5 rounded-full border border-secondary-foreground/20 text-secondary-foreground/70">{f}</span>
+                  <span key={f} className="glass-pill-cream">{f}</span>
                 ))}
               </div>
             </div>
@@ -190,7 +190,7 @@ export default function SearchVisibility() {
           </div>
 
           {/* Right column — chart */}
-          <div className="bg-background/5 border border-secondary-foreground/10 rounded-xl p-6">
+          <div className="glass-card-cream">
             <div className="flex items-start justify-between mb-1">
               <div>
                 <h4 className="text-sm font-bold text-secondary-foreground mb-1">Search engine visibility</h4>
@@ -262,7 +262,7 @@ export default function SearchVisibility() {
 
         {/* Bottom: Focus areas */}
         <div className="grid md:grid-cols-2 gap-6 mt-10">
-          <div className="bg-background/5 border border-secondary-foreground/10 rounded-xl p-6">
+          <div className="glass-card-cream">
             <p className="text-xs font-bold uppercase tracking-wider text-secondary-foreground/50 mb-4">Areas of focus last quarter</p>
             <ul className="space-y-3">
               {s.focusAreas.map((item) => (
@@ -273,7 +273,7 @@ export default function SearchVisibility() {
               ))}
             </ul>
           </div>
-          <div className="bg-background/5 border border-secondary-foreground/10 rounded-xl p-6">
+          <div className="glass-card-cream">
             <p className="text-xs font-bold uppercase tracking-wider text-secondary-foreground/50 mb-4">Areas to focus next quarter</p>
             <ul className="space-y-3">
               {s.nextQuarter.map((item) => (

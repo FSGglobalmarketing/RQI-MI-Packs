@@ -158,15 +158,80 @@
   }
 
   .metric-card {
-    @apply rounded-xl p-6 transition-all duration-300;
-    background-color: hsl(var(--card));
-    border: 1px solid hsl(var(--border));
+    @apply rounded-2xl p-6 transition-all duration-300;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--card) / 0.6),
+      hsl(var(--background) / 0.4)
+    );
+    backdrop-filter: blur(24px) saturate(1.5);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
+    border: 1px solid hsl(var(--foreground) / 0.08);
+    box-shadow:
+      inset 0 1px 0 0 hsl(var(--foreground) / 0.06),
+      inset 0 -1px 0 0 hsl(var(--foreground) / 0.02),
+      0 8px 32px -8px hsl(var(--background) / 0.4);
   }
 
   .metric-card:hover {
-    border-color: hsl(var(--primary) / 0.5);
+    border-color: hsl(var(--primary) / 0.3);
     transform: translateY(-2px);
-    box-shadow: 0 8px 30px -10px hsl(var(--primary) / 0.2);
+    box-shadow:
+      inset 0 1px 0 0 hsl(var(--foreground) / 0.08),
+      0 12px 40px -10px hsl(var(--primary) / 0.15);
+  }
+
+  /* Glass card for dark sections */
+  .glass-card-dark {
+    @apply rounded-2xl p-6 transition-all duration-300;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--card) / 0.5),
+      hsl(var(--muted) / 0.3)
+    );
+    backdrop-filter: blur(24px) saturate(1.5);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
+    border: 1px solid hsl(var(--foreground) / 0.08);
+    box-shadow:
+      inset 0 1px 0 0 hsl(var(--foreground) / 0.06),
+      inset 0 -1px 0 0 hsl(var(--foreground) / 0.02),
+      0 8px 32px -8px hsl(var(--background) / 0.4);
+  }
+
+  /* Glass card for cream sections */
+  .glass-card-cream {
+    @apply rounded-2xl p-6 transition-all duration-300;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--secondary) / 0.5),
+      hsl(var(--cream) / 0.3)
+    );
+    backdrop-filter: blur(24px) saturate(1.5);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
+    border: 1px solid hsl(var(--secondary-foreground) / 0.08);
+    box-shadow:
+      inset 0 1px 0 0 hsl(var(--secondary-foreground) / 0.04),
+      inset 0 -1px 0 0 hsl(var(--secondary-foreground) / 0.02),
+      0 8px 32px -8px hsl(var(--secondary-foreground) / 0.06);
+  }
+
+  /* Glass pill for format/activity tags */
+  .glass-pill-dark {
+    @apply text-xs px-4 py-1.5 rounded-full transition-all duration-200;
+    background: hsl(var(--foreground) / 0.06);
+    backdrop-filter: blur(12px) saturate(1.3);
+    -webkit-backdrop-filter: blur(12px) saturate(1.3);
+    border: 1px solid hsl(var(--foreground) / 0.1);
+    color: hsl(var(--muted-foreground));
+  }
+
+  .glass-pill-cream {
+    @apply text-xs px-4 py-1.5 rounded-full transition-all duration-200;
+    background: hsl(var(--secondary-foreground) / 0.04);
+    backdrop-filter: blur(12px) saturate(1.3);
+    -webkit-backdrop-filter: blur(12px) saturate(1.3);
+    border: 1px solid hsl(var(--secondary-foreground) / 0.1);
+    color: hsl(var(--secondary-foreground) / 0.7);
   }
 
   .hero-glass-card {

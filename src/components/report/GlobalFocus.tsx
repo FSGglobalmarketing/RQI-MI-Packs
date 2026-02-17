@@ -11,7 +11,7 @@ export default function GlobalFocus() {
           {reportData.globalFocus.map((item, i) => (
             <div
               key={item.number}
-              className="bg-background/5 border border-secondary-foreground/10 rounded-2xl p-8 animate-slide-up"
+              className="glass-card-cream animate-slide-up"
               style={{ animationDelay: `${i * 0.15}s` }}
             >
               <span className="text-5xl font-extrabold text-primary/30 block mb-4">{item.number}</span>
