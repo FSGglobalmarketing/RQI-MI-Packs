@@ -1,6 +1,7 @@
 import { reportData } from "@/data/igneo-report";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Legend, Cell, PieChart, Pie, ReferenceArea } from "recharts";
 import { useState, useCallback, useRef, useEffect } from "react";
+import KpiRow from "./KpiRow";
 
 interface KpiItem {
   value: string;
@@ -70,16 +71,7 @@ export function CampaignSection({ id, title, stage, subtitle, description, goals
               <h4 className={`text-sm font-bold mb-4 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Key Results</h4>
               <div className="space-y-3">
                 {keyResults.map((kpi) => (
-                  <div key={kpi.label} className="flex items-center gap-4">
-                    <span className="text-primary shrink-0 text-sm">+</span>
-                    <span className={`text-lg font-extrabold min-w-[70px] ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{kpi.value}</span>
-                    {isDark ? (
-                      <span className="text-sm text-muted-foreground">{kpi.label}</span>
-                    ) : (
-                      <span className="kpi-pill-good text-xs px-3 py-0.5 rounded-full">{kpi.label}</span>
-                    )}
-                    <span className="stat-positive text-xs ml-auto whitespace-nowrap">{kpi.comparison}</span>
-                  </div>
+                  <KpiRow key={kpi.label} value={kpi.value} label={kpi.label} comparison={kpi.comparison} />
                 ))}
               </div>
             </div>
