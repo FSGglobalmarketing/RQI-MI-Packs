@@ -69,8 +69,9 @@ export default function PerformanceResults() {
   const spineX = 160;
   const branchStartX = spineX + 2;
   const channelX = spineX + 70;
-  const metricX = channelX + 155;
-  const compX = metricX + 175;
+  const channelPillW = 145;
+  const metricX = channelX + channelPillW + 10;
+  const compX = metricX + 165;
   const totalW = compX + 130;
 
   // Helper: row height based on metric count
@@ -216,12 +217,23 @@ export default function PerformanceResults() {
                             strokeWidth={2}
                           />
 
-                          {/* Channel name */}
+                          {/* Channel pill */}
+                          <rect
+                            x={channelX}
+                            y={rowMidY - 12}
+                            width={channelPillW}
+                            height={24}
+                            rx={12}
+                            fill="rgba(255,255,255,0.06)"
+                            stroke="rgba(255,255,255,0.12)"
+                            strokeWidth={1}
+                          />
                           <text
-                            x={channelX + 4}
+                            x={channelX + channelPillW / 2}
                             y={rowMidY}
+                            textAnchor="middle"
                             dominantBaseline="central"
-                            fontSize={12}
+                            fontSize={11}
                             fontWeight={600}
                             className="fill-foreground"
                           >
@@ -233,10 +245,10 @@ export default function PerformanceResults() {
                             const pillY = y + rowPadding + mi * (metricPillH + metricGap);
                             return (
                               <g key={mi}>
-                                <rect
+                              <rect
                                   x={metricX}
                                   y={pillY}
-                                  width={155}
+                                  width={145}
                                   height={metricPillH}
                                   rx={10}
                                   fill={statusBg[row.status]}
@@ -244,7 +256,7 @@ export default function PerformanceResults() {
                                   strokeWidth={1}
                                 />
                                 <text
-                                  x={metricX + 77}
+                                  x={metricX + 72}
                                   y={pillY + metricPillH / 2}
                                   textAnchor="middle"
                                   dominantBaseline="central"
