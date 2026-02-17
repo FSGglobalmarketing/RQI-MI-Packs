@@ -36,27 +36,27 @@ export function CampaignSection({ id, title, stage, subtitle, description, goals
             <p className={`text-sm leading-relaxed ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>{description}</p>
 
             <div>
-              <h4 className={`text-sm font-semibold mb-2 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Goals</h4>
-              <ul className="space-y-1.5">
+              <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Goals</h4>
+              <ul className="space-y-2">
                 {goals.map((g) => (
-                  <li key={g} className={`text-sm flex gap-2 ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>
-                    <span className="text-primary mt-0.5">+</span>{g}
+                  <li key={g} className={`text-sm flex items-start gap-2 ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>
+                    <span className="text-primary mt-0.5 shrink-0">+</span>{g}
                   </li>
                 ))}
               </ul>
             </div>
 
             <div>
-              <h4 className={`text-sm font-semibold mb-2 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Formats</h4>
+              <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Formats</h4>
               <div className="flex flex-wrap gap-2">
                 {formats.map((f) => (
-                  <span key={f} className={`text-xs px-3 py-1.5 rounded-lg ${isDark ? "bg-muted text-muted-foreground" : "bg-secondary-foreground/10 text-secondary-foreground"}`}>{f}</span>
+                  <span key={f} className={`text-xs px-4 py-1.5 rounded-full border ${isDark ? "border-border text-muted-foreground" : "border-secondary-foreground/20 text-secondary-foreground/70"}`}>{f}</span>
                 ))}
               </div>
             </div>
 
             <div>
-              <h4 className={`text-sm font-semibold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Key Results</h4>
+              <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Key Results</h4>
               <div className="grid grid-cols-2 gap-3">
                 {keyResults.map((kpi) => (
                   <div key={kpi.label} className={`rounded-xl p-4 ${isDark ? "bg-card border border-border" : "bg-background/5 border border-secondary-foreground/10"}`}>
@@ -97,7 +97,7 @@ export function NorthAmericaChart() {
 
   return (
     <div className="metric-card">
-      <h4 className="text-sm font-semibold text-foreground mb-4">Page ranking positions for North American content</h4>
+      <h4 className="text-sm font-bold text-foreground mb-4">Page ranking positions for North American content</h4>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
@@ -139,7 +139,7 @@ export function DACHCharts() {
   return (
     <>
       <div className="bg-background/5 border border-secondary-foreground/10 rounded-xl p-6">
-        <h4 className="text-sm font-semibold text-secondary-foreground mb-4">Audience by Country</h4>
+        <h4 className="text-sm font-bold text-secondary-foreground mb-4">Audience by Country</h4>
         <ResponsiveContainer width="100%" height={220}>
           <PieChart>
             <Pie data={countries} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`} animationDuration={1200}>
@@ -152,7 +152,7 @@ export function DACHCharts() {
         </ResponsiveContainer>
       </div>
       <div className="bg-background/5 border border-secondary-foreground/10 rounded-xl p-6">
-        <h4 className="text-sm font-semibold text-secondary-foreground mb-4">Top Companies by Ad Views</h4>
+        <h4 className="text-sm font-bold text-secondary-foreground mb-4">Top Companies by Ad Views</h4>
         <ResponsiveContainer width="100%" height={220}>
           <BarChart data={companies} layout="vertical">
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
@@ -177,7 +177,7 @@ export function UKNordicsChart() {
 
   return (
     <div className="metric-card">
-      <h4 className="text-sm font-semibold text-foreground mb-4">Ad Views vs Clicks to Website</h4>
+      <h4 className="text-sm font-bold text-foreground mb-4">Ad Views vs Clicks to Website</h4>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data}>
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />

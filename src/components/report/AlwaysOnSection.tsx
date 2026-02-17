@@ -44,10 +44,10 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
 
             {activities && (
               <div>
-                <h4 className={`text-sm font-semibold mb-2 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Activities</h4>
+                <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Activities</h4>
                 <div className="flex flex-wrap gap-2">
                   {activities.map((a) => (
-                    <span key={a} className={`text-xs px-3 py-1.5 rounded-lg ${isDark ? "bg-muted text-muted-foreground" : "bg-secondary-foreground/10 text-secondary-foreground"}`}>{a}</span>
+                    <span key={a} className={`text-xs px-4 py-1.5 rounded-full border ${isDark ? "border-border text-muted-foreground" : "border-secondary-foreground/20 text-secondary-foreground/70"}`}>{a}</span>
                   ))}
                 </div>
               </div>
@@ -56,7 +56,7 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
 
           <div className="space-y-6">
             <div className={`rounded-xl p-6 ${isDark ? "bg-card border border-border" : "bg-background/5 border border-secondary-foreground/10"}`}>
-              <h4 className={`text-sm font-semibold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Areas of focus in Q4</h4>
+              <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Areas of focus in Q4</h4>
               <ul className="space-y-2">
                 {focusQ4.map((f) => (
                   <li key={f} className={`text-sm flex items-start gap-2 ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>
@@ -68,11 +68,11 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
             </div>
 
             <div className={`rounded-xl p-6 ${isDark ? "bg-card border border-border" : "bg-background/5 border border-secondary-foreground/10"}`}>
-              <h4 className={`text-sm font-semibold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Areas to focus in Q1</h4>
+              <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Areas to focus in Q1</h4>
               <ul className="space-y-2">
                 {focusQ1.map((f) => (
                   <li key={f} className={`text-sm flex items-start gap-2 ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>
-                    <span className="text-primary mt-0.5">+</span>{f}
+                    <span className="text-primary mt-0.5 shrink-0">+</span>{f}
                   </li>
                 ))}
               </ul>
