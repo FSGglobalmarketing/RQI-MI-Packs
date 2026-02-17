@@ -1,11 +1,23 @@
-import { Sankey, Tooltip, Rectangle, Layer } from "recharts";
 import { reportData } from "@/data/igneo-report";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Status = "good" | "below" | "inactive";
 
-// Build Sankey data from the performance results
-function buildSankeyData() {
+const statusColors: Record<Status, { bg: string; border: string; text: string }> = {
+  good: { bg: "hsl(var(--success) / 0.15)", border: "hsl(var(--success))", text: "hsl(var(--success))" },
+  below: { bg: "hsl(var(--primary) / 0.15)", border: "hsl(var(--primary))", text: "hsl(var(--primary))" },
+  inactive: { bg: "hsl(var(--muted-foreground) / 0.1)", border: "hsl(var(--muted-foreground) / 0.4)", text: "hsl(var(--muted-foreground))" },
+};
+
+interface ChannelNode {
+  channel: string;
+  metrics: string[];
+  comparison: string;
+  status: Status;
+  stage: string;
+}
+
+function buildTree() {
   const p = reportData.performanceResults;
   const stages = [
     { label: "Awareness", data: p.awareness },
@@ -14,140 +26,60 @@ function buildSankeyData() {
     { label: "Service & Loyalty", data: p.serviceLoyalty },
   ];
 
-  const nodeMap = new Map<string, number>();
-  const nodes: { name: string; status?: Status; column?: string }[] = [];
-  const links: { source: number; target: number; value: number; status: Status; comparison: string }[] = [];
-
-  const getOrCreate = (name: string, extra?: { status?: Status; column?: string }) => {
-    if (!nodeMap.has(name)) {
-      nodeMap.set(name, nodes.length);
-      nodes.push({ name, ...extra });
-    }
-    return nodeMap.get(name)!;
-  };
-
-  stages.forEach((stage) => {
-    const stageIdx = getOrCreate(stage.label, { column: "stage" });
-
-    stage.data.forEach((item) => {
-      const channelIdx = getOrCreate(item.channel, { status: item.status, column: "channel" });
-      // Link stage → channel
-      links.push({
-        source: stageIdx,
-        target: channelIdx,
-        value: item.status === "inactive" ? 5 : item.status === "good" ? 20 : 12,
-        status: item.status,
-        comparison: item.comparison,
-      });
-
-      // Create result nodes from metrics
-      item.metrics.forEach((metric) => {
-        const resultLabel = `${metric}`;
-        const resultIdx = getOrCreate(resultLabel, { status: item.status, column: "result" });
-        links.push({
-          source: channelIdx,
-          target: resultIdx,
-          value: item.status === "inactive" ? 5 : item.status === "good" ? 20 : 12,
-          status: item.status,
-          comparison: item.comparison,
-        });
-      });
-    });
-  });
-
-  return { nodes, links };
-}
-
-const statusColors: Record<Status, string> = {
-  good: "hsl(var(--success))",
-  below: "hsl(var(--primary))",
-  inactive: "hsl(var(--muted-foreground))",
-};
-
-function CustomNode({ x, y, width, height, index, payload }: any) {
-  const node = payload;
-  const isStage = node.column === "stage";
-  const isResult = node.column === "result";
-  const fill = isStage
-    ? "hsl(var(--primary))"
-    : node.status
-      ? statusColors[node.status as Status]
-      : "hsl(var(--muted-foreground))";
-
-  return (
-    <Layer key={`node-${index}`}>
-      <Rectangle
-        x={x}
-        y={y}
-        width={width}
-        height={height}
-        fill={fill}
-        fillOpacity={0.9}
-        rx={4}
-        ry={4}
-      />
-      <text
-        x={isResult ? x + width + 8 : x - 8}
-        y={y + height / 2}
-        textAnchor={isResult ? "start" : "end"}
-        dominantBaseline="middle"
-        className="fill-foreground"
-        fontSize={11}
-        fontWeight={isStage ? 700 : 500}
-      >
-        {node.name}
-      </text>
-    </Layer>
+  const allChannels: ChannelNode[] = [];
+  stages.forEach((s) =>
+    s.data.forEach((item) =>
+      allChannels.push({ ...item, stage: s.label })
+    )
   );
-}
 
-function CustomLink({ sourceX, sourceY, sourceControlX, targetX, targetY, targetControlX, linkWidth, payload }: any) {
-  const color = statusColors[payload.status as Status] || "hsl(var(--muted-foreground))";
-  return (
-    <Layer>
-      <path
-        d={`M${sourceX},${sourceY}C${sourceControlX},${sourceY} ${targetControlX},${targetY} ${targetX},${targetY}`}
-        fill="none"
-        stroke={color}
-        strokeWidth={linkWidth}
-        strokeOpacity={0.3}
-        className="transition-all duration-300 hover:stroke-opacity-60"
-      />
-    </Layer>
-  );
-}
-
-function SankeyTooltipContent({ active, payload }: any) {
-  if (!active || !payload?.length) return null;
-  const data = payload[0]?.payload;
-  if (!data) return null;
-  return (
-    <div className="rounded-lg border border-border bg-card px-3 py-2 text-xs shadow-xl">
-      <p className="font-semibold text-foreground">{data.source?.name} → {data.target?.name}</p>
-      {data.comparison && (
-        <p className={data.status === "good" ? "text-success mt-1" : data.status === "below" ? "text-primary mt-1" : "text-muted-foreground mt-1"}>
-          {data.comparison}
-        </p>
-      )}
-    </div>
-  );
+  return { stages: stages.map((s) => s.label), channels: allChannels };
 }
 
 export default function PerformanceResults() {
-  const sankeyData = buildSankeyData();
-  const [containerWidth, setContainerWidth] = useState(1100);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState(900);
 
   useEffect(() => {
-    const handleResize = () => {
-      const el = document.getElementById("sankey-container");
-      if (el) setContainerWidth(el.clientWidth);
+    const measure = () => {
+      if (containerRef.current) setWidth(containerRef.current.clientWidth);
     };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
   }, []);
 
-  const chartHeight = Math.max(500, sankeyData.nodes.length * 28);
+  const { stages, channels } = buildTree();
+
+  // Layout constants
+  const stageX = 20;
+  const stagePillW = 160;
+  const stagePillH = 44;
+  const channelPillW = Math.min(360, width - stagePillW - 80);
+  const channelPillH = 56;
+  const channelX = stageX + stagePillW + 80;
+  const channelGap = 12;
+  const stageGap = 10;
+
+  // Compute channel Y positions
+  const channelPositions: { node: ChannelNode; y: number }[] = [];
+  let cy = 20;
+  channels.forEach((ch) => {
+    channelPositions.push({ node: ch, y: cy });
+    cy += channelPillH + channelGap;
+  });
+  const totalHeight = cy + 10;
+
+  // Compute stage Y positions (centered on their channels)
+  const stagePositions: { label: string; y: number; h: number }[] = [];
+  stages.forEach((stage) => {
+    const stageChannels = channelPositions.filter((c) => c.node.stage === stage);
+    if (stageChannels.length === 0) return;
+    const firstY = stageChannels[0].y;
+    const lastY = stageChannels[stageChannels.length - 1].y + channelPillH;
+    const centerY = (firstY + lastY) / 2 - stagePillH / 2;
+    stagePositions.push({ label: stage, y: centerY, h: stagePillH });
+  });
 
   return (
     <section id="performance" className="section-dark py-20">
@@ -166,28 +98,109 @@ export default function PerformanceResults() {
           </span>
         </div>
 
-        <div id="sankey-container" className="metric-card overflow-x-auto">
-          <div className="hidden sm:flex justify-between mb-4 px-16 text-xs font-bold text-muted-foreground uppercase tracking-wider">
-            <span>Funnel Stage</span>
-            <span>Channel</span>
-            <span>Result</span>
+        {/* Desktop SVG diagram */}
+        <div ref={containerRef} className="hidden sm:block metric-card overflow-x-auto">
+          <div className="flex justify-between mb-4 text-xs font-bold text-muted-foreground uppercase tracking-wider" style={{ paddingLeft: stageX, paddingRight: 20 }}>
+            <span style={{ width: stagePillW, textAlign: "center" }}>Funnel Stage</span>
+            <span style={{ flex: 1, textAlign: "center" }}>Channel & Metrics</span>
           </div>
-          <Sankey
-            width={Math.max(containerWidth - 48, 600)}
-            height={chartHeight}
-            data={sankeyData}
-            node={<CustomNode />}
-            link={<CustomLink />}
-            nodePadding={14}
-            nodeWidth={10}
-            margin={{ left: 180, right: 200, top: 10, bottom: 10 }}
-            iterations={64}
-          >
-            <Tooltip content={<SankeyTooltipContent />} />
-          </Sankey>
+          <svg width={Math.max(channelX + channelPillW + 20, width - 48)} height={totalHeight} className="block">
+            {/* Connector lines */}
+            {channelPositions.map(({ node, y }) => {
+              const sp = stagePositions.find((s) => s.label === node.stage);
+              if (!sp) return null;
+              const x1 = stageX + stagePillW;
+              const y1 = sp.y + stagePillH / 2;
+              const x2 = channelX;
+              const y2 = y + channelPillH / 2;
+              const midX = (x1 + x2) / 2;
+              const colors = statusColors[node.status];
+              return (
+                <path
+                  key={node.channel}
+                  d={`M${x1},${y1} C${midX},${y1} ${midX},${y2} ${x2},${y2}`}
+                  fill="none"
+                  stroke={colors.border}
+                  strokeWidth={2}
+                  strokeOpacity={0.5}
+                  className="transition-opacity duration-300"
+                />
+              );
+            })}
+
+            {/* Stage pills */}
+            {stagePositions.map(({ label, y }) => (
+              <g key={label}>
+                <rect
+                  x={stageX}
+                  y={y}
+                  width={stagePillW}
+                  height={stagePillH}
+                  rx={stagePillH / 2}
+                  fill="hsl(var(--primary) / 0.15)"
+                  stroke="hsl(var(--primary))"
+                  strokeWidth={1.5}
+                />
+                <text
+                  x={stageX + stagePillW / 2}
+                  y={y + stagePillH / 2}
+                  textAnchor="middle"
+                  dominantBaseline="central"
+                  className="fill-foreground"
+                  fontSize={13}
+                  fontWeight={700}
+                >
+                  {label}
+                </text>
+              </g>
+            ))}
+
+            {/* Channel pills with metrics inside */}
+            {channelPositions.map(({ node, y }) => {
+              const colors = statusColors[node.status];
+              return (
+                <g key={node.channel} className="group">
+                  <rect
+                    x={channelX}
+                    y={y}
+                    width={channelPillW}
+                    height={channelPillH}
+                    rx={channelPillH / 2}
+                    fill={colors.bg}
+                    stroke={colors.border}
+                    strokeWidth={1.5}
+                    className="transition-all duration-200"
+                  />
+                  {/* Channel name */}
+                  <text
+                    x={channelX + 20}
+                    y={y + 20}
+                    dominantBaseline="central"
+                    className="fill-foreground"
+                    fontSize={12}
+                    fontWeight={600}
+                  >
+                    {node.channel}
+                  </text>
+                  {/* Metrics row */}
+                  <text
+                    x={channelX + 20}
+                    y={y + 40}
+                    dominantBaseline="central"
+                    fontSize={10}
+                    fill={colors.text}
+                    fontWeight={500}
+                  >
+                    {node.metrics.join("  ·  ")}
+                    {node.comparison && `  ▸  ${node.comparison}`}
+                  </text>
+                </g>
+              );
+            })}
+          </svg>
         </div>
 
-        {/* Mobile fallback table */}
+        {/* Mobile fallback */}
         <div className="sm:hidden mt-6 space-y-4">
           {["awareness", "consideration", "conversion", "serviceLoyalty"].map((key) => {
             const stageLabel = key === "serviceLoyalty" ? "Service & Loyalty" : key.charAt(0).toUpperCase() + key.slice(1);
@@ -196,12 +209,12 @@ export default function PerformanceResults() {
               <div key={key}>
                 <h3 className="text-sm font-bold text-primary mb-2">{stageLabel}</h3>
                 {items.map((item) => (
-                  <div key={item.channel} className="metric-card mb-2 flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-2">
+                  <div key={item.channel} className="metric-card mb-2">
+                    <div className="flex items-center gap-2 mb-1">
                       <span className={`inline-block w-2 h-2 rounded-full ${item.status === "good" ? "bg-success" : item.status === "below" ? "bg-primary" : "bg-muted-foreground"}`} />
-                      <span className="text-xs font-medium text-foreground">{item.channel}</span>
+                      <span className="text-xs font-semibold text-foreground">{item.channel}</span>
                     </div>
-                    <span className="text-xs text-muted-foreground">{item.metrics.join(" · ")}</span>
+                    <span className="text-xs text-muted-foreground">{item.metrics.join(" · ")}{item.comparison && ` · ${item.comparison}`}</span>
                   </div>
                 ))}
               </div>
