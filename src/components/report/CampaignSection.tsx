@@ -40,6 +40,7 @@ export function CampaignSection({ id, title, stage, subtitle, description, goals
         <p className={`mb-8 ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>{subtitle}</p>
 
         <div className="grid lg:grid-cols-2 gap-10">
+          {/* Left column: all content */}
           <div className="space-y-6">
             <p className={`text-sm leading-relaxed ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>{description}</p>
 
@@ -62,20 +63,25 @@ export function CampaignSection({ id, title, stage, subtitle, description, goals
                 ))}
               </div>
             </div>
-          </div>
 
-          <div>
-            <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Key Results</h4>
-            <div className="grid grid-cols-2 gap-3">
-              {keyResults.map((kpi) => (
-                <div key={kpi.label} className={`rounded-xl p-4 ${isDark ? "bg-card border border-border" : "bg-background/5 border border-secondary-foreground/10"}`}>
-                  <span className={`text-2xl font-extrabold block ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{kpi.value}</span>
-                  <span className={`text-xs block mt-1 ${isDark ? "text-muted-foreground" : "text-secondary-foreground/60"}`}>{kpi.label}</span>
-                  <span className="stat-positive block mt-1">{kpi.comparison}</span>
-                </div>
-              ))}
+            {/* Key Results — KPI list style matching Performance section */}
+            <div>
+              <h4 className={`text-sm font-bold mb-4 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Key Results</h4>
+              <div className="space-y-3">
+                {keyResults.map((kpi) => (
+                  <div key={kpi.label} className="flex items-center gap-4">
+                    <span className="text-primary shrink-0 text-sm">+</span>
+                    <span className={`text-lg font-extrabold min-w-[70px] ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{kpi.value}</span>
+                    <span className={`text-sm ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>{kpi.label}</span>
+                    <span className="stat-positive text-xs ml-auto whitespace-nowrap">{kpi.comparison}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
+
+          {/* Right column: empty for now, reserved for images */}
+          <div />
         </div>
       </div>
     </section>
@@ -88,7 +94,9 @@ export function CampaignChartPage({ id, title, variant, children }: CampaignChar
   return (
     <section id={`${id}-data`} className={`${isDark ? "section-dark" : "section-cream"} py-20`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h3 className={`text-xl font-bold mb-6 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{title} — Data & Charts</h3>
+        <h3 className={`text-2xl font-extrabold mb-8 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>
+          Deep dive: <span className="font-bold">{title}</span>
+        </h3>
         <div className="space-y-8">
           {children}
         </div>
@@ -233,9 +241,9 @@ export function NorthAmericaChart() {
             <Tooltip content={<SortedTooltip />} />
             <Legend wrapperStyle={{ fontSize: 11 }} />
             <Line type="monotone" dataKey="page1" stroke="#e8613a" strokeWidth={2.5} dot={false} animationDuration={1500} name="Page 1" />
-            <Line type="monotone" dataKey="page2" stroke="#1e293b" strokeWidth={2} dot={false} animationDuration={1500} name="Page 2" />
+            <Line type="monotone" dataKey="page2" stroke="#64748b" strokeWidth={2} dot={false} animationDuration={1500} name="Page 2" />
             <Line type="monotone" dataKey="page3" stroke="#06b6d4" strokeWidth={2} dot={false} animationDuration={1500} name="Page 3" />
-            <Line type="monotone" dataKey="page4" stroke="#94a3b8" strokeWidth={1.5} dot={false} animationDuration={1500} name="Page 4" />
+            <Line type="monotone" dataKey="page4" stroke="#cbd5e1" strokeWidth={1.5} dot={false} animationDuration={1500} name="Page 4" />
             {zoom.refAreaLeft !== null && zoom.refAreaRight !== null && (
               <ReferenceArea x1={allData[Math.min(zoom.refAreaLeft, zoom.refAreaRight)]?.month} x2={allData[Math.max(zoom.refAreaLeft, zoom.refAreaRight)]?.month} strokeOpacity={0.3} fill="rgba(232,97,58,0.1)" />
             )}
@@ -263,7 +271,7 @@ export function NorthAmericaExtra() {
 }
 
 /* ── DACH Charts ── */
-const DACH_COLORS = ["#e8613a", "#3b82f6", "#94a3b8", "#64748b"];
+const DACH_COLORS = ["#e8613a", "#06b6d4", "#94a3b8", "#64748b"];
 
 export function DACHCharts() {
   const countries = [
@@ -330,7 +338,7 @@ export function UKNordicsChart() {
           <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} />
           <Tooltip content={<SortedTooltip />} />
           <Legend wrapperStyle={{ fontSize: 11 }} />
-          <Bar dataKey="impressions" fill="#3b82f6" radius={[4, 4, 0, 0]} animationDuration={1200} name="Impressions" />
+          <Bar dataKey="impressions" fill="#06b6d4" radius={[4, 4, 0, 0]} animationDuration={1200} name="Impressions" />
           <Bar dataKey="clicks" fill="#e8613a" radius={[4, 4, 0, 0]} animationDuration={1200} name="Clicks" />
         </BarChart>
       </ResponsiveContainer>
@@ -344,12 +352,14 @@ export function UKNordicsChart() {
 export function UKNordicsLearnings() {
   const learnings = reportData.campaigns.ukNordics.keyLearnings;
   return (
-    <div className="metric-card">
-      <h4 className="text-sm font-semibold text-foreground mb-3">Key Learnings</h4>
-      <ul className="space-y-2">
+    <div className="rounded-xl border-2 border-primary/30 bg-primary/5 p-6">
+      <h4 className="text-base font-bold text-foreground mb-4 flex items-center gap-2">
+        <span className="text-primary">→</span> Key Learnings
+      </h4>
+      <ul className="space-y-3">
         {learnings.map((l: string) => (
-          <li key={l} className="text-sm text-muted-foreground flex gap-2">
-            <span className="text-primary mt-0.5">→</span>{l}
+          <li key={l} className="text-sm text-muted-foreground flex items-start gap-3">
+            <span className="text-primary mt-0.5 shrink-0 font-bold">+</span>{l}
           </li>
         ))}
       </ul>
