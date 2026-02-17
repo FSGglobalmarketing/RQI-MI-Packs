@@ -96,9 +96,9 @@ export function CampaignChartPage({ id, title, variant, children, backgroundImag
       {backgroundImage && (
         <>
           <div className="absolute inset-0">
-            <img src={backgroundImage} alt="" className="w-full h-full object-cover object-center opacity-15" />
+            <img src={backgroundImage} alt="" className="w-full h-full object-cover object-center opacity-30" />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/70 to-background/90" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/50 to-background/70" />
         </>
       )}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
