@@ -4,6 +4,7 @@ import GlobalFocus from "@/components/report/GlobalFocus";
 import PerformanceResults from "@/components/report/PerformanceResults";
 import SearchVisibility from "@/components/report/SearchVisibility";
 import { CampaignSection, CampaignChartPage, NorthAmericaChart, NorthAmericaExtra, DACHCharts, UKNordicsChart, UKNordicsLearnings } from "@/components/report/CampaignSection";
+import DACHPhoneShowcase from "@/components/report/DACHPhoneShowcase";
 import AlwaysOnSection from "@/components/report/AlwaysOnSection";
 import PodcastSection from "@/components/report/PodcastSection";
 import EventsSection from "@/components/report/EventsSection";
@@ -52,6 +53,7 @@ const Index = () => {
         formats={d.campaigns.dach.formats}
         keyResults={d.campaigns.dach.keyResults}
         variant="cream"
+        phoneImage={<DACHPhoneShowcase />}
       />
       {/* DACH — Page 2: Charts & Data */}
       <CampaignChartPage id="dach" title={d.campaigns.dach.title} variant="cream">
