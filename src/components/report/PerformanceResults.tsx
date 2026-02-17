@@ -147,9 +147,9 @@ export default function PerformanceResults() {
                 y1={stageBlocks[0]?.centerY ?? 0}
                 x2={spineX}
                 y2={stageBlocks[stageBlocks.length - 1]?.centerY ?? 0}
-                stroke="hsl(var(--border))"
+                stroke="hsl(var(--primary))"
                 strokeWidth={2}
-                opacity={dimmed ? 0.15 : 0.4}
+                opacity={dimmed ? 0.1 : 0.35}
               />
 
               {stageBlocks.map((block) => {
@@ -202,9 +202,9 @@ export default function PerformanceResults() {
                             y1={block.centerY}
                             x2={spineX}
                             y2={rowMidY}
-                            stroke="hsl(var(--border))"
+                           stroke="hsl(var(--primary))"
                             strokeWidth={2}
-                            opacity={0.5}
+                            opacity={0.7}
                           />
                           {/* Horizontal branch line */}
                           <line
@@ -212,7 +212,7 @@ export default function PerformanceResults() {
                             y1={rowMidY}
                             x2={channelX}
                             y2={rowMidY}
-                            stroke="hsl(var(--border))"
+                            stroke="hsl(var(--primary))"
                             strokeWidth={2}
                           />
 
