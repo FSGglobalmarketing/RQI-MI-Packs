@@ -297,25 +297,39 @@
   }
 
   .dach-phones-wrapper {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 16px;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+    overflow: visible;
   }
 
   .dach-phone-card {
-    position: relative;
-    flex: 0 0 auto;
+    position: absolute;
   }
 
-  .dach-phone-left,
+  .dach-phone-left {
+    left: 0;
+    bottom: 0;
+    z-index: 2;
+  }
+
   .dach-phone-right {
-    transform: none;
+    right: -40px;
+    top: 0;
+    z-index: 1;
+  }
+
+  .dach-phone-left .dach-phone-image {
+    height: 520px;
+  }
+
+  .dach-phone-right .dach-phone-image {
+    height: 440px;
   }
 
   .dach-phone-image {
     width: auto;
-    height: 480px;
     display: block;
     object-fit: contain;
     filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
