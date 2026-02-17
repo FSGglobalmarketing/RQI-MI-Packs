@@ -1,7 +1,8 @@
 import { reportData } from "@/data/igneo-report";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceArea } from "recharts";
 import { CheckCircle, ArrowRight } from "lucide-react";
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useMemo } from "react";
+import { Switch } from "@/components/ui/switch";
 
 const COMPETITOR_COLOR = "rgba(26, 46, 53, 0.25)";
 
@@ -71,6 +72,8 @@ export default function SearchVisibility() {
   const s = reportData.searchVisibility;
   const allData = s.chartData;
   const [hiddenLines, setHiddenLines] = useState<Set<string>>(new Set());
+  const [showPeers, setShowPeers] = useState(true);
+  const peerKeys = LINE_CONFIG.filter(l => l.key !== "Igneo").map(l => l.key);
 
   // Zoom state: index-based range
   const [left, setLeft] = useState(0);
@@ -84,7 +87,7 @@ export default function SearchVisibility() {
   const visibleData = allData.slice(left, right + 1);
 
   // Compute Y domain from visible data (only visible lines)
-  const visibleKeys = DATA_KEYS.filter((k) => !hiddenLines.has(k));
+  const visibleKeys = DATA_KEYS.filter((k) => !hiddenLines.has(k) && (k === "Igneo" || showPeers));
   let yMax = 0;
   visibleData.forEach((d: any) => {
     visibleKeys.forEach((k) => {
@@ -216,11 +219,19 @@ export default function SearchVisibility() {
               {isZoomed && (
                 <button
                   onClick={resetZoom}
-                  className="text-xs font-semibold text-primary hover:underline shrink-0 mt-1"
+                  className="text-xs font-semibold text-primary hover:underline shrink-0"
                 >
                   Reset zoom
                 </button>
               )}
+            </div>
+            <div className="flex items-center gap-2 mb-4">
+              <Switch
+                checked={showPeers}
+                onCheckedChange={setShowPeers}
+                className="scale-75"
+              />
+              <span className="text-xs text-secondary-foreground/60">Show peers</span>
             </div>
             <div onWheel={handleWheel} style={{ userSelect: "none" }}>
               <ResponsiveContainer width="100%" height={360}>
@@ -237,25 +248,52 @@ export default function SearchVisibility() {
                   <Legend
                     wrapperStyle={{ fontSize: 10, cursor: "pointer" }}
                     onClick={handleLegendClick}
-                    formatter={(value: string) => (
-                      <span style={{ color: hiddenLines.has(value) ? "#ccc" : undefined, textDecoration: hiddenLines.has(value) ? "line-through" : undefined }}>
-                        {value}
-                      </span>
-                    )}
+                    content={({ payload }) => {
+                      if (!payload?.length) return null;
+                      const lastDataPoint = visibleData[visibleData.length - 1] || {};
+                      const sorted = [...payload].sort((a: any, b: any) => {
+                        if (a.dataKey === "Igneo") return -1;
+                        if (b.dataKey === "Igneo") return 1;
+                        return (lastDataPoint[b.dataKey as string] ?? 0) - (lastDataPoint[a.dataKey as string] ?? 0);
+                      });
+                      return (
+                        <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 pt-2" style={{ fontSize: 10 }}>
+                          {sorted.map((entry: any) => {
+                            const isHidden = hiddenLines.has(entry.dataKey) || (entry.dataKey !== "Igneo" && !showPeers);
+                            return (
+                              <span
+                                key={entry.dataKey}
+                                onClick={() => handleLegendClick(entry)}
+                                style={{
+                                  cursor: "pointer",
+                                  color: isHidden ? "#ccc" : entry.color,
+                                  textDecoration: isHidden ? "line-through" : undefined,
+                                }}
+                              >
+                                ● {entry.dataKey}
+                              </span>
+                            );
+                          })}
+                        </div>
+                      );
+                    }}
                   />
-                  {LINE_CONFIG.map(({ key, color, width, opacity }) => (
-                    <Line
-                      key={key}
-                      type="monotone"
-                      dataKey={key}
-                      stroke={color}
-                      strokeWidth={width}
-                      dot={false}
-                      strokeOpacity={hiddenLines.has(key) ? 0 : opacity}
-                      animationDuration={800}
-                      hide={hiddenLines.has(key)}
-                    />
-                  ))}
+                  {LINE_CONFIG.map(({ key, color, width, opacity }) => {
+                    const isHidden = hiddenLines.has(key) || (key !== "Igneo" && !showPeers);
+                    return (
+                      <Line
+                        key={key}
+                        type="monotone"
+                        dataKey={key}
+                        stroke={color}
+                        strokeWidth={width}
+                        dot={false}
+                        strokeOpacity={isHidden ? 0 : opacity}
+                        animationDuration={800}
+                        hide={isHidden}
+                      />
+                    );
+                  })}
                   {refAreaLeft !== null && refAreaRight !== null && (
                     <ReferenceArea
                       x1={allData[Math.min(refAreaLeft, refAreaRight)]?.month}
