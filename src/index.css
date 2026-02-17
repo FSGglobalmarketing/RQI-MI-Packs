@@ -304,7 +304,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 32px;
+    gap: 20px;
     overflow: visible;
   }
 
@@ -321,12 +321,9 @@
     z-index: 1;
   }
 
-  .dach-phone-left .dach-phone-image {
-    height: 520px;
-  }
-
+  .dach-phone-left .dach-phone-image,
   .dach-phone-right .dach-phone-image {
-    height: 440px;
+    height: 480px;
   }
 
   .dach-phone-image {
