@@ -3,6 +3,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import { CheckCircle, ArrowRight } from "lucide-react";
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Switch } from "@/components/ui/switch";
+import KpiRow from "./KpiRow";
 
 const COMPETITOR_COLOR = "rgba(26, 46, 53, 0.25)";
 
@@ -178,12 +179,7 @@ export default function SearchVisibility() {
               <h4 className="text-sm font-bold mb-4 text-secondary-foreground">Key Results</h4>
               <div className="space-y-3">
                 {s.kpis.map((kpi) => (
-                  <div key={kpi.label} className="flex items-center gap-4">
-                    <span className="text-primary shrink-0 text-sm">+</span>
-                    <span className="text-lg font-extrabold min-w-[70px] text-secondary-foreground">{kpi.value}</span>
-                    <span className="kpi-pill-good text-xs px-3 py-0.5 rounded-full">{kpi.label}</span>
-                    <span className="stat-positive text-xs whitespace-nowrap">{kpi.comparison}</span>
-                  </div>
+                  <KpiRow key={kpi.label} value={kpi.value} label={kpi.label} comparison={kpi.comparison} />
                 ))}
               </div>
             </div>

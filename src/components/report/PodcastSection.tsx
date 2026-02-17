@@ -1,4 +1,5 @@
 import { reportData } from "@/data/igneo-report";
+import KpiRow from "./KpiRow";
 
 export default function PodcastSection() {
   const p = reportData.podcast;
@@ -18,12 +19,7 @@ export default function PodcastSection() {
               <h4 className="text-sm font-bold mb-4 text-foreground">Key Results</h4>
               <div className="space-y-3">
                 {p.kpis.map((kpi) => (
-                  <div key={kpi.label} className="flex items-center gap-4">
-                    <span className="text-primary shrink-0 text-sm">+</span>
-                    <span className="text-lg font-extrabold min-w-[70px] text-foreground">{kpi.value}</span>
-                    <span className="text-sm text-muted-foreground">{kpi.label}</span>
-                    <span className="stat-negative text-xs ml-auto whitespace-nowrap">{kpi.comparison}</span>
-                  </div>
+                  <KpiRow key={kpi.label} value={kpi.value} label={kpi.label} comparison={kpi.comparison} />
                 ))}
               </div>
             </div>
