@@ -10,7 +10,7 @@ export default function EventsSection() {
           <span className="stage-badge text-xs">{e.stage}</span>
         </div>
 
-        <div className="overflow-x-auto">
+        <div className="glass-card-cream overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-secondary-foreground/10">

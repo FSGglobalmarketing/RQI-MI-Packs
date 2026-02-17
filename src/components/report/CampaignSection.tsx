@@ -59,7 +59,7 @@ export function CampaignSection({ id, title, stage, subtitle, description, goals
               <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Formats</h4>
               <div className="flex flex-wrap gap-2">
                 {formats.map((f) => (
-                  <span key={f} className={`text-xs px-4 py-1.5 rounded-full border ${isDark ? "border-border text-muted-foreground" : "border-secondary-foreground/20 text-secondary-foreground/70"}`}>{f}</span>
+                  <span key={f} className={isDark ? "glass-pill-dark" : "glass-pill-cream"}>{f}</span>
                 ))}
               </div>
             </div>
@@ -290,7 +290,7 @@ export function DACHCharts() {
 
   return (
     <>
-      <div className="bg-background/5 border border-secondary-foreground/10 rounded-xl p-6">
+      <div className="glass-card-cream">
         <h4 className="text-sm font-bold text-secondary-foreground mb-4">Audience by Country</h4>
         <ResponsiveContainer width="100%" height={280}>
           <PieChart>
@@ -303,7 +303,7 @@ export function DACHCharts() {
           </PieChart>
         </ResponsiveContainer>
       </div>
-      <div className="bg-background/5 border border-secondary-foreground/10 rounded-xl p-6">
+      <div className="glass-card-cream">
         <h4 className="text-sm font-bold text-secondary-foreground mb-4">Top Companies by Ad Views</h4>
         <ResponsiveContainer width="100%" height={280}>
           <BarChart data={companies} layout="vertical">
@@ -352,7 +352,7 @@ export function UKNordicsChart() {
 export function UKNordicsLearnings() {
   const learnings = reportData.campaigns.ukNordics.keyLearnings;
   return (
-    <div className="rounded-xl border-2 border-primary/30 bg-primary/5 p-6">
+    <div className="glass-card-dark border-2 border-primary/20">
       <h4 className="text-base font-bold text-foreground mb-4 flex items-center gap-2">
         <span className="text-primary">→</span> Key Learnings
       </h4>
