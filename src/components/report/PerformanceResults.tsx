@@ -1,23 +1,30 @@
 import { reportData } from "@/data/igneo-report";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 type Status = "good" | "below" | "inactive";
 
-const statusColors: Record<Status, { bg: string; border: string; text: string }> = {
-  good: { bg: "hsl(var(--success) / 0.15)", border: "hsl(var(--success))", text: "hsl(var(--success))" },
-  below: { bg: "hsl(var(--primary) / 0.15)", border: "hsl(var(--primary))", text: "hsl(var(--primary))" },
-  inactive: { bg: "hsl(var(--muted-foreground) / 0.1)", border: "hsl(var(--muted-foreground) / 0.4)", text: "hsl(var(--muted-foreground))" },
+const statusFill: Record<Status, string> = {
+  good: "hsl(var(--success))",
+  below: "hsl(var(--primary))",
+  inactive: "hsl(var(--muted-foreground))",
 };
 
-interface ChannelNode {
+const statusBg: Record<Status, string> = {
+  good: "hsl(var(--success) / 0.15)",
+  below: "hsl(var(--primary) / 0.15)",
+  inactive: "hsl(var(--muted-foreground) / 0.08)",
+};
+
+interface Row {
   channel: string;
   metrics: string[];
   comparison: string;
   status: Status;
   stage: string;
+  id: string;
 }
 
-function buildTree() {
+function buildRows(): { stages: string[]; rows: Row[] } {
   const p = reportData.performanceResults;
   const stages = [
     { label: "Awareness", data: p.awareness },
@@ -25,183 +32,238 @@ function buildTree() {
     { label: "Conversion", data: p.conversion },
     { label: "Service & Loyalty", data: p.serviceLoyalty },
   ];
-
-  const allChannels: ChannelNode[] = [];
+  const rows: Row[] = [];
   stages.forEach((s) =>
-    s.data.forEach((item) =>
-      allChannels.push({ ...item, stage: s.label })
+    s.data.forEach((item, i) =>
+      rows.push({ ...item, stage: s.label, id: `${s.label}-${i}` })
     )
   );
-
-  return { stages: stages.map((s) => s.label), channels: allChannels };
+  return { stages: stages.map((s) => s.label), rows };
 }
 
 export default function PerformanceResults() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState(900);
+  const { stages, rows } = buildRows();
+  const [hovered, setHovered] = useState<string | null>(null);
 
-  useEffect(() => {
-    const measure = () => {
-      if (containerRef.current) setWidth(containerRef.current.clientWidth);
-    };
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, []);
+  // Layout
+  const rowH = 52;
+  const rowGap = 8;
+  const spineX = 420;
+  const circleR = 28;
+  const branchStartX = spineX + 2;
+  const channelX = spineX + 80;
+  const metricX = channelX + 160;
+  const compX = metricX + 180;
+  const totalW = compX + 140;
 
-  const { stages, channels } = buildTree();
+  // Compute Y positions
+  let currentY = 30;
+  const stageBlocks: { label: string; y: number; centerY: number; rows: { row: Row; y: number }[] }[] = [];
 
-  // Layout constants
-  const stageX = 20;
-  const stagePillW = 160;
-  const stagePillH = 44;
-  const channelPillW = Math.min(360, width - stagePillW - 80);
-  const channelPillH = 56;
-  const channelX = stageX + stagePillW + 80;
-  const channelGap = 12;
-  const stageGap = 10;
-
-  // Compute channel Y positions
-  const channelPositions: { node: ChannelNode; y: number }[] = [];
-  let cy = 20;
-  channels.forEach((ch) => {
-    channelPositions.push({ node: ch, y: cy });
-    cy += channelPillH + channelGap;
-  });
-  const totalHeight = cy + 10;
-
-  // Compute stage Y positions (centered on their channels)
-  const stagePositions: { label: string; y: number; h: number }[] = [];
   stages.forEach((stage) => {
-    const stageChannels = channelPositions.filter((c) => c.node.stage === stage);
-    if (stageChannels.length === 0) return;
-    const firstY = stageChannels[0].y;
-    const lastY = stageChannels[stageChannels.length - 1].y + channelPillH;
-    const centerY = (firstY + lastY) / 2 - stagePillH / 2;
-    stagePositions.push({ label: stage, y: centerY, h: stagePillH });
+    const stageRows = rows.filter((r) => r.stage === stage);
+    const startY = currentY;
+    const rowPositions = stageRows.map((row, i) => {
+      const y = currentY + i * (rowH + rowGap);
+      return { row, y };
+    });
+    currentY += stageRows.length * (rowH + rowGap) + 24;
+    const firstY = rowPositions[0]?.y ?? startY;
+    const lastY = rowPositions[rowPositions.length - 1]?.y ?? startY;
+    const centerY = (firstY + lastY) / 2 + rowH / 2;
+    stageBlocks.push({ label: stage, y: startY, centerY, rows: rowPositions });
   });
+
+  const totalH = currentY + 20;
+
+  const dimmed = hovered !== null;
 
   return (
     <section id="performance" className="section-dark py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground mb-2">KPI Framework</h2>
-        <p className="text-muted-foreground mb-4">A birds-eye view of performance across channel and where we exceeded our targets.</p>
-        <div className="flex gap-4 mb-8">
-          <span className="flex items-center gap-2 text-xs text-muted-foreground">
-            <span className="inline-block w-2.5 h-2.5 rounded-full bg-success" /> Good
-          </span>
-          <span className="flex items-center gap-2 text-xs text-muted-foreground">
-            <span className="inline-block w-2.5 h-2.5 rounded-full bg-primary" /> Below target
-          </span>
-          <span className="flex items-center gap-2 text-xs text-muted-foreground">
-            <span className="inline-block w-2.5 h-2.5 rounded-full bg-muted-foreground" /> Not activated
-          </span>
-        </div>
-
-        {/* Desktop SVG diagram */}
-        <div ref={containerRef} className="hidden sm:block metric-card overflow-x-auto">
-          <div className="flex justify-between mb-4 text-xs font-bold text-muted-foreground uppercase tracking-wider" style={{ paddingLeft: stageX, paddingRight: 20 }}>
-            <span style={{ width: stagePillW, textAlign: "center" }}>Funnel Stage</span>
-            <span style={{ flex: 1, textAlign: "center" }}>Channel & Metrics</span>
+        <div className="flex flex-col lg:flex-row lg:items-start gap-8 mb-0">
+          {/* Left text block */}
+          <div className="lg:w-[340px] shrink-0">
+            <h2 className="text-4xl sm:text-5xl font-extrabold text-foreground mb-4 leading-tight">
+              Performance<br />& Results
+            </h2>
+            <h3 className="text-lg font-bold text-foreground mb-3">What does good look like?</h3>
+            <p className="text-sm text-muted-foreground mb-8">
+              A birds-eye view of performance across channel and where we exceeded our targets.
+            </p>
+            <div className="space-y-3">
+              <span className="flex items-center gap-3 text-sm text-muted-foreground">
+                <span className="inline-block w-4 h-4 rounded-full bg-success" /> Good
+              </span>
+              <span className="flex items-center gap-3 text-sm text-muted-foreground">
+                <span className="inline-block w-4 h-4 rounded-full bg-primary" /> Below target
+              </span>
+              <span className="flex items-center gap-3 text-sm text-muted-foreground">
+                <span className="inline-block w-4 h-4 rounded-full" style={{ background: "hsl(var(--muted-foreground) / 0.4)" }} /> Not activated / finished
+              </span>
+            </div>
           </div>
-          <svg width={Math.max(channelX + channelPillW + 20, width - 48)} height={totalHeight} className="block">
-            {/* Connector lines */}
-            {channelPositions.map(({ node, y }) => {
-              const sp = stagePositions.find((s) => s.label === node.stage);
-              if (!sp) return null;
-              const x1 = stageX + stagePillW;
-              const y1 = sp.y + stagePillH / 2;
-              const x2 = channelX;
-              const y2 = y + channelPillH / 2;
-              const midX = (x1 + x2) / 2;
-              const colors = statusColors[node.status];
-              return (
-                <path
-                  key={node.channel}
-                  d={`M${x1},${y1} C${midX},${y1} ${midX},${y2} ${x2},${y2}`}
-                  fill="none"
-                  stroke={colors.border}
-                  strokeWidth={2}
-                  strokeOpacity={0.5}
-                  className="transition-opacity duration-300"
-                />
-              );
-            })}
 
-            {/* Stage pills */}
-            {stagePositions.map(({ label, y }) => (
-              <g key={label}>
-                <rect
-                  x={stageX}
-                  y={y}
-                  width={stagePillW}
-                  height={stagePillH}
-                  rx={stagePillH / 2}
-                  fill="hsl(var(--primary) / 0.15)"
-                  stroke="hsl(var(--primary))"
-                  strokeWidth={1.5}
-                />
-                <text
-                  x={stageX + stagePillW / 2}
-                  y={y + stagePillH / 2}
-                  textAnchor="middle"
-                  dominantBaseline="central"
-                  className="fill-foreground"
-                  fontSize={13}
-                  fontWeight={700}
-                >
-                  {label}
-                </text>
-              </g>
-            ))}
+          {/* Right diagram */}
+          <div className="flex-1 overflow-x-auto">
+            <svg
+              viewBox={`0 0 ${totalW} ${totalH}`}
+              width="100%"
+              height={totalH}
+              className="block min-w-[700px]"
+              onMouseLeave={() => setHovered(null)}
+            >
+              {/* Vertical spine */}
+              <line
+                x1={spineX}
+                y1={stageBlocks[0]?.centerY ?? 0}
+                x2={spineX}
+                y2={stageBlocks[stageBlocks.length - 1]?.centerY ?? 0}
+                stroke="hsl(var(--border))"
+                strokeWidth={2}
+                opacity={dimmed ? 0.15 : 0.4}
+              />
 
-            {/* Channel pills with metrics inside */}
-            {channelPositions.map(({ node, y }) => {
-              const colors = statusColors[node.status];
-              return (
-                <g key={node.channel} className="group">
-                  <rect
-                    x={channelX}
-                    y={y}
-                    width={channelPillW}
-                    height={channelPillH}
-                    rx={channelPillH / 2}
-                    fill={colors.bg}
-                    stroke={colors.border}
-                    strokeWidth={1.5}
-                    className="transition-all duration-200"
-                  />
-                  {/* Channel name */}
-                  <text
-                    x={channelX + 20}
-                    y={y + 20}
-                    dominantBaseline="central"
-                    className="fill-foreground"
-                    fontSize={12}
-                    fontWeight={600}
-                  >
-                    {node.channel}
-                  </text>
-                  {/* Metrics row */}
-                  <text
-                    x={channelX + 20}
-                    y={y + 40}
-                    dominantBaseline="central"
-                    fontSize={10}
-                    fill={colors.text}
-                    fontWeight={500}
-                  >
-                    {node.metrics.join("  ·  ")}
-                    {node.comparison && `  ▸  ${node.comparison}`}
-                  </text>
-                </g>
-              );
-            })}
-          </svg>
+              {stageBlocks.map((block) => {
+                const anyHoveredInStage = block.rows.some((r) => r.row.id === hovered);
+
+                return (
+                  <g key={block.label}>
+                    {/* Stage label */}
+                    <text
+                      x={spineX - circleR - 16}
+                      y={block.centerY}
+                      textAnchor="end"
+                      dominantBaseline="central"
+                      fontSize={15}
+                      fontWeight={700}
+                      fill={statusFill[block.rows[0]?.row.status ?? "good"]}
+                      opacity={dimmed && !anyHoveredInStage ? 0.2 : 1}
+                      className="transition-opacity duration-200"
+                    >
+                      {block.label}
+                    </text>
+
+                    {/* Stage circle */}
+                    <circle
+                      cx={spineX}
+                      cy={block.centerY}
+                      r={circleR}
+                      fill={statusFill[block.rows[0]?.row.status ?? "good"]}
+                      opacity={dimmed && !anyHoveredInStage ? 0.15 : 0.85}
+                      className="transition-opacity duration-200"
+                    />
+
+                    {/* Rows */}
+                    {block.rows.map(({ row, y }) => {
+                      const isActive = hovered === row.id;
+                      const rowOpacity = dimmed ? (isActive ? 1 : 0.15) : 1;
+                      const rowMidY = y + rowH / 2;
+
+                      return (
+                        <g
+                          key={row.id}
+                          onMouseEnter={() => setHovered(row.id)}
+                          className="cursor-pointer"
+                          style={{ transition: "opacity 0.2s" }}
+                          opacity={rowOpacity}
+                        >
+                          {/* Horizontal branch line from spine to channel */}
+                          <line
+                            x1={branchStartX}
+                            y1={rowMidY}
+                            x2={channelX}
+                            y2={rowMidY}
+                            stroke="hsl(var(--border))"
+                            strokeWidth={2}
+                          />
+                          {/* Vertical connector from spine center to branch */}
+                          <line
+                            x1={spineX}
+                            y1={block.centerY}
+                            x2={spineX}
+                            y2={rowMidY}
+                            stroke="hsl(var(--border))"
+                            strokeWidth={2}
+                            opacity={0.5}
+                          />
+
+                          {/* Channel name */}
+                          <text
+                            x={channelX + 4}
+                            y={rowMidY}
+                            dominantBaseline="central"
+                            fontSize={12}
+                            fontWeight={600}
+                            className="fill-foreground"
+                          >
+                            {row.channel}
+                          </text>
+
+                          {/* Metric pills */}
+                          {row.metrics.map((m, mi) => {
+                            const pillY = y + 6 + mi * 22;
+                            return (
+                              <g key={mi}>
+                                <rect
+                                  x={metricX}
+                                  y={pillY}
+                                  width={160}
+                                  height={20}
+                                  rx={10}
+                                  fill={statusBg[row.status]}
+                                  stroke={statusFill[row.status]}
+                                  strokeWidth={1}
+                                />
+                                <text
+                                  x={metricX + 80}
+                                  y={pillY + 10}
+                                  textAnchor="middle"
+                                  dominantBaseline="central"
+                                  fontSize={10}
+                                  fontWeight={600}
+                                  fill={statusFill[row.status]}
+                                >
+                                  {m}
+                                </text>
+                              </g>
+                            );
+                          })}
+
+                          {/* Comparison text */}
+                          {row.comparison && (
+                            <text
+                              x={compX}
+                              y={rowMidY}
+                              dominantBaseline="central"
+                              fontSize={11}
+                              fontWeight={600}
+                              fill={row.status === "good" ? "hsl(var(--success))" : row.status === "below" ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))"}
+                            >
+                              {row.comparison}
+                            </text>
+                          )}
+
+                          {/* Invisible hover target */}
+                          <rect
+                            x={branchStartX}
+                            y={y}
+                            width={compX + 120 - branchStartX}
+                            height={rowH}
+                            fill="transparent"
+                          />
+                        </g>
+                      );
+                    })}
+                  </g>
+                );
+              })}
+            </svg>
+          </div>
         </div>
 
         {/* Mobile fallback */}
-        <div className="sm:hidden mt-6 space-y-4">
+        <div className="lg:hidden mt-8 space-y-4">
           {["awareness", "consideration", "conversion", "serviceLoyalty"].map((key) => {
             const stageLabel = key === "serviceLoyalty" ? "Service & Loyalty" : key.charAt(0).toUpperCase() + key.slice(1);
             const items = reportData.performanceResults[key as keyof typeof reportData.performanceResults];
