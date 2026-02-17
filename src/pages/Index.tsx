@@ -3,6 +3,7 @@ import HeroSection from "@/components/report/HeroSection";
 import GlobalFocus from "@/components/report/GlobalFocus";
 import PerformanceResults from "@/components/report/PerformanceResults";
 import SearchVisibility from "@/components/report/SearchVisibility";
+import SearchChartPage from "@/components/report/SearchChartPage";
 import { CampaignSection, CampaignChartPage, NorthAmericaChart, NorthAmericaExtra, DACHCharts, UKNordicsChart, UKNordicsLearnings } from "@/components/report/CampaignSection";
 import AlwaysOnSection from "@/components/report/AlwaysOnSection";
 import PodcastSection from "@/components/report/PodcastSection";
@@ -18,6 +19,7 @@ const Index = () => {
       <GlobalFocus />
       <PerformanceResults />
       <SearchVisibility />
+      <SearchChartPage />
 
       {/* North America — Page 1: Info */}
       <CampaignSection
