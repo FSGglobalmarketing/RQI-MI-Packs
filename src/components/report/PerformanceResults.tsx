@@ -15,6 +15,22 @@ const statusBg: Record<Status, string> = {
   inactive: "hsl(var(--muted-foreground) / 0.08)",
 };
 
+// Funnel circle sizes: biggest at top, smallest at bottom
+const stageCircleR: Record<string, number> = {
+  "Awareness": 36,
+  "Consideration": 28,
+  "Conversion": 22,
+  "Service & Loyalty": 18,
+};
+
+// More spacing for top-of-funnel stages
+const stageBottomGap: Record<string, number> = {
+  "Awareness": 36,
+  "Consideration": 28,
+  "Conversion": 20,
+  "Service & Loyalty": 10,
+};
+
 interface Row {
   channel: string;
   metrics: string[];
@@ -45,18 +61,17 @@ export default function PerformanceResults() {
   const { stages, rows } = buildRows();
   const [hovered, setHovered] = useState<string | null>(null);
 
-  // Layout
+  // Layout — shifted left
   const metricPillH = 20;
   const metricGap = 4;
-  const rowPadding = 8; // top/bottom padding within a row
+  const rowPadding = 8;
   const rowGap = 14;
-  const spineX = 420;
-  const circleR = 28;
+  const spineX = 160;
   const branchStartX = spineX + 2;
-  const channelX = spineX + 80;
-  const metricX = channelX + 160;
-  const compX = metricX + 180;
-  const totalW = compX + 140;
+  const channelX = spineX + 70;
+  const metricX = channelX + 155;
+  const compX = metricX + 175;
+  const totalW = compX + 130;
 
   // Helper: row height based on metric count
   const getRowH = (row: Row) => {
@@ -65,8 +80,8 @@ export default function PerformanceResults() {
   };
 
   // Compute Y positions
-  let currentY = 30;
-  const stageBlocks: { label: string; y: number; centerY: number; rows: { row: Row; y: number; h: number }[] }[] = [];
+  let currentY = 20;
+  const stageBlocks: { label: string; y: number; centerY: number; circleR: number; rows: { row: Row; y: number; h: number }[] }[] = [];
 
   stages.forEach((stage) => {
     const stageRows = rows.filter((r) => r.stage === stage);
@@ -77,13 +92,14 @@ export default function PerformanceResults() {
       currentY += h + rowGap;
       return { row, y, h };
     });
-    currentY += 20; // gap between stages
+    currentY += stageBottomGap[stage] ?? 20;
     const firstMidY = rowPositions[0] ? rowPositions[0].y + rowPositions[0].h / 2 : startY;
     const lastMidY = rowPositions[rowPositions.length - 1]
       ? rowPositions[rowPositions.length - 1].y + rowPositions[rowPositions.length - 1].h / 2
       : startY;
     const centerY = (firstMidY + lastMidY) / 2;
-    stageBlocks.push({ label: stage, y: startY, centerY, rows: rowPositions });
+    const r = stageCircleR[stage] ?? 24;
+    stageBlocks.push({ label: stage, y: startY, centerY, circleR: r, rows: rowPositions });
   });
 
   const totalH = currentY + 20;
@@ -93,9 +109,9 @@ export default function PerformanceResults() {
   return (
     <section id="performance" className="section-dark py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row lg:items-start gap-8 mb-0">
+        <div className="flex flex-col lg:flex-row lg:items-center gap-6 mb-0">
           {/* Left text block */}
-          <div className="lg:w-[340px] shrink-0">
+          <div className="lg:w-[280px] shrink-0">
             <h2 className="text-4xl sm:text-5xl font-extrabold text-foreground mb-4 leading-tight">
               Performance<br />& Results
             </h2>
@@ -111,7 +127,7 @@ export default function PerformanceResults() {
                 <span className="inline-block w-4 h-4 rounded-full bg-primary" /> Below target
               </span>
               <span className="flex items-center gap-3 text-sm text-muted-foreground">
-                <span className="inline-block w-4 h-4 rounded-full" style={{ background: "hsl(var(--muted-foreground) / 0.4)" }} /> Not activated / finished
+                <span className="inline-block w-4 h-4 rounded-full bg-muted-foreground/40" /> Not activated / finished
               </span>
             </div>
           </div>
@@ -122,7 +138,7 @@ export default function PerformanceResults() {
               viewBox={`0 0 ${totalW} ${totalH}`}
               width="100%"
               height={totalH}
-              className="block min-w-[700px]"
+              className="block min-w-[650px]"
               onMouseLeave={() => setHovered(null)}
             >
               {/* Vertical spine */}
@@ -143,26 +159,26 @@ export default function PerformanceResults() {
                   <g key={block.label}>
                     {/* Stage label */}
                     <text
-                      x={spineX - circleR - 16}
+                      x={spineX - block.circleR - 14}
                       y={block.centerY}
                       textAnchor="end"
                       dominantBaseline="central"
-                      fontSize={15}
+                      fontSize={14}
                       fontWeight={700}
-                      fill={statusFill[block.rows[0]?.row.status ?? "good"]}
+                      fill="hsl(var(--primary))"
                       opacity={dimmed && !anyHoveredInStage ? 0.2 : 1}
                       className="transition-opacity duration-200"
                     >
                       {block.label}
                     </text>
 
-                    {/* Stage circle */}
+                    {/* Stage circle — all orange (primary), sized by funnel position */}
                     <circle
                       cx={spineX}
                       cy={block.centerY}
-                      r={circleR}
-                      fill={statusFill[block.rows[0]?.row.status ?? "good"]}
-                      opacity={dimmed && !anyHoveredInStage ? 0.15 : 0.85}
+                      r={block.circleR}
+                      fill="hsl(var(--primary))"
+                      opacity={dimmed && !anyHoveredInStage ? 0.2 : 0.9}
                       className="transition-opacity duration-200"
                     />
 
@@ -180,15 +196,6 @@ export default function PerformanceResults() {
                           style={{ transition: "opacity 0.2s" }}
                           opacity={rowOpacity}
                         >
-                          {/* Horizontal branch line from spine to channel */}
-                          <line
-                            x1={branchStartX}
-                            y1={rowMidY}
-                            x2={channelX}
-                            y2={rowMidY}
-                            stroke="hsl(var(--border))"
-                            strokeWidth={2}
-                          />
                           {/* Vertical connector from spine center to branch */}
                           <line
                             x1={spineX}
@@ -198,6 +205,15 @@ export default function PerformanceResults() {
                             stroke="hsl(var(--border))"
                             strokeWidth={2}
                             opacity={0.5}
+                          />
+                          {/* Horizontal branch line */}
+                          <line
+                            x1={branchStartX}
+                            y1={rowMidY}
+                            x2={channelX}
+                            y2={rowMidY}
+                            stroke="hsl(var(--border))"
+                            strokeWidth={2}
                           />
 
                           {/* Channel name */}
@@ -220,16 +236,16 @@ export default function PerformanceResults() {
                                 <rect
                                   x={metricX}
                                   y={pillY}
-                                  width={160}
-                                  height={20}
+                                  width={155}
+                                  height={metricPillH}
                                   rx={10}
                                   fill={statusBg[row.status]}
                                   stroke={statusFill[row.status]}
                                   strokeWidth={1}
                                 />
                                 <text
-                                  x={metricX + 80}
-                                  y={pillY + 10}
+                                  x={metricX + 77}
+                                  y={pillY + metricPillH / 2}
                                   textAnchor="middle"
                                   dominantBaseline="central"
                                   fontSize={10}
