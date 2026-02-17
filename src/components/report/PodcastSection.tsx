@@ -14,14 +14,18 @@ export default function PodcastSection() {
         <div className="grid md:grid-cols-2 gap-8">
           <div>
             <p className="text-sm text-muted-foreground leading-relaxed mb-6">{p.description}</p>
-            <div className="grid grid-cols-2 gap-3">
-              {p.kpis.map((kpi) => (
-                <div key={kpi.label} className="metric-card">
-                  <span className="text-3xl font-extrabold text-foreground block">{kpi.value}</span>
-                  <span className="text-xs text-muted-foreground block mt-1">{kpi.label}</span>
-                  <span className="stat-negative block mt-1">{kpi.comparison}</span>
-                </div>
-              ))}
+            <div>
+              <h4 className="text-sm font-bold mb-4 text-foreground">Key Results</h4>
+              <div className="space-y-3">
+                {p.kpis.map((kpi) => (
+                  <div key={kpi.label} className="flex items-center gap-4">
+                    <span className="text-primary shrink-0 text-sm">+</span>
+                    <span className="text-lg font-extrabold min-w-[70px] text-foreground">{kpi.value}</span>
+                    <span className="text-sm text-muted-foreground">{kpi.label}</span>
+                    <span className="stat-negative text-xs ml-auto whitespace-nowrap">{kpi.comparison}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
           <div className="metric-card flex items-center justify-center">
