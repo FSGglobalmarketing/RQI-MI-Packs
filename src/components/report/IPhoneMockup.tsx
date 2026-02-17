@@ -16,7 +16,7 @@ export default function IPhoneMockup({ scrollImageSrc, alt = "Phone preview" }: 
           <img
             src={scrollImageSrc}
             alt={alt}
-            className="block"
+            className="w-full h-auto block"
             draggable={false}
           />
         </div>
