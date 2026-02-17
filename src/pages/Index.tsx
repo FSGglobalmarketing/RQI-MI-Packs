@@ -10,7 +10,7 @@ import EventsSection from "@/components/report/EventsSection";
 import IPhoneMockup from "@/components/report/IPhoneMockup";
 import { reportData } from "@/data/igneo-report";
 import railImage from "@/assets/rail-to-runway-us-backbone.jpg";
-import naScrollImage from "@/assets/na-campaign-scroll.png";
+import naScrollImage from "@/assets/na-campaign-scroll.webp";
 
 const Index = () => {
   const d = reportData;
