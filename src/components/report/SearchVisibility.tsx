@@ -1,7 +1,7 @@
 import { reportData } from "@/data/igneo-report";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceArea } from "recharts";
 import { CheckCircle, ArrowRight } from "lucide-react";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 
 const COMPETITOR_COLOR = "rgba(26, 46, 53, 0.25)";
 
@@ -21,9 +21,77 @@ const LINE_CONFIG: { key: string; color: string; width: number; opacity: number 
   { key: "Ardian", color: COMPETITOR_COLOR, width: 1.2, opacity: 1 },
 ];
 
+const DATA_KEYS = LINE_CONFIG.map((l) => l.key);
+
+function CustomTooltip({ active, payload, label }: any) {
+  if (!active || !payload?.length) return null;
+  // Sort by value descending, Igneo always first
+  const sorted = [...payload].sort((a: any, b: any) => {
+    if (a.dataKey === "Igneo") return -1;
+    if (b.dataKey === "Igneo") return 1;
+    return (b.value ?? 0) - (a.value ?? 0);
+  });
+
+  return (
+    <div style={{
+      backgroundColor: "#1a2e35",
+      borderRadius: 10,
+      padding: "12px 16px",
+      minWidth: 320,
+      maxWidth: 420,
+      border: "1px solid rgba(232, 97, 58, 0.3)",
+    }}>
+      <p style={{ color: "#e8613a", fontWeight: 700, fontSize: 13, marginBottom: 8 }}>{label}</p>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px 24px" }}>
+        {sorted.map((entry: any) => (
+          <div key={entry.dataKey} style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
+            <span style={{
+              fontSize: 11,
+              color: entry.dataKey === "Igneo" ? "#e8613a" : "rgba(255,255,255,0.6)",
+              fontWeight: entry.dataKey === "Igneo" ? 700 : 400,
+            }}>
+              {entry.dataKey}
+            </span>
+            <span style={{
+              fontSize: 11,
+              color: entry.dataKey === "Igneo" ? "#e8613a" : "rgba(255,255,255,0.85)",
+              fontWeight: entry.dataKey === "Igneo" ? 700 : 500,
+              fontVariantNumeric: "tabular-nums",
+            }}>
+              {entry.value}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function SearchVisibility() {
   const s = reportData.searchVisibility;
+  const allData = s.chartData;
   const [hiddenLines, setHiddenLines] = useState<Set<string>>(new Set());
+
+  // Zoom state: index-based range
+  const [left, setLeft] = useState(0);
+  const [right, setRight] = useState(allData.length - 1);
+
+  // Drag-to-select zoom
+  const [refAreaLeft, setRefAreaLeft] = useState<number | null>(null);
+  const [refAreaRight, setRefAreaRight] = useState<number | null>(null);
+  const dragging = useRef(false);
+
+  const visibleData = allData.slice(left, right + 1);
+
+  // Compute Y domain from visible data (only visible lines)
+  const visibleKeys = DATA_KEYS.filter((k) => !hiddenLines.has(k));
+  let yMax = 0;
+  visibleData.forEach((d: any) => {
+    visibleKeys.forEach((k) => {
+      if (d[k] > yMax) yMax = d[k];
+    });
+  });
+  yMax = Math.ceil(yMax * 1.1);
 
   const handleLegendClick = useCallback((e: any) => {
     const key = e.dataKey || e.value;
@@ -35,6 +103,67 @@ export default function SearchVisibility() {
       return next;
     });
   }, []);
+
+  // Mouse wheel zoom
+  const handleWheel = useCallback((e: React.WheelEvent) => {
+    e.preventDefault();
+    const zoomIn = e.deltaY < 0;
+    setLeft((l) => {
+      return setRightFromLeft(l, zoomIn);
+    });
+
+    function setRightFromLeft(l: number, zoomIn: boolean) {
+      // We need both left and right, use functional update on right
+      setRight((r) => {
+        const range = r - l;
+        if (zoomIn && range <= 3) return r; // min 4 points
+        const step = zoomIn ? 1 : -1;
+        const newL = Math.max(0, l + step);
+        const newR = Math.min(allData.length - 1, r - step);
+        if (newL >= newR) return r;
+        setLeft(newL);
+        return newR;
+      });
+      return l; // don't change left here, it's set inside
+    }
+  }, [allData.length]);
+
+  // Drag zoom
+  const onMouseDown = useCallback((e: any) => {
+    if (e?.activeLabel) {
+      const idx = allData.findIndex((d) => d.month === e.activeLabel);
+      setRefAreaLeft(idx);
+      dragging.current = true;
+    }
+  }, [allData]);
+
+  const onMouseMove = useCallback((e: any) => {
+    if (dragging.current && e?.activeLabel) {
+      const idx = allData.findIndex((d) => d.month === e.activeLabel);
+      setRefAreaRight(idx);
+    }
+  }, [allData]);
+
+  const onMouseUp = useCallback(() => {
+    if (refAreaLeft !== null && refAreaRight !== null) {
+      const l = Math.min(refAreaLeft, refAreaRight);
+      const r = Math.max(refAreaLeft, refAreaRight);
+      if (r - l >= 2) {
+        setLeft(l);
+        setRight(r);
+      }
+    }
+    setRefAreaLeft(null);
+    setRefAreaRight(null);
+    dragging.current = false;
+  }, [refAreaLeft, refAreaRight]);
+
+  const resetZoom = useCallback(() => {
+    setLeft(0);
+    setRight(allData.length - 1);
+  }, [allData.length]);
+
+  const isZoomed = left !== 0 || right !== allData.length - 1;
 
   return (
     <section id="search-visibility" className="section-cream py-20">
@@ -79,41 +208,66 @@ export default function SearchVisibility() {
 
           {/* Right column — chart */}
           <div className="lg:col-span-3 bg-background/5 border border-secondary-foreground/10 rounded-xl p-6">
-            <h3 className="text-sm font-bold text-secondary-foreground mb-1">Search engine visibility</h3>
-            <p className="text-xs text-secondary-foreground/60 mb-5">Number of times we show up in infrastructure searches between pages 1-3.</p>
-            <ResponsiveContainer width="100%" height={360}>
-              <LineChart data={s.chartData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
-                <XAxis dataKey="month" tick={{ fontSize: 10, fill: "#64748b" }} interval={1} />
-                <YAxis tick={{ fontSize: 10, fill: "#64748b" }} />
-                <Tooltip
-                  contentStyle={{ backgroundColor: "#1a2e35", border: "none", borderRadius: "8px", color: "#fff", fontSize: 11 }}
-                  labelStyle={{ color: "#e8613a", fontWeight: 700 }}
-                />
-                <Legend
-                  wrapperStyle={{ fontSize: 10, cursor: "pointer" }}
-                  onClick={handleLegendClick}
-                  formatter={(value: string) => (
-                    <span style={{ color: hiddenLines.has(value) ? "#ccc" : undefined, textDecoration: hiddenLines.has(value) ? "line-through" : undefined }}>
-                      {value}
-                    </span>
-                  )}
-                />
-                {LINE_CONFIG.map(({ key, color, width, opacity }) => (
-                  <Line
-                    key={key}
-                    type="monotone"
-                    dataKey={key}
-                    stroke={color}
-                    strokeWidth={width}
-                    dot={false}
-                    strokeOpacity={hiddenLines.has(key) ? 0 : opacity}
-                    animationDuration={1500}
-                    hide={hiddenLines.has(key)}
+            <div className="flex items-start justify-between mb-1">
+              <div>
+                <h3 className="text-sm font-bold text-secondary-foreground mb-1">Search engine visibility</h3>
+                <p className="text-xs text-secondary-foreground/60 mb-4">Number of times we show up in infrastructure searches between pages 1-3.</p>
+              </div>
+              {isZoomed && (
+                <button
+                  onClick={resetZoom}
+                  className="text-xs font-semibold text-primary hover:underline shrink-0 mt-1"
+                >
+                  Reset zoom
+                </button>
+              )}
+            </div>
+            <div onWheel={handleWheel} style={{ userSelect: "none" }}>
+              <ResponsiveContainer width="100%" height={360}>
+                <LineChart
+                  data={visibleData}
+                  onMouseDown={onMouseDown}
+                  onMouseMove={onMouseMove}
+                  onMouseUp={onMouseUp}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
+                  <XAxis dataKey="month" tick={{ fontSize: 10, fill: "#64748b" }} />
+                  <YAxis tick={{ fontSize: 10, fill: "#64748b" }} domain={[0, yMax]} />
+                  <Tooltip content={<CustomTooltip />} />
+                  <Legend
+                    wrapperStyle={{ fontSize: 10, cursor: "pointer" }}
+                    onClick={handleLegendClick}
+                    formatter={(value: string) => (
+                      <span style={{ color: hiddenLines.has(value) ? "#ccc" : undefined, textDecoration: hiddenLines.has(value) ? "line-through" : undefined }}>
+                        {value}
+                      </span>
+                    )}
                   />
-                ))}
-              </LineChart>
-            </ResponsiveContainer>
+                  {LINE_CONFIG.map(({ key, color, width, opacity }) => (
+                    <Line
+                      key={key}
+                      type="monotone"
+                      dataKey={key}
+                      stroke={color}
+                      strokeWidth={width}
+                      dot={false}
+                      strokeOpacity={hiddenLines.has(key) ? 0 : opacity}
+                      animationDuration={800}
+                      hide={hiddenLines.has(key)}
+                    />
+                  ))}
+                  {refAreaLeft !== null && refAreaRight !== null && (
+                    <ReferenceArea
+                      x1={allData[Math.min(refAreaLeft, refAreaRight)]?.month}
+                      x2={allData[Math.max(refAreaLeft, refAreaRight)]?.month}
+                      strokeOpacity={0.3}
+                      fill="rgba(232, 97, 58, 0.1)"
+                    />
+                  )}
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            <p className="text-[10px] text-secondary-foreground/40 mt-2 text-center">Scroll to zoom · Drag to select range · Click legend to toggle</p>
           </div>
         </div>
 
