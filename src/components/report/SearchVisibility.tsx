@@ -1,7 +1,7 @@
 import { reportData } from "@/data/igneo-report";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceArea } from "recharts";
 import { CheckCircle, ArrowRight } from "lucide-react";
-import { useState, useCallback, useRef, useMemo } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { Switch } from "@/components/ui/switch";
 
 const COMPETITOR_COLOR = "rgba(26, 46, 53, 0.25)";
@@ -66,6 +66,18 @@ function CustomTooltip({ active, payload, label }: any) {
       </div>
     </div>
   );
+}
+
+function ChartScrollContainer({ children, onWheelHandler }: { children: React.ReactNode; onWheelHandler: (e: React.WheelEvent) => void }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const handler = (e: WheelEvent) => { e.preventDefault(); e.stopPropagation(); };
+    el.addEventListener("wheel", handler, { passive: false });
+    return () => el.removeEventListener("wheel", handler);
+  }, []);
+  return <div ref={ref} onWheel={onWheelHandler} style={{ userSelect: "none" }}>{children}</div>;
 }
 
 export default function SearchVisibility() {
@@ -233,7 +245,7 @@ export default function SearchVisibility() {
               />
               <span className="text-xs text-secondary-foreground/60">Show peers</span>
             </div>
-            <div onWheel={handleWheel} style={{ userSelect: "none" }}>
+            <ChartScrollContainer onWheelHandler={handleWheel}>
               <ResponsiveContainer width="100%" height={360}>
                 <LineChart
                   data={visibleData}
@@ -304,7 +316,7 @@ export default function SearchVisibility() {
                   )}
                 </LineChart>
               </ResponsiveContainer>
-            </div>
+            </ChartScrollContainer>
             <p className="text-[10px] text-secondary-foreground/40 mt-2 text-center">Scroll to zoom · Drag to select range · Click legend to toggle</p>
           </div>
         </div>

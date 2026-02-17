@@ -1,5 +1,6 @@
+import { reportData } from "@/data/igneo-report";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Legend, Cell, PieChart, Pie, ReferenceArea } from "recharts";
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 
 interface KpiItem {
   value: string;
@@ -17,11 +18,17 @@ interface CampaignProps {
   formats: string[];
   keyResults: KpiItem[];
   variant: "dark" | "cream";
-  chart?: React.ReactNode;
-  extra?: React.ReactNode;
 }
 
-export function CampaignSection({ id, title, stage, subtitle, description, goals, formats, keyResults, variant, chart, extra }: CampaignProps) {
+interface CampaignChartPageProps {
+  id: string;
+  title: string;
+  variant: "dark" | "cream";
+  children: React.ReactNode;
+}
+
+/* ── Page 1: Info ── */
+export function CampaignSection({ id, title, stage, subtitle, description, goals, formats, keyResults, variant }: CampaignProps) {
   const isDark = variant === "dark";
   return (
     <section id={id} className={`${isDark ? "section-dark" : "section-cream"} py-20`}>
@@ -55,24 +62,19 @@ export function CampaignSection({ id, title, stage, subtitle, description, goals
                 ))}
               </div>
             </div>
-
-            <div>
-              <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Key Results</h4>
-              <div className="grid grid-cols-2 gap-3">
-                {keyResults.map((kpi) => (
-                  <div key={kpi.label} className={`rounded-xl p-4 ${isDark ? "bg-card border border-border" : "bg-background/5 border border-secondary-foreground/10"}`}>
-                    <span className={`text-2xl font-extrabold block ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{kpi.value}</span>
-                    <span className={`text-xs block mt-1 ${isDark ? "text-muted-foreground" : "text-secondary-foreground/60"}`}>{kpi.label}</span>
-                    <span className="stat-positive block mt-1">{kpi.comparison}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
 
-          <div className="space-y-6">
-            {chart}
-            {extra}
+          <div>
+            <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Key Results</h4>
+            <div className="grid grid-cols-2 gap-3">
+              {keyResults.map((kpi) => (
+                <div key={kpi.label} className={`rounded-xl p-4 ${isDark ? "bg-card border border-border" : "bg-background/5 border border-secondary-foreground/10"}`}>
+                  <span className={`text-2xl font-extrabold block ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{kpi.value}</span>
+                  <span className={`text-xs block mt-1 ${isDark ? "text-muted-foreground" : "text-secondary-foreground/60"}`}>{kpi.label}</span>
+                  <span className="stat-positive block mt-1">{kpi.comparison}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -80,6 +82,121 @@ export function CampaignSection({ id, title, stage, subtitle, description, goals
   );
 }
 
+/* ── Page 2: Chart (full width) ── */
+export function CampaignChartPage({ id, title, variant, children }: CampaignChartPageProps) {
+  const isDark = variant === "dark";
+  return (
+    <section id={`${id}-data`} className={`${isDark ? "section-dark" : "section-cream"} py-20`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h3 className={`text-xl font-bold mb-6 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{title} — Data & Charts</h3>
+        <div className="space-y-8">
+          {children}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Scroll-contained chart wrapper ── */
+function ChartScrollWrapper({ children, onWheel }: { children: React.ReactNode; onWheel: (e: React.WheelEvent) => void }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const handler = (e: WheelEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+    };
+    el.addEventListener("wheel", handler, { passive: false });
+    return () => el.removeEventListener("wheel", handler);
+  }, []);
+
+  return (
+    <div ref={ref} onWheel={onWheel} style={{ userSelect: "none" }}>
+      {children}
+    </div>
+  );
+}
+
+/* ── Sorted tooltip used by all charts ── */
+function SortedTooltip({ active, payload, label }: any) {
+  if (!active || !payload?.length) return null;
+  const sorted = [...payload].sort((a: any, b: any) => (b.value ?? 0) - (a.value ?? 0));
+  return (
+    <div style={{ backgroundColor: "#1a2e35", borderRadius: 10, padding: "12px 16px", minWidth: 220, border: "1px solid rgba(232,97,58,0.3)" }}>
+      <p style={{ color: "#e8613a", fontWeight: 700, fontSize: 13, marginBottom: 8 }}>{label}</p>
+      {sorted.map((entry: any) => (
+        <div key={entry.dataKey} style={{ display: "flex", justifyContent: "space-between", gap: 16, marginBottom: 2 }}>
+          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.6)" }}>{entry.name || entry.dataKey}</span>
+          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.85)", fontVariantNumeric: "tabular-nums" }}>{typeof entry.value === "number" ? entry.value.toLocaleString() : entry.value}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ── Zoom hook ── */
+function useChartZoom(allData: any[], labelKey: string) {
+  const [left, setLeft] = useState(0);
+  const [right, setRight] = useState(allData.length - 1);
+  const [refAreaLeft, setRefAreaLeft] = useState<number | null>(null);
+  const [refAreaRight, setRefAreaRight] = useState<number | null>(null);
+  const dragging = useRef(false);
+
+  const visibleData = allData.slice(left, right + 1);
+  const isZoomed = left !== 0 || right !== allData.length - 1;
+
+  const handleWheel = useCallback((e: React.WheelEvent) => {
+    const zoomIn = e.deltaY < 0;
+    setLeft(l => {
+      setRight(r => {
+        const range = r - l;
+        if (zoomIn && range <= 3) return r;
+        const step = zoomIn ? 1 : -1;
+        const newL = Math.max(0, l + step);
+        const newR = Math.min(allData.length - 1, r - step);
+        if (newL >= newR) return r;
+        setLeft(newL);
+        return newR;
+      });
+      return l;
+    });
+  }, [allData.length]);
+
+  const onMouseDown = useCallback((e: any) => {
+    if (e?.activeLabel) {
+      setRefAreaLeft(allData.findIndex(d => d[labelKey] === e.activeLabel));
+      dragging.current = true;
+    }
+  }, [allData, labelKey]);
+
+  const onMouseMove = useCallback((e: any) => {
+    if (dragging.current && e?.activeLabel) {
+      setRefAreaRight(allData.findIndex(d => d[labelKey] === e.activeLabel));
+    }
+  }, [allData, labelKey]);
+
+  const onMouseUp = useCallback(() => {
+    if (refAreaLeft !== null && refAreaRight !== null) {
+      const l = Math.min(refAreaLeft, refAreaRight);
+      const r = Math.max(refAreaLeft, refAreaRight);
+      if (r - l >= 2) { setLeft(l); setRight(r); }
+    }
+    setRefAreaLeft(null);
+    setRefAreaRight(null);
+    dragging.current = false;
+  }, [refAreaLeft, refAreaRight]);
+
+  const resetZoom = useCallback(() => {
+    setLeft(0);
+    setRight(allData.length - 1);
+  }, [allData.length]);
+
+  return { visibleData, isZoomed, handleWheel, onMouseDown, onMouseMove, onMouseUp, resetZoom, refAreaLeft, refAreaRight, allData };
+}
+
+/* ── North America Chart ── */
 export function NorthAmericaChart() {
   const allData = [
     { month: "Jan", page1: 30, page2: 40, page3: 35, page4: 50 },
@@ -96,67 +213,56 @@ export function NorthAmericaChart() {
     { month: "Dec", page1: 135, page2: 40, page3: 35, page4: 120 },
   ];
 
-  const [left, setLeft] = useState(0);
-  const [right, setRight] = useState(allData.length - 1);
-  const [refAreaLeft, setRefAreaLeft] = useState<number | null>(null);
-  const [refAreaRight, setRefAreaRight] = useState<number | null>(null);
-  const dragging = useRef(false);
-  const visibleData = allData.slice(left, right + 1);
-  const isZoomed = left !== 0 || right !== allData.length - 1;
-
-  const handleWheel = useCallback((e: React.WheelEvent) => {
-    e.preventDefault();
-    const zoomIn = e.deltaY < 0;
-    setLeft(l => { setRight(r => { const range = r - l; if (zoomIn && range <= 3) return r; const step = zoomIn ? 1 : -1; const newL = Math.max(0, l + step); const newR = Math.min(allData.length - 1, r - step); if (newL >= newR) return r; setLeft(newL); return newR; }); return l; });
-  }, [allData.length]);
-
-  const onMouseDown = useCallback((e: any) => { if (e?.activeLabel) { setRefAreaLeft(allData.findIndex(d => d.month === e.activeLabel)); dragging.current = true; } }, [allData]);
-  const onMouseMove = useCallback((e: any) => { if (dragging.current && e?.activeLabel) setRefAreaRight(allData.findIndex(d => d.month === e.activeLabel)); }, [allData]);
-  const onMouseUp = useCallback(() => { if (refAreaLeft !== null && refAreaRight !== null) { const l = Math.min(refAreaLeft, refAreaRight); const r = Math.max(refAreaLeft, refAreaRight); if (r - l >= 2) { setLeft(l); setRight(r); } } setRefAreaLeft(null); setRefAreaRight(null); dragging.current = false; }, [refAreaLeft, refAreaRight]);
+  const zoom = useChartZoom(allData, "month");
 
   return (
     <div className="metric-card">
       <div className="flex items-start justify-between mb-4">
-        <h4 className="text-sm font-bold text-foreground">Page ranking positions for North American content</h4>
-        {isZoomed && <button onClick={() => { setLeft(0); setRight(allData.length - 1); }} className="text-xs font-semibold text-primary hover:underline shrink-0">Reset zoom</button>}
+        <div>
+          <h4 className="text-sm font-bold text-foreground">Page ranking positions for North American content</h4>
+          <p className="text-xs text-muted-foreground/60 mt-1">Monthly page ranking distribution across search result pages.</p>
+        </div>
+        {zoom.isZoomed && <button onClick={zoom.resetZoom} className="text-xs font-semibold text-primary hover:underline shrink-0">Reset zoom</button>}
       </div>
-      <div onWheel={handleWheel} style={{ userSelect: "none" }}>
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={visibleData} onMouseDown={onMouseDown} onMouseMove={onMouseMove} onMouseUp={onMouseUp}>
+      <ChartScrollWrapper onWheel={zoom.handleWheel}>
+        <ResponsiveContainer width="100%" height={360}>
+          <LineChart data={zoom.visibleData} onMouseDown={zoom.onMouseDown} onMouseMove={zoom.onMouseMove} onMouseUp={zoom.onMouseUp}>
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
             <XAxis dataKey="month" tick={{ fontSize: 11, fill: "#94a3b8" }} />
             <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} />
-            <Tooltip content={({ active, payload, label }) => {
-              if (!active || !payload?.length) return null;
-              const sorted = [...payload].sort((a: any, b: any) => (b.value ?? 0) - (a.value ?? 0));
-              return (
-                <div style={{ backgroundColor: "#1a2e35", borderRadius: 10, padding: "12px 16px", minWidth: 200, border: "1px solid rgba(232,97,58,0.3)" }}>
-                  <p style={{ color: "#e8613a", fontWeight: 700, fontSize: 13, marginBottom: 8 }}>{label}</p>
-                  {sorted.map((entry: any) => (
-                    <div key={entry.dataKey} style={{ display: "flex", justifyContent: "space-between", gap: 16, marginBottom: 2 }}>
-                      <span style={{ fontSize: 11, color: "rgba(255,255,255,0.6)" }}>{entry.name}</span>
-                      <span style={{ fontSize: 11, color: "rgba(255,255,255,0.85)", fontVariantNumeric: "tabular-nums" }}>{entry.value}</span>
-                    </div>
-                  ))}
-                </div>
-              );
-            }} />
+            <Tooltip content={<SortedTooltip />} />
             <Legend wrapperStyle={{ fontSize: 11 }} />
             <Line type="monotone" dataKey="page1" stroke="#e8613a" strokeWidth={2.5} dot={false} animationDuration={1500} name="Page 1" />
             <Line type="monotone" dataKey="page2" stroke="#1e293b" strokeWidth={2} dot={false} animationDuration={1500} name="Page 2" />
             <Line type="monotone" dataKey="page3" stroke="#06b6d4" strokeWidth={2} dot={false} animationDuration={1500} name="Page 3" />
             <Line type="monotone" dataKey="page4" stroke="#94a3b8" strokeWidth={1.5} dot={false} animationDuration={1500} name="Page 4" />
-            {refAreaLeft !== null && refAreaRight !== null && (
-              <ReferenceArea x1={allData[Math.min(refAreaLeft, refAreaRight)]?.month} x2={allData[Math.max(refAreaLeft, refAreaRight)]?.month} strokeOpacity={0.3} fill="rgba(232,97,58,0.1)" />
+            {zoom.refAreaLeft !== null && zoom.refAreaRight !== null && (
+              <ReferenceArea x1={allData[Math.min(zoom.refAreaLeft, zoom.refAreaRight)]?.month} x2={allData[Math.max(zoom.refAreaLeft, zoom.refAreaRight)]?.month} strokeOpacity={0.3} fill="rgba(232,97,58,0.1)" />
             )}
           </LineChart>
         </ResponsiveContainer>
-      </div>
+      </ChartScrollWrapper>
       <p className="text-[10px] text-muted-foreground/40 mt-2 text-center">Scroll to zoom · Drag to select range</p>
     </div>
   );
 }
 
+export function NorthAmericaExtra() {
+  const d = reportData.campaigns.northAmerica;
+  return (
+    <div className="metric-card grid grid-cols-3 gap-3">
+      {[d.searchAppearances, ...d.pageRankKPIs].map((kpi: any) => (
+        <div key={kpi.label} className="text-center">
+          <span className="text-2xl font-extrabold text-foreground">{kpi.value}</span>
+          <span className="kpi-pill-good text-xs px-2 py-0.5 rounded-full block mt-1 mx-auto w-fit">{kpi.label}</span>
+          <span className="stat-positive block mt-1 text-xs">{kpi.comparison}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ── DACH Charts ── */
 const DACH_COLORS = ["#e8613a", "#3b82f6", "#94a3b8", "#64748b"];
 
 export function DACHCharts() {
@@ -178,9 +284,9 @@ export function DACHCharts() {
     <>
       <div className="bg-background/5 border border-secondary-foreground/10 rounded-xl p-6">
         <h4 className="text-sm font-bold text-secondary-foreground mb-4">Audience by Country</h4>
-        <ResponsiveContainer width="100%" height={220}>
+        <ResponsiveContainer width="100%" height={280}>
           <PieChart>
-            <Pie data={countries} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`} animationDuration={1200}>
+            <Pie data={countries} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`} animationDuration={1200}>
               {countries.map((_, i) => (
                 <Cell key={i} fill={DACH_COLORS[i]} />
               ))}
@@ -191,7 +297,7 @@ export function DACHCharts() {
       </div>
       <div className="bg-background/5 border border-secondary-foreground/10 rounded-xl p-6">
         <h4 className="text-sm font-bold text-secondary-foreground mb-4">Top Companies by Ad Views</h4>
-        <ResponsiveContainer width="100%" height={220}>
+        <ResponsiveContainer width="100%" height={280}>
           <BarChart data={companies} layout="vertical">
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
             <XAxis type="number" tick={{ fontSize: 11, fill: "#64748b" }} />
@@ -205,6 +311,7 @@ export function DACHCharts() {
   );
 }
 
+/* ── UK & Nordics Chart ── */
 export function UKNordicsChart() {
   const data = [
     { name: "Explore Igneo's\nEuropean capabilities", type: "Static", impressions: 55000, clicks: 2100, ctr: 3.8 },
@@ -216,26 +323,13 @@ export function UKNordicsChart() {
   return (
     <div className="metric-card">
       <h4 className="text-sm font-bold text-foreground mb-4">Ad Views vs Clicks to Website</h4>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={360}>
         <BarChart data={data}>
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
           <XAxis dataKey="name" tick={{ fontSize: 9, fill: "#94a3b8" }} interval={0} />
           <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} />
-          <Tooltip content={({ active, payload, label }) => {
-              if (!active || !payload?.length) return null;
-              const sorted = [...payload].sort((a: any, b: any) => (b.value ?? 0) - (a.value ?? 0));
-              return (
-                <div style={{ backgroundColor: "#1a2e35", borderRadius: 10, padding: "12px 16px", minWidth: 200, border: "1px solid rgba(232,97,58,0.3)" }}>
-                  <p style={{ color: "#e8613a", fontWeight: 700, fontSize: 13, marginBottom: 8 }}>{label}</p>
-                  {sorted.map((entry: any) => (
-                    <div key={entry.dataKey} style={{ display: "flex", justifyContent: "space-between", gap: 16, marginBottom: 2 }}>
-                      <span style={{ fontSize: 11, color: "rgba(255,255,255,0.6)" }}>{entry.name}</span>
-                      <span style={{ fontSize: 11, color: "rgba(255,255,255,0.85)", fontVariantNumeric: "tabular-nums" }}>{entry.value?.toLocaleString()}</span>
-                    </div>
-                  ))}
-                </div>
-              );
-            }} />
+          <Tooltip content={<SortedTooltip />} />
+          <Legend wrapperStyle={{ fontSize: 11 }} />
           <Bar dataKey="impressions" fill="#3b82f6" radius={[4, 4, 0, 0]} animationDuration={1200} name="Impressions" />
           <Bar dataKey="clicks" fill="#e8613a" radius={[4, 4, 0, 0]} animationDuration={1200} name="Clicks" />
         </BarChart>
@@ -243,6 +337,22 @@ export function UKNordicsChart() {
       <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
         <span className="w-3 h-0.5 bg-primary inline-block" /> Industry average CTR
       </div>
+    </div>
+  );
+}
+
+export function UKNordicsLearnings() {
+  const learnings = reportData.campaigns.ukNordics.keyLearnings;
+  return (
+    <div className="metric-card">
+      <h4 className="text-sm font-semibold text-foreground mb-3">Key Learnings</h4>
+      <ul className="space-y-2">
+        {learnings.map((l: string) => (
+          <li key={l} className="text-sm text-muted-foreground flex gap-2">
+            <span className="text-primary mt-0.5">→</span>{l}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

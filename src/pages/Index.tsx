@@ -3,7 +3,7 @@ import HeroSection from "@/components/report/HeroSection";
 import GlobalFocus from "@/components/report/GlobalFocus";
 import PerformanceResults from "@/components/report/PerformanceResults";
 import SearchVisibility from "@/components/report/SearchVisibility";
-import { CampaignSection, NorthAmericaChart, DACHCharts, UKNordicsChart } from "@/components/report/CampaignSection";
+import { CampaignSection, CampaignChartPage, NorthAmericaChart, NorthAmericaExtra, DACHCharts, UKNordicsChart, UKNordicsLearnings } from "@/components/report/CampaignSection";
 import AlwaysOnSection from "@/components/report/AlwaysOnSection";
 import PodcastSection from "@/components/report/PodcastSection";
 import EventsSection from "@/components/report/EventsSection";
@@ -19,6 +19,7 @@ const Index = () => {
       <PerformanceResults />
       <SearchVisibility />
 
+      {/* North America — Page 1: Info */}
       <CampaignSection
         id="north-america"
         title={d.campaigns.northAmerica.title}
@@ -29,20 +30,14 @@ const Index = () => {
         formats={d.campaigns.northAmerica.formats}
         keyResults={d.campaigns.northAmerica.keyResults}
         variant="dark"
-        chart={<NorthAmericaChart />}
-        extra={
-          <div className="metric-card grid grid-cols-3 gap-3">
-            {[d.campaigns.northAmerica.searchAppearances, ...d.campaigns.northAmerica.pageRankKPIs].map((kpi) => (
-              <div key={kpi.label} className="text-center">
-                <span className="text-2xl font-extrabold text-foreground">{kpi.value}</span>
-                <span className="kpi-pill-good text-xs px-2 py-0.5 rounded-full block mt-1 mx-auto w-fit">{kpi.label}</span>
-                <span className="stat-positive block mt-1 text-xs">{kpi.comparison}</span>
-              </div>
-            ))}
-          </div>
-        }
       />
+      {/* North America — Page 2: Charts & Data */}
+      <CampaignChartPage id="north-america" title={d.campaigns.northAmerica.title} variant="dark">
+        <NorthAmericaChart />
+        <NorthAmericaExtra />
+      </CampaignChartPage>
 
+      {/* DACH — Page 1: Info */}
       <CampaignSection
         id="dach"
         title={d.campaigns.dach.title}
@@ -53,9 +48,13 @@ const Index = () => {
         formats={d.campaigns.dach.formats}
         keyResults={d.campaigns.dach.keyResults}
         variant="cream"
-        chart={<DACHCharts />}
       />
+      {/* DACH — Page 2: Charts & Data */}
+      <CampaignChartPage id="dach" title={d.campaigns.dach.title} variant="cream">
+        <DACHCharts />
+      </CampaignChartPage>
 
+      {/* UK & Nordics — Page 1: Info */}
       <CampaignSection
         id="uk-nordics"
         title={d.campaigns.ukNordics.title}
@@ -66,20 +65,12 @@ const Index = () => {
         formats={d.campaigns.ukNordics.formats}
         keyResults={d.campaigns.ukNordics.keyResults}
         variant="dark"
-        chart={<UKNordicsChart />}
-        extra={
-          <div className="metric-card">
-            <h4 className="text-sm font-semibold text-foreground mb-3">Key Learnings</h4>
-            <ul className="space-y-2">
-              {d.campaigns.ukNordics.keyLearnings.map((l) => (
-                <li key={l} className="text-sm text-muted-foreground flex gap-2">
-                  <span className="text-primary mt-0.5">→</span>{l}
-                </li>
-              ))}
-            </ul>
-          </div>
-        }
       />
+      {/* UK & Nordics — Page 2: Charts & Data */}
+      <CampaignChartPage id="uk-nordics" title={d.campaigns.ukNordics.title} variant="dark">
+        <UKNordicsChart />
+        <UKNordicsLearnings />
+      </CampaignChartPage>
 
       <AlwaysOnSection
         id="website"
