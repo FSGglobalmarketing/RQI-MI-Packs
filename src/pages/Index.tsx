@@ -8,6 +8,7 @@ import AlwaysOnSection from "@/components/report/AlwaysOnSection";
 import PodcastSection from "@/components/report/PodcastSection";
 import EventsSection from "@/components/report/EventsSection";
 import { reportData } from "@/data/igneo-report";
+import railImage from "@/assets/rail-to-runway-us-backbone.jpg";
 
 const Index = () => {
   const d = reportData;
@@ -32,7 +33,7 @@ const Index = () => {
         variant="dark"
       />
       {/* North America — Page 2: Charts & Data */}
-      <CampaignChartPage id="north-america" title={d.campaigns.northAmerica.title} variant="dark">
+      <CampaignChartPage id="north-america" title={d.campaigns.northAmerica.title} variant="dark" backgroundImage={railImage}>
         <NorthAmericaChart />
         <NorthAmericaExtra />
       </CampaignChartPage>

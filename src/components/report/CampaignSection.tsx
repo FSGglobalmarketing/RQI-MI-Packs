@@ -89,11 +89,19 @@ export function CampaignSection({ id, title, stage, subtitle, description, goals
 }
 
 /* ── Page 2: Chart (full width) ── */
-export function CampaignChartPage({ id, title, variant, children }: CampaignChartPageProps) {
+export function CampaignChartPage({ id, title, variant, children, backgroundImage }: CampaignChartPageProps & { backgroundImage?: string }) {
   const isDark = variant === "dark";
   return (
-    <section id={`${id}-data`} className={`${isDark ? "section-dark" : "section-cream"} py-20`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id={`${id}-data`} className={`${isDark ? "section-dark" : "section-cream"} py-20 relative overflow-hidden`}>
+      {backgroundImage && (
+        <>
+          <div className="absolute inset-0">
+            <img src={backgroundImage} alt="" className="w-full h-full object-cover object-center opacity-15" />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/70 to-background/90" />
+        </>
+      )}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <h3 className={`text-2xl font-extrabold mb-8 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>
           Deep dive: <span className="font-bold">{title}</span>
         </h3>
