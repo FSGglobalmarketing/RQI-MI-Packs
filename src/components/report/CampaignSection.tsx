@@ -73,7 +73,11 @@ export function CampaignSection({ id, title, stage, subtitle, description, goals
                   <div key={kpi.label} className="flex items-center gap-4">
                     <span className="text-primary shrink-0 text-sm">+</span>
                     <span className={`text-lg font-extrabold min-w-[70px] ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{kpi.value}</span>
-                    <span className={`text-sm ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>{kpi.label}</span>
+                    {isDark ? (
+                      <span className="text-sm text-muted-foreground">{kpi.label}</span>
+                    ) : (
+                      <span className="kpi-pill-good text-xs px-3 py-0.5 rounded-full">{kpi.label}</span>
+                    )}
                     <span className="stat-positive text-xs ml-auto whitespace-nowrap">{kpi.comparison}</span>
                   </div>
                 ))}
@@ -82,7 +86,7 @@ export function CampaignSection({ id, title, stage, subtitle, description, goals
           </div>
 
           {/* Right column: phone mockup */}
-          <div className="flex items-center justify-center">
+          <div className="flex items-start justify-center pt-8">
             {phoneImage}
           </div>
         </div>
