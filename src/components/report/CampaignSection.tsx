@@ -1,4 +1,5 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Legend, Cell, PieChart, Pie } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Legend, Cell, PieChart, Pie, ReferenceArea } from "recharts";
+import { useState, useCallback, useRef } from "react";
 
 interface KpiItem {
   value: string;
@@ -80,7 +81,7 @@ export function CampaignSection({ id, title, stage, subtitle, description, goals
 }
 
 export function NorthAmericaChart() {
-  const data = [
+  const allData = [
     { month: "Jan", page1: 30, page2: 40, page3: 35, page4: 50 },
     { month: "Feb", page1: 35, page2: 45, page3: 38, page4: 55 },
     { month: "Mar", page1: 40, page2: 50, page3: 40, page4: 60 },
@@ -95,26 +96,63 @@ export function NorthAmericaChart() {
     { month: "Dec", page1: 135, page2: 40, page3: 35, page4: 120 },
   ];
 
+  const [left, setLeft] = useState(0);
+  const [right, setRight] = useState(allData.length - 1);
+  const [refAreaLeft, setRefAreaLeft] = useState<number | null>(null);
+  const [refAreaRight, setRefAreaRight] = useState<number | null>(null);
+  const dragging = useRef(false);
+  const visibleData = allData.slice(left, right + 1);
+  const isZoomed = left !== 0 || right !== allData.length - 1;
+
+  const handleWheel = useCallback((e: React.WheelEvent) => {
+    e.preventDefault();
+    const zoomIn = e.deltaY < 0;
+    setLeft(l => { setRight(r => { const range = r - l; if (zoomIn && range <= 3) return r; const step = zoomIn ? 1 : -1; const newL = Math.max(0, l + step); const newR = Math.min(allData.length - 1, r - step); if (newL >= newR) return r; setLeft(newL); return newR; }); return l; });
+  }, [allData.length]);
+
+  const onMouseDown = useCallback((e: any) => { if (e?.activeLabel) { setRefAreaLeft(allData.findIndex(d => d.month === e.activeLabel)); dragging.current = true; } }, [allData]);
+  const onMouseMove = useCallback((e: any) => { if (dragging.current && e?.activeLabel) setRefAreaRight(allData.findIndex(d => d.month === e.activeLabel)); }, [allData]);
+  const onMouseUp = useCallback(() => { if (refAreaLeft !== null && refAreaRight !== null) { const l = Math.min(refAreaLeft, refAreaRight); const r = Math.max(refAreaLeft, refAreaRight); if (r - l >= 2) { setLeft(l); setRight(r); } } setRefAreaLeft(null); setRefAreaRight(null); dragging.current = false; }, [refAreaLeft, refAreaRight]);
+
   return (
     <div className="metric-card">
-      <h4 className="text-sm font-bold text-foreground mb-4">Page ranking positions for North American content</h4>
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-          <XAxis dataKey="month" tick={{ fontSize: 11, fill: "#94a3b8" }} />
-          <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} />
-          <Tooltip contentStyle={{ backgroundColor: "#1a2e35", border: "none", borderRadius: "8px", color: "#fff" }} />
-          <Legend wrapperStyle={{ fontSize: 11 }} />
-          <Line type="monotone" dataKey="page1" stroke="#e8613a" strokeWidth={2.5} dot={false} animationDuration={1500} name="Page 1" />
-          <Line type="monotone" dataKey="page2" stroke="#1e293b" strokeWidth={2} dot={false} animationDuration={1500} name="Page 2" />
-          <Line type="monotone" dataKey="page3" stroke="#06b6d4" strokeWidth={2} dot={false} animationDuration={1500} name="Page 3" />
-          <Line type="monotone" dataKey="page4" stroke="#94a3b8" strokeWidth={1.5} dot={false} animationDuration={1500} name="Page 4" />
-        </LineChart>
-      </ResponsiveContainer>
-      <div className="flex items-center gap-2 mt-3 text-xs text-muted-foreground">
-        <span className="border-l-2 border-dashed border-muted-foreground/40 h-4" />
-        Campaign start (Jul)
+      <div className="flex items-start justify-between mb-4">
+        <h4 className="text-sm font-bold text-foreground">Page ranking positions for North American content</h4>
+        {isZoomed && <button onClick={() => { setLeft(0); setRight(allData.length - 1); }} className="text-xs font-semibold text-primary hover:underline shrink-0">Reset zoom</button>}
       </div>
+      <div onWheel={handleWheel} style={{ userSelect: "none" }}>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={visibleData} onMouseDown={onMouseDown} onMouseMove={onMouseMove} onMouseUp={onMouseUp}>
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+            <XAxis dataKey="month" tick={{ fontSize: 11, fill: "#94a3b8" }} />
+            <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} />
+            <Tooltip content={({ active, payload, label }) => {
+              if (!active || !payload?.length) return null;
+              const sorted = [...payload].sort((a: any, b: any) => (b.value ?? 0) - (a.value ?? 0));
+              return (
+                <div style={{ backgroundColor: "#1a2e35", borderRadius: 10, padding: "12px 16px", minWidth: 200, border: "1px solid rgba(232,97,58,0.3)" }}>
+                  <p style={{ color: "#e8613a", fontWeight: 700, fontSize: 13, marginBottom: 8 }}>{label}</p>
+                  {sorted.map((entry: any) => (
+                    <div key={entry.dataKey} style={{ display: "flex", justifyContent: "space-between", gap: 16, marginBottom: 2 }}>
+                      <span style={{ fontSize: 11, color: "rgba(255,255,255,0.6)" }}>{entry.name}</span>
+                      <span style={{ fontSize: 11, color: "rgba(255,255,255,0.85)", fontVariantNumeric: "tabular-nums" }}>{entry.value}</span>
+                    </div>
+                  ))}
+                </div>
+              );
+            }} />
+            <Legend wrapperStyle={{ fontSize: 11 }} />
+            <Line type="monotone" dataKey="page1" stroke="#e8613a" strokeWidth={2.5} dot={false} animationDuration={1500} name="Page 1" />
+            <Line type="monotone" dataKey="page2" stroke="#1e293b" strokeWidth={2} dot={false} animationDuration={1500} name="Page 2" />
+            <Line type="monotone" dataKey="page3" stroke="#06b6d4" strokeWidth={2} dot={false} animationDuration={1500} name="Page 3" />
+            <Line type="monotone" dataKey="page4" stroke="#94a3b8" strokeWidth={1.5} dot={false} animationDuration={1500} name="Page 4" />
+            {refAreaLeft !== null && refAreaRight !== null && (
+              <ReferenceArea x1={allData[Math.min(refAreaLeft, refAreaRight)]?.month} x2={allData[Math.max(refAreaLeft, refAreaRight)]?.month} strokeOpacity={0.3} fill="rgba(232,97,58,0.1)" />
+            )}
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+      <p className="text-[10px] text-muted-foreground/40 mt-2 text-center">Scroll to zoom · Drag to select range</p>
     </div>
   );
 }
@@ -158,7 +196,7 @@ export function DACHCharts() {
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
             <XAxis type="number" tick={{ fontSize: 11, fill: "#64748b" }} />
             <YAxis dataKey="company" type="category" width={120} tick={{ fontSize: 11, fill: "#64748b" }} />
-            <Tooltip contentStyle={{ backgroundColor: "#1a2e35", border: "none", borderRadius: "8px", color: "#fff" }} />
+            <Tooltip contentStyle={{ backgroundColor: "#1a2e35", border: "1px solid rgba(232,97,58,0.3)", borderRadius: "10px", color: "#fff" }} />
             <Bar dataKey="views" fill="#e8613a" radius={[0, 6, 6, 0]} animationDuration={1200} />
           </BarChart>
         </ResponsiveContainer>
@@ -183,8 +221,21 @@ export function UKNordicsChart() {
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
           <XAxis dataKey="name" tick={{ fontSize: 9, fill: "#94a3b8" }} interval={0} />
           <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} />
-          <Tooltip contentStyle={{ backgroundColor: "#1a2e35", border: "none", borderRadius: "8px", color: "#fff" }} />
-          <Legend wrapperStyle={{ fontSize: 11 }} />
+          <Tooltip content={({ active, payload, label }) => {
+              if (!active || !payload?.length) return null;
+              const sorted = [...payload].sort((a: any, b: any) => (b.value ?? 0) - (a.value ?? 0));
+              return (
+                <div style={{ backgroundColor: "#1a2e35", borderRadius: 10, padding: "12px 16px", minWidth: 200, border: "1px solid rgba(232,97,58,0.3)" }}>
+                  <p style={{ color: "#e8613a", fontWeight: 700, fontSize: 13, marginBottom: 8 }}>{label}</p>
+                  {sorted.map((entry: any) => (
+                    <div key={entry.dataKey} style={{ display: "flex", justifyContent: "space-between", gap: 16, marginBottom: 2 }}>
+                      <span style={{ fontSize: 11, color: "rgba(255,255,255,0.6)" }}>{entry.name}</span>
+                      <span style={{ fontSize: 11, color: "rgba(255,255,255,0.85)", fontVariantNumeric: "tabular-nums" }}>{entry.value?.toLocaleString()}</span>
+                    </div>
+                  ))}
+                </div>
+              );
+            }} />
           <Bar dataKey="impressions" fill="#3b82f6" radius={[4, 4, 0, 0]} animationDuration={1200} name="Impressions" />
           <Bar dataKey="clicks" fill="#e8613a" radius={[4, 4, 0, 0]} animationDuration={1200} name="Clicks" />
         </BarChart>
