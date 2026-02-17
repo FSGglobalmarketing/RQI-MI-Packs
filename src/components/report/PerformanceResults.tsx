@@ -223,7 +223,7 @@ export default function PerformanceResults() {
                             y={rowMidY - 12}
                             width={channelPillW}
                             height={24}
-                            rx={12}
+                            rx={50}
                             fill="rgba(255,255,255,0.06)"
                             stroke="rgba(255,255,255,0.12)"
                             strokeWidth={1}
@@ -240,24 +240,48 @@ export default function PerformanceResults() {
                             {row.channel}
                           </text>
 
+                          {/* Connecting line from channel pill to metric pills */}
+                          <line
+                            x1={channelX + channelPillW}
+                            y1={rowMidY}
+                            x2={metricX}
+                            y2={rowMidY}
+                            stroke={statusFill[row.status]}
+                            strokeWidth={2}
+                            opacity={0.5}
+                          />
+
                           {/* Metric pills */}
                           {row.metrics.map((m, mi) => {
                             const pillY = y + rowPadding + mi * (metricPillH + metricGap);
+                            const pillMidY = pillY + metricPillH / 2;
                             return (
                               <g key={mi}>
-                              <rect
+                                {/* Vertical connector to each metric pill if multiple */}
+                                {row.metrics.length > 1 && (
+                                  <line
+                                    x1={metricX}
+                                    y1={rowMidY}
+                                    x2={metricX}
+                                    y2={pillMidY}
+                                    stroke={statusFill[row.status]}
+                                    strokeWidth={2}
+                                    opacity={0.5}
+                                  />
+                                )}
+                                <rect
                                   x={metricX}
                                   y={pillY}
                                   width={145}
                                   height={metricPillH}
-                                  rx={10}
+                                  rx={50}
                                   fill={statusBg[row.status]}
                                   stroke={statusFill[row.status]}
                                   strokeWidth={1}
                                 />
                                 <text
                                   x={metricX + 72}
-                                  y={pillY + metricPillH / 2}
+                                  y={pillMidY}
                                   textAnchor="middle"
                                   dominantBaseline="central"
                                   fontSize={10}
