@@ -71,7 +71,7 @@ export function CampaignSection({ id, title, stage, subtitle, description, goals
               <h4 className={`text-sm font-bold mb-4 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Key Results</h4>
               <div className="space-y-3">
                 {keyResults.map((kpi) => (
-                  <KpiRow key={kpi.label} value={kpi.value} label={kpi.label} comparison={kpi.comparison} />
+                  <KpiRow key={kpi.label} value={kpi.value} label={kpi.label} comparison={kpi.comparison} variant={variant} />
                 ))}
               </div>
             </div>

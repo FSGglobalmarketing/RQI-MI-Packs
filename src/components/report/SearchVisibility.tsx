@@ -179,7 +179,7 @@ export default function SearchVisibility() {
               <h4 className="text-sm font-bold mb-4 text-secondary-foreground">Key Results</h4>
               <div className="space-y-3">
                 {s.kpis.map((kpi) => (
-                  <KpiRow key={kpi.label} value={kpi.value} label={kpi.label} comparison={kpi.comparison} />
+                  <KpiRow key={kpi.label} value={kpi.value} label={kpi.label} comparison={kpi.comparison} variant="cream" />
                 ))}
               </div>
             </div>
