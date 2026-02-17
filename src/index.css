@@ -297,32 +297,21 @@
   }
 
   .dach-phones-wrapper {
-    position: relative;
-    width: 100%;
-    height: 520px;
     display: flex;
     align-items: flex-start;
     justify-content: center;
+    gap: 16px;
   }
 
   .dach-phone-card {
-    position: absolute;
-    width: 320px;
+    position: relative;
+    width: 280px;
     flex-shrink: 0;
   }
 
-  .dach-phone-left {
-    left: -10%;
-    top: 30px;
-    transform: rotate(-6deg);
-    z-index: 1;
-  }
-
+  .dach-phone-left,
   .dach-phone-right {
-    right: -10%;
-    top: 0;
-    transform: rotate(4deg);
-    z-index: 2;
+    transform: none;
   }
 
   .dach-phone-image {
