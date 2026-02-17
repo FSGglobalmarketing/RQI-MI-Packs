@@ -42,9 +42,9 @@ export default function DACHPhoneShowcase() {
 
   return (
     <>
-      <div className="flex flex-wrap justify-center gap-10">
+      <div className="dach-phones-wrapper">
         {ads.map((ad, i) => (
-          <div key={i} className="dach-phone-card">
+          <div key={i} className={`dach-phone-card ${i === 0 ? "dach-phone-left" : "dach-phone-right"}`}>
             <img
               src={ad.image}
               alt={ad.title}
