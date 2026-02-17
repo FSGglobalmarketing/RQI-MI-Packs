@@ -46,8 +46,10 @@ export default function PerformanceResults() {
   const [hovered, setHovered] = useState<string | null>(null);
 
   // Layout
-  const rowH = 52;
-  const rowGap = 8;
+  const metricPillH = 20;
+  const metricGap = 4;
+  const rowPadding = 8; // top/bottom padding within a row
+  const rowGap = 14;
   const spineX = 420;
   const circleR = 28;
   const branchStartX = spineX + 2;
@@ -56,21 +58,31 @@ export default function PerformanceResults() {
   const compX = metricX + 180;
   const totalW = compX + 140;
 
+  // Helper: row height based on metric count
+  const getRowH = (row: Row) => {
+    const metricsH = row.metrics.length * metricPillH + (row.metrics.length - 1) * metricGap;
+    return Math.max(36, metricsH + rowPadding * 2);
+  };
+
   // Compute Y positions
   let currentY = 30;
-  const stageBlocks: { label: string; y: number; centerY: number; rows: { row: Row; y: number }[] }[] = [];
+  const stageBlocks: { label: string; y: number; centerY: number; rows: { row: Row; y: number; h: number }[] }[] = [];
 
   stages.forEach((stage) => {
     const stageRows = rows.filter((r) => r.stage === stage);
     const startY = currentY;
-    const rowPositions = stageRows.map((row, i) => {
-      const y = currentY + i * (rowH + rowGap);
-      return { row, y };
+    const rowPositions = stageRows.map((row) => {
+      const h = getRowH(row);
+      const y = currentY;
+      currentY += h + rowGap;
+      return { row, y, h };
     });
-    currentY += stageRows.length * (rowH + rowGap) + 24;
-    const firstY = rowPositions[0]?.y ?? startY;
-    const lastY = rowPositions[rowPositions.length - 1]?.y ?? startY;
-    const centerY = (firstY + lastY) / 2 + rowH / 2;
+    currentY += 20; // gap between stages
+    const firstMidY = rowPositions[0] ? rowPositions[0].y + rowPositions[0].h / 2 : startY;
+    const lastMidY = rowPositions[rowPositions.length - 1]
+      ? rowPositions[rowPositions.length - 1].y + rowPositions[rowPositions.length - 1].h / 2
+      : startY;
+    const centerY = (firstMidY + lastMidY) / 2;
     stageBlocks.push({ label: stage, y: startY, centerY, rows: rowPositions });
   });
 
@@ -155,10 +167,10 @@ export default function PerformanceResults() {
                     />
 
                     {/* Rows */}
-                    {block.rows.map(({ row, y }) => {
+                    {block.rows.map(({ row, y, h }) => {
                       const isActive = hovered === row.id;
                       const rowOpacity = dimmed ? (isActive ? 1 : 0.15) : 1;
-                      const rowMidY = y + rowH / 2;
+                      const rowMidY = y + h / 2;
 
                       return (
                         <g
@@ -202,7 +214,7 @@ export default function PerformanceResults() {
 
                           {/* Metric pills */}
                           {row.metrics.map((m, mi) => {
-                            const pillY = y + 6 + mi * 22;
+                            const pillY = y + rowPadding + mi * (metricPillH + metricGap);
                             return (
                               <g key={mi}>
                                 <rect
@@ -249,7 +261,7 @@ export default function PerformanceResults() {
                             x={branchStartX}
                             y={y}
                             width={compX + 120 - branchStartX}
-                            height={rowH}
+                            height={h}
                             fill="transparent"
                           />
                         </g>
