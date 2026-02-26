@@ -109,7 +109,7 @@ export default function PerformanceResults() {
 
   return (
     <section id="performance" className="section-dark py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row lg:items-center gap-6 mb-0">
           {/* Left text block */}
           <div className="lg:w-[280px] shrink-0">
