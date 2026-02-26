@@ -1,45 +1,83 @@
+import { useState } from "react";
 import { reportData } from "@/data/igneo-report";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 /**
  * Simplified world-map SVG with pulsing pins for event locations.
  * Coordinates are approximate positions on an 800×400 natural-earth-ish projection.
  */
 
+interface EventItem {
+  name: string;
+  format: string;
+  audience: string;
+  region: string;
+  quarter: string;
+}
+
 interface PinLocation {
   label: string;
   x: number;
   y: number;
-  events: string[];
+  events: EventItem[];
 }
 
 function getPinLocations(): PinLocation[] {
   const events = reportData.events.list;
 
   const regionCoords: Record<string, { x: number; y: number }> = {
-    Asia: { x: 620, y: 175 },      // Singapore
-    ANZ: { x: 700, y: 310 },       // Australia
-    EMEA: { x: 400, y: 145 },      // Europe
+    Asia: { x: 620, y: 175 },
+    ANZ: { x: 700, y: 310 },
+    EMEA: { x: 400, y: 145 },
   };
 
-  const grouped: Record<string, string[]> = {};
+  const grouped: Record<string, EventItem[]> = {};
   events.forEach((ev) => {
     if (!grouped[ev.region]) grouped[ev.region] = [];
-    grouped[ev.region].push(ev.name);
+    grouped[ev.region].push(ev);
   });
 
-  return Object.entries(grouped).map(([region, names]) => ({
+  return Object.entries(grouped).map(([region, items]) => ({
     label: region,
     x: regionCoords[region]?.x ?? 400,
     y: regionCoords[region]?.y ?? 200,
-    events: names,
+    events: items,
   }));
 }
 
 export default function EventsWorldMap() {
   const pins = getPinLocations();
+  const [selectedRegion, setSelectedRegion] = useState<PinLocation | null>(null);
 
   return (
     <div className="mb-10">
+      <Dialog open={!!selectedRegion} onOpenChange={(open) => !open && setSelectedRegion(null)}>
+        <DialogContent className="sm:max-w-md bg-secondary border-secondary-foreground/10">
+          <DialogHeader>
+            <DialogTitle className="text-secondary-foreground">
+              {selectedRegion?.label} — {selectedRegion?.events.length} Event{(selectedRegion?.events.length ?? 0) > 1 ? "s" : ""}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-3 mt-2">
+            {selectedRegion?.events.map((ev) => (
+              <div key={ev.name} className="glass-card-cream p-4 rounded-lg">
+                <p className="font-semibold text-secondary-foreground">{ev.name}</p>
+                <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1.5 text-sm text-secondary-foreground/70">
+                  <span>📋 {ev.format}</span>
+                  <span>👥 {ev.audience}</span>
+                  <span>📅 {ev.quarter}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
+
       <svg
         viewBox="0 0 800 400"
         className="w-full h-auto"
@@ -85,7 +123,11 @@ export default function EventsWorldMap() {
 
         {/* Pulsing pins */}
         {pins.map((pin, i) => (
-          <g key={pin.label}>
+          <g
+            key={pin.label}
+            className="cursor-pointer"
+            onClick={() => setSelectedRegion(pin)}
+          >
             {/* Pulse ring */}
             <circle
               cx={pin.x}
