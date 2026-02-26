@@ -1,4 +1,5 @@
 import { reportData } from "@/data/igneo-report";
+import EventsWorldMap from "./EventsWorldMap";
 
 export default function EventsSection() {
   const e = reportData.events;
@@ -9,6 +10,8 @@ export default function EventsSection() {
           <h2 className="text-3xl sm:text-4xl font-extrabold text-secondary-foreground">{e.title}</h2>
           <span className="stage-badge text-xs">{e.stage}</span>
         </div>
+
+        <EventsWorldMap />
 
         <div className="glass-card-cream overflow-x-auto">
           <table className="w-full text-sm">
