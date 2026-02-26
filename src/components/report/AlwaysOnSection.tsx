@@ -23,7 +23,7 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
   const isDark = variant === "dark";
   return (
     <section id={id} className={`${isDark ? "section-dark" : "section-cream"} py-20`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center gap-3 mb-2">
           <h2 className={`text-3xl sm:text-4xl font-extrabold ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{title}</h2>
           <span className="stage-badge text-xs">{stage}</span>

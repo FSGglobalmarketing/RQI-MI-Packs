@@ -1,3 +1,4 @@
+import { useState } from "react";
 import ReportNav from "@/components/report/ReportNav";
 import HeroSection from "@/components/report/HeroSection";
 import GlobalFocus from "@/components/report/GlobalFocus";
@@ -9,14 +10,17 @@ import AlwaysOnSection from "@/components/report/AlwaysOnSection";
 import PodcastSection from "@/components/report/PodcastSection";
 import EventsSection from "@/components/report/EventsSection";
 import IPhoneMockup from "@/components/report/IPhoneMockup";
+import SplashScreen from "@/components/report/SplashScreen";
 import { reportData } from "@/data/igneo-report";
 import railImage from "@/assets/rail-to-runway-us-backbone.jpg";
 import naScrollImage from "@/assets/na-campaign-scroll.webp";
 
 const Index = () => {
+  const [showSplash, setShowSplash] = useState(true);
   const d = reportData;
   return (
     <div className="min-h-screen bg-background">
+      {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
       <ReportNav />
       <HeroSection />
       <GlobalFocus />
@@ -107,7 +111,7 @@ const Index = () => {
       <EventsSection />
 
       <footer className="section-dark py-8 border-t border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-muted-foreground">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-muted-foreground">
           <p>{d.brandFull} · {d.quarter} Marketing Impact Report · Internal Use</p>
         </div>
       </footer>

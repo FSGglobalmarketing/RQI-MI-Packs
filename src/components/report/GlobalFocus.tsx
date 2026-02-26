@@ -3,7 +3,7 @@ import { reportData } from "@/data/igneo-report";
 export default function GlobalFocus() {
   return (
     <section className="section-cream py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl sm:text-4xl font-extrabold text-secondary-foreground mb-2">Our global focus</h2>
         <p className="text-secondary-foreground/70 mb-12">What were we trying to achieve globally last quarter?</p>
 
