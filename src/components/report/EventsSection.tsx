@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { reportData, type EventItem } from "@/data/igneo-report";
 import EventsLeafletMap from "./EventsLeafletMap";
 import EventsFilterBar from "./EventsFilterBar";
+import EventsKPIs from "./EventsKPIs";
 
 type FilterState = {
   category: string[];
@@ -41,8 +42,8 @@ export default function EventsSection() {
     });
   }, [e.list, filters]);
 
-  const pastCount = filteredEvents.filter((ev) => ev.status === "past").length;
-  const upcomingCount = filteredEvents.filter((ev) => ev.status === "upcoming").length;
+  const committedCount = filteredEvents.filter((ev) => ev.status === "committed").length;
+  const proposedCount = filteredEvents.filter((ev) => ev.status === "proposed").length;
 
   return (
     <section id="events" className="section-cream py-20">
@@ -53,7 +54,7 @@ export default function EventsSection() {
         </div>
 
         <p className="text-sm text-secondary-foreground/60 mb-6">
-          Showing {filteredEvents.length} event{filteredEvents.length !== 1 ? "s" : ""} — {pastCount} completed, {upcomingCount} upcoming
+          Showing {filteredEvents.length} event{filteredEvents.length !== 1 ? "s" : ""} — {committedCount} committed, {proposedCount} proposed
         </p>
 
         <EventsFilterBar
@@ -63,6 +64,8 @@ export default function EventsSection() {
           onClearAll={clearAll}
         />
 
+        <EventsKPIs events={filteredEvents} />
+
         <EventsLeafletMap filteredEvents={filteredEvents} />
 
         {/* Events table */}
@@ -71,28 +74,43 @@ export default function EventsSection() {
             <thead>
               <tr className="border-b border-secondary-foreground/10">
                 <th className="text-left py-3 px-4 text-secondary-foreground font-semibold">Event</th>
+                <th className="text-left py-3 px-4 text-secondary-foreground font-semibold">Brand</th>
                 <th className="text-left py-3 px-4 text-secondary-foreground font-semibold">Format</th>
                 <th className="text-left py-3 px-4 text-secondary-foreground font-semibold">Audience</th>
                 <th className="text-left py-3 px-4 text-secondary-foreground font-semibold">Region</th>
+                <th className="text-left py-3 px-4 text-secondary-foreground font-semibold">Speaker</th>
                 <th className="text-left py-3 px-4 text-secondary-foreground font-semibold">Status</th>
               </tr>
             </thead>
             <tbody>
               {filteredEvents.map((ev) => (
-                <tr key={ev.name} className="border-b border-secondary-foreground/5 hover:bg-secondary-foreground/5 transition-colors">
-                  <td className="py-3 px-4 font-medium text-secondary-foreground">{ev.name}</td>
+                <tr key={`${ev.name}-${ev.city}`} className="border-b border-secondary-foreground/5 hover:bg-secondary-foreground/5 transition-colors">
+                  <td className="py-3 px-4 font-medium text-secondary-foreground">
+                    <div>{ev.name}</div>
+                    <div className="text-[10px] text-secondary-foreground/40">{ev.city} · {ev.quarter}</div>
+                  </td>
+                  <td className="py-3 px-4 text-secondary-foreground/70">{ev.brand || "—"}</td>
                   <td className="py-3 px-4 text-secondary-foreground/70">{ev.format}</td>
                   <td className="py-3 px-4 text-secondary-foreground/70">{ev.audience}</td>
                   <td className="py-3 px-4">
                     <span className="text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary font-medium">{ev.region}</span>
                   </td>
+                  <td className="py-3 px-4 text-secondary-foreground/70">
+                    {ev.hasSpeakingSlot ? (
+                      <span className="text-xs">{ev.speaker || "TBC"}</span>
+                    ) : (
+                      <span className="text-secondary-foreground/30">—</span>
+                    )}
+                  </td>
                   <td className="py-3 px-4">
-                    <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${
-                      ev.status === "upcoming"
+                    <span className={`text-xs px-2.5 py-1 rounded-full font-medium capitalize ${
+                      ev.status === "committed"
                         ? "bg-primary/10 text-primary"
-                        : "bg-success/15 text-success"
+                        : ev.status === "proposed"
+                        ? "bg-amber-500/10 text-amber-600"
+                        : "bg-violet-500/10 text-violet-600"
                     }`}>
-                      {ev.status === "upcoming" ? "Upcoming" : "Completed"}
+                      {ev.status.replace("-", " ")}
                     </span>
                   </td>
                 </tr>

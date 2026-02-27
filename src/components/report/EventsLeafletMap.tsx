@@ -98,8 +98,8 @@ export default function EventsLeafletMap({ filteredEvents }: EventsLeafletMapPro
     const groups = groupEventsByCity(filteredEvents);
 
     groups.forEach((group) => {
-      const hasUpcoming = group.events.some((e) => e.status === "upcoming");
-      const icon = createPulsingIcon(group.events.length, hasUpcoming);
+      const hasCommitted = group.events.some((e) => e.status === "committed");
+      const icon = createPulsingIcon(group.events.length, hasCommitted);
 
       const marker = L.marker([group.lat, group.lng], { icon })
         .on("click", () => {
@@ -190,7 +190,7 @@ function EventGroupPicker({
               className="w-full text-left p-4 rounded-xl border border-secondary-foreground/10 hover:border-primary/40 hover:bg-primary/5 transition-all"
             >
               <div className="flex items-center gap-3">
-                <span className={`w-2 h-2 rounded-full ${ev.status === "upcoming" ? "bg-primary" : "bg-success"}`} />
+                <span className={`w-2 h-2 rounded-full ${ev.status === "committed" ? "bg-primary" : ev.status === "proposed" ? "bg-amber-500" : "bg-success"}`} />
                 <div>
                   <p className="font-semibold text-secondary-foreground text-sm">{ev.name}</p>
                   <p className="text-xs text-secondary-foreground/60">{ev.format} · {ev.quarter}</p>
