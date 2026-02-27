@@ -17,18 +17,18 @@ const statusBg: Record<Status, string> = {
 
 // Funnel circle sizes: biggest at top, smallest at bottom
 const stageCircleR: Record<string, number> = {
-  "Awareness": 36,
-  "Consideration": 28,
-  "Conversion": 22,
-  "Service & Loyalty": 18,
+  "Awareness": 42,
+  "Consideration": 34,
+  "Conversion": 26,
+  "Service & Loyalty": 20,
 };
 
 // More spacing for top-of-funnel stages
 const stageBottomGap: Record<string, number> = {
-  "Awareness": 36,
-  "Consideration": 28,
-  "Conversion": 20,
-  "Service & Loyalty": 10,
+  "Awareness": 44,
+  "Consideration": 34,
+  "Conversion": 24,
+  "Service & Loyalty": 12,
 };
 
 interface Row {
@@ -61,23 +61,24 @@ export default function PerformanceResults() {
   const { stages, rows } = buildRows();
   const [hovered, setHovered] = useState<string | null>(null);
 
-  // Layout — shifted left
-  const metricPillH = 20;
-  const metricGap = 4;
-  const rowPadding = 8;
-  const rowGap = 14;
-  const spineX = 160;
+  // Layout — expanded to use more space
+  const metricPillH = 28;
+  const metricGap = 6;
+  const rowPadding = 10;
+  const rowGap = 18;
+  const spineX = 180;
   const branchStartX = spineX + 2;
-  const channelX = spineX + 70;
-  const channelPillW = 145;
-  const metricX = channelX + channelPillW + 10;
-  const compX = metricX + 165;
-  const totalW = compX + 130;
+  const channelX = spineX + 80;
+  const channelPillW = 175;
+  const metricX = channelX + channelPillW + 14;
+  const metricPillW = 175;
+  const compX = metricX + metricPillW + 14;
+  const totalW = compX + 160;
 
   // Helper: row height based on metric count
   const getRowH = (row: Row) => {
     const metricsH = row.metrics.length * metricPillH + (row.metrics.length - 1) * metricGap;
-    return Math.max(36, metricsH + rowPadding * 2);
+    return Math.max(44, metricsH + rowPadding * 2);
   };
 
   // Compute Y positions
@@ -160,11 +161,11 @@ export default function PerformanceResults() {
                   <g key={block.label}>
                     {/* Stage label */}
                     <text
-                      x={spineX - block.circleR - 14}
+                      x={spineX - block.circleR - 16}
                       y={block.centerY}
                       textAnchor="end"
                       dominantBaseline="central"
-                      fontSize={14}
+                      fontSize={16}
                       fontWeight={700}
                       fill="hsl(var(--primary))"
                       opacity={dimmed && !anyHoveredInStage ? 0.2 : 1}
@@ -220,10 +221,10 @@ export default function PerformanceResults() {
                           {/* Channel pill */}
                           <rect
                             x={channelX}
-                            y={rowMidY - 12}
+                            y={rowMidY - 16}
                             width={channelPillW}
-                            height={24}
-                            rx={12}
+                            height={32}
+                            rx={16}
                             fill="rgba(255,255,255,0.06)"
                             stroke="rgba(255,255,255,0.12)"
                             strokeWidth={1}
@@ -233,7 +234,7 @@ export default function PerformanceResults() {
                             y={rowMidY}
                             textAnchor="middle"
                             dominantBaseline="central"
-                            fontSize={11}
+                            fontSize={13}
                             fontWeight={600}
                             className="fill-foreground"
                           >
@@ -274,19 +275,19 @@ export default function PerformanceResults() {
                                 <rect
                                   x={metricX}
                                   y={pillY}
-                                  width={145}
+                                  width={metricPillW}
                                   height={metricPillH}
-                                  rx={10}
+                                  rx={14}
                                   fill={statusBg[row.status]}
                                   stroke={statusFill[row.status]}
                                   strokeWidth={1}
                                 />
                                 <text
-                                  x={metricX + 72}
+                                  x={metricX + metricPillW / 2}
                                   y={pillMidY}
                                   textAnchor="middle"
                                   dominantBaseline="central"
-                                  fontSize={10}
+                                  fontSize={12}
                                   fontWeight={600}
                                   fill={statusFill[row.status]}
                                 >
@@ -302,7 +303,7 @@ export default function PerformanceResults() {
                               x={compX}
                               y={rowMidY}
                               dominantBaseline="central"
-                              fontSize={11}
+                              fontSize={13}
                               fontWeight={600}
                               fill={row.status === "good" ? "hsl(var(--success))" : row.status === "below" ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))"}
                             >
