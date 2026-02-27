@@ -16,7 +16,7 @@ function formatK(v: number) {
 /* ── Timeline: stacked area chart ── */
 function ImpressionsTimeline() {
   return (
-    <ResponsiveContainer width="100%" height={260}>
+    <ResponsiveContainer width="100%" height={340}>
       <AreaChart data={linkedInMonthlyData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
         <XAxis dataKey="month" tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} interval={5} />
@@ -126,7 +126,7 @@ function EngagementHeatmap() {
 /* ── Organic vs Sponsored quarterly bar chart ── */
 function OrgVsSponsoredChart() {
   return (
-    <ResponsiveContainer width="100%" height={260}>
+    <ResponsiveContainer width="100%" height={340}>
       <BarChart data={linkedInQuarterlyData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
         <XAxis dataKey="quarter" tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} />
@@ -217,7 +217,7 @@ export default function LinkedInSection() {
         <p className="text-muted-foreground mb-8">{d.subtitle}</p>
 
         <div className="grid lg:grid-cols-2 gap-10">
-          {/* Left — Info */}
+          {/* Left — Info + Focus boxes */}
           <div className="space-y-6">
             <p className="text-sm leading-relaxed text-muted-foreground">{d.description}</p>
 
