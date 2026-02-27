@@ -269,7 +269,7 @@ export function NorthAmericaExtra() {
       {[d.searchAppearances, ...d.pageRankKPIs].map((kpi: any) => (
         <div key={kpi.label} className="text-center">
           <span className="text-2xl font-extrabold text-foreground">{kpi.value}</span>
-          <span className="kpi-pill-good text-xs px-2 py-0.5 rounded-full block mt-1 mx-auto w-fit">{kpi.label}</span>
+          <span className="kpi-pill-good block mt-1 mx-auto w-fit">{kpi.label}</span>
           <span className="stat-positive block mt-1 text-xs">{kpi.comparison}</span>
         </div>
       ))}
