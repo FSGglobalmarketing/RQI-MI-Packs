@@ -1,6 +1,5 @@
 import { reportData } from "@/data/igneo-report";
 import frontCover from "@/assets/front-cover-q4.jpg";
-import LiquidGlass from "liquid-glass-react";
 
 export default function HeroSection() {
   const d = reportData;
@@ -27,17 +26,8 @@ export default function HeroSection() {
             <p className="text-2xl font-bold text-primary">{d.tagline}</p>
           </div>
 
-          <div className="animate-slide-up flex items-center" style={{ animationDelay: "0.2s" }}>
-            {/* Liquid glass card */}
-            <LiquidGlass
-              overLight={false}
-              blurAmount={0.05}
-              saturation={160}
-              displacementScale={50}
-              cornerRadius={20}
-              padding="24px"
-              className="space-y-4 w-full"
-            >
+          <div className="animate-slide-up flex items-center justify-end" style={{ animationDelay: "0.2s" }}>
+            <div className="hero-glass-card space-y-4 w-full max-w-sm">
               <h3 className="text-sm font-semibold text-foreground/60 uppercase tracking-wider">Report Details</h3>
               <div>
                 <p className="text-sm text-foreground/50">Data period</p>
@@ -47,11 +37,11 @@ export default function HeroSection() {
                 <p className="text-sm text-foreground/50">Sources</p>
                 <div className="flex flex-wrap gap-2 mt-1">
                   {d.dataSources.map((s) => (
-                    <span key={s} className="text-xs px-2.5 py-1 rounded-full bg-foreground/10 text-foreground/70 backdrop-blur-sm">{s}</span>
+                    <span key={s} className="glass-pill-dark">{s}</span>
                   ))}
                 </div>
               </div>
-            </LiquidGlass>
+            </div>
           </div>
         </div>
       </div>
