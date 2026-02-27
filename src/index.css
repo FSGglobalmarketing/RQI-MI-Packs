@@ -633,7 +633,6 @@
 /* Base pattern positioning */
 .topo-pattern {
   position: relative;
-  overflow: hidden;
 }
 
 /* Cream sections: topographic map (dark lines on light bg) */
@@ -644,15 +643,11 @@
   background-image: url('/patterns/topographic-map-pos.png');
   background-size: 800px 800px;
   background-repeat: repeat;
-  opacity: 0.12;
+  opacity: 0.18;
   pointer-events: none;
   z-index: 0;
-  -webkit-mask-image: radial-gradient(ellipse at 20% 20%, black 0%, transparent 60%),
-                      radial-gradient(ellipse at 80% 80%, black 0%, transparent 60%);
-  -webkit-mask-composite: source-over;
-  mask-image: radial-gradient(ellipse at 20% 20%, black 0%, transparent 60%),
-              radial-gradient(ellipse at 80% 80%, black 0%, transparent 60%);
-  mask-composite: add;
+  -webkit-mask-image: linear-gradient(180deg, black 0%, transparent 85%);
+  mask-image: linear-gradient(180deg, black 0%, transparent 85%);
 }
 
 /* Dark sections: topographic map (light lines on dark bg) */
@@ -663,15 +658,11 @@
   background-image: url('/patterns/topographic-map-rev.png');
   background-size: 800px 800px;
   background-repeat: repeat;
-  opacity: 0.08;
+  opacity: 0.12;
   pointer-events: none;
   z-index: 0;
-  -webkit-mask-image: radial-gradient(ellipse at 20% 20%, black 0%, transparent 60%),
-                      radial-gradient(ellipse at 80% 80%, black 0%, transparent 60%);
-  -webkit-mask-composite: source-over;
-  mask-image: radial-gradient(ellipse at 20% 20%, black 0%, transparent 60%),
-              radial-gradient(ellipse at 80% 80%, black 0%, transparent 60%);
-  mask-composite: add;
+  -webkit-mask-image: linear-gradient(180deg, black 0%, transparent 85%);
+  mask-image: linear-gradient(180deg, black 0%, transparent 85%);
 }
 
 /* Giant's Causeway hexagon pattern - cream sections */
@@ -682,11 +673,11 @@
   background-image: url('/patterns/giants-causeway-pos.png');
   background-size: 600px 600px;
   background-repeat: repeat;
-  opacity: 0.08;
+  opacity: 0.15;
   pointer-events: none;
   z-index: 0;
-  -webkit-mask-image: radial-gradient(ellipse at 70% 30%, black 0%, transparent 55%);
-  mask-image: radial-gradient(ellipse at 70% 30%, black 0%, transparent 55%);
+  -webkit-mask-image: linear-gradient(135deg, black 0%, transparent 70%);
+  mask-image: linear-gradient(135deg, black 0%, transparent 70%);
 }
 
 /* Giant's Causeway hexagon pattern - dark sections */
@@ -697,11 +688,11 @@
   background-image: url('/patterns/giants-causeway-rev.png');
   background-size: 600px 600px;
   background-repeat: repeat;
-  opacity: 0.06;
+  opacity: 0.1;
   pointer-events: none;
   z-index: 0;
-  -webkit-mask-image: radial-gradient(ellipse at 70% 30%, black 0%, transparent 55%);
-  mask-image: radial-gradient(ellipse at 70% 30%, black 0%, transparent 55%);
+  -webkit-mask-image: linear-gradient(135deg, black 0%, transparent 70%);
+  mask-image: linear-gradient(135deg, black 0%, transparent 70%);
 }
 
 /* Pumice stone organic pattern - cream sections */
@@ -712,11 +703,11 @@
   background-image: url('/patterns/pumice-stone-pos.png');
   background-size: 700px 700px;
   background-repeat: repeat;
-  opacity: 0.1;
+  opacity: 0.15;
   pointer-events: none;
   z-index: 0;
-  -webkit-mask-image: radial-gradient(ellipse at 30% 70%, black 0%, transparent 55%);
-  mask-image: radial-gradient(ellipse at 30% 70%, black 0%, transparent 55%);
+  -webkit-mask-image: linear-gradient(315deg, black 0%, transparent 70%);
+  mask-image: linear-gradient(315deg, black 0%, transparent 70%);
 }
 
 /* Pumice stone organic pattern - dark sections */
@@ -727,11 +718,11 @@
   background-image: url('/patterns/pumice-stone-rev.png');
   background-size: 700px 700px;
   background-repeat: repeat;
-  opacity: 0.06;
+  opacity: 0.08;
   pointer-events: none;
   z-index: 0;
-  -webkit-mask-image: radial-gradient(ellipse at 30% 70%, black 0%, transparent 55%);
-  mask-image: radial-gradient(ellipse at 30% 70%, black 0%, transparent 55%);
+  -webkit-mask-image: linear-gradient(315deg, black 0%, transparent 70%);
+  mask-image: linear-gradient(315deg, black 0%, transparent 70%);
 }
 
 /* ── Flow Device ── */
@@ -742,18 +733,22 @@
 }
 
 /* Section-level flow device: asymmetric curve — rounded left, swept up right */
+/* Cream sections sit ON TOP of previous dark sections */
 .flow-section-cream {
   position: relative;
-  margin-top: -40px;
-  padding-top: calc(40px + 5rem);
-  border-radius: 80px 0 0 0;
+  margin-top: -60px;
+  padding-top: calc(60px + 5rem);
+  border-radius: 0 80px 0 0;
+  z-index: 1;
 }
 
+/* Dark sections sit ON TOP of previous cream sections */
 .flow-section-dark {
   position: relative;
-  margin-top: -40px;
-  padding-top: calc(40px + 5rem);
-  border-radius: 80px 0 0 0;
+  margin-top: -60px;
+  padding-top: calc(60px + 5rem);
+  border-radius: 0 80px 0 0;
+  z-index: 1;
 }
 
 /* Single rounded corner variants (for call-outs, containers) */
