@@ -7,6 +7,7 @@ import SearchVisibility from "@/components/report/SearchVisibility";
 import { CampaignSection, CampaignChartPage, NorthAmericaChart, NorthAmericaExtra, DACHCharts, UKNordicsChart, UKNordicsLearnings } from "@/components/report/CampaignSection";
 import DACHPhoneShowcase from "@/components/report/DACHPhoneShowcase";
 import AlwaysOnSection from "@/components/report/AlwaysOnSection";
+import LinkedInSection from "@/components/report/LinkedInSection";
 import PodcastSection from "@/components/report/PodcastSection";
 import EventsSection from "@/components/report/EventsSection";
 import IPhoneMockup from "@/components/report/IPhoneMockup";
@@ -94,18 +95,7 @@ const Index = () => {
         variant="cream"
       />
 
-      <AlwaysOnSection
-        id="linkedin"
-        title={d.linkedin.title}
-        stage={d.linkedin.stage}
-        subtitle={d.linkedin.subtitle}
-        description={d.linkedin.description}
-        kpis={d.linkedin.kpis}
-        focusQ4={d.linkedin.focusQ4}
-        focusQ1={d.linkedin.focusQ1}
-        variant="dark"
-        activities={d.linkedin.activities}
-      />
+      <LinkedInSection />
 
       <PodcastSection />
       <EventsSection />
