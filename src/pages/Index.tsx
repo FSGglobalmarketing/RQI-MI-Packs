@@ -94,6 +94,9 @@ const Index = () => {
         focusQ4={d.website.focusQ4}
         focusQ1={d.website.focusQ1}
         variant="cream"
+        gaMonthly={d.website.gaMonthly}
+        topPages={d.website.topPages}
+        trafficSources={d.website.trafficSources}
       />
 
       <LinkedInSection />

@@ -76,18 +76,18 @@ function EngagementHeatmap() {
   }
 
   return (
-    <div>
-      <div className="flex gap-1">
+    <div className="flex flex-col items-center">
+      <div className="flex gap-1 w-full justify-center">
         <div className="flex flex-col gap-1 mr-1 pt-5">
           {dayLabels.map((d, i) => (
-            <div key={i} className="h-4 w-4 flex items-center justify-center text-[8px] text-muted-foreground">{d}</div>
+            <div key={i} className="h-5 w-5 flex items-center justify-center text-[9px] text-muted-foreground">{d}</div>
           ))}
         </div>
         <div className="flex gap-1 overflow-x-auto">
           {weeks.map((week) => (
             <div key={week.week} className="flex flex-col gap-1">
               {/* Month label on first week */}
-              <div className="h-4 text-[8px] text-muted-foreground text-center">
+              <div className="h-5 text-[9px] text-muted-foreground text-center">
                 {week.cells[0]?.date
                   ? new Date(week.cells[0].date).getDate() <= 7
                     ? new Date(week.cells[0].date).toLocaleDateString("en", { month: "short" })
@@ -96,11 +96,11 @@ function EngagementHeatmap() {
               </div>
               {Array.from({ length: 7 }, (_, dayIndex) => {
                 const cell = week.cells.find((c) => c.day === dayIndex);
-                if (!cell || !cell.date) return <div key={dayIndex} className="h-4 w-4 rounded-sm bg-muted/30" />;
+                if (!cell || !cell.date) return <div key={dayIndex} className="h-5 w-5 rounded-sm bg-muted/30" />;
                 return (
                   <div
                     key={dayIndex}
-                    className="h-4 w-4 rounded-sm cursor-default transition-transform hover:scale-125"
+                    className="h-5 w-5 rounded-sm cursor-default transition-transform hover:scale-125"
                     style={{ backgroundColor: getColor(cell.rate) }}
                     title={`${cell.date}: ${cell.rate.toFixed(2)}%`}
                   />
@@ -110,10 +110,10 @@ function EngagementHeatmap() {
           ))}
         </div>
       </div>
-      <div className="flex items-center gap-2 mt-3 justify-end">
+      <div className="flex items-center gap-2 mt-4 justify-center">
         <span className="text-[9px] text-muted-foreground">Less</span>
         {[0, 1.5, 3, 5, 7].map((v) => (
-          <div key={v} className="h-3 w-3 rounded-sm" style={{ backgroundColor: getColor(v) }} />
+          <div key={v} className="h-3.5 w-3.5 rounded-sm" style={{ backgroundColor: getColor(v) }} />
         ))}
         <span className="text-[9px] text-muted-foreground">More</span>
       </div>
