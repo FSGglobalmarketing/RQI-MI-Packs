@@ -15,6 +15,7 @@ import SplashScreen from "@/components/report/SplashScreen";
 import { reportData } from "@/data/igneo-report";
 import railImage from "@/assets/rail-to-runway-us-backbone.jpg";
 import naScrollImage from "@/assets/na-campaign-scroll.webp";
+import igneoLogo from "@/assets/igneo-footer-logo.svg";
 
 const Index = () => {
   const [showSplash, setShowSplash] = useState(true);
@@ -100,9 +101,10 @@ const Index = () => {
       <PodcastSection />
       <EventsSection />
 
-      <footer className="section-dark py-8 border-t border-border">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-muted-foreground">
-          <p>{d.brandFull} · {d.quarter} Marketing Impact Report · Internal Use</p>
+      <footer className="section-dark py-10 border-t border-border">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-4">
+          <img src={igneoLogo} alt="Igneo Infrastructure Partners" className="h-8 opacity-80" />
+          <p className="text-xs text-muted-foreground">{d.quarter} Marketing Impact Report · Internal Use</p>
         </div>
       </footer>
     </div>

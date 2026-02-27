@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import igneoLogo from "@/assets/igneo-footer-logo.svg";
 
 const navItems = [
   { id: "overview", label: "Overview" },
@@ -42,9 +43,7 @@ export default function ReportNav() {
     >
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <span className="text-lg font-bold tracking-tight text-foreground">
-            igneo <span className="text-xs font-normal text-muted-foreground ml-1">Infrastructure Partners</span>
-          </span>
+          <img src={igneoLogo} alt="Igneo Infrastructure Partners" className="h-7" />
 
           {/* Desktop nav */}
           <div className="hidden lg:flex items-center gap-1">
