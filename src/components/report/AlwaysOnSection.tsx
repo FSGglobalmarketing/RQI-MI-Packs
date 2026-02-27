@@ -59,7 +59,7 @@ function UsersSessionsChart({ data, variant }: { data: GaMonthlyItem[]; variant:
   const tickFill = isDark ? "hsl(195 15% 65%)" : "#64748b";
 
   return (
-    <ResponsiveContainer width="100%" height={260}>
+    <ResponsiveContainer width="100%" height={340}>
       <AreaChart data={data} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
         <XAxis dataKey="month" tick={{ fontSize: 9, fill: tickFill }} />
