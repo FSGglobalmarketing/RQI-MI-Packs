@@ -1,3 +1,26 @@
+export interface EventTeamMember {
+  name: string;
+  role: string;
+  avatar?: string; // URL or placeholder
+}
+
+export interface EventItem {
+  name: string;
+  format: string;
+  audience: string;
+  region: string;
+  quarter: string;
+  status: "past" | "upcoming";
+  category: string; // e.g. "Conference", "Roundtable", "Site Tour", "Luncheon"
+  city: string;
+  lat: number;
+  lng: number;
+  description?: string;
+  eventUrl?: string;
+  images?: string[]; // placeholder slots for user uploads
+  team?: EventTeamMember[];
+}
+
 export const reportData = {
   brand: "Igneo",
   brandFull: "Igneo Infrastructure Partners",
@@ -242,11 +265,150 @@ export const reportData = {
     title: "Events",
     stage: "Conversion",
     list: [
-      { name: "PEI Singapore", format: "Conference", audience: "Institutional", region: "Asia", quarter: "Q4" },
-      { name: "CPERI", format: "Site tour", audience: "Clients", region: "ANZ", quarter: "Q4" },
-      { name: "Titan Investors", format: "Roundtable / Dinner", audience: "Institutional", region: "EMEA", quarter: "Q4" },
-      { name: "European roundtable (Syd)", format: "Luncheon", audience: "Institutional", region: "ANZ", quarter: "Q4" },
-      { name: "European roundtable (Mel)", format: "Luncheon", audience: "Institutional", region: "ANZ", quarter: "Q4" },
-    ],
+      {
+        name: "PEI Singapore",
+        format: "Conference",
+        audience: "Institutional",
+        region: "Asia",
+        quarter: "Q4",
+        status: "past" as const,
+        category: "Conference",
+        city: "Singapore",
+        lat: 1.3521,
+        lng: 103.8198,
+        description: "Annual infrastructure investment conference bringing together institutional investors and fund managers across Asia-Pacific.",
+        images: [],
+        team: [
+          { name: "James Chen", role: "Head of Asia Pacific" },
+          { name: "Sarah Lim", role: "Investor Relations" },
+        ],
+      },
+      {
+        name: "CPERI",
+        format: "Site tour",
+        audience: "Clients",
+        region: "ANZ",
+        quarter: "Q4",
+        status: "past" as const,
+        category: "Site Tour",
+        city: "Sydney",
+        lat: -33.8688,
+        lng: 151.2093,
+        description: "Exclusive site tour of portfolio assets for existing clients, showcasing infrastructure operations first-hand.",
+        images: [],
+        team: [
+          { name: "Michael Torres", role: "Portfolio Director" },
+          { name: "Emma Wilson", role: "Client Relations Manager" },
+        ],
+      },
+      {
+        name: "Titan Investors",
+        format: "Roundtable / Dinner",
+        audience: "Institutional",
+        region: "EMEA",
+        quarter: "Q4",
+        status: "past" as const,
+        category: "Roundtable",
+        city: "London",
+        lat: 51.5074,
+        lng: -0.1278,
+        description: "Intimate roundtable dinner with senior institutional investors discussing European infrastructure opportunities and market outlook.",
+        images: [],
+        team: [
+          { name: "David Harper", role: "Managing Director, EMEA" },
+          { name: "Anna Müller", role: "Senior Investment Manager" },
+        ],
+      },
+      {
+        name: "European roundtable (Syd)",
+        format: "Luncheon",
+        audience: "Institutional",
+        region: "ANZ",
+        quarter: "Q4",
+        status: "past" as const,
+        category: "Luncheon",
+        city: "Sydney",
+        lat: -33.8688,
+        lng: 151.2093,
+        description: "A curated luncheon for Australian institutional investors exploring European infrastructure allocations.",
+        images: [],
+        team: [
+          { name: "Michael Torres", role: "Portfolio Director" },
+          { name: "Olivia Brown", role: "Head of Distribution, ANZ" },
+        ],
+      },
+      {
+        name: "European roundtable (Mel)",
+        format: "Luncheon",
+        audience: "Institutional",
+        region: "ANZ",
+        quarter: "Q4",
+        status: "past" as const,
+        category: "Luncheon",
+        city: "Melbourne",
+        lat: -37.8136,
+        lng: 144.9631,
+        description: "Melbourne-based luncheon focused on European infrastructure investment themes for institutional allocators.",
+        images: [],
+        team: [
+          { name: "Olivia Brown", role: "Head of Distribution, ANZ" },
+          { name: "James Chen", role: "Head of Asia Pacific" },
+        ],
+      },
+      // Upcoming events
+      {
+        name: "Infrastructure Investor Global Summit",
+        format: "Conference",
+        audience: "Institutional",
+        region: "EMEA",
+        quarter: "Q1 2026",
+        status: "upcoming" as const,
+        category: "Conference",
+        city: "Berlin",
+        lat: 52.52,
+        lng: 13.405,
+        description: "Major annual gathering of infrastructure investors, managers and advisors from around the world.",
+        images: [],
+        team: [
+          { name: "David Harper", role: "Managing Director, EMEA" },
+          { name: "Anna Müller", role: "Senior Investment Manager" },
+        ],
+      },
+      {
+        name: "AVCJ Private Equity Forum",
+        format: "Conference",
+        audience: "Institutional",
+        region: "Asia",
+        quarter: "Q1 2026",
+        status: "upcoming" as const,
+        category: "Conference",
+        city: "Hong Kong",
+        lat: 22.3193,
+        lng: 114.1694,
+        description: "Asia's premier private equity and venture capital conference attracting top-tier institutional investors.",
+        images: [],
+        team: [
+          { name: "James Chen", role: "Head of Asia Pacific" },
+          { name: "Sarah Lim", role: "Investor Relations" },
+        ],
+      },
+      {
+        name: "Nordic Infrastructure Roundtable",
+        format: "Roundtable",
+        audience: "Institutional",
+        region: "EMEA",
+        quarter: "Q1 2026",
+        status: "upcoming" as const,
+        category: "Roundtable",
+        city: "Stockholm",
+        lat: 59.3293,
+        lng: 18.0686,
+        description: "Exclusive roundtable bringing together Nordic pension funds and sovereign wealth funds to discuss infrastructure allocation strategies.",
+        images: [],
+        team: [
+          { name: "David Harper", role: "Managing Director, EMEA" },
+        ],
+      },
+    ] as EventItem[],
   },
 };
