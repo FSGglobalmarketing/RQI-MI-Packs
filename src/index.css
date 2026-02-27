@@ -664,19 +664,19 @@
   overflow: hidden;
 }
 
-/* Section-level flow device: curved overlap from previous section */
+/* Section-level flow device: asymmetric curve — rounded left, swept up right */
 .flow-section-cream {
   position: relative;
   margin-top: -40px;
-  padding-top: calc(40px + 5rem); /* compensate for negative margin + original py-20 */
-  border-radius: 60px 60px 0 0;
+  padding-top: calc(40px + 5rem);
+  border-radius: 80px 0 0 0;
 }
 
 .flow-section-dark {
   position: relative;
   margin-top: -40px;
   padding-top: calc(40px + 5rem);
-  border-radius: 60px 60px 0 0;
+  border-radius: 80px 0 0 0;
 }
 
 /* Single rounded corner variants (for call-outs, containers) */
