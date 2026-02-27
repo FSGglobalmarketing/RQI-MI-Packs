@@ -5,22 +5,21 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import { Switch } from "@/components/ui/switch";
 import KpiRow from "./KpiRow";
 
-const COMPETITOR_COLOR = "rgba(26, 46, 53, 0.25)";
-
+/* Brand secondary colour hierarchy for chart lines */
 const LINE_CONFIG: { key: string; color: string; width: number; opacity: number }[] = [
-  { key: "Igneo", color: "#e8613a", width: 3, opacity: 1 },
-  { key: "CIP", color: COMPETITOR_COLOR, width: 1.2, opacity: 1 },
-  { key: "Antin", color: COMPETITOR_COLOR, width: 1.2, opacity: 1 },
-  { key: "IFM", color: COMPETITOR_COLOR, width: 1.2, opacity: 1 },
-  { key: "Infravia", color: COMPETITOR_COLOR, width: 1.2, opacity: 1 },
-  { key: "Global Infra", color: COMPETITOR_COLOR, width: 1.2, opacity: 1 },
-  { key: "CVC", color: COMPETITOR_COLOR, width: 1.2, opacity: 1 },
-  { key: "DIF", color: COMPETITOR_COLOR, width: 1.2, opacity: 1 },
-  { key: "KKR", color: COMPETITOR_COLOR, width: 1.2, opacity: 1 },
-  { key: "Blackstone", color: COMPETITOR_COLOR, width: 1.2, opacity: 1 },
-  { key: "Vauban", color: COMPETITOR_COLOR, width: 1.2, opacity: 1 },
-  { key: "Stonepeak", color: COMPETITOR_COLOR, width: 1.2, opacity: 1 },
-  { key: "Ardian", color: COMPETITOR_COLOR, width: 1.2, opacity: 1 },
+  { key: "Igneo", color: "#FF5424", width: 3, opacity: 1 },        // Magma — always
+  { key: "CIP", color: "#506570", width: 1.2, opacity: 0.75 },     // Basalt
+  { key: "Antin", color: "#829199", width: 1.2, opacity: 0.75 },   // Granite
+  { key: "IFM", color: "#214E6F", width: 1.2, opacity: 0.75 },     // Sodalite
+  { key: "Infravia", color: "#29628A", width: 1.2, opacity: 0.75 },// Sapphire
+  { key: "Global Infra", color: "#3A8AC3", width: 1.2, opacity: 0.75 }, // Aquamarine
+  { key: "CVC", color: "#423355", width: 1.2, opacity: 0.75 },     // Amethyst
+  { key: "DIF", color: "#7B7088", width: 1.2, opacity: 0.75 },     // Rhodolite
+  { key: "KKR", color: "#958C9F", width: 1.2, opacity: 0.75 },     // Tanzanite
+  { key: "Blackstone", color: "#6D1800", width: 1.2, opacity: 0.75 }, // Molten
+  { key: "Vauban", color: "#B62800", width: 1.2, opacity: 0.75 },  // Lava
+  { key: "Stonepeak", color: "#052332", width: 1.2, opacity: 0.6 },// Obsidian
+  { key: "Ardian", color: "#506570", width: 1.2, opacity: 0.5 },   // Basalt repeat
 ];
 
 const DATA_KEYS = LINE_CONFIG.map((l) => l.key);
@@ -186,7 +185,7 @@ export default function SearchVisibility() {
           </div>
 
           {/* Right column — chart */}
-          <div className="glass-card-cream">
+          <div className="glass-card-cream flow-corner-br">
             <div className="flex items-start justify-between mb-1">
               <div>
                 <h4 className="text-sm font-bold text-secondary-foreground mb-1">Search engine visibility</h4>
@@ -258,7 +257,7 @@ export default function SearchVisibility() {
 
         {/* Bottom: Focus areas */}
         <div className="grid md:grid-cols-2 gap-6 mt-10">
-          <div className="glass-card-cream">
+          <div className="glass-card-cream flow-corner-bl">
             <p className="text-xs font-bold uppercase tracking-wider text-secondary-foreground/50 mb-4">Areas of focus last quarter</p>
             <ul className="space-y-3">
               {s.focusAreas.map((item) => (
@@ -269,7 +268,7 @@ export default function SearchVisibility() {
               ))}
             </ul>
           </div>
-          <div className="glass-card-cream">
+          <div className="glass-card-cream flow-corner-tr">
             <p className="text-xs font-bold uppercase tracking-wider text-secondary-foreground/50 mb-4">Areas to focus next quarter</p>
             <ul className="space-y-3">
               {s.nextQuarter.map((item) => (

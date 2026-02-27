@@ -26,8 +26,8 @@ function ImpressionsTimeline() {
           labelStyle={{ color: "hsl(14 78% 57%)", fontWeight: 700 }}
           formatter={(value: number, name: string) => [formatK(value), name === "organic" ? "Organic" : "Sponsored"]}
         />
-        <Area type="monotone" dataKey="sponsored" stackId="1" fill="hsl(14 78% 57% / 0.2)" stroke="hsl(14 78% 57% / 0.5)" strokeWidth={1} />
-        <Area type="monotone" dataKey="organic" stackId="1" fill="hsl(14 78% 57%)" stroke="hsl(14 78% 57%)" strokeWidth={2} />
+        <Area type="monotone" dataKey="sponsored" stackId="1" fill="#214E6F" stroke="#29628A" strokeWidth={1} />
+        <Area type="monotone" dataKey="organic" stackId="1" fill="#FF5424" stroke="#FF5424" strokeWidth={2} />
         <Legend
           wrapperStyle={{ fontSize: 10, paddingTop: 8 }}
           formatter={(value: string) => <span style={{ color: "hsl(195 15% 65%)" }}>{value === "organic" ? "Organic" : "Sponsored"}</span>}
@@ -133,8 +133,8 @@ function OrgVsSponsoredChart() {
           contentStyle={{ background: "hsl(195 30% 12%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }}
           formatter={(value: number, name: string) => [formatK(value), name === "organic" ? "Organic" : "Sponsored"]}
         />
-        <Bar dataKey="organic" stackId="a" fill="hsl(14 78% 57%)" radius={[0, 0, 0, 0]} />
-        <Bar dataKey="sponsored" stackId="a" fill="hsl(14 78% 57% / 0.3)" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="organic" stackId="a" fill="#FF5424" radius={[0, 0, 0, 0]} />
+        <Bar dataKey="sponsored" stackId="a" fill="#214E6F" radius={[4, 4, 0, 0]} />
         <Legend
           wrapperStyle={{ fontSize: 10, paddingTop: 8 }}
           formatter={(value: string) => <span style={{ color: "hsl(195 15% 65%)" }}>{value === "organic" ? "Organic" : "Sponsored"}</span>}
@@ -240,7 +240,7 @@ export default function LinkedInSection() {
             )}
 
             <div className="grid grid-cols-2 gap-4">
-              <div className="glass-card-dark">
+              <div className="glass-card-dark flow-corner-bl">
                 <h4 className="text-sm font-bold mb-3 text-foreground">Focus in Q4</h4>
                 <ul className="space-y-2">
                   {d.focusQ4.map((f) => (
@@ -251,7 +251,7 @@ export default function LinkedInSection() {
                   ))}
                 </ul>
               </div>
-              <div className="glass-card-dark">
+              <div className="glass-card-dark flow-corner-tr">
                 <h4 className="text-sm font-bold mb-3 text-foreground">Focus in Q1</h4>
                 <ul className="space-y-2">
                   {d.focusQ1.map((f) => (
@@ -265,7 +265,7 @@ export default function LinkedInSection() {
           </div>
 
           {/* Right — Charts */}
-          <div className="glass-card-dark">
+          <div className="glass-card-dark flow-corner-br">
             <div className="flex gap-1 mb-4 overflow-x-auto">
               {TABS.map((tab) => (
                 <button

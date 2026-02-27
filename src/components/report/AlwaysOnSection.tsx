@@ -56,7 +56,7 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
           </div>
 
           <div className="space-y-6">
-            <div className={isDark ? "glass-card-dark" : "glass-card-cream"}>
+            <div className={isDark ? "glass-card-dark flow-corner-bl" : "glass-card-cream flow-corner-bl"}>
               <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Areas of focus in Q4</h4>
               <ul className="space-y-2">
                 {focusQ4.map((f) => (
@@ -68,7 +68,7 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
               </ul>
             </div>
 
-            <div className={isDark ? "glass-card-dark" : "glass-card-cream"}>
+            <div className={isDark ? "glass-card-dark flow-corner-tr" : "glass-card-cream flow-corner-tr"}>
               <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Areas to focus in Q1</h4>
               <ul className="space-y-2">
                 {focusQ1.map((f) => (

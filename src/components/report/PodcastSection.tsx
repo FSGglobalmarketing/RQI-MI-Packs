@@ -181,7 +181,7 @@ export default function PodcastSection() {
           </div>
 
           {/* Right — Tabbed charts */}
-          <div className="glass-card-dark">
+          <div className="glass-card-dark flow-corner-br">
             <div className="flex gap-1 mb-4 overflow-x-auto">
               {TABS.map((tab) => (
                 <button
