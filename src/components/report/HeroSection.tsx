@@ -4,7 +4,7 @@ import frontCover from "@/assets/front-cover-q4.jpg";
 export default function HeroSection() {
   const d = reportData;
   return (
-    <section id="overview" className="section-dark relative min-h-[80vh] flex items-center pt-20 pb-16 overflow-hidden">
+    <section id="overview" className="section-dark topo-pattern topo-pattern-dark relative min-h-[80vh] flex items-center pt-20 pb-16 overflow-hidden">
       {/* Background cover image */}
       <div className="absolute inset-0">
         <img
