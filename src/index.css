@@ -736,19 +736,21 @@
 /* Cream sections sit ON TOP of previous dark sections */
 .flow-section-cream {
   position: relative;
-  margin-top: -60px;
-  padding-top: calc(60px + 5rem);
-  border-radius: 0 80px 0 0;
+  margin-top: -100px;
+  padding-top: calc(100px + 5rem);
+  border-radius: 0 200px 0 0;
   z-index: 1;
+  overflow: hidden;
 }
 
 /* Dark sections sit ON TOP of previous cream sections */
 .flow-section-dark {
   position: relative;
-  margin-top: -60px;
-  padding-top: calc(60px + 5rem);
-  border-radius: 0 80px 0 0;
+  margin-top: -100px;
+  padding-top: calc(100px + 5rem);
+  border-radius: 0 200px 0 0;
   z-index: 1;
+  overflow: hidden;
 }
 
 /* Single rounded corner variants (for call-outs, containers) */
