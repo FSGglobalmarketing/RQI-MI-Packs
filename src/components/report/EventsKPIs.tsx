@@ -34,15 +34,15 @@ export default function EventsKPIs({ events }: EventsKPIsProps) {
       .map(([name, value]) => ({ name, value }))
       .sort((a, b) => b.value - a.value);
 
-    // Spend by brand (normalized to AUD rough equivalent)
-    const brandSpend: Record<string, number> = {};
+    // Spend by region
+    const regionSpend: Record<string, number> = {};
     events.forEach((e) => {
-      if (e.sponsorshipCost && e.brand) {
+      if (e.sponsorshipCost) {
         const multiplier = e.currency === "GBP" ? 1.95 : e.currency === "EUR" ? 1.65 : e.currency === "CAD" ? 1.1 : 1;
-        brandSpend[e.brand] = (brandSpend[e.brand] || 0) + Math.round(e.sponsorshipCost * multiplier);
+        regionSpend[e.region] = (regionSpend[e.region] || 0) + Math.round(e.sponsorshipCost * multiplier);
       }
     });
-    const spendData = Object.entries(brandSpend)
+    const spendData = Object.entries(regionSpend)
       .map(([name, value]) => ({ name, value }))
       .sort((a, b) => b.value - a.value);
 
@@ -58,7 +58,7 @@ export default function EventsKPIs({ events }: EventsKPIsProps) {
     const monthlyData = monthNames.map((name, i) => ({ name, events: monthCounts[i] }));
 
     // Total estimated spend
-    const totalSpend = Object.values(brandSpend).reduce((a, b) => a + b, 0);
+    const totalSpend = Object.values(regionSpend).reduce((a, b) => a + b, 0);
 
     return { speakingRatio, withSpeaking, audienceData, spendData, monthlyData, totalSpend };
   }, [events]);

@@ -32,7 +32,7 @@ export default function EventDetailModal({ event, onClose }: EventDetailModalPro
               }`}>
                 {event.status.replace("-", " ")}
               </span>
-              {event.brand && <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-secondary-foreground/8 text-secondary-foreground/60">{event.brand}</span>}
+              {event.assetClass && <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-secondary-foreground/8 text-secondary-foreground/60">{event.assetClass}</span>}
               <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-secondary-foreground/8 text-secondary-foreground/60">
                 {event.category}
               </span>
