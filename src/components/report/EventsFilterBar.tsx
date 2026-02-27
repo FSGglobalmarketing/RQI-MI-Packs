@@ -20,7 +20,7 @@ export default function EventsFilterBar({ events, activeFilters, onToggleFilter,
   const categories = getUniqueValues(events, "category");
   const regions = getUniqueValues(events, "region");
   const quarters = getUniqueValues(events, "quarter");
-  const statuses = ["past", "upcoming"];
+  const statuses = ["committed", "proposed", "proprietary", "distribution-owned"];
 
   const hasActiveFilters = Object.values(activeFilters).some((arr) => arr.length > 0);
 

@@ -22,12 +22,17 @@ export default function EventDetailModal({ event, onClose }: EventDetailModalPro
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className={`text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full ${
-                event.status === "upcoming"
+                event.status === "committed"
                   ? "bg-primary/15 text-primary"
+                  : event.status === "proposed"
+                  ? "bg-amber-500/15 text-amber-600"
+                  : event.status === "proprietary"
+                  ? "bg-violet-500/15 text-violet-600"
                   : "bg-success/15 text-success"
               }`}>
-                {event.status === "upcoming" ? "Upcoming" : "Completed"}
+                {event.status.replace("-", " ")}
               </span>
+              {event.brand && <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-secondary-foreground/8 text-secondary-foreground/60">{event.brand}</span>}
               <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-secondary-foreground/8 text-secondary-foreground/60">
                 {event.category}
               </span>
