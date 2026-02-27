@@ -630,31 +630,108 @@
 
 /* ── Brand Patterns ── */
 
-/* Topographic map pattern overlay - use on sections */
+/* Base pattern positioning */
 .topo-pattern {
   position: relative;
+  overflow: hidden;
 }
 
+/* Cream sections: topographic map (dark lines on light bg) */
 .topo-pattern-cream::before {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/patterns/topographic-cream.svg');
-  background-size: 600px 600px;
+  background-image: url('/patterns/topographic-map-pos.png');
+  background-size: 800px 800px;
   background-repeat: repeat;
+  opacity: 0.12;
   pointer-events: none;
   z-index: 0;
+  -webkit-mask-image: radial-gradient(ellipse at 20% 20%, black 0%, transparent 60%),
+                      radial-gradient(ellipse at 80% 80%, black 0%, transparent 60%);
+  -webkit-mask-composite: source-over;
+  mask-image: radial-gradient(ellipse at 20% 20%, black 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 80%, black 0%, transparent 60%);
+  mask-composite: add;
 }
 
+/* Dark sections: topographic map (light lines on dark bg) */
 .topo-pattern-dark::before {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/patterns/topographic-dark.svg');
-  background-size: 600px 600px;
+  background-image: url('/patterns/topographic-map-rev.png');
+  background-size: 800px 800px;
   background-repeat: repeat;
+  opacity: 0.08;
   pointer-events: none;
   z-index: 0;
+  -webkit-mask-image: radial-gradient(ellipse at 20% 20%, black 0%, transparent 60%),
+                      radial-gradient(ellipse at 80% 80%, black 0%, transparent 60%);
+  -webkit-mask-composite: source-over;
+  mask-image: radial-gradient(ellipse at 20% 20%, black 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 80%, black 0%, transparent 60%);
+  mask-composite: add;
+}
+
+/* Giant's Causeway hexagon pattern - cream sections */
+.hex-pattern-cream::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/patterns/giants-causeway-pos.png');
+  background-size: 600px 600px;
+  background-repeat: repeat;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+  -webkit-mask-image: radial-gradient(ellipse at 70% 30%, black 0%, transparent 55%);
+  mask-image: radial-gradient(ellipse at 70% 30%, black 0%, transparent 55%);
+}
+
+/* Giant's Causeway hexagon pattern - dark sections */
+.hex-pattern-dark::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/patterns/giants-causeway-rev.png');
+  background-size: 600px 600px;
+  background-repeat: repeat;
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 0;
+  -webkit-mask-image: radial-gradient(ellipse at 70% 30%, black 0%, transparent 55%);
+  mask-image: radial-gradient(ellipse at 70% 30%, black 0%, transparent 55%);
+}
+
+/* Pumice stone organic pattern - cream sections */
+.pumice-pattern-cream::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/patterns/pumice-stone-pos.png');
+  background-size: 700px 700px;
+  background-repeat: repeat;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 0;
+  -webkit-mask-image: radial-gradient(ellipse at 30% 70%, black 0%, transparent 55%);
+  mask-image: radial-gradient(ellipse at 30% 70%, black 0%, transparent 55%);
+}
+
+/* Pumice stone organic pattern - dark sections */
+.pumice-pattern-dark::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/patterns/pumice-stone-rev.png');
+  background-size: 700px 700px;
+  background-repeat: repeat;
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 0;
+  -webkit-mask-image: radial-gradient(ellipse at 30% 70%, black 0%, transparent 55%);
+  mask-image: radial-gradient(ellipse at 30% 70%, black 0%, transparent 55%);
 }
 
 /* ── Flow Device ── */

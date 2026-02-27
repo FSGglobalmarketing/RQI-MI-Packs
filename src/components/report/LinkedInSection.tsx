@@ -206,7 +206,7 @@ export default function LinkedInSection() {
   const [activeTab, setActiveTab] = useState<Tab>("Timeline");
 
   return (
-    <section id="linkedin" className="section-dark topo-pattern topo-pattern-dark py-20 flow-section-dark relative z-[2]">
+    <section id="linkedin" className="section-dark topo-pattern hex-pattern-dark py-20 flow-section-dark relative z-[2]">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-[1]">
         <div className="flex flex-wrap items-center gap-3 mb-2">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground">{d.title}</h2>
