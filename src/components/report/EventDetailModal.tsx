@@ -16,9 +16,9 @@ export default function EventDetailModal({ event, onClose }: EventDetailModalPro
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative z-[1001] w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-secondary rounded-2xl shadow-2xl border border-secondary-foreground/10">
+      <div className="relative z-[1001] w-full max-w-2xl max-h-[90vh] overflow-y-auto glass-modal">
         {/* Header */}
-        <div className="sticky top-0 z-10 flex items-start justify-between p-6 pb-4 bg-secondary rounded-t-2xl border-b border-secondary-foreground/5">
+        <div className="sticky top-0 z-10 flex items-start justify-between p-6 pb-4 rounded-t-2xl border-b border-secondary-foreground/5">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className={`text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full ${

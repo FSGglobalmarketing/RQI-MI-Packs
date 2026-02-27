@@ -163,93 +163,212 @@
     color: hsl(var(--primary));
   }
 
+  /* ── Liquid Glass: Metric Card (dark sections) ── */
   .metric-card {
     @apply rounded-2xl p-6 transition-all duration-300;
+    position: relative;
+    isolation: isolate;
     background: linear-gradient(
       135deg,
-      hsl(var(--card) / 0.6),
-      hsl(var(--background) / 0.4)
+      hsl(var(--card) / 0.55),
+      hsl(var(--background) / 0.35)
     );
-    backdrop-filter: blur(24px) saturate(1.5);
-    -webkit-backdrop-filter: blur(24px) saturate(1.5);
-    border: 1px solid hsl(var(--foreground) / 0.08);
-    box-shadow:
-      inset 0 1px 0 0 hsl(var(--foreground) / 0.06),
-      inset 0 -1px 0 0 hsl(var(--foreground) / 0.02),
-      0 8px 32px -8px hsl(var(--background) / 0.4);
+    border: 1px solid hsl(var(--foreground) / 0.12);
+    border-radius: 20px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  .metric-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: 20px;
+    box-shadow: inset 0 1px 0 0 hsl(var(--foreground) / 0.1),
+                inset 0 0 20px -5px hsl(var(--foreground) / 0.06);
+    background: hsl(var(--foreground) / 0.03);
+    pointer-events: none;
+  }
+
+  .metric-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 20px;
+    backdrop-filter: blur(20px) saturate(1.6);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6);
   }
 
   .metric-card:hover {
     border-color: hsl(var(--primary) / 0.3);
     transform: translateY(-2px);
-    box-shadow:
-      inset 0 1px 0 0 hsl(var(--foreground) / 0.08),
-      0 12px 40px -10px hsl(var(--primary) / 0.15);
+    box-shadow: 0 12px 40px -10px hsl(var(--primary) / 0.15);
   }
 
-  /* Glass card for dark sections */
+  /* ── Liquid Glass: Dark section cards ── */
   .glass-card-dark {
     @apply rounded-2xl p-6 transition-all duration-300;
+    position: relative;
+    isolation: isolate;
     background: linear-gradient(
       135deg,
-      hsl(var(--card) / 0.5),
-      hsl(var(--muted) / 0.3)
+      hsl(var(--card) / 0.45),
+      hsl(var(--muted) / 0.25)
     );
-    backdrop-filter: blur(24px) saturate(1.5);
-    -webkit-backdrop-filter: blur(24px) saturate(1.5);
-    border: 1px solid hsl(var(--foreground) / 0.08);
-    box-shadow:
-      inset 0 1px 0 0 hsl(var(--foreground) / 0.06),
-      inset 0 -1px 0 0 hsl(var(--foreground) / 0.02),
-      0 8px 32px -8px hsl(var(--background) / 0.4);
+    border: 1px solid hsl(var(--foreground) / 0.1);
+    border-radius: 20px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
   }
 
-  /* Glass card for cream sections */
+  .glass-card-dark::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: 20px;
+    box-shadow: inset 0 1px 0 0 hsl(var(--foreground) / 0.08),
+                inset 0 0 20px -5px hsl(var(--foreground) / 0.05);
+    background: hsl(var(--foreground) / 0.02);
+    pointer-events: none;
+  }
+
+  .glass-card-dark::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 20px;
+    backdrop-filter: blur(20px) saturate(1.6);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  }
+
+  /* ── Liquid Glass: Cream section cards ── */
   .glass-card-cream {
     @apply rounded-2xl p-6 transition-all duration-300;
+    position: relative;
+    isolation: isolate;
     background: linear-gradient(
       135deg,
-      hsl(var(--secondary) / 0.5),
-      hsl(var(--cream) / 0.3)
+      hsl(var(--secondary) / 0.6),
+      hsl(var(--cream) / 0.35)
     );
-    backdrop-filter: blur(24px) saturate(1.5);
-    -webkit-backdrop-filter: blur(24px) saturate(1.5);
-    border: 1px solid hsl(var(--secondary-foreground) / 0.08);
-    box-shadow:
-      inset 0 1px 0 0 hsl(var(--secondary-foreground) / 0.04),
-      inset 0 -1px 0 0 hsl(var(--secondary-foreground) / 0.02),
-      0 8px 32px -8px hsl(var(--secondary-foreground) / 0.06);
+    border: 1px solid hsl(var(--secondary-foreground) / 0.1);
+    border-radius: 20px;
+    box-shadow: 0 6px 24px hsl(var(--secondary-foreground) / 0.06);
   }
 
-  /* Glass pill for format/activity tags */
+  .glass-card-cream::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: 20px;
+    box-shadow: inset 0 1px 0 0 hsl(0 0% 100% / 0.35),
+                inset 0 0 20px -5px hsl(0 0% 100% / 0.15);
+    background: hsl(0 0% 100% / 0.05);
+    pointer-events: none;
+  }
+
+  .glass-card-cream::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 20px;
+    backdrop-filter: blur(20px) saturate(1.6);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  }
+
+  /* ── Liquid Glass: Pills ── */
   .glass-pill-dark {
     @apply text-xs px-4 py-1.5 rounded-full transition-all duration-200;
+    position: relative;
     background: hsl(var(--foreground) / 0.06);
     backdrop-filter: blur(12px) saturate(1.3);
     -webkit-backdrop-filter: blur(12px) saturate(1.3);
-    border: 1px solid hsl(var(--foreground) / 0.1);
+    border: 1px solid hsl(var(--foreground) / 0.12);
     color: hsl(var(--muted-foreground));
+    box-shadow: inset 0 1px 0 0 hsl(var(--foreground) / 0.06);
   }
 
   .glass-pill-cream {
     @apply text-xs px-4 py-1.5 rounded-full transition-all duration-200;
+    position: relative;
     background: hsl(var(--secondary-foreground) / 0.04);
     backdrop-filter: blur(12px) saturate(1.3);
     -webkit-backdrop-filter: blur(12px) saturate(1.3);
-    border: 1px solid hsl(var(--secondary-foreground) / 0.1);
+    border: 1px solid hsl(var(--secondary-foreground) / 0.12);
     color: hsl(var(--secondary-foreground) / 0.7);
+    box-shadow: inset 0 1px 0 0 hsl(0 0% 100% / 0.2);
   }
 
+  /* ── Liquid Glass: Hero card ── */
   .hero-glass-card {
     @apply rounded-2xl p-6;
-    background: hsl(var(--background) / 0.65);
-    backdrop-filter: blur(20px) saturate(1.4);
-    -webkit-backdrop-filter: blur(20px) saturate(1.4);
-    border: 1px solid hsl(var(--foreground) / 0.15);
-    box-shadow:
-      inset 0 1px 0 0 hsl(var(--foreground) / 0.1),
-      inset 0 -1px 0 0 hsl(var(--foreground) / 0.04),
-      0 16px 48px -12px hsl(var(--background) / 0.7);
+    position: relative;
+    isolation: isolate;
+    background: hsl(var(--background) / 0.6);
+    border: 1px solid hsl(var(--foreground) / 0.18);
+    border-radius: 20px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+  }
+
+  .hero-glass-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: 20px;
+    box-shadow: inset 0 1px 0 0 hsl(var(--foreground) / 0.12),
+                inset 0 0 24px -5px hsl(var(--foreground) / 0.08);
+    background: hsl(var(--foreground) / 0.03);
+    pointer-events: none;
+  }
+
+  .hero-glass-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 20px;
+    backdrop-filter: blur(24px) saturate(1.8);
+    -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  }
+
+  /* ── Liquid Glass: Modal cards ── */
+  .glass-modal {
+    position: relative;
+    isolation: isolate;
+    background: linear-gradient(
+      145deg,
+      hsl(var(--secondary) / 0.92),
+      hsl(var(--cream) / 0.88)
+    );
+    border: 1px solid hsl(var(--secondary-foreground) / 0.1);
+    border-radius: 24px;
+    box-shadow: 0 24px 80px -12px rgba(0, 0, 0, 0.35);
+  }
+
+  .glass-modal::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: 24px;
+    box-shadow: inset 0 1px 0 0 hsl(0 0% 100% / 0.4),
+                inset 0 0 30px -5px hsl(0 0% 100% / 0.15);
+    pointer-events: none;
+  }
+
+  .glass-modal::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 24px;
+    backdrop-filter: blur(32px) saturate(1.8);
+    -webkit-backdrop-filter: blur(32px) saturate(1.8);
   }
 
 
