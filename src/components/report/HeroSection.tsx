@@ -1,5 +1,6 @@
 import { reportData } from "@/data/igneo-report";
 import frontCover from "@/assets/front-cover-q4.jpg";
+import LiquidGlass from "liquid-glass-react";
 
 export default function HeroSection() {
   const d = reportData;
@@ -28,7 +29,15 @@ export default function HeroSection() {
 
           <div className="animate-slide-up" style={{ animationDelay: "0.2s" }}>
             {/* Liquid glass card */}
-            <div className="hero-glass-card space-y-4">
+            <LiquidGlass
+              overLight={false}
+              blurAmount={0.05}
+              saturation={160}
+              displacementScale={50}
+              cornerRadius={20}
+              padding="24px"
+              className="space-y-4"
+            >
               <h3 className="text-sm font-semibold text-foreground/60 uppercase tracking-wider">Report Details</h3>
               <div>
                 <p className="text-sm text-foreground/50">Data period</p>
@@ -42,7 +51,7 @@ export default function HeroSection() {
                   ))}
                 </div>
               </div>
-            </div>
+            </LiquidGlass>
           </div>
         </div>
       </div>

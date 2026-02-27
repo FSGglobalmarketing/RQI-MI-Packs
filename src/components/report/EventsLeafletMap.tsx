@@ -3,6 +3,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { reportData, type EventItem } from "@/data/igneo-report";
 import EventDetailModal from "./EventDetailModal";
+import LiquidGlass from "liquid-glass-react";
 
 interface MarkerGroup {
   city: string;
@@ -173,7 +174,15 @@ function EventGroupPicker({
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative z-[1001] w-full max-w-md glass-modal p-6">
+      <LiquidGlass
+        overLight
+        blurAmount={0.04}
+        saturation={150}
+        displacementScale={40}
+        cornerRadius={24}
+        padding="24px"
+        className="relative z-[1001] w-full max-w-md"
+      >
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-bold text-secondary-foreground">
             {group.city} — {group.events.length} Events
@@ -199,7 +208,7 @@ function EventGroupPicker({
             </button>
           ))}
         </div>
-      </div>
+      </LiquidGlass>
     </div>
   );
 }
