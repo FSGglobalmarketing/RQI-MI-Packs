@@ -2,7 +2,6 @@ import { useState } from "react";
 import type { EventItem } from "@/data/igneo-report";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { MapPin, Users, Calendar, Tag, ExternalLink, ChevronLeft, ChevronRight, X } from "lucide-react";
-import LiquidGlass from "liquid-glass-react";
 
 interface EventDetailModalProps {
   event: EventItem;
@@ -17,14 +16,7 @@ export default function EventDetailModal({ event, onClose }: EventDetailModalPro
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <LiquidGlass
-        overLight
-        blurAmount={0.04}
-        saturation={150}
-        displacementScale={40}
-        cornerRadius={24}
-        className="relative z-[1001] w-full max-w-2xl max-h-[90vh] overflow-y-auto"
-      >
+      <div className="glass-modal relative z-[1001] w-full max-w-2xl max-h-[90vh] overflow-y-auto p-0">
         {/* Header */}
         <div className="sticky top-0 z-10 flex items-start justify-between p-6 pb-4 rounded-t-2xl border-b border-secondary-foreground/5">
           <div>
@@ -185,7 +177,7 @@ export default function EventDetailModal({ event, onClose }: EventDetailModalPro
             </p>
           </div>
         )}
-      </LiquidGlass>
+      </div>
     </div>
   );
 }
