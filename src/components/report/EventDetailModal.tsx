@@ -14,9 +14,9 @@ export default function EventDetailModal({ event, onClose }: EventDetailModalPro
   const hasImages = event.images && event.images.length > 0;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-2xl max-h-[90vh] overflow-y-auto glass-card-cream rounded-2xl">
+      <div className="relative z-[1001] w-full max-w-2xl max-h-[90vh] overflow-y-auto glass-card-cream rounded-2xl">
         {/* Header */}
         <div className="sticky top-0 z-10 flex items-start justify-between p-6 pb-4 bg-gradient-to-b from-secondary/90 to-secondary/0 backdrop-blur-sm rounded-t-2xl">
           <div>
@@ -140,7 +140,7 @@ export default function EventDetailModal({ event, onClose }: EventDetailModalPro
 
         {/* Lightbox overlay */}
         {lightboxIndex !== null && hasImages && (
-          <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90" onClick={() => setLightboxIndex(null)}>
+          <div className="fixed inset-0 z-[1100] flex items-center justify-center bg-black/90" onClick={() => setLightboxIndex(null)}>
             <button
               onClick={(e) => { e.stopPropagation(); setLightboxIndex(Math.max(0, lightboxIndex - 1)); }}
               className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white"
