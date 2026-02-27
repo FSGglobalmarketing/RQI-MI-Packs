@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import igneoLogo from "@/assets/igneo-footer-logo.svg";
 
 const facts = [
   "Our team speaks over 30 languages across 3 continents 🌍",
@@ -15,6 +16,17 @@ const facts = [
   "Finerge avoids 1.6 million tonnes of CO₂ every year 🌿",
 ];
 
+const loadingPhrases = [
+  "Spinning up turbines…",
+  "Charging batteries…",
+  "Connecting servers…",
+  "Routing ferry traffic…",
+  "Calibrating solar panels…",
+  "Warming up the grid…",
+  "Laying fibre optic cable…",
+  "Fuelling the portfolio…",
+];
+
 export default function SplashScreen({ onComplete }: { onComplete: () => void }) {
   const [progress, setProgress] = useState(0);
   const [gwValue, setGwValue] = useState("0.0");
@@ -22,6 +34,9 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
   const [factVisible, setFactVisible] = useState(true);
   const [done, setDone] = useState(false);
   const [showSkip, setShowSkip] = useState(false);
+  const [loadingPhrase, setLoadingPhrase] = useState(
+    () => loadingPhrases[Math.floor(Math.random() * loadingPhrases.length)]
+  );
 
   const finish = useCallback(() => {
     setDone(true);
@@ -29,7 +44,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
   }, [onComplete]);
 
   useEffect(() => {
-    const duration = 3400;
+    const duration = 5500; // longer to enjoy the animation
     const step = 16;
     const totalSteps = duration / step;
     const targetGW = 3.2;
@@ -52,33 +67,33 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
         setFactIndex((prev) => (prev + 1) % facts.length);
         setFactVisible(true);
       }, 280);
-    }, 2400);
+    }, 2800);
 
-    const skipTimer = setTimeout(() => setShowSkip(true), 2000);
+    const phraseInterval = setInterval(() => {
+      setLoadingPhrase(loadingPhrases[Math.floor(Math.random() * loadingPhrases.length)]);
+    }, 1800);
+
+    const skipTimer = setTimeout(() => setShowSkip(true), 3000);
 
     return () => {
       clearInterval(interval);
       clearInterval(factInterval);
+      clearInterval(phraseInterval);
       clearTimeout(skipTimer);
     };
   }, [finish]);
 
   return (
-    <div
-      className={`splash-screen ${done ? "splash-done" : ""}`}
-    >
-      {/* Logo */}
+    <div className={`splash-screen ${done ? "splash-done" : ""}`}>
+      {/* Real SVG Logo */}
       <div className="splash-logo">
-        <span className="splash-logo-text">igneo</span>
-        <span className="splash-logo-sub">Infrastructure Partners</span>
+        <img src={igneoLogo} alt="Igneo Infrastructure Partners" className="splash-logo-img" />
       </div>
 
       {/* Infrastructure Scene */}
       <div className="splash-scene">
-        {/* Ground line */}
         <div className="splash-ground" />
 
-        {/* Turbine 1 */}
         <div className="splash-turbine splash-turbine-1">
           <div className="splash-turbine-hub" />
           <div className="splash-turbine-blades">
@@ -89,7 +104,6 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
           <div className="splash-turbine-tower" />
         </div>
 
-        {/* Turbine 2 (smaller, dimmer) */}
         <div className="splash-turbine splash-turbine-2">
           <div className="splash-turbine-hub" />
           <div className="splash-turbine-blades">
@@ -100,7 +114,6 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
           <div className="splash-turbine-tower" />
         </div>
 
-        {/* Ferry */}
         <div className="splash-ferry">
           <div className="splash-ferry-stack" />
           <div className="splash-ferry-cabin" />
@@ -108,7 +121,6 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
           <div className="splash-ferry-wave" />
         </div>
 
-        {/* Solar panels */}
         <div className="splash-solar">
           <div className="splash-solar-panel" />
           <div className="splash-solar-panel" />
@@ -116,7 +128,6 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
           <div className="splash-solar-post" />
         </div>
 
-        {/* Data center */}
         <div className="splash-dc">
           <div className="splash-dc-rack">
             <div className="splash-dc-led splash-dc-led-green" />
@@ -135,14 +146,11 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
       {/* GW Counter */}
       <div className="splash-counter">
         <span className="splash-gw">{gwValue} GW</span>
-        <span className="splash-unit">Assets Under Management</span>
+        <span className="splash-unit">{loadingPhrase}</span>
       </div>
 
       {/* Rotating fact */}
-      <p
-        className="splash-fact"
-        style={{ opacity: factVisible ? 1 : 0 }}
-      >
+      <p className="splash-fact" style={{ opacity: factVisible ? 1 : 0 }}>
         {facts[factIndex]}
       </p>
 
@@ -151,7 +159,6 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
         <div className="splash-bar-fill" style={{ width: `${progress}%` }} />
       </div>
 
-      {/* Skip */}
       {showSkip && (
         <button className="splash-skip" onClick={finish}>
           Skip
