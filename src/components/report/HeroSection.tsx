@@ -27,7 +27,7 @@ export default function HeroSection() {
           </div>
 
           <div className="animate-slide-up flex items-center justify-end" style={{ animationDelay: "0.2s" }}>
-            <div className="hero-glass-card space-y-4 w-full max-w-sm">
+            <div className="hero-glass-card flow-corner-br space-y-4 w-full max-w-sm">
               <h3 className="text-sm font-semibold text-foreground/60 uppercase tracking-wider">Report Details</h3>
               <div>
                 <p className="text-sm text-foreground/50">Data period</p>

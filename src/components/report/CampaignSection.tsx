@@ -231,7 +231,7 @@ export function NorthAmericaChart() {
   const zoom = useChartZoom(allData, "month");
 
   return (
-    <div className="metric-card">
+    <div className="metric-card flow-corner-br">
       <div className="flex items-start justify-between mb-4">
         <div>
           <h4 className="text-sm font-bold text-foreground">Page ranking positions for North American content</h4>
@@ -247,10 +247,10 @@ export function NorthAmericaChart() {
             <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} />
             <Tooltip content={<SortedTooltip />} />
             <Legend wrapperStyle={{ fontSize: 11 }} />
-            <Line type="monotone" dataKey="page1" stroke="#e8613a" strokeWidth={2.5} dot={false} animationDuration={1500} name="Page 1" />
-            <Line type="monotone" dataKey="page2" stroke="#64748b" strokeWidth={2} dot={false} animationDuration={1500} name="Page 2" />
-            <Line type="monotone" dataKey="page3" stroke="#06b6d4" strokeWidth={2} dot={false} animationDuration={1500} name="Page 3" />
-            <Line type="monotone" dataKey="page4" stroke="#cbd5e1" strokeWidth={1.5} dot={false} animationDuration={1500} name="Page 4" />
+            <Line type="monotone" dataKey="page1" stroke="#FF5424" strokeWidth={2.5} dot={false} animationDuration={1500} name="Page 1" />
+            <Line type="monotone" dataKey="page2" stroke="#214E6F" strokeWidth={2} dot={false} animationDuration={1500} name="Page 2" />
+            <Line type="monotone" dataKey="page3" stroke="#29628A" strokeWidth={2} dot={false} animationDuration={1500} name="Page 3" />
+            <Line type="monotone" dataKey="page4" stroke="#3A8AC3" strokeWidth={1.5} dot={false} animationDuration={1500} name="Page 4" />
             {zoom.refAreaLeft !== null && zoom.refAreaRight !== null && (
               <ReferenceArea x1={allData[Math.min(zoom.refAreaLeft, zoom.refAreaRight)]?.month} x2={allData[Math.max(zoom.refAreaLeft, zoom.refAreaRight)]?.month} strokeOpacity={0.3} fill="rgba(232,97,58,0.1)" />
             )}
@@ -278,7 +278,7 @@ export function NorthAmericaExtra() {
 }
 
 /* ── DACH Charts ── */
-const DACH_COLORS = ["#e8613a", "#06b6d4", "#94a3b8", "#64748b"];
+const DACH_COLORS = ["#FF5424", "#214E6F", "#29628A", "#506570"]; // Magma, Sodalite, Sapphire, Basalt
 
 export function DACHCharts() {
   const countries = [
@@ -297,7 +297,7 @@ export function DACHCharts() {
 
   return (
     <>
-      <div className="glass-card-cream">
+      <div className="glass-card-cream flow-corner-bl">
         <h4 className="text-sm font-bold text-secondary-foreground mb-4">Audience by Country</h4>
         <ResponsiveContainer width="100%" height={280}>
           <PieChart>
@@ -310,7 +310,7 @@ export function DACHCharts() {
           </PieChart>
         </ResponsiveContainer>
       </div>
-      <div className="glass-card-cream">
+      <div className="glass-card-cream flow-corner-tr">
         <h4 className="text-sm font-bold text-secondary-foreground mb-4">Top Companies by Ad Views</h4>
         <ResponsiveContainer width="100%" height={280}>
           <BarChart data={companies} layout="vertical">
@@ -318,7 +318,7 @@ export function DACHCharts() {
             <XAxis type="number" tick={{ fontSize: 11, fill: "#64748b" }} />
             <YAxis dataKey="company" type="category" width={120} tick={{ fontSize: 11, fill: "#64748b" }} />
             <Tooltip contentStyle={{ backgroundColor: "#1a2e35", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", color: "#fff" }} />
-            <Bar dataKey="views" fill="#e8613a" radius={[0, 6, 6, 0]} animationDuration={1200} />
+            <Bar dataKey="views" fill="#FF5424" radius={[0, 6, 6, 0]} animationDuration={1200} />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -336,7 +336,7 @@ export function UKNordicsChart() {
   ];
 
   return (
-    <div className="metric-card">
+    <div className="metric-card flow-corner-bl">
       <h4 className="text-sm font-bold text-foreground mb-4">Ad Views vs Clicks to Website</h4>
       <ResponsiveContainer width="100%" height={360}>
         <BarChart data={data}>
@@ -345,8 +345,8 @@ export function UKNordicsChart() {
           <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} />
           <Tooltip content={<SortedTooltip />} />
           <Legend wrapperStyle={{ fontSize: 11 }} />
-          <Bar dataKey="impressions" fill="#06b6d4" radius={[4, 4, 0, 0]} animationDuration={1200} name="Impressions" />
-          <Bar dataKey="clicks" fill="#e8613a" radius={[4, 4, 0, 0]} animationDuration={1200} name="Clicks" />
+          <Bar dataKey="impressions" fill="#214E6F" radius={[4, 4, 0, 0]} animationDuration={1200} name="Impressions" />
+          <Bar dataKey="clicks" fill="#FF5424" radius={[4, 4, 0, 0]} animationDuration={1200} name="Clicks" />
         </BarChart>
       </ResponsiveContainer>
       <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
@@ -359,7 +359,7 @@ export function UKNordicsChart() {
 export function UKNordicsLearnings() {
   const learnings = reportData.campaigns.ukNordics.keyLearnings;
   return (
-    <div className="glass-card-dark border border-foreground/10">
+    <div className="glass-card-dark flow-corner-br border border-foreground/10">
       <h4 className="text-base font-bold text-foreground mb-4 flex items-center gap-2">
         <span className="text-primary">→</span> Key Learnings
       </h4>

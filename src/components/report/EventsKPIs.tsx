@@ -7,13 +7,14 @@ interface EventsKPIsProps {
   events: EventItem[];
 }
 
+/* Brand secondary palette for charts — Igneo always Magma */
 const COLORS = [
-  "hsl(14, 78%, 57%)",   // primary
-  "hsl(142, 60%, 45%)",  // success
-  "hsl(45, 93%, 58%)",   // amber
-  "hsl(262, 52%, 55%)",  // violet
-  "hsl(199, 89%, 48%)",  // sky
-  "hsl(330, 65%, 55%)",  // pink
+  "#FF5424",  // Magma
+  "#214E6F",  // Sodalite
+  "#29628A",  // Sapphire
+  "#3A8AC3",  // Aquamarine
+  "#506570",  // Basalt
+  "#423355",  // Amethyst
 ];
 
 export default function EventsKPIs({ events }: EventsKPIsProps) {
@@ -66,7 +67,7 @@ export default function EventsKPIs({ events }: EventsKPIsProps) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
       {/* Speaking Slots */}
-      <div className="glass-card-cream p-5 rounded-2xl">
+      <div className="glass-card-cream flow-corner-br p-5 rounded-2xl">
         <div className="flex items-center gap-2 mb-3">
           <Mic className="w-4 h-4 text-primary" />
           <h4 className="text-xs font-bold uppercase tracking-wider text-secondary-foreground/50">Speaking Slots</h4>
@@ -97,7 +98,7 @@ export default function EventsKPIs({ events }: EventsKPIsProps) {
       </div>
 
       {/* Audience Mix */}
-      <div className="glass-card-cream p-5 rounded-2xl">
+      <div className="glass-card-cream flow-corner-tl p-5 rounded-2xl">
         <div className="flex items-center gap-2 mb-3">
           <Users className="w-4 h-4 text-primary" />
           <h4 className="text-xs font-bold uppercase tracking-wider text-secondary-foreground/50">Audience Mix</h4>

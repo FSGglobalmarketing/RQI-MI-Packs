@@ -6,26 +6,26 @@
 
 @layer base {
   :root {
-    /* Obsidian - primary dark background */
-    --background: 204 82% 11%;
+    /* Obsidian #052332 - primary dark background */
+    --background: 200 82% 11%;
     --foreground: 20 33% 93%;
 
     /* Card surfaces - slightly lighter Obsidian */
-    --card: 204 70% 9%;
+    --card: 200 70% 9%;
     --card-foreground: 20 33% 93%;
 
-    --popover: 204 70% 9%;
+    --popover: 200 70% 9%;
     --popover-foreground: 20 33% 93%;
 
-    /* Magma - punchy accent, used sparingly */
+    /* Magma #FF5424 - punchy accent, used sparingly */
     --primary: 14 100% 57%;
     --primary-foreground: 0 0% 100%;
 
-    /* Pumice - warm cream background */
+    /* Pumice #F2EBE6 - warm cream background */
     --secondary: 20 33% 93%;
-    --secondary-foreground: 204 82% 11%;
+    --secondary-foreground: 200 82% 11%;
 
-    /* Sodalite tones for muted elements */
+    /* Sodalite #214E6F tones for muted elements */
     --muted: 205 54% 28%;
     --muted-foreground: 205 30% 60%;
 
@@ -50,19 +50,23 @@
 
     /* Pumice */
     --cream: 20 33% 93%;
-    --cream-foreground: 204 82% 11%;
+    --cream-foreground: 200 82% 11%;
 
-    /* Chart secondary palette (brand guidelines hierarchy) */
-    --chart-obsidian: 204 82% 11%;
+    /* Chart secondary palette — exact brand hex conversions */
+    --chart-obsidian: 200 82% 11%;
     --chart-basalt: 200 17% 38%;
     --chart-granite: 200 10% 55%;
+    --chart-molten: 13 100% 21%;
+    --chart-lava: 13 100% 36%;
+    --chart-magma: 14 100% 57%;
     --chart-sodalite: 205 54% 28%;
-    --chart-sapphire: 205 51% 35%;
+    --chart-sapphire: 205 54% 35%;
     --chart-aquamarine: 207 54% 49%;
     --chart-amethyst: 261 26% 26%;
     --chart-rhodolite: 268 10% 48%;
+    --chart-tanzanite: 268 10% 59%;
 
-    --sidebar-background: 204 82% 9%;
+    --sidebar-background: 200 82% 9%;
     --sidebar-foreground: 20 33% 93%;
     --sidebar-primary: 14 100% 57%;
     --sidebar-primary-foreground: 0 0% 100%;
@@ -73,16 +77,16 @@
   }
 
   .dark {
-    --background: 204 82% 11%;
+    --background: 200 82% 11%;
     --foreground: 20 33% 93%;
-    --card: 204 70% 9%;
+    --card: 200 70% 9%;
     --card-foreground: 20 33% 93%;
-    --popover: 204 70% 9%;
+    --popover: 200 70% 9%;
     --popover-foreground: 20 33% 93%;
     --primary: 14 100% 57%;
     --primary-foreground: 0 0% 100%;
     --secondary: 20 33% 93%;
-    --secondary-foreground: 204 82% 11%;
+    --secondary-foreground: 200 82% 11%;
     --muted: 205 54% 28%;
     --muted-foreground: 205 30% 60%;
     --accent: 14 100% 57%;
@@ -92,7 +96,7 @@
     --border: 205 40% 22%;
     --input: 205 40% 22%;
     --ring: 14 100% 57%;
-    --sidebar-background: 204 82% 9%;
+    --sidebar-background: 200 82% 9%;
     --sidebar-foreground: 20 33% 93%;
     --sidebar-primary: 14 100% 57%;
     --sidebar-primary-foreground: 0 0% 100%;

@@ -69,16 +69,15 @@ export default function EventsSection() {
         <EventsLeafletMap filteredEvents={filteredEvents} />
 
         {/* Events table */}
-        <div className="glass-card-cream overflow-x-auto mt-8">
+        <div className="glass-card-cream flow-corner-br overflow-x-auto mt-8">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-secondary-foreground/10">
                 <th className="text-left py-3 px-4 text-secondary-foreground font-semibold">Event</th>
-                
+                <th className="text-left py-3 px-4 text-secondary-foreground font-semibold">Team</th>
                 <th className="text-left py-3 px-4 text-secondary-foreground font-semibold">Format</th>
                 <th className="text-left py-3 px-4 text-secondary-foreground font-semibold">Audience</th>
                 <th className="text-left py-3 px-4 text-secondary-foreground font-semibold">Region</th>
-                <th className="text-left py-3 px-4 text-secondary-foreground font-semibold">Speaker</th>
                 <th className="text-left py-3 px-4 text-secondary-foreground font-semibold">Status</th>
               </tr>
             </thead>
@@ -89,18 +88,37 @@ export default function EventsSection() {
                     <div>{ev.name}</div>
                     <div className="text-[10px] text-secondary-foreground/40">{ev.city} · {ev.quarter}</div>
                   </td>
-                  
+                  <td className="py-3 px-4">
+                    <div className="flex -space-x-2">
+                      {(() => {
+                        const people: string[] = [];
+                        if (ev.speaker) ev.speaker.split(",").map(s => s.trim()).forEach(s => people.push(s));
+                        if (ev.marketingLead && !people.includes(ev.marketingLead)) people.push(ev.marketingLead);
+                        if (ev.distributionLead) ev.distributionLead.split("/").map(s => s.trim()).forEach(s => { if (!people.includes(s)) people.push(s); });
+                        if (people.length === 0) return <span className="text-secondary-foreground/30 text-xs">—</span>;
+                        const colors = ["#FF5424", "#214E6F", "#29628A", "#3A8AC3", "#506570"];
+                        return people.slice(0, 3).map((name, i) => {
+                          const initials = name.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
+                          return (
+                            <div key={i} className="w-7 h-7 rounded-full flex items-center justify-center text-[9px] font-bold text-white border-2 border-white/80" style={{ backgroundColor: colors[i % colors.length] }} title={name}>
+                              {initials}
+                            </div>
+                          );
+                        });
+                      })()}
+                      {(() => {
+                        const people: string[] = [];
+                        if (ev.speaker) ev.speaker.split(",").map(s => s.trim()).forEach(s => people.push(s));
+                        if (ev.marketingLead) people.push(ev.marketingLead);
+                        if (ev.distributionLead) ev.distributionLead.split("/").map(s => s.trim()).forEach(s => people.push(s));
+                        return people.length > 3 ? <div className="w-7 h-7 rounded-full flex items-center justify-center text-[9px] font-bold text-secondary-foreground bg-secondary-foreground/10 border-2 border-white/80">+{people.length - 3}</div> : null;
+                      })()}
+                    </div>
+                  </td>
                   <td className="py-3 px-4 text-secondary-foreground/70">{ev.format}</td>
                   <td className="py-3 px-4 text-secondary-foreground/70">{ev.audience}</td>
                   <td className="py-3 px-4">
                     <span className="text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary font-medium">{ev.region}</span>
-                  </td>
-                  <td className="py-3 px-4 text-secondary-foreground/70">
-                    {ev.hasSpeakingSlot ? (
-                      <span className="text-xs">{ev.speaker || "TBC"}</span>
-                    ) : (
-                      <span className="text-secondary-foreground/30">—</span>
-                    )}
                   </td>
                   <td className="py-3 px-4">
                     <span className={`text-xs px-2.5 py-1 rounded-full font-medium capitalize ${
