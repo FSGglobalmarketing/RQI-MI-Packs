@@ -172,8 +172,8 @@ function EventGroupPicker({
 }) {
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/60" onClick={onClose} />
-      <div className="relative z-[1001] w-full max-w-md glass-card-cream rounded-2xl p-6">
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+      <div className="relative z-[1001] w-full max-w-md bg-secondary rounded-2xl shadow-2xl border border-secondary-foreground/10 p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-bold text-secondary-foreground">
             {group.city} — {group.events.length} Events
