@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 @layer base {
   :root {
@@ -110,7 +110,7 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Inter', 'Avenir Next LT Pro', Arial, sans-serif;
+    font-family: 'Plus Jakarta Sans', 'Avenir Next LT Pro', Arial, sans-serif;
   }
 
   html {
@@ -594,7 +594,7 @@
     border: none !important;
     border-radius: 8px !important;
     padding: 6px 10px !important;
-    font-family: 'Inter', sans-serif !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
     font-size: 12px !important;
     box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3) !important;
   }
@@ -605,7 +605,7 @@
 
   /* Override Leaflet default styles to match theme */
   .leaflet-container {
-    font-family: 'Inter', sans-serif !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
   }
 
   .leaflet-control-zoom a {
@@ -622,6 +622,59 @@
   .leaflet-tile-pane {
     filter: saturate(0.15) brightness(1.05) contrast(0.95);
   }
+}
+
+/* ── Brand Patterns ── */
+
+/* Topographic map pattern overlay - use on sections */
+.topo-pattern {
+  position: relative;
+}
+
+.topo-pattern-cream::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/patterns/topographic-cream.svg');
+  background-size: 600px 600px;
+  background-repeat: repeat;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.topo-pattern-dark::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/patterns/topographic-dark.svg');
+  background-size: 600px 600px;
+  background-repeat: repeat;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Flow Device ── */
+/* Large rounded-corner shape used as section accent - per brand guidelines */
+.flow-device {
+  border-radius: 80px;
+  overflow: hidden;
+}
+
+/* Single rounded corner variants (for call-outs, containers) */
+.flow-corner-tl {
+  border-top-left-radius: 80px;
+}
+
+.flow-corner-tr {
+  border-top-right-radius: 80px;
+}
+
+.flow-corner-bl {
+  border-bottom-left-radius: 80px;
+}
+
+.flow-corner-br {
+  border-bottom-right-radius: 80px;
 }
 
 @layer utilities {

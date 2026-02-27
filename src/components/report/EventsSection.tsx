@@ -46,8 +46,8 @@ export default function EventsSection() {
   const proposedCount = filteredEvents.filter((ev) => ev.status === "proposed").length;
 
   return (
-    <section id="events" className="section-cream py-20">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="events" className="section-cream topo-pattern topo-pattern-cream py-20">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-[1]">
         <div className="flex flex-wrap items-center gap-3 mb-2">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-secondary-foreground">{e.title}</h2>
           <span className="stage-badge text-xs">{e.stage}</span>
