@@ -74,7 +74,7 @@ export default function EventsSection() {
             <thead>
               <tr className="border-b border-secondary-foreground/10">
                 <th className="text-left py-3 px-4 text-secondary-foreground font-semibold">Event</th>
-                <th className="text-left py-3 px-4 text-secondary-foreground font-semibold">Brand</th>
+                
                 <th className="text-left py-3 px-4 text-secondary-foreground font-semibold">Format</th>
                 <th className="text-left py-3 px-4 text-secondary-foreground font-semibold">Audience</th>
                 <th className="text-left py-3 px-4 text-secondary-foreground font-semibold">Region</th>
@@ -89,7 +89,7 @@ export default function EventsSection() {
                     <div>{ev.name}</div>
                     <div className="text-[10px] text-secondary-foreground/40">{ev.city} · {ev.quarter}</div>
                   </td>
-                  <td className="py-3 px-4 text-secondary-foreground/70">{ev.brand || "—"}</td>
+                  
                   <td className="py-3 px-4 text-secondary-foreground/70">{ev.format}</td>
                   <td className="py-3 px-4 text-secondary-foreground/70">{ev.audience}</td>
                   <td className="py-3 px-4">
