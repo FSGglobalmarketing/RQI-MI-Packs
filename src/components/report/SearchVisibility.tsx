@@ -34,7 +34,7 @@ function CustomTooltip({ active, payload, label }: any) {
   });
 
   return (
-    <div className="bg-background rounded-[10px] px-4 py-3 min-w-[320px] max-w-[420px] border border-primary/30">
+    <div className="bg-background rounded-[10px] px-4 py-3 min-w-[320px] max-w-[420px] border border-foreground/12">
       <p className="text-primary font-bold text-[13px] mb-2">{label}</p>
       <div className="grid grid-cols-2 gap-x-6 gap-y-1">
         {sorted.map((entry: any) => (

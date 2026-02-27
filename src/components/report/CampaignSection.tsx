@@ -139,7 +139,7 @@ function SortedTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   const sorted = [...payload].sort((a: any, b: any) => (b.value ?? 0) - (a.value ?? 0));
   return (
-    <div style={{ backgroundColor: "#1a2e35", borderRadius: 10, padding: "12px 16px", minWidth: 220, border: "1px solid rgba(232,97,58,0.3)" }}>
+    <div style={{ backgroundColor: "#1a2e35", borderRadius: 10, padding: "12px 16px", minWidth: 220, border: "1px solid rgba(255,255,255,0.12)" }}>
       <p style={{ color: "#e8613a", fontWeight: 700, fontSize: 13, marginBottom: 8 }}>{label}</p>
       {sorted.map((entry: any) => (
         <div key={entry.dataKey} style={{ display: "flex", justifyContent: "space-between", gap: 16, marginBottom: 2 }}>
@@ -317,7 +317,7 @@ export function DACHCharts() {
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
             <XAxis type="number" tick={{ fontSize: 11, fill: "#64748b" }} />
             <YAxis dataKey="company" type="category" width={120} tick={{ fontSize: 11, fill: "#64748b" }} />
-            <Tooltip contentStyle={{ backgroundColor: "#1a2e35", border: "1px solid rgba(232,97,58,0.3)", borderRadius: "10px", color: "#fff" }} />
+            <Tooltip contentStyle={{ backgroundColor: "#1a2e35", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", color: "#fff" }} />
             <Bar dataKey="views" fill="#e8613a" radius={[0, 6, 6, 0]} animationDuration={1200} />
           </BarChart>
         </ResponsiveContainer>
@@ -359,7 +359,7 @@ export function UKNordicsChart() {
 export function UKNordicsLearnings() {
   const learnings = reportData.campaigns.ukNordics.keyLearnings;
   return (
-    <div className="glass-card-dark border-2 border-primary/20">
+    <div className="glass-card-dark border border-foreground/10">
       <h4 className="text-base font-bold text-foreground mb-4 flex items-center gap-2">
         <span className="text-primary">→</span> Key Learnings
       </h4>

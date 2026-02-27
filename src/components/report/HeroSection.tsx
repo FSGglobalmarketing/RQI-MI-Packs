@@ -27,7 +27,7 @@ export default function HeroSection() {
             <p className="text-2xl font-bold text-primary">{d.tagline}</p>
           </div>
 
-          <div className="animate-slide-up" style={{ animationDelay: "0.2s" }}>
+          <div className="animate-slide-up flex items-center" style={{ animationDelay: "0.2s" }}>
             {/* Liquid glass card */}
             <LiquidGlass
               overLight={false}
@@ -36,7 +36,7 @@ export default function HeroSection() {
               displacementScale={50}
               cornerRadius={20}
               padding="24px"
-              className="space-y-4"
+              className="space-y-4 w-full"
             >
               <h3 className="text-sm font-semibold text-foreground/60 uppercase tracking-wider">Report Details</h3>
               <div>
