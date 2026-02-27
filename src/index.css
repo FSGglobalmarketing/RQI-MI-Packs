@@ -6,33 +6,39 @@
 
 @layer base {
   :root {
-    --background: 195 35% 15%;
-    --foreground: 0 0% 98%;
+    /* Obsidian - primary dark background */
+    --background: 204 82% 11%;
+    --foreground: 20 33% 93%;
 
-    --card: 195 30% 12%;
-    --card-foreground: 0 0% 98%;
+    /* Card surfaces - slightly lighter Obsidian */
+    --card: 204 70% 9%;
+    --card-foreground: 20 33% 93%;
 
-    --popover: 195 30% 12%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 204 70% 9%;
+    --popover-foreground: 20 33% 93%;
 
-    --primary: 14 78% 57%;
+    /* Magma - punchy accent, used sparingly */
+    --primary: 14 100% 57%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 25 33% 94%;
-    --secondary-foreground: 195 35% 15%;
+    /* Pumice - warm cream background */
+    --secondary: 20 33% 93%;
+    --secondary-foreground: 204 82% 11%;
 
-    --muted: 195 25% 20%;
-    --muted-foreground: 195 15% 65%;
+    /* Sodalite tones for muted elements */
+    --muted: 205 54% 28%;
+    --muted-foreground: 205 30% 60%;
 
-    --accent: 14 78% 57%;
+    --accent: 14 100% 57%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 195 20% 25%;
-    --input: 195 20% 25%;
-    --ring: 14 78% 57%;
+    /* Sodalite-based borders */
+    --border: 205 40% 22%;
+    --input: 205 40% 22%;
+    --ring: 14 100% 57%;
 
     --radius: 0.75rem;
 
@@ -42,47 +48,58 @@
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
 
-    --cream: 25 33% 94%;
-    --cream-foreground: 195 35% 15%;
+    /* Pumice */
+    --cream: 20 33% 93%;
+    --cream-foreground: 204 82% 11%;
 
-    --sidebar-background: 195 35% 12%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 14 78% 57%;
+    /* Chart secondary palette (brand guidelines hierarchy) */
+    --chart-obsidian: 204 82% 11%;
+    --chart-basalt: 200 17% 38%;
+    --chart-granite: 200 10% 55%;
+    --chart-sodalite: 205 54% 28%;
+    --chart-sapphire: 205 51% 35%;
+    --chart-aquamarine: 207 54% 49%;
+    --chart-amethyst: 261 26% 26%;
+    --chart-rhodolite: 268 10% 48%;
+
+    --sidebar-background: 204 82% 9%;
+    --sidebar-foreground: 20 33% 93%;
+    --sidebar-primary: 14 100% 57%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 195 25% 20%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 195 20% 25%;
-    --sidebar-ring: 14 78% 57%;
+    --sidebar-accent: 205 54% 28%;
+    --sidebar-accent-foreground: 20 33% 93%;
+    --sidebar-border: 205 40% 22%;
+    --sidebar-ring: 14 100% 57%;
   }
 
   .dark {
-    --background: 195 35% 15%;
-    --foreground: 0 0% 98%;
-    --card: 195 30% 12%;
-    --card-foreground: 0 0% 98%;
-    --popover: 195 30% 12%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 14 78% 57%;
+    --background: 204 82% 11%;
+    --foreground: 20 33% 93%;
+    --card: 204 70% 9%;
+    --card-foreground: 20 33% 93%;
+    --popover: 204 70% 9%;
+    --popover-foreground: 20 33% 93%;
+    --primary: 14 100% 57%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 25 33% 94%;
-    --secondary-foreground: 195 35% 15%;
-    --muted: 195 25% 20%;
-    --muted-foreground: 195 15% 65%;
-    --accent: 14 78% 57%;
+    --secondary: 20 33% 93%;
+    --secondary-foreground: 204 82% 11%;
+    --muted: 205 54% 28%;
+    --muted-foreground: 205 30% 60%;
+    --accent: 14 100% 57%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 195 20% 25%;
-    --input: 195 20% 25%;
-    --ring: 14 78% 57%;
-    --sidebar-background: 195 35% 12%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 14 78% 57%;
+    --border: 205 40% 22%;
+    --input: 205 40% 22%;
+    --ring: 14 100% 57%;
+    --sidebar-background: 204 82% 9%;
+    --sidebar-foreground: 20 33% 93%;
+    --sidebar-primary: 14 100% 57%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 195 25% 20%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 195 20% 25%;
-    --sidebar-ring: 14 78% 57%;
+    --sidebar-accent: 205 54% 28%;
+    --sidebar-accent-foreground: 20 33% 93%;
+    --sidebar-border: 205 40% 22%;
+    --sidebar-ring: 14 100% 57%;
   }
 }
 
@@ -93,11 +110,20 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', 'Avenir Next LT Pro', Arial, sans-serif;
   }
 
   html {
     scroll-behavior: smooth;
+  }
+
+  /* Brand heading tracking per Igneo type scale */
+  h1, h2 {
+    letter-spacing: -0.04em;
+  }
+
+  h3, h4, h5, h6 {
+    letter-spacing: -0.02em;
   }
 }
 
