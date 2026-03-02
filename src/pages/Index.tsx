@@ -6,15 +6,16 @@ import PerformanceResults from "@/components/report/PerformanceResults";
 import SearchVisibility from "@/components/report/SearchVisibility";
 import { CampaignSection, CampaignChartPage, NorthAmericaChart, NorthAmericaExtra, DACHCharts, UKNordicsChart, UKNordicsLearnings } from "@/components/report/CampaignSection";
 import DACHPhoneShowcase from "@/components/report/DACHPhoneShowcase";
+import DeviceMockup from "@/components/report/DeviceMockup";
 import AlwaysOnSection from "@/components/report/AlwaysOnSection";
 import LinkedInSection from "@/components/report/LinkedInSection";
 import PodcastSection from "@/components/report/PodcastSection";
 import EventsSection from "@/components/report/EventsSection";
-import IPhoneMockup from "@/components/report/IPhoneMockup";
+
 import SplashScreen from "@/components/report/SplashScreen";
 import { reportData } from "@/data/igneo-report";
 import railImage from "@/assets/rail-to-runway-us-backbone.jpg";
-import naScrollImage from "@/assets/na-campaign-scroll.png";
+
 import igneoLogo from "@/assets/igneo-footer-logo.svg";
 
 const Index = () => {
@@ -40,7 +41,7 @@ const Index = () => {
         formats={d.campaigns.northAmerica.formats}
         keyResults={d.campaigns.northAmerica.keyResults}
         variant="dark"
-        phoneImage={<IPhoneMockup scrollImageSrc={naScrollImage} alt="North America campaign preview" />}
+        phoneImage={<DeviceMockup iframeSrc="/mockups/na-campaign.html" alt="North America campaign preview" />}
       />
       {/* North America — Page 2: Charts & Data */}
       <CampaignChartPage id="north-america" title={d.campaigns.northAmerica.title} variant="dark" backgroundImage={railImage}>
