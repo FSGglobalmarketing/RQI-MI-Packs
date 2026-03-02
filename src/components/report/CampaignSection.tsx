@@ -78,7 +78,7 @@ export function CampaignSection({ id, title, stage, subtitle, description, goals
           </div>
 
           {/* Right column: phone mockup */}
-          <div className="flex items-stretch justify-center">
+          <div className="flex items-start justify-center">
             {phoneImage}
           </div>
         </div>
