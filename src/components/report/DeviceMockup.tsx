@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "@/styles/device-mockup.css";
+import naScrollImage from "@/assets/na-campaign-scroll.png";
 
 type DeviceMode = "iphone" | "ipad";
 type HeatLevel = "high" | "medium" | "low";
@@ -23,13 +24,17 @@ const DUMMY_HEATMAP: HeatmapPoint[] = [
   { className: "heat-10", level: "low", clicks: 44 },
 ];
 
+/* Native image dimensions */
+const IMG_NATIVE_W = 780;
+const IMG_NATIVE_H = 12042;
+
 interface DeviceMockupProps {
-  iframeSrc?: string;
+  scrollImageSrc?: string;
   alt?: string;
 }
 
 export default function DeviceMockup({
-  iframeSrc = "/mockups/na-campaign.html",
+  scrollImageSrc = naScrollImage,
   alt = "Campaign preview",
 }: DeviceMockupProps) {
   const [device, setDevice] = useState<DeviceMode>("iphone");
@@ -76,7 +81,16 @@ export default function DeviceMockup({
 
         {device === "ipad" && <span className="device-camera" aria-hidden="true" />}
 
-        <iframe src={iframeSrc} title={alt} className="device-viewport" />
+        <div className="device-scroll-viewport">
+          <img
+            src={scrollImageSrc}
+            alt={alt}
+            draggable={false}
+            className="device-scroll-image"
+            width={IMG_NATIVE_W}
+            height={IMG_NATIVE_H}
+          />
+        </div>
 
         {showHeatmap && (
           <div className="device-heatmap" aria-label="Heatmap overlay">
