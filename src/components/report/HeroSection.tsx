@@ -5,13 +5,20 @@ export default function HeroSection() {
   const d = reportData;
   return (
     <section id="overview" className="section-dark topo-pattern topo-pattern-dark relative min-h-[80vh] flex items-center pt-20 pb-16 overflow-hidden">
-      {/* Background cover image */}
-      <div className="absolute inset-0">
-        <img
-          src={frontCover}
-          alt="Q4 2025 Marketing Report Cover"
-          className="w-full h-full object-cover object-center"
-        />
+      {/* Background cover image — horizontal scroll loop */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="hero-scroll-track absolute inset-y-0 flex w-[200%]">
+          <img
+            src={frontCover}
+            alt=""
+            className="w-1/2 h-full object-cover object-center shrink-0"
+          />
+          <img
+            src={frontCover}
+            alt=""
+            className="w-1/2 h-full object-cover object-center shrink-0"
+          />
+        </div>
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/40" />
       </div>
 
