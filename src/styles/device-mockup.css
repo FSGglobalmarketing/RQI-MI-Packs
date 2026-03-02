@@ -1,0 +1,291 @@
+.device-mockup-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.device-toggle,
+.device-heat-toggle {
+  border-radius: 9999px;
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--card) / 0.25);
+}
+
+.device-toggle {
+  padding: 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.device-toggle-btn {
+  border: 0;
+  border-radius: 9999px;
+  background: transparent;
+  color: hsl(var(--muted-foreground));
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.45rem 1rem;
+  line-height: 1;
+  transition: all 0.2s ease;
+}
+
+.device-toggle-btn:hover {
+  color: hsl(var(--foreground));
+}
+
+.device-toggle-btn.is-active {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+.device-heat-toggle {
+  border-radius: 9999px;
+  padding: 0.35rem 0.8rem;
+  color: hsl(var(--muted-foreground));
+  font-size: 0.625rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.device-heat-toggle.is-active {
+  border-color: hsl(var(--primary) / 0.45);
+  color: hsl(var(--primary));
+  background: hsl(var(--primary) / 0.1);
+}
+
+.device-shell {
+  width: 100%;
+  position: relative;
+  border: 6px solid hsl(0 0% 22%);
+  background: hsl(0 0% 0%);
+  overflow: hidden;
+  box-shadow: 0 25px 70px -10px hsl(0 0% 0% / 0.6);
+  transition: all 0.35s ease;
+}
+
+.device-shell.device-iphone {
+  max-width: 320px;
+  aspect-ratio: 300 / 610;
+  border-radius: 44px;
+}
+
+.device-shell.device-ipad {
+  max-width: 760px;
+  aspect-ratio: 760 / 500;
+  border-radius: 30px;
+}
+
+.device-island,
+.device-home,
+.device-camera {
+  position: absolute;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.device-island {
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 24px;
+  border-radius: 9999px;
+  background: hsl(0 0% 0%);
+}
+
+.device-home {
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 4px;
+  border-radius: 9999px;
+  background: hsl(0 0% 100% / 0.28);
+}
+
+.device-camera {
+  right: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: hsl(0 0% 9%);
+  border: 1px solid hsl(0 0% 32%);
+}
+
+.device-viewport {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.device-shell.device-iphone .device-viewport,
+.device-shell.device-iphone .device-heatmap {
+  border-radius: 38px;
+}
+
+.device-shell.device-ipad .device-viewport,
+.device-shell.device-ipad .device-heatmap {
+  border-radius: 24px;
+}
+
+.device-heatmap {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  overflow: hidden;
+}
+
+.device-heatmap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: hsl(0 0% 0% / 0.1);
+  pointer-events: none;
+}
+
+.heatmap-point {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+}
+
+.heatmap-point::after {
+  content: attr(data-clicks);
+  position: absolute;
+  left: 50%;
+  top: -8px;
+  transform: translate(-50%, -100%);
+  white-space: nowrap;
+  padding: 0.25rem 0.45rem;
+  border-radius: 6px;
+  border: 1px solid hsl(var(--primary) / 0.4);
+  background: hsl(0 0% 0% / 0.86);
+  color: hsl(var(--primary-foreground));
+  font-size: 0.62rem;
+  font-weight: 700;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.heatmap-point:hover::after {
+  opacity: 1;
+}
+
+.heatmap-glow {
+  display: block;
+  width: var(--dot-size);
+  height: var(--dot-size);
+  border-radius: 9999px;
+  animation: heat-breathe 2.1s ease-in-out infinite;
+}
+
+.heatmap-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  transform: translate(-50%, -50%);
+}
+
+.heatmap-point.high .heatmap-glow {
+  background: radial-gradient(circle, hsl(14 98% 52% / 0.55), hsl(14 98% 52% / 0));
+}
+
+.heatmap-point.medium .heatmap-glow {
+  background: radial-gradient(circle, hsl(28 100% 60% / 0.45), hsl(28 100% 60% / 0));
+}
+
+.heatmap-point.low .heatmap-glow {
+  background: radial-gradient(circle, hsl(46 100% 66% / 0.35), hsl(46 100% 66% / 0));
+}
+
+.heatmap-point.high .heatmap-core {
+  background: hsl(14 98% 52% / 0.95);
+  box-shadow: 0 0 10px hsl(14 98% 52% / 0.75);
+}
+
+.heatmap-point.medium .heatmap-core {
+  background: hsl(28 100% 60% / 0.95);
+  box-shadow: 0 0 10px hsl(28 100% 60% / 0.7);
+}
+
+.heatmap-point.low .heatmap-core {
+  background: hsl(46 100% 66% / 0.95);
+  box-shadow: 0 0 10px hsl(46 100% 66% / 0.65);
+}
+
+.heat-1 { left: 50%; top: 12%; --dot-size: 82px; }
+.heat-2 { left: 72%; top: 8%; --dot-size: 64px; }
+.heat-3 { left: 30%; top: 28%; --dot-size: 72px; }
+.heat-4 { left: 65%; top: 35%; --dot-size: 76px; }
+.heat-5 { left: 48%; top: 52%; --dot-size: 58px; }
+.heat-6 { left: 20%; top: 60%; --dot-size: 50px; }
+.heat-7 { left: 55%; top: 72%; --dot-size: 66px; }
+.heat-8 { left: 80%; top: 45%; --dot-size: 52px; }
+.heat-9 { left: 35%; top: 85%; --dot-size: 62px; }
+.heat-10 { left: 60%; top: 92%; --dot-size: 44px; }
+
+.device-heat-legend {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 0.62rem;
+  color: hsl(var(--muted-foreground));
+}
+
+.device-heat-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.legend-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+}
+
+.legend-dot.high { background: hsl(14 98% 52% / 0.85); }
+.legend-dot.medium { background: hsl(28 100% 60% / 0.82); }
+.legend-dot.low { background: hsl(46 100% 66% / 0.8); }
+
+@keyframes heat-breathe {
+  0%,
+  100% {
+    opacity: 0.52;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.08);
+  }
+}
+
+@media (max-width: 1024px) {
+  .device-shell.device-ipad {
+    max-width: 640px;
+  }
+}
+
+@media (max-width: 640px) {
+  .device-shell.device-iphone {
+    max-width: min(320px, 96vw);
+  }
+
+  .device-shell.device-ipad {
+    max-width: 96vw;
+    aspect-ratio: 16 / 10;
+  }
+}
