@@ -67,9 +67,9 @@
 }
 
 .device-shell.device-iphone {
-  max-width: 320px;
-  aspect-ratio: 300 / 610;
-  border-radius: 44px;
+  max-width: 390px;
+  aspect-ratio: 390 / 790;
+  border-radius: 52px;
 }
 
 .device-shell.device-ipad {
@@ -142,7 +142,7 @@
 
 .device-shell.device-iphone .device-scroll-viewport,
 .device-shell.device-iphone .device-heatmap {
-  border-radius: 38px;
+  border-radius: 46px;
 }
 
 .device-shell.device-ipad .device-scroll-viewport,
@@ -155,6 +155,7 @@
   inset: 0;
   z-index: 12;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .device-heatmap::before {
