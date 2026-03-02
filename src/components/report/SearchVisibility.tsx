@@ -223,7 +223,7 @@ export default function SearchVisibility() {
               <span className="text-xs text-secondary-foreground/60">Show peers</span>
             </div>
             <ChartScrollContainer onWheelHandler={handleWheel}>
-              <ResponsiveContainer width="100%" height={360}>
+              <ResponsiveContainer width="100%" height={480}>
                 <LineChart data={visibleData} onMouseDown={onMouseDown} onMouseMove={onMouseMove} onMouseUp={onMouseUp}>
                   <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
                   <XAxis dataKey="month" tick={{ fontSize: 10, fill: "#64748b" }} />
