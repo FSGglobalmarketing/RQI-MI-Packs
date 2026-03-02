@@ -6,27 +6,38 @@ interface IPhoneMockupProps {
   alt?: string;
 }
 
+const PHONE_VIEWPORT_WIDTH = 300;
+
+function inferNativeScale(naturalWidth: number) {
+  if (naturalWidth >= 1100) return 3;
+  if (naturalWidth >= 700) return 2;
+  return 1;
+}
+
 export default function IPhoneMockup({ scrollImageSrc, iframeSrc, alt = "Phone preview" }: IPhoneMockupProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScroll, setCanScroll] = useState(false);
+  const [renderSize, setRenderSize] = useState({ width: PHONE_VIEWPORT_WIDTH, height: 610 });
 
   useEffect(() => {
     const el = scrollRef.current;
-    if (!el) return;
-    const check = () => setCanScroll(el.scrollHeight > el.clientHeight + 10);
-    // Check after image loads
-    const img = el.querySelector("img");
-    if (img) {
-      img.addEventListener("load", check);
-    }
+    if (!el || iframeSrc) return;
+
+    const check = () => setCanScroll(el.scrollHeight > el.clientHeight + 4);
     check();
+
+    const resizeObserver = typeof ResizeObserver !== "undefined" ? new ResizeObserver(check) : null;
+    resizeObserver?.observe(el);
+    window.addEventListener("resize", check);
+
     return () => {
-      if (img) img.removeEventListener("load", check);
+      resizeObserver?.disconnect();
+      window.removeEventListener("resize", check);
     };
-  }, [scrollImageSrc]);
+  }, [iframeSrc, scrollImageSrc, renderSize.width, renderSize.height]);
 
   return (
-    <div className="flex justify-center items-start -mt-8">
+    <div className="flex justify-center">
       <div className="iphone-mockup">
         <div className="iphone-mockup-island" />
         {iframeSrc ? (
@@ -38,12 +49,28 @@ export default function IPhoneMockup({ scrollImageSrc, iframeSrc, alt = "Phone p
           />
         ) : (
           <div ref={scrollRef} className="iphone-mockup-scroll">
-            <img
-              src={scrollImageSrc}
-              alt={alt}
-              className="w-full h-auto block"
-              draggable={false}
-            />
+            <div className="relative shrink-0" style={{ width: `${renderSize.width}px`, minHeight: `${renderSize.height}px` }}>
+              <img
+                src={scrollImageSrc}
+                alt={alt}
+                loading="lazy"
+                draggable={false}
+                className="block max-w-none select-none"
+                style={{ width: `${renderSize.width}px`, height: `${renderSize.height}px` }}
+                onLoad={(e) => {
+                  const img = e.currentTarget;
+                  if (!img.naturalWidth || !img.naturalHeight) return;
+
+                  const nativeScale = inferNativeScale(img.naturalWidth);
+                  const cssWidth = img.naturalWidth / nativeScale;
+                  const cssHeight = img.naturalHeight / nativeScale;
+                  const width = Math.max(PHONE_VIEWPORT_WIDTH, Math.round(cssWidth));
+                  const height = Math.round(cssHeight * (width / cssWidth));
+
+                  setRenderSize({ width, height });
+                }}
+              />
+            </div>
           </div>
         )}
         <div className="iphone-mockup-home" />
@@ -56,3 +83,4 @@ export default function IPhoneMockup({ scrollImageSrc, iframeSrc, alt = "Phone p
     </div>
   );
 }
+

@@ -430,8 +430,18 @@
     position: absolute;
     inset: 0;
     overflow-y: auto;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
     border-radius: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    scrollbar-width: none;
+  }
+
+  .iphone-mockup-scroll::-webkit-scrollbar {
+    display: none;
   }
 
   .iphone-mockup-home {
