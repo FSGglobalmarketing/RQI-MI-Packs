@@ -328,32 +328,103 @@ export function DACHCharts() {
   );
 }
 
-/* ── UK & Nordics Chart ── */
+/* ── UK & Nordics Ad Creative Showcase ── */
+import ukAd1 from "@/assets/uk-nordics-ad-1.jpg";
+import ukAd2 from "@/assets/uk-nordics-ad-2.jpg";
+import ukAd3 from "@/assets/uk-nordics-ad-3.jpg";
+import ukAd4 from "@/assets/uk-nordics-ad-4.jpg";
+import ukAd5 from "@/assets/uk-nordics-ad-5.jpg";
+
+const UK_ADS = [
+  { name: "Proactive management.\nProven success.", type: "Static", image: ukAd1, impressions: 55000, clicks: 2100, ctr: 3.8 },
+  { name: "Middle-market.\nMaximum impact. (Snow)", type: "Static", image: ukAd4, impressions: 50000, clicks: 1800, ctr: 3.6 },
+  { name: "Middle-market.\nMaximum impact. (LNG)", type: "Static", image: ukAd3, impressions: 60000, clicks: 3200, ctr: 5.3 },
+  { name: "Höegh Esperanza\n(Ship bow)", type: "Static", image: ukAd5, impressions: 50229, clicks: 2174, ctr: 4.3 },
+];
+
+function formatK(v: number) {
+  if (v >= 1_000_000) return `${(v / 1_000_000).toFixed(1)}M`;
+  if (v >= 1000) return `${(v / 1000).toFixed(1)}k`;
+  return String(v);
+}
+
 export function UKNordicsChart() {
-  const data = [
-    { name: "Explore Igneo's\nEuropean capabilities", type: "Static", impressions: 55000, clicks: 2100, ctr: 3.8 },
-    { name: "Middle-market.\nMaximum impact.", type: "Static", impressions: 50000, clicks: 1800, ctr: 3.6 },
-    { name: "Investing in European\nInfrastructure", type: "Video", impressions: 60000, clicks: 3200, ctr: 5.3 },
-    { name: "Middle-market.\nMaximum impact. (V)", type: "Video", impressions: 50229, clicks: 2174, ctr: 4.3 },
-  ];
+  const [selectedAd, setSelectedAd] = useState<number | null>(null);
 
   return (
-    <div className="metric-card flow-corner-bl">
-      <h4 className="text-sm font-bold text-foreground mb-4">Ad Views vs Clicks to Website</h4>
-      <ResponsiveContainer width="100%" height={360}>
-        <BarChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-          <XAxis dataKey="name" tick={{ fontSize: 9, fill: "#94a3b8" }} interval={0} />
-          <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} />
-          <Tooltip content={<SortedTooltip />} />
-          <Legend wrapperStyle={{ fontSize: 11 }} />
-          <Bar dataKey="impressions" fill="#214E6F" radius={[4, 4, 0, 0]} animationDuration={1200} name="Impressions" />
-          <Bar dataKey="clicks" fill="#FF5424" radius={[4, 4, 0, 0]} animationDuration={1200} name="Clicks" />
-        </BarChart>
-      </ResponsiveContainer>
-      <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
-        <span className="w-3 h-0.5 bg-primary inline-block" /> Industry average CTR
+    <div className="space-y-6">
+      {/* Bar chart */}
+      <div className="metric-card flow-corner-bl">
+        <h4 className="text-sm font-bold text-foreground mb-4">Ad Performance — Impressions vs Clicks</h4>
+        <ResponsiveContainer width="100%" height={320}>
+          <BarChart data={UK_ADS}>
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+            <XAxis dataKey="name" tick={{ fontSize: 9, fill: "#94a3b8" }} interval={0} />
+            <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} tickFormatter={formatK} />
+            <Tooltip content={<SortedTooltip />} />
+            <Legend wrapperStyle={{ fontSize: 11 }} />
+            <Bar dataKey="impressions" fill="#214E6F" radius={[4, 4, 0, 0]} animationDuration={1200} name="Impressions" />
+            <Bar dataKey="clicks" fill="#FF5424" radius={[4, 4, 0, 0]} animationDuration={1200} name="Clicks" />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
+
+      {/* Ad creative cards grid */}
+      <div>
+        <h4 className="text-sm font-bold text-foreground mb-4">Ad Creatives</h4>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {UK_ADS.map((ad, i) => (
+            <button
+              key={i}
+              onClick={() => setSelectedAd(selectedAd === i ? null : i)}
+              className={`group relative rounded-xl overflow-hidden border transition-all duration-300 text-left ${
+                selectedAd === i
+                  ? "border-primary ring-2 ring-primary/30 scale-[1.02]"
+                  : "border-foreground/10 hover:border-foreground/25"
+              }`}
+            >
+              <img src={ad.image} alt={ad.name.replace("\n", " ")} className="w-full aspect-square object-cover" loading="lazy" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-3">
+                <p className="text-[10px] font-semibold text-foreground leading-tight whitespace-pre-line">{ad.name}</p>
+                <div className="flex items-center gap-3 mt-1.5">
+                  <span className="text-[9px] text-muted-foreground">{formatK(ad.impressions)} imp</span>
+                  <span className="text-[9px] text-primary font-bold">{ad.ctr}% CTR</span>
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Expanded detail when an ad is selected */}
+      {selectedAd !== null && (
+        <div className="metric-card flex gap-6 items-center animate-fade-in">
+          <img
+            src={UK_ADS[selectedAd].image}
+            alt={UK_ADS[selectedAd].name.replace("\n", " ")}
+            className="w-32 h-32 rounded-lg object-cover shrink-0"
+          />
+          <div className="flex-1 space-y-3">
+            <p className="text-sm font-bold text-foreground whitespace-pre-line">{UK_ADS[selectedAd].name}</p>
+            <span className="glass-pill-dark text-[10px]">{UK_ADS[selectedAd].type}</span>
+            <div className="grid grid-cols-3 gap-4 mt-2">
+              <div>
+                <p className="text-lg font-extrabold text-foreground">{formatK(UK_ADS[selectedAd].impressions)}</p>
+                <p className="text-[10px] text-muted-foreground">Impressions</p>
+              </div>
+              <div>
+                <p className="text-lg font-extrabold text-foreground">{formatK(UK_ADS[selectedAd].clicks)}</p>
+                <p className="text-[10px] text-muted-foreground">Clicks</p>
+              </div>
+              <div>
+                <p className="text-lg font-extrabold text-primary">{UK_ADS[selectedAd].ctr}%</p>
+                <p className="text-[10px] text-muted-foreground">CTR</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
