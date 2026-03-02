@@ -28,13 +28,16 @@ type Ad = {
   ctr: number;
 };
 
-const ADS: Ad[] = [
+const STATIC_ADS: Ad[] = [
   { name: "Proactive management. Proven success.", type: "Static", image: ukAd1, impressions: 55000, clicks: 2100, ctr: 3.8 },
   { name: "Middle market. Maximum impact.", type: "Static", image: ukAd4, impressions: 50000, clicks: 1800, ctr: 3.6 },
   { name: "Middle-market. Maximum impact.", type: "Static", image: ukAd3, impressions: 60000, clicks: 3200, ctr: 5.3 },
   { name: "Höegh Esperanza", type: "Static", image: ukAd5, impressions: 50229, clicks: 2174, ctr: 4.3 },
+];
+
+const CAROUSEL_ADS: Ad[] = [
   {
-    name: "Nordion Energi Carousel",
+    name: "Nordion Energi",
     type: "Carousel",
     image: carousel1,
     images: [carousel1, carousel2, carousel3, carousel4, carousel5],
@@ -43,7 +46,7 @@ const ADS: Ad[] = [
     ctr: 4.3,
   },
   {
-    name: "Scandlines Carousel",
+    name: "Scandlines",
     type: "Carousel",
     image: scandlines1,
     images: [scandlines1, scandlines2, scandlines3, scandlines4, scandlines5, scandlines6],
@@ -52,7 +55,7 @@ const ADS: Ad[] = [
     ctr: 4.3,
   },
   {
-    name: "European Infrastructure Carousel",
+    name: "European Infrastructure",
     type: "Carousel",
     image: euro1,
     images: [euro1, euro2, euro3],
@@ -70,12 +73,16 @@ function fmtK(v: number) {
 function CarouselSlider({ images }: { images: string[] }) {
   const [idx, setIdx] = useState(0);
   return (
-    <div className="relative">
+    <div className="relative group/slider">
       <img
         src={images[idx]}
         alt={`Carousel slide ${idx + 1}`}
         className="w-full rounded-lg object-cover aspect-square"
       />
+      {/* Slide counter */}
+      <div className="absolute top-2 right-2 bg-background/80 backdrop-blur-sm rounded-full px-2 py-0.5 text-[10px] font-semibold text-foreground">
+        {idx + 1} / {images.length}
+      </div>
       {/* Dots */}
       <div className="flex justify-center gap-1.5 mt-2">
         {images.map((_, i) => (
@@ -86,21 +93,22 @@ function CarouselSlider({ images }: { images: string[] }) {
           />
         ))}
       </div>
-      {/* Arrows */}
+      {/* Prev arrow */}
       {idx > 0 && (
         <button
           onClick={(e) => { e.stopPropagation(); setIdx(idx - 1); }}
-          className="absolute left-1.5 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-background/70 flex items-center justify-center text-foreground text-xs hover:bg-background/90 transition-colors"
+          className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-background/90 backdrop-blur-sm border border-foreground/15 flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground transition-colors shadow-lg"
         >
-          ‹
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
         </button>
       )}
+      {/* Next arrow */}
       {idx < images.length - 1 && (
         <button
           onClick={(e) => { e.stopPropagation(); setIdx(idx + 1); }}
-          className="absolute right-1.5 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-background/70 flex items-center justify-center text-foreground text-xs hover:bg-background/90 transition-colors"
+          className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-background/90 backdrop-blur-sm border border-foreground/15 flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground transition-colors shadow-lg"
         >
-          ›
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
         </button>
       )}
     </div>
@@ -108,16 +116,45 @@ function CarouselSlider({ images }: { images: string[] }) {
 }
 
 export default function UKNordicsAdShowcase() {
+  const [mode, setMode] = useState<"static" | "carousel">("static");
   const [expanded, setExpanded] = useState<number | null>(null);
+
+  const ads = mode === "static" ? STATIC_ADS : CAROUSEL_ADS;
 
   return (
     <div className="space-y-3 w-full max-w-md mx-auto">
-      <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Ad Creatives</h4>
-      {ADS.map((ad, i) => {
+      {/* Toggle */}
+      <div className="flex items-center justify-between">
+        <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Ad Creatives</h4>
+        <div className="flex rounded-full border border-foreground/10 overflow-hidden">
+          <button
+            onClick={() => { setMode("static"); setExpanded(null); }}
+            className={`px-3 py-1 text-[10px] font-semibold transition-colors ${
+              mode === "static"
+                ? "bg-primary text-primary-foreground"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Static
+          </button>
+          <button
+            onClick={() => { setMode("carousel"); setExpanded(null); }}
+            className={`px-3 py-1 text-[10px] font-semibold transition-colors ${
+              mode === "carousel"
+                ? "bg-primary text-primary-foreground"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Carousel
+          </button>
+        </div>
+      </div>
+
+      {ads.map((ad, i) => {
         const isOpen = expanded === i;
         return (
           <button
-            key={i}
+            key={`${mode}-${i}`}
             onClick={() => setExpanded(isOpen ? null : i)}
             className={`w-full text-left rounded-xl overflow-hidden border transition-all duration-300 ${
               isOpen
@@ -133,14 +170,7 @@ export default function UKNordicsAdShowcase() {
                 loading="lazy"
               />
               <div className="flex-1 min-w-0 py-0.5">
-                <div className="flex items-center gap-2">
-                  <p className="text-xs font-semibold text-foreground leading-snug truncate">{ad.name}</p>
-                  {ad.type === "Carousel" && (
-                    <span className="text-[8px] font-bold uppercase tracking-wider text-primary bg-primary/10 px-1.5 py-0.5 rounded shrink-0">
-                      Carousel
-                    </span>
-                  )}
-                </div>
+                <p className="text-xs font-semibold text-foreground leading-snug truncate">{ad.name}</p>
                 <div className="flex items-center gap-3 mt-1.5">
                   <span className="text-[10px] text-muted-foreground">{fmtK(ad.impressions)} imp</span>
                   <span className="text-[10px] text-muted-foreground">{fmtK(ad.clicks)} clicks</span>
