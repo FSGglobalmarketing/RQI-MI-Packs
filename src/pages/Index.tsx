@@ -14,7 +14,7 @@ import IPhoneMockup from "@/components/report/IPhoneMockup";
 import SplashScreen from "@/components/report/SplashScreen";
 import { reportData } from "@/data/igneo-report";
 import railImage from "@/assets/rail-to-runway-us-backbone.jpg";
-import naScrollImage from "@/assets/na-campaign-scroll.webp";
+import naScrollImage from "@/assets/na-campaign-scroll.png";
 import igneoLogo from "@/assets/igneo-footer-logo.svg";
 
 const Index = () => {
