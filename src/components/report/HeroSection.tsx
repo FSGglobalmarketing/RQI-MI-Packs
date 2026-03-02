@@ -1,5 +1,5 @@
 import { reportData } from "@/data/igneo-report";
-import frontCover from "@/assets/front-cover-q4.jpg";
+import heroBg from "@/assets/hero-bg.png";
 
 export default function HeroSection() {
   const d = reportData;
@@ -9,12 +9,12 @@ export default function HeroSection() {
       <div className="absolute inset-0 overflow-hidden">
         <div className="hero-scroll-track absolute inset-y-0 flex w-[200%]">
           <img
-            src={frontCover}
+            src={heroBg}
             alt=""
             className="w-1/2 h-full object-cover object-center shrink-0"
           />
           <img
-            src={frontCover}
+            src={heroBg}
             alt=""
             className="w-1/2 h-full object-cover object-center shrink-0"
           />
