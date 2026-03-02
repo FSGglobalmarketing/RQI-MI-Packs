@@ -1,22 +1,32 @@
 import { useState } from "react";
 import "@/styles/device-mockup.css";
 import naScrollImage from "@/assets/na-campaign-scroll.png";
+import naIpadImage from "@/assets/na-campaign-ipad.png";
 
 type DeviceMode = "iphone" | "ipad";
 
-const IMG_NATIVE_W = 780;
-const IMG_NATIVE_H = 12042;
+const IPHONE_W = 780;
+const IPHONE_H = 12042;
+const IPAD_W = 488;
+const IPAD_H = 7334;
 
 interface DeviceMockupProps {
-  scrollImageSrc?: string;
+  iphoneImageSrc?: string;
+  ipadImageSrc?: string;
   alt?: string;
 }
 
 export default function DeviceMockup({
-  scrollImageSrc = naScrollImage,
+  iphoneImageSrc = naScrollImage,
+  ipadImageSrc = naIpadImage,
   alt = "Campaign preview",
 }: DeviceMockupProps) {
   const [device, setDevice] = useState<DeviceMode>("iphone");
+
+  const isIphone = device === "iphone";
+  const imgSrc = isIphone ? iphoneImageSrc : ipadImageSrc;
+  const imgW = isIphone ? IPHONE_W : IPAD_W;
+  const imgH = isIphone ? IPHONE_H : IPAD_H;
 
   return (
     <div className="device-mockup-wrap">
@@ -24,8 +34,8 @@ export default function DeviceMockup({
         <button
           type="button"
           role="tab"
-          aria-selected={device === "iphone"}
-          className={`device-toggle-btn ${device === "iphone" ? "is-active" : ""}`}
+          aria-selected={isIphone}
+          className={`device-toggle-btn ${isIphone ? "is-active" : ""}`}
           onClick={() => setDevice("iphone")}
         >
           iPhone
@@ -33,32 +43,33 @@ export default function DeviceMockup({
         <button
           type="button"
           role="tab"
-          aria-selected={device === "ipad"}
-          className={`device-toggle-btn ${device === "ipad" ? "is-active" : ""}`}
+          aria-selected={!isIphone}
+          className={`device-toggle-btn ${!isIphone ? "is-active" : ""}`}
           onClick={() => setDevice("ipad")}
         >
           iPad
         </button>
       </div>
 
-      <div className={`device-shell ${device === "iphone" ? "device-iphone" : "device-ipad"}`}>
-        {device === "iphone" && (
+      <div className={`device-shell ${isIphone ? "device-iphone" : "device-ipad"}`}>
+        {isIphone && (
           <>
             <span className="device-island" aria-hidden="true" />
             <span className="device-home" aria-hidden="true" />
           </>
         )}
 
-        {device === "ipad" && <span className="device-camera" aria-hidden="true" />}
+        {!isIphone && <span className="device-camera" aria-hidden="true" />}
 
         <div className="device-scroll-viewport">
           <img
-            src={scrollImageSrc}
+            key={device}
+            src={imgSrc}
             alt={alt}
             draggable={false}
             className="device-scroll-image"
-            width={IMG_NATIVE_W}
-            height={IMG_NATIVE_H}
+            width={imgW}
+            height={imgH}
           />
         </div>
       </div>
