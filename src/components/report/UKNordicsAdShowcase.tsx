@@ -8,6 +8,15 @@ import carousel2 from "@/assets/uk-nordics-carousel-2.jpg";
 import carousel3 from "@/assets/uk-nordics-carousel-3.jpg";
 import carousel4 from "@/assets/uk-nordics-carousel-4.jpg";
 import carousel5 from "@/assets/uk-nordics-carousel-5.jpg";
+import scandlines1 from "@/assets/uk-nordics-scandlines-1.jpg";
+import scandlines2 from "@/assets/uk-nordics-scandlines-2.jpg";
+import scandlines3 from "@/assets/uk-nordics-scandlines-3.jpg";
+import scandlines4 from "@/assets/uk-nordics-scandlines-4.jpg";
+import scandlines5 from "@/assets/uk-nordics-scandlines-5.jpg";
+import scandlines6 from "@/assets/uk-nordics-scandlines-6.jpg";
+import euro1 from "@/assets/uk-nordics-euro-1.jpg";
+import euro2 from "@/assets/uk-nordics-euro-2.jpg";
+import euro3 from "@/assets/uk-nordics-euro-3.jpg";
 
 type Ad = {
   name: string;
@@ -32,6 +41,24 @@ const ADS: Ad[] = [
     impressions: 45000,
     clicks: 1950,
     ctr: 4.3,
+  },
+  {
+    name: "Scandlines Carousel",
+    type: "Carousel",
+    image: scandlines1,
+    images: [scandlines1, scandlines2, scandlines3, scandlines4, scandlines5, scandlines6],
+    impressions: 48000,
+    clicks: 2050,
+    ctr: 4.3,
+  },
+  {
+    name: "European Infrastructure Carousel",
+    type: "Carousel",
+    image: euro1,
+    images: [euro1, euro2, euro3],
+    impressions: 42000,
+    clicks: 1780,
+    ctr: 4.2,
   },
 ];
 
