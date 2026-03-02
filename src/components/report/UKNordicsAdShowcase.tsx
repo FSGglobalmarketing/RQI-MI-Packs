@@ -126,12 +126,12 @@ export default function UKNordicsAdShowcase() {
       {/* Toggle */}
       <div className="flex items-center justify-between">
         <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Ad Creatives</h4>
-        <div className="flex rounded-full border border-foreground/10 overflow-hidden">
+        <div className="flex rounded-full bg-foreground/10 p-1">
           <button
             onClick={() => { setMode("static"); setExpanded(null); }}
-            className={`px-3 py-1 text-[10px] font-semibold transition-colors ${
+            className={`px-4 py-1.5 rounded-full text-[11px] font-semibold transition-all ${
               mode === "static"
-                ? "bg-primary text-primary-foreground"
+                ? "bg-primary text-primary-foreground shadow-sm"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
@@ -139,9 +139,9 @@ export default function UKNordicsAdShowcase() {
           </button>
           <button
             onClick={() => { setMode("carousel"); setExpanded(null); }}
-            className={`px-3 py-1 text-[10px] font-semibold transition-colors ${
+            className={`px-4 py-1.5 rounded-full text-[11px] font-semibold transition-all ${
               mode === "carousel"
-                ? "bg-primary text-primary-foreground"
+                ? "bg-primary text-primary-foreground shadow-sm"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
