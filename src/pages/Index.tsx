@@ -6,6 +6,7 @@ import PerformanceResults from "@/components/report/PerformanceResults";
 import SearchVisibility from "@/components/report/SearchVisibility";
 import { CampaignSection, CampaignChartPage, NorthAmericaChart, NorthAmericaExtra, DACHCharts, UKNordicsChart, UKNordicsLearnings } from "@/components/report/CampaignSection";
 import DACHPhoneShowcase from "@/components/report/DACHPhoneShowcase";
+import UKNordicsAdShowcase from "@/components/report/UKNordicsAdShowcase";
 import DeviceMockup from "@/components/report/DeviceMockup";
 import AlwaysOnSection from "@/components/report/AlwaysOnSection";
 import LinkedInSection from "@/components/report/LinkedInSection";
@@ -78,6 +79,7 @@ const Index = () => {
         formats={d.campaigns.ukNordics.formats}
         keyResults={d.campaigns.ukNordics.keyResults}
         variant="dark"
+        phoneImage={<UKNordicsAdShowcase />}
       />
       {/* UK & Nordics — Page 2: Charts & Data */}
       <CampaignChartPage id="uk-nordics" title={d.campaigns.ukNordics.title} variant="dark">
