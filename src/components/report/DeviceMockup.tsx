@@ -21,7 +21,7 @@ export default function DeviceMockup({
   ipadImageSrc = naIpadImage,
   alt = "Campaign preview",
 }: DeviceMockupProps) {
-  const [device, setDevice] = useState<DeviceMode>("iphone");
+  const [device, setDevice] = useState<DeviceMode>("ipad");
 
   const isIphone = device === "iphone";
   const imgSrc = isIphone ? iphoneImageSrc : ipadImageSrc;
