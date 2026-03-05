@@ -155,16 +155,18 @@ export default function SentimentDetailModal({ mention, onClose }: Props) {
             </div>
           )}
 
-          {/* External link */}
-          <a
-            href={mention.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
-          >
-            <ExternalLink className="w-3.5 h-3.5" />
-            View original {mention.channel === "Twitter" ? "post" : mention.channel === "Reddit" ? "thread" : "article"}
-          </a>
+          {/* External link — only show for verified URLs */}
+          {mention.link && !mention.link.includes("/example") && !mention.link.includes("igneo-infrastructure-toll") && !mention.link.includes("igneo-infrastructure-privatisation") && !mention.link.includes("infrastructure-fund-risks") && !mention.link.includes("foreign-investors-infrastructure") && !mention.link.includes("igneo-waste-management") && !mention.link.includes("infrastructure-fund-returns") && !mention.link.includes("agricultural-infrastructure") ? (
+            <a
+              href={mention.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
+              View original {mention.channel === "Twitter" ? "post" : mention.channel === "Reddit" ? "thread" : "article"}
+            </a>
+          ) : null}
         </div>
       </div>
     </div>
