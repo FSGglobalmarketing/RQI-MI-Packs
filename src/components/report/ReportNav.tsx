@@ -27,6 +27,7 @@ export default function ReportNav() {
   const [active, setActive] = useState("overview");
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [, setTick] = useState(0);
   const navRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
   useEffect(() => {
@@ -42,7 +43,14 @@ export default function ReportNav() {
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const onResize = () => setTick((t) => t + 1);
+    window.addEventListener("resize", onResize);
+    // Force bracket recalculation after first paint
+    requestAnimationFrame(() => setTick((t) => t + 1));
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
 
   /* Compute bracket positions from DOM refs */
