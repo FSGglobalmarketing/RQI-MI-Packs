@@ -70,7 +70,7 @@ function FeaturedCarousel({ images }: { images: string[] }) {
   const [idx, setIdx] = useState(0);
   return (
     <div className="relative">
-      <img src={images[idx]} alt={`Slide ${idx + 1}`} className="w-full rounded-lg object-cover aspect-[4/3]" />
+      <img src={images[idx]} alt={`Slide ${idx + 1}`} className="w-full rounded-lg object-contain" />
       {/* Counter badge */}
       <div className="absolute top-3 right-3 bg-background/80 backdrop-blur-sm rounded-full px-2.5 py-1 text-[11px] font-bold text-foreground">
         {idx + 1} / {images.length}
@@ -146,7 +146,7 @@ export default function UKNordicsAdShowcase() {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto space-y-3">
+    <div className="w-full max-w-lg mx-auto space-y-3">
       {/* Header + toggle */}
       <div className="flex items-center justify-between">
         <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Ad Creatives</h4>
@@ -172,7 +172,7 @@ export default function UKNordicsAdShowcase() {
         {ad.images ? (
           <FeaturedCarousel key={`${mode}-${selected}`} images={ad.images} />
         ) : (
-          <img src={ad.image} alt={ad.name} className="w-full rounded-lg object-cover aspect-[4/3]" />
+          <img src={ad.image} alt={ad.name} className="w-full rounded-lg object-contain" />
         )}
 
         {/* Title + badge */}
