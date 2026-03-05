@@ -1,5 +1,5 @@
 import type { SentimentMention } from "@/data/sentiment-data";
-import { X, ExternalLink, Users, BarChart3, Globe, Calendar, Hash, MessageCircle } from "lucide-react";
+import { X, ExternalLink, Globe, Calendar, Hash } from "lucide-react";
 
 const SENTIMENT_COLORS = {
   positive: "hsl(var(--success))",
@@ -15,28 +15,6 @@ const CHANNEL_ICONS: Record<string, string> = {
   Bluesky: "🦋",
 };
 
-/** Check if link points to a real, verifiable URL (not a placeholder) */
-function isVerifiedUrl(url: string): boolean {
-  if (!url) return false;
-  // Exclude placeholder twitter/reddit example links
-  if (/\/example\d*$/.test(url)) return false;
-  // Exclude fabricated article slugs that don't exist
-  const fakePatterns = [
-    "igneo-infrastructure-toll", "igneo-infrastructure-privatisation",
-    "infrastructure-fund-risks", "foreign-investors-infrastructure",
-    "igneo-waste-management", "infrastructure-fund-returns",
-    "agricultural-infrastructure", "igneo-community-engagement",
-    "igneo-digital-infrastructure-concerns",
-  ];
-  return !fakePatterns.some(p => url.includes(p));
-}
-
-function formatNumber(n: number): string {
-  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
-  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K`;
-  return String(n);
-}
-
 interface Props {
   mention: SentimentMention;
   onClose: () => void;
@@ -44,6 +22,7 @@ interface Props {
 
 export default function SentimentDetailModal({ mention, onClose }: Props) {
   const sentimentColor = SENTIMENT_COLORS[mention.sentiment];
+  const hasLink = mention.link && mention.link.length > 0;
 
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
@@ -94,72 +73,7 @@ export default function SentimentDetailModal({ mention, onClose }: Props) {
               <Hash className="w-3.5 h-3.5 text-primary" />
               {mention.country}
             </span>
-            {mention.author && (
-              <span className="flex items-center gap-1.5">
-                <MessageCircle className="w-3.5 h-3.5 text-primary" />
-                {mention.author}
-              </span>
-            )}
           </div>
-
-          {/* Share of Voice / Reach metrics */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            {mention.followers !== undefined && (
-              <div className="rounded-xl border border-secondary-foreground/8 bg-secondary-foreground/3 p-4 text-center">
-                <Users className="w-4 h-4 text-primary mx-auto mb-1.5" />
-                <p className="text-lg font-extrabold text-secondary-foreground">{formatNumber(mention.followers)}</p>
-                <p className="text-[10px] text-secondary-foreground/50 uppercase tracking-wider font-semibold">
-                  {mention.channel === "Reddit" ? "Subreddit Members" : "Followers"}
-                </p>
-              </div>
-            )}
-            {mention.domainRank !== undefined && (
-              <div className="rounded-xl border border-secondary-foreground/8 bg-secondary-foreground/3 p-4 text-center">
-                <BarChart3 className="w-4 h-4 text-primary mx-auto mb-1.5" />
-                <p className="text-lg font-extrabold text-secondary-foreground">#{formatNumber(mention.domainRank)}</p>
-                <p className="text-[10px] text-secondary-foreground/50 uppercase tracking-wider font-semibold">Domain Rank</p>
-              </div>
-            )}
-            {mention.engagement !== undefined && (
-              <div className="rounded-xl border border-secondary-foreground/8 bg-secondary-foreground/3 p-4 text-center">
-                <MessageCircle className="w-4 h-4 text-primary mx-auto mb-1.5" />
-                <p className="text-lg font-extrabold text-secondary-foreground">{formatNumber(mention.engagement)}</p>
-                <p className="text-[10px] text-secondary-foreground/50 uppercase tracking-wider font-semibold">Engagements</p>
-              </div>
-            )}
-          </div>
-
-          {/* Exposure indicator */}
-          {(mention.followers || mention.domainRank) && (
-            <div className="rounded-xl border border-secondary-foreground/8 bg-secondary-foreground/3 p-4">
-              <p className="text-[10px] text-secondary-foreground/50 uppercase tracking-wider font-semibold mb-2">
-                Share of Voice Indicator
-              </p>
-              <div className="flex items-center gap-3">
-                <div className="flex-1 h-2 rounded-full bg-secondary-foreground/10 overflow-hidden">
-                  <div
-                    className="h-full rounded-full transition-all"
-                    style={{
-                      width: `${Math.min(100, mention.domainRank ? Math.max(5, 100 - Math.log10(mention.domainRank) * 18) : mention.followers ? Math.min(100, (mention.followers / 500_000) * 100) : 10)}%`,
-                      backgroundColor: sentimentColor,
-                    }}
-                  />
-                </div>
-                <span className="text-xs font-bold text-secondary-foreground whitespace-nowrap">
-                  {mention.domainRank && mention.domainRank < 5_000
-                    ? "High Exposure"
-                    : mention.followers && mention.followers > 50_000
-                    ? "High Exposure"
-                    : mention.domainRank && mention.domainRank < 50_000
-                    ? "Medium Exposure"
-                    : "Low Exposure"}
-                </span>
-              </div>
-              <p className="text-[10px] text-secondary-foreground/40 mt-1.5">
-                Based on {mention.domainRank ? `domain authority rank (#${mention.domainRank.toLocaleString()})` : ""}{mention.domainRank && mention.followers ? " and " : ""}{mention.followers ? `audience reach (${formatNumber(mention.followers)} followers)` : ""}
-              </p>
-            </div>
-          )}
 
           {/* Snippet */}
           {mention.snippet && (
@@ -171,8 +85,8 @@ export default function SentimentDetailModal({ mention, onClose }: Props) {
             </div>
           )}
 
-          {/* External link — only show for verified URLs */}
-          {mention.link && isVerifiedUrl(mention.link) && (
+          {/* External link */}
+          {hasLink && (
             <a
               href={mention.link}
               target="_blank"
