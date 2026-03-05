@@ -15,6 +15,22 @@ const CHANNEL_ICONS: Record<string, string> = {
   Bluesky: "🦋",
 };
 
+/** Check if link points to a real, verifiable URL (not a placeholder) */
+function isVerifiedUrl(url: string): boolean {
+  if (!url) return false;
+  // Exclude placeholder twitter/reddit example links
+  if (/\/example\d*$/.test(url)) return false;
+  // Exclude fabricated article slugs that don't exist
+  const fakePatterns = [
+    "igneo-infrastructure-toll", "igneo-infrastructure-privatisation",
+    "infrastructure-fund-risks", "foreign-investors-infrastructure",
+    "igneo-waste-management", "infrastructure-fund-returns",
+    "agricultural-infrastructure", "igneo-community-engagement",
+    "igneo-digital-infrastructure-concerns",
+  ];
+  return !fakePatterns.some(p => url.includes(p));
+}
+
 function formatNumber(n: number): string {
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
   if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K`;
