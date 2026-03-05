@@ -33,7 +33,7 @@ interface CampaignChartPageProps {
 export function CampaignSection({ id, title, stage, subtitle, description, goals, formats, keyResults, variant, phoneImage }: CampaignProps) {
   const isDark = variant === "dark";
   return (
-    <section id={id} className={`${isDark ? "section-dark topo-pattern topo-pattern-dark flow-section-dark" : "section-cream topo-pattern topo-pattern-cream flow-section-cream"} py-20 relative`}>
+    <section id={id} className={`${isDark ? "section-dark topo-pattern topo-pattern-dark flow-section-dark" : "section-cream topo-pattern topo-pattern-cream flow-section-cream"} py-24 relative`}>
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-[1]">
         <div className="grid lg:grid-cols-2 gap-10 items-start">
           {/* Left column: all content */}
@@ -93,7 +93,7 @@ export function CampaignSection({ id, title, stage, subtitle, description, goals
 export function CampaignChartPage({ id, title, variant, children, backgroundImage }: CampaignChartPageProps & { backgroundImage?: string }) {
   const isDark = variant === "dark";
   return (
-    <section id={`${id}-data`} className={`${isDark ? "section-dark" : "section-cream"} py-20 relative overflow-hidden`}>
+    <section id={`${id}-data`} className={`${isDark ? "section-dark" : "section-cream"} py-24 relative overflow-hidden`}>
       {backgroundImage && (
         <>
           <div className="absolute inset-0">
@@ -242,7 +242,7 @@ export function NorthAmericaChart() {
         {zoom.isZoomed && <button onClick={zoom.resetZoom} className="text-xs font-semibold text-primary hover:underline shrink-0">Reset zoom</button>}
       </div>
       <ChartScrollWrapper onWheel={zoom.handleWheel}>
-        <ResponsiveContainer width="100%" height={360}>
+        <ResponsiveContainer width="100%" height={400}>
           <LineChart data={zoom.visibleData} onMouseDown={zoom.onMouseDown} onMouseMove={zoom.onMouseMove} onMouseUp={zoom.onMouseUp}>
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
             <XAxis dataKey="month" tick={{ fontSize: 11, fill: "#94a3b8" }} />
@@ -346,7 +346,7 @@ export function UKNordicsChart() {
   return (
     <div className="metric-card flow-corner-bl">
       <h4 className="text-sm font-bold text-foreground mb-4">Ad Performance — Impressions vs Clicks</h4>
-      <ResponsiveContainer width="100%" height={320}>
+      <ResponsiveContainer width="100%" height={400}>
         <BarChart data={UK_CHART_DATA}>
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
           <XAxis dataKey="name" tick={{ fontSize: 9, fill: "#94a3b8" }} interval={0} />
