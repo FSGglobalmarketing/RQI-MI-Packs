@@ -12,6 +12,7 @@ import AlwaysOnSection from "@/components/report/AlwaysOnSection";
 import LinkedInSection from "@/components/report/LinkedInSection";
 import PodcastSection from "@/components/report/PodcastSection";
 import EventsSection from "@/components/report/EventsSection";
+import SentimentSection from "@/components/report/SentimentSection";
 
 import SplashScreen from "@/components/report/SplashScreen";
 import { reportData } from "@/data/igneo-report";

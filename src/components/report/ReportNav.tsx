@@ -12,6 +12,7 @@ const navItems = [
   { id: "linkedin", label: "LinkedIn" },
   { id: "podcast", label: "Podcast" },
   { id: "events", label: "Events" },
+  { id: "sentiment", label: "Sentiment" },
 ];
 
 export default function ReportNav() {
