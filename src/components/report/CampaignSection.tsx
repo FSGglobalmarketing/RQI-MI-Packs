@@ -351,7 +351,7 @@ export function UKNordicsChart() {
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
           <XAxis dataKey="name" tick={{ fontSize: 9, fill: "#94a3b8" }} interval={0} />
           <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} tickFormatter={formatKUK} />
-          <Tooltip content={<SortedTooltip />} />
+          <Tooltip content={<SortedTooltip />} cursor={{ fill: "rgba(255,255,255,0.04)" }} />
           <Legend wrapperStyle={{ fontSize: 11 }} />
           <Bar dataKey="impressions" fill="#214E6F" radius={[4, 4, 0, 0]} animationDuration={1200} name="Impressions" />
           <Bar dataKey="clicks" fill="#FF5424" radius={[4, 4, 0, 0]} animationDuration={1200} name="Clicks" />
