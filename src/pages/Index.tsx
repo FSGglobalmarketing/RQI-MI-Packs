@@ -107,6 +107,7 @@ const Index = () => {
 
       <PodcastSection />
       <EventsSection />
+      <SentimentSection />
 
       <footer className="section-dark py-10 border-t border-border">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-4">
