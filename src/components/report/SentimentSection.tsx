@@ -21,7 +21,7 @@ const COLORS = {
 /* ── Timeline: stacked area chart ── */
 function TimelineChart() {
   return (
-    <ResponsiveContainer width="100%" height={340}>
+    <ResponsiveContainer width="100%" height={420}>
       <AreaChart data={mentionsByMonth} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
         <XAxis dataKey="month" tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} />
@@ -56,7 +56,7 @@ function SentimentDonut() {
 
   return (
     <div className="flex flex-col items-center">
-      <ResponsiveContainer width="100%" height={280}>
+      <ResponsiveContainer width="100%" height={360}>
         <PieChart>
           <Pie
             data={data}
@@ -93,7 +93,7 @@ function SentimentDonut() {
 /* ── Channel bar chart ── */
 function ChannelChart() {
   return (
-    <ResponsiveContainer width="100%" height={280}>
+    <ResponsiveContainer width="100%" height={400}>
       <BarChart data={channelBreakdown} layout="vertical" margin={{ top: 10, right: 20, left: 10, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" horizontal={false} />
         <XAxis type="number" tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} />
@@ -118,7 +118,7 @@ function ChannelChart() {
 /* ── Geography bar chart ── */
 function GeographyChart() {
   return (
-    <ResponsiveContainer width="100%" height={340}>
+    <ResponsiveContainer width="100%" height={420}>
       <BarChart data={countryBreakdown} layout="vertical" margin={{ top: 10, right: 20, left: 10, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" horizontal={false} />
         <XAxis type="number" tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} />
@@ -204,7 +204,7 @@ export default function SentimentSection() {
           </div>
 
           {/* Right — Charts */}
-          <div className="glass-card-dark flow-corner-br">
+          <div className="glass-card-dark flow-corner-br min-h-[540px] flex flex-col">
             <div className="flex gap-1 mb-4 overflow-x-auto">
               {TABS.map((tab) => (
                 <button

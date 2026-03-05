@@ -301,7 +301,7 @@ export function DACHCharts() {
     <>
       <div className="glass-card-cream flow-corner-bl">
         <h4 className="text-sm font-bold text-secondary-foreground mb-4">Audience by Country</h4>
-        <ResponsiveContainer width="100%" height={280}>
+        <ResponsiveContainer width="100%" height={340}>
           <PieChart>
             <Pie data={countries} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`} animationDuration={1200}>
               {countries.map((_, i) => (
@@ -314,7 +314,7 @@ export function DACHCharts() {
       </div>
       <div className="glass-card-cream flow-corner-tr">
         <h4 className="text-sm font-bold text-secondary-foreground mb-4">Top Companies by Ad Views</h4>
-        <ResponsiveContainer width="100%" height={280}>
+        <ResponsiveContainer width="100%" height={340}>
           <BarChart data={companies} layout="vertical">
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
             <XAxis type="number" tick={{ fontSize: 11, fill: "#64748b" }} />
