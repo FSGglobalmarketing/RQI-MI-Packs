@@ -16,7 +16,7 @@ function formatK(v: number) {
 /* ── Timeline: stacked area chart ── */
 function ImpressionsTimeline() {
   return (
-    <ResponsiveContainer width="100%" height={340}>
+    <ResponsiveContainer width="100%" height={420}>
       <AreaChart data={linkedInMonthlyData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
         <XAxis dataKey="month" tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} interval={5} />
@@ -126,7 +126,7 @@ function EngagementHeatmap() {
 /* ── Organic vs Sponsored quarterly bar chart ── */
 function OrgVsSponsoredChart() {
   return (
-    <ResponsiveContainer width="100%" height={340}>
+    <ResponsiveContainer width="100%" height={420}>
       <BarChart data={linkedInQuarterlyData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
         <XAxis dataKey="quarter" tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} />
@@ -208,7 +208,7 @@ export default function LinkedInSection() {
   const [activeTab, setActiveTab] = useState<Tab>("Timeline");
 
   return (
-    <section id="linkedin" className="section-dark topo-pattern hex-pattern-dark py-20 flow-section-dark relative">
+    <section id="linkedin" className="section-dark topo-pattern hex-pattern-dark py-24 flow-section-dark relative">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-[1]">
         <div className="flex flex-wrap items-center gap-3 mb-2">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground">{d.title}</h2>
@@ -267,7 +267,7 @@ export default function LinkedInSection() {
           </div>
 
           {/* Right — Charts */}
-          <div className="glass-card-dark flow-corner-br">
+          <div className="glass-card-dark flow-corner-br min-h-[540px] flex flex-col">
             <div className="flex gap-1 mb-4 overflow-x-auto">
               {TABS.map((tab) => (
                 <button
@@ -285,9 +285,11 @@ export default function LinkedInSection() {
             </div>
 
             {activeTab === "Timeline" && (
-              <div>
+              <div className="flex-1 flex flex-col">
                 <p className="text-xs text-muted-foreground mb-3">Total impressions by month (organic + sponsored)</p>
-                <ImpressionsTimeline />
+                <div className="flex-1 min-h-0">
+                  <ImpressionsTimeline />
+                </div>
               </div>
             )}
 

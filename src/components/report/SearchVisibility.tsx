@@ -137,7 +137,7 @@ export default function SearchVisibility() {
   const isZoomed = left !== 0 || right !== allData.length - 1;
 
   return (
-    <section id="search-visibility" className="section-cream topo-pattern topo-pattern-cream py-20 flow-section-cream relative">
+    <section id="search-visibility" className="section-cream topo-pattern topo-pattern-cream py-24 flow-section-cream relative">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-[1]">
         {/* Header */}
         <div className="flex flex-wrap items-center gap-3 mb-2">
@@ -208,7 +208,7 @@ export default function SearchVisibility() {
           </div>
 
           {/* Right column — chart */}
-          <div className="glass-card-cream flow-corner-br">
+          <div className="glass-card-cream flow-corner-br min-h-[540px] flex flex-col">
             <div className="flex items-start justify-between mb-1">
               <div>
                 <h4 className="text-sm font-bold text-secondary-foreground mb-1">Search engine visibility</h4>
@@ -223,7 +223,7 @@ export default function SearchVisibility() {
               <span className="text-xs text-secondary-foreground/60">Show peers</span>
             </div>
             <ChartScrollContainer onWheelHandler={handleWheel}>
-              <ResponsiveContainer width="100%" height={480}>
+              <ResponsiveContainer width="100%" height={500}>
                 <LineChart data={visibleData} onMouseDown={onMouseDown} onMouseMove={onMouseMove} onMouseUp={onMouseUp}>
                   <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
                   <XAxis dataKey="month" tick={{ fontSize: 10, fill: "#64748b" }} />

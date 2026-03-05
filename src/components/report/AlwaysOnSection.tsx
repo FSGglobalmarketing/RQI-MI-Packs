@@ -59,7 +59,7 @@ function UsersSessionsChart({ data, variant }: { data: GaMonthlyItem[]; variant:
   const tickFill = isDark ? "hsl(195 15% 65%)" : "#64748b";
 
   return (
-    <ResponsiveContainer width="100%" height={340}>
+    <ResponsiveContainer width="100%" height={420}>
       <AreaChart data={data} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
         <XAxis dataKey="month" tick={{ fontSize: 9, fill: tickFill }} />
@@ -156,7 +156,7 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
   const [activeTab, setActiveTab] = useState<Tab>("Users & Sessions");
 
   return (
-    <section id={id} className={`${isDark ? "section-dark topo-pattern topo-pattern-dark flow-section-dark" : "section-cream topo-pattern topo-pattern-cream flow-section-cream"} py-20 relative`}>
+    <section id={id} className={`${isDark ? "section-dark topo-pattern topo-pattern-dark flow-section-dark" : "section-cream topo-pattern topo-pattern-cream flow-section-cream"} py-24 relative`}>
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-[1]">
         <div className="flex flex-wrap items-center gap-3 mb-2">
           <h2 className={`text-3xl sm:text-4xl font-extrabold ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{title}</h2>
@@ -216,7 +216,7 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
 
           {/* Right — GA Charts (if data available) */}
           {hasGA ? (
-            <div className={isDark ? "glass-card-dark flow-corner-br" : "glass-card-cream flow-corner-br"}>
+            <div className={`${isDark ? "glass-card-dark flow-corner-br" : "glass-card-cream flow-corner-br"} min-h-[540px] flex flex-col`}>
               <div className="flex gap-1 mb-4 overflow-x-auto">
                 {TABS.map((tab) => (
                   <button
@@ -234,9 +234,11 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
               </div>
 
               {activeTab === "Users & Sessions" && (
-                <div>
+                <div className="flex-1 flex flex-col">
                   <p className={`text-xs mb-3 ${isDark ? "text-muted-foreground" : "text-secondary-foreground/60"}`}>Monthly active users and sessions — Google Analytics</p>
-                  <UsersSessionsChart data={gaMonthly!} variant={variant} />
+                  <div className="flex-1 min-h-0">
+                    <UsersSessionsChart data={gaMonthly!} variant={variant} />
+                  </div>
                 </div>
               )}
 
