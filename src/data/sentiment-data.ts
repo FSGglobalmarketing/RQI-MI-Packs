@@ -760,7 +760,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2026-03-04",
     link: "https://au.linkedin.com/jobs/view/investor-relations-associate-at-igneo-infrastructure-partners-4378556368",
-    followers: 26,
   },
   {
     title: "#marketingcommunications | Igneo Infrastructure Partners",
