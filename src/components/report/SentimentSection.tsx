@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import {
   AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, Legend, PieChart, Pie, Cell,
@@ -16,6 +16,9 @@ type Tab = typeof TABS[number];
 
 const SENTIMENT_FILTERS = ["all", "positive", "neutral", "negative"] as const;
 type SentimentFilter = typeof SENTIMENT_FILTERS[number];
+
+const CHANNEL_FILTERS = ["all", "Web", "LinkedIn", "Twitter", "Reddit", "Bluesky"] as const;
+type ChannelFilter = typeof CHANNEL_FILTERS[number];
 
 const COLORS = {
   positive: "hsl(142 60% 45%)",
@@ -92,8 +95,14 @@ function SentimentDonut() {
   );
 }
 
-/* ── Channel bar chart ── */
-function ChannelChart() {
+/* ── Channel bar chart (clickable) ── */
+function ChannelChart({ onBarClick }: { onBarClick: (sentiment: SentimentFilter, channel: ChannelFilter) => void }) {
+  const handleClick = (data: any, sentiment: string) => {
+    if (data?.channel) {
+      onBarClick(sentiment as SentimentFilter, data.channel as ChannelFilter);
+    }
+  };
+
   return (
     <div className="flex-1 min-h-0">
       <ResponsiveContainer width="100%" height="100%">
@@ -101,10 +110,10 @@ function ChannelChart() {
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" horizontal={false} />
           <XAxis type="number" tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} />
           <YAxis type="category" dataKey="channel" tick={{ fontSize: 11, fill: "hsl(195 15% 65%)" }} width={70} />
-          <Tooltip contentStyle={{ background: "hsl(195 30% 12%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }} />
-          <Bar dataKey="positive" stackId="a" fill={COLORS.positive} radius={[0, 0, 0, 0]} />
-          <Bar dataKey="neutral" stackId="a" fill={COLORS.neutral} />
-          <Bar dataKey="negative" stackId="a" fill={COLORS.negative} radius={[0, 4, 4, 0]} />
+          <Tooltip contentStyle={{ background: "hsl(195 30% 12%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }} cursor={{ fill: "rgba(255,255,255,0.04)" }} />
+          <Bar dataKey="positive" stackId="a" fill={COLORS.positive} radius={[0, 0, 0, 0]} className="cursor-pointer" onClick={(data) => handleClick(data, "positive")} />
+          <Bar dataKey="neutral" stackId="a" fill={COLORS.neutral} className="cursor-pointer" onClick={(data) => handleClick(data, "neutral")} />
+          <Bar dataKey="negative" stackId="a" fill={COLORS.negative} radius={[0, 4, 4, 0]} className="cursor-pointer" onClick={(data) => handleClick(data, "negative")} />
           <Legend
             wrapperStyle={{ fontSize: 10, paddingTop: 8 }}
             formatter={(value: string) => (
@@ -126,7 +135,7 @@ function GeographyChart() {
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" horizontal={false} />
           <XAxis type="number" tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} />
           <YAxis type="category" dataKey="country" tick={{ fontSize: 10, fill: "hsl(195 15% 65%)" }} width={100} />
-          <Tooltip contentStyle={{ background: "hsl(195 30% 12%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }} />
+          <Tooltip contentStyle={{ background: "hsl(195 30% 12%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }} cursor={{ fill: "rgba(255,255,255,0.04)" }} />
           <Bar dataKey="mentions" fill="hsl(14 100% 57%)" radius={[0, 4, 4, 0]} />
         </BarChart>
       </ResponsiveContainer>
@@ -144,126 +153,56 @@ function SentimentDot({ sentiment }: { sentiment: string }) {
 export default function SentimentSection() {
   const [activeTab, setActiveTab] = useState<Tab>("Timeline");
   const [sentimentFilter, setSentimentFilter] = useState<SentimentFilter>("all");
+  const [channelFilter, setChannelFilter] = useState<ChannelFilter>("all");
   const [selectedMention, setSelectedMention] = useState<SentimentMention | null>(null);
 
+  const handleBarClick = useCallback((sentiment: SentimentFilter, channel: ChannelFilter) => {
+    setSentimentFilter(sentiment);
+    setChannelFilter(channel);
+  }, []);
+
+  const clearFilters = useCallback(() => {
+    setSentimentFilter("all");
+    setChannelFilter("all");
+  }, []);
+
   const filteredHighlights = useMemo(() => {
-    if (sentimentFilter === "all") return recentHighlights;
-    return recentHighlights.filter((m) => m.sentiment === sentimentFilter);
-  }, [sentimentFilter]);
+    let results = recentHighlights;
+    if (sentimentFilter !== "all") {
+      results = results.filter((m) => m.sentiment === sentimentFilter);
+    }
+    if (channelFilter !== "all") {
+      results = results.filter((m) => m.channel === channelFilter);
+    }
+    return results;
+  }, [sentimentFilter, channelFilter]);
+
+  const activeFilterCount = (sentimentFilter !== "all" ? 1 : 0) + (channelFilter !== "all" ? 1 : 0);
 
   return (
     <section id="sentiment" className="section-dark topo-pattern hex-pattern-dark py-24 flow-section-dark relative">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-[1]">
+        {/* Header */}
         <div className="flex flex-wrap items-center gap-3 mb-2">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground">Sentiment Monitoring</h2>
           <span className="stage-badge text-xs">Social Listening</span>
         </div>
-        <p className="text-muted-foreground mb-8">
+        <p className="text-muted-foreground mb-6">
           Brand visibility and media sentiment tracking across web, social and news channels — powered by Brandwatch.
         </p>
 
-        <div className="grid lg:grid-cols-2 gap-10">
-          {/* Left — KPIs & Highlights */}
-          <div className="space-y-6">
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              Monitoring of all public mentions of Igneo Infrastructure Partners across global web, news, LinkedIn, Twitter/X, Reddit, and Bluesky.
-              Coverage spans Sep 2025 – Mar 2026 with 940+ tracked mentions across 24 countries.
-            </p>
+        {/* KPIs row */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <KpiRow value="940+" label="Total mentions" comparison="+18% vs prior period" />
+          <KpiRow value={sentimentKpis.positiveRate} label="Positive sentiment" comparison="+5pp vs Q3" />
+          <KpiRow value={String(sentimentKpis.countriesReached)} label="Countries reached" comparison="+3 new markets" />
+          <KpiRow value="83%" label="Web coverage share" comparison="Dominant channel" />
+        </div>
 
-            <div>
-              <h4 className="text-sm font-bold mb-4 text-foreground">Key Metrics</h4>
-              <div className="space-y-3">
-                <KpiRow value="940+" label="Total mentions" comparison="+18% vs prior period" />
-                <KpiRow value={sentimentKpis.positiveRate} label="Positive sentiment" comparison="+5pp vs Q3" />
-                <KpiRow value={String(sentimentKpis.countriesReached)} label="Countries reached" comparison="+3 new markets" />
-                <KpiRow value="83%" label="Web coverage share" comparison="Dominant channel" />
-              </div>
-            </div>
-
-            {/* Sentiment Filter + Notable Coverage */}
-            <div className="glass-card-dark flow-corner-bl">
-              <div className="flex items-center justify-between mb-3">
-                <h4 className="text-sm font-bold text-foreground">Notable Coverage</h4>
-                <div className="flex gap-1">
-                  {SENTIMENT_FILTERS.map((f) => (
-                    <button
-                      key={f}
-                      onClick={() => setSentimentFilter(f)}
-                      className={`px-2.5 py-1 rounded-full text-[10px] font-semibold transition-all capitalize ${
-                        sentimentFilter === f
-                          ? f === "positive" ? "bg-success/20 text-success"
-                          : f === "negative" ? "bg-destructive/20 text-destructive"
-                          : f === "neutral" ? "bg-muted/30 text-muted-foreground"
-                          : "bg-primary text-primary-foreground"
-                          : "text-muted-foreground hover:text-foreground"
-                      }`}
-                    >
-                      {f}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="space-y-3 max-h-[420px] overflow-y-auto pr-2" style={{ scrollbarWidth: "thin" }}>
-                {filteredHighlights.length === 0 && (
-                  <p className="text-xs text-muted-foreground py-4 text-center">No mentions with this sentiment filter.</p>
-                )}
-                {filteredHighlights.map((m, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setSelectedMention(m)}
-                    className="flex items-start gap-3 group cursor-pointer w-full text-left"
-                  >
-                    <SentimentDot sentiment={m.sentiment} />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-snug">
-                        {m.title}
-                      </p>
-                      <div className="flex items-center gap-2 mt-1 flex-wrap">
-                        <span className="text-[10px] text-muted-foreground">{m.source}</span>
-                        <span className="text-[10px] text-muted-foreground">·</span>
-                        <span className="text-[10px] text-muted-foreground">
-                          {new Date(m.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
-                        </span>
-                        {m.followers !== undefined && m.followers > 0 && (
-                          <>
-                            <span className="text-[10px] text-muted-foreground">·</span>
-                            <span className="text-[10px] font-semibold text-primary/80">
-                              {formatFollowers(m.followers)} followers
-                            </span>
-                          </>
-                        )}
-                        {m.engagement !== undefined && (
-                          <>
-                            <span className="text-[10px] text-muted-foreground">·</span>
-                            <span className="text-[10px] text-muted-foreground">
-                              {m.engagement} engagements
-                            </span>
-                          </>
-                        )}
-                        {m.domainRank !== undefined && (
-                          <>
-                            <span className="text-[10px] text-muted-foreground">·</span>
-                            <span className={`text-[10px] font-semibold ${
-                              m.domainRank < 5_000 ? "text-success" : m.domainRank < 50_000 ? "text-warning" : "text-muted-foreground"
-                            }`}>
-                              Rank #{m.domainRank.toLocaleString()}
-                            </span>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                    <svg className="w-3.5 h-3.5 text-muted-foreground shrink-0 mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path d="M7 17L17 7M17 7H7M17 7v10" />
-                    </svg>
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Right — Charts */}
-          <div className="glass-card-dark flow-corner-br min-h-[540px] flex flex-col">
+        {/* Charts row — full width, like the events map */}
+        <div className="grid lg:grid-cols-2 gap-6 mb-8">
+          {/* Left chart — tabbed */}
+          <div className="glass-card-dark flow-corner-br min-h-[420px] flex flex-col">
             <div className="flex gap-1 mb-4 overflow-x-auto">
               {TABS.map((tab) => (
                 <button
@@ -286,21 +225,18 @@ export default function SentimentSection() {
                 <TimelineChart />
               </div>
             )}
-
             {activeTab === "Sentiment" && (
               <div className="flex flex-col flex-1 min-h-0">
                 <p className="text-xs text-muted-foreground mb-3">Overall sentiment distribution — Sep 2025 to Mar 2026</p>
                 <SentimentDonut />
               </div>
             )}
-
             {activeTab === "Channels" && (
               <div className="flex flex-col flex-1 min-h-0">
-                <p className="text-xs text-muted-foreground mb-3">Mentions by channel with sentiment breakdown</p>
-                <ChannelChart />
+                <p className="text-xs text-muted-foreground mb-3">Click a bar segment to filter coverage below</p>
+                <ChannelChart onBarClick={handleBarClick} />
               </div>
             )}
-
             {activeTab === "Geography" && (
               <div className="flex flex-col flex-1 min-h-0">
                 <p className="text-xs text-muted-foreground mb-3">Top 10 countries by mention volume</p>
@@ -308,6 +244,155 @@ export default function SentimentSection() {
               </div>
             )}
           </div>
+
+          {/* Right — summary text + description */}
+          <div className="glass-card-dark flow-corner-bl min-h-[420px] flex flex-col justify-between">
+            <div>
+              <h4 className="text-sm font-bold mb-3 text-foreground">Coverage Summary</h4>
+              <p className="text-sm leading-relaxed text-muted-foreground mb-4">
+                Monitoring of all public mentions of Igneo Infrastructure Partners across global web, news, LinkedIn, Twitter/X, Reddit, and Bluesky.
+                Coverage spans Sep 2025 – Mar 2026 with 940+ tracked mentions across 24 countries.
+              </p>
+              <p className="text-sm leading-relaxed text-muted-foreground mb-4">
+                The majority of negative sentiment originates from German-language media, focused on themes of infrastructure privatisation,
+                community impact, and regulatory oversight. High-authority outlets like Spiegel, Berliner Zeitung, and PAZ account for
+                the most impactful negative coverage by domain rank.
+              </p>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                Positive coverage is dominated by acquisition and fund-close announcements, particularly the EDIF III close at €5.3bn
+                and the Vault Digital Infrastructure acquisition, with strong amplification via Twitter/X industry commentators.
+              </p>
+            </div>
+            <div className="mt-4 flex items-center gap-6 text-xs text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: COLORS.positive }} />
+                <span>{sentimentBreakdown.positive} positive</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: COLORS.neutral }} />
+                <span>{sentimentBreakdown.neutral} neutral</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: COLORS.negative }} />
+                <span>{sentimentBreakdown.negative} negative</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Filter bar */}
+        <div className="flex flex-wrap items-center gap-2 mb-4">
+          <span className="text-sm font-bold text-foreground mr-2">Notable Coverage</span>
+
+          {/* Sentiment filters */}
+          {SENTIMENT_FILTERS.map((f) => (
+            <button
+              key={f}
+              onClick={() => setSentimentFilter(f)}
+              className={`px-2.5 py-1 rounded-full text-[10px] font-semibold transition-all capitalize ${
+                sentimentFilter === f
+                  ? f === "positive" ? "bg-success/20 text-success"
+                  : f === "negative" ? "bg-destructive/20 text-destructive"
+                  : f === "neutral" ? "bg-muted/30 text-muted-foreground"
+                  : "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {f}
+            </button>
+          ))}
+
+          <span className="text-muted-foreground/30 mx-1">|</span>
+
+          {/* Channel filters */}
+          {CHANNEL_FILTERS.map((f) => (
+            <button
+              key={f}
+              onClick={() => setChannelFilter(f)}
+              className={`px-2.5 py-1 rounded-full text-[10px] font-semibold transition-all ${
+                channelFilter === f
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {f === "all" ? "All Channels" : f}
+            </button>
+          ))}
+
+          {activeFilterCount > 0 && (
+            <button onClick={clearFilters} className="px-2.5 py-1 rounded-full text-[10px] font-semibold text-destructive hover:text-destructive/80 transition-all ml-1">
+              Clear filters
+            </button>
+          )}
+
+          <span className="text-xs text-muted-foreground ml-auto">
+            {filteredHighlights.length} mention{filteredHighlights.length !== 1 ? "s" : ""}
+          </span>
+        </div>
+
+        {/* Coverage table — full width like events table */}
+        <div className="glass-card-dark flow-corner-bl overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-white/10">
+                <th className="text-left py-3 px-4 text-foreground font-semibold w-6"></th>
+                <th className="text-left py-3 px-4 text-foreground font-semibold">Title</th>
+                <th className="text-left py-3 px-4 text-foreground font-semibold">Source</th>
+                <th className="text-left py-3 px-4 text-foreground font-semibold">Channel</th>
+                <th className="text-left py-3 px-4 text-foreground font-semibold">Country</th>
+                <th className="text-left py-3 px-4 text-foreground font-semibold">Date</th>
+                <th className="text-right py-3 px-4 text-foreground font-semibold">Reach</th>
+                <th className="text-right py-3 px-4 text-foreground font-semibold">Rank</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredHighlights.length === 0 && (
+                <tr>
+                  <td colSpan={8} className="text-center py-8 text-muted-foreground text-xs">
+                    No mentions match the current filters.
+                  </td>
+                </tr>
+              )}
+              {filteredHighlights.map((m, i) => (
+                <tr
+                  key={i}
+                  onClick={() => setSelectedMention(m)}
+                  className="border-b border-white/5 hover:bg-white/[0.03] transition-colors cursor-pointer group"
+                >
+                  <td className="py-3 px-4">
+                    <SentimentDot sentiment={m.sentiment} />
+                  </td>
+                  <td className="py-3 px-4 font-medium text-foreground group-hover:text-primary transition-colors max-w-[400px]">
+                    <span className="line-clamp-1">{m.title}</span>
+                  </td>
+                  <td className="py-3 px-4 text-muted-foreground whitespace-nowrap">{m.source}</td>
+                  <td className="py-3 px-4 text-muted-foreground">{m.channel}</td>
+                  <td className="py-3 px-4 text-muted-foreground">{m.country}</td>
+                  <td className="py-3 px-4 text-muted-foreground whitespace-nowrap">
+                    {new Date(m.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "2-digit" })}
+                  </td>
+                  <td className="py-3 px-4 text-right">
+                    {m.followers !== undefined && m.followers > 0 ? (
+                      <span className="text-primary font-semibold">{formatFollowers(m.followers)}</span>
+                    ) : (
+                      <span className="text-muted-foreground/30">—</span>
+                    )}
+                  </td>
+                  <td className="py-3 px-4 text-right">
+                    {m.domainRank !== undefined ? (
+                      <span className={`font-semibold ${
+                        m.domainRank < 1_000 ? "text-success" : m.domainRank < 10_000 ? "text-primary" : m.domainRank < 50_000 ? "text-warning" : "text-muted-foreground"
+                      }`}>
+                        #{m.domainRank.toLocaleString()}
+                      </span>
+                    ) : (
+                      <span className="text-muted-foreground/30">—</span>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
 
