@@ -1369,6 +1369,20 @@ export const recentHighlights: SentimentMention[] = [
     link: "https://www.linkedin.com/posts/igneo-infrastructure-partners_giant-energy-from-waste-facility-connected-activity-7369351590182391811-grE1",
     followers: 26,
   },
+  /* ─── Reddit ─── */
+  {
+    title: "CVC DIF and Northleaf Divest US Data Center Portfolio, Vault Digital Infrastructure, to Igneo Infrastructure Partners",
+    source: "reddit.com",
+    channel: "Reddit",
+    category: "Reddit Posts",
+    sentiment: "positive",
+    country: "US",
+    date: "2026-02-05",
+    link: "https://www.reddit.com/r/Quantisnow/comments/1qwkpln/cvc_dif_and_northleaf_divest_us_data_center/",
+    author: "Quantisnow",
+    followers: 2861,
+    engagement: 1,
+  },
   /* ─── Bluesky ─── */
   {
     title: "Italy's natural gas grid operator Snam has acquired a 48.2% stake in Offshore LNG Toscana (OLT) from UK-based Igneo Infrastructure Partners",
