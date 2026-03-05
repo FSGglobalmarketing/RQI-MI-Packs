@@ -17,7 +17,7 @@ type Tab = typeof TABS[number];
 const SENTIMENT_FILTERS = ["all", "positive", "neutral", "negative"] as const;
 type SentimentFilter = typeof SENTIMENT_FILTERS[number];
 
-const CHANNEL_FILTERS = ["all", "Web", "Twitter", "Bluesky", "Youtube"] as const;
+const CHANNEL_FILTERS = ["all", "Web", "Twitter"] as const;
 type ChannelFilter = typeof CHANNEL_FILTERS[number];
 
 const COLORS = {
@@ -193,10 +193,10 @@ export default function SentimentSection() {
 
         {/* KPIs row */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <KpiRow value="940+" label="Total mentions" comparison="+18% vs prior period" />
-          <KpiRow value={sentimentKpis.positiveRate} label="Positive sentiment" comparison="+5pp vs Q3" />
-          <KpiRow value={String(sentimentKpis.countriesReached)} label="Countries reached" comparison="+3 new markets" />
-          <KpiRow value="83%" label="Web coverage share" comparison="Dominant channel" />
+          <KpiRow value={String(sentimentKpis.totalMentions)} label="Total mentions" comparison="Jan – Mar 2026" />
+          <KpiRow value={sentimentKpis.positiveRate} label="Positive sentiment" comparison="Across all channels" />
+          <KpiRow value={String(sentimentKpis.countriesReached)} label="Countries reached" comparison="10 markets" />
+          <KpiRow value="97%" label="Web coverage share" comparison="Dominant channel" />
         </div>
 
         {/* Charts row — full width, like the events map */}
@@ -250,17 +250,17 @@ export default function SentimentSection() {
             <div>
               <h4 className="text-sm font-bold mb-3 text-foreground">Coverage Summary</h4>
               <p className="text-sm leading-relaxed text-muted-foreground mb-4">
-                Monitoring of all public mentions of Igneo Infrastructure Partners across global web, news, LinkedIn, Twitter/X, Reddit, and Bluesky.
-                Coverage spans Sep 2025 – Mar 2026 with 940+ tracked mentions across 24 countries.
+                Monitoring of all public mentions of Igneo Infrastructure Partners across global web, news, and Twitter/X.
+                Coverage spans Jan – Mar 2026 with 93 tracked mentions across 10 countries.
               </p>
               <p className="text-sm leading-relaxed text-muted-foreground mb-4">
-                The majority of negative sentiment originates from German-language media, focused on themes of infrastructure privatisation,
-                community impact, and regulatory oversight. High-authority outlets like Spiegel, Berliner Zeitung, and PAZ account for
+                Negative sentiment originates exclusively from German-language media, focused on the Deutsche Agrar Holding (DAH) acquisition
+                and themes of foreign ownership of agricultural land. High-authority outlets like Berliner Zeitung and Nachdenkseiten account for
                 the most impactful negative coverage by domain rank.
               </p>
               <p className="text-sm leading-relaxed text-muted-foreground">
-                Positive coverage is dominated by acquisition and fund-close announcements, particularly the EDIF III close at €5.3bn
-                and the Vault Digital Infrastructure acquisition, with strong amplification via Twitter/X industry commentators.
+                Positive coverage is driven by the Snam/OLT completion, Strait Link acquisition, Terra-Gen energy storage operations,
+                and the Vault Digital Infrastructure portfolio exit, alongside Westconnect fiber rollout press releases across Germany.
               </p>
             </div>
             <div className="mt-4 flex items-center gap-6 text-xs text-muted-foreground">
