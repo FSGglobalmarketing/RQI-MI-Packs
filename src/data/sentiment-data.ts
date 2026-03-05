@@ -60,7 +60,6 @@ export const channelBreakdown: {
 }[] = [
   { channel: "Web", mentions: 780, positive: 260, neutral: 514, negative: 6 },
   { channel: "Twitter", mentions: 42, positive: 18, neutral: 22, negative: 2 },
-  { channel: "Twitter", mentions: 42, positive: 18, neutral: 22, negative: 2 },
   { channel: "Bluesky", mentions: 18, positive: 4, neutral: 14, negative: 0 },
   { channel: "Youtube", mentions: 15, positive: 2, neutral: 12, negative: 1 },
 ];
