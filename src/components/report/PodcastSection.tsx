@@ -14,7 +14,7 @@ function EpisodeLeaderboard() {
   const maxStreams = sorted[0]?.streams || 1;
 
   return (
-    <div className="space-y-2 max-h-[400px] overflow-y-auto pr-2">
+    <div className="space-y-2 max-h-[460px] overflow-y-auto pr-2">
       {sorted.map((ep, i) => (
         <div key={ep.title} className="group flex items-center gap-3">
           <span className={`text-xs font-bold w-5 text-right shrink-0 ${i < 3 ? "text-primary" : "text-muted-foreground"}`}>
@@ -48,7 +48,7 @@ function StreamsOverTime() {
   const releaseMonths = podcastMonthlyStreams.filter((m) => m.episodeReleased);
 
   return (
-    <ResponsiveContainer width="100%" height={280}>
+    <ResponsiveContainer width="100%" height={420}>
       <LineChart data={podcastMonthlyStreams} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
         <XAxis dataKey="month" tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} interval={5} />
@@ -131,7 +131,7 @@ export default function PodcastSection() {
   const totalStreams = podcastEpisodes.reduce((sum, ep) => sum + ep.streams, 0);
 
   return (
-    <section id="podcast" className="section-dark topo-pattern pumice-pattern-dark py-20 flow-section-dark relative">
+    <section id="podcast" className="section-dark topo-pattern pumice-pattern-dark py-24 flow-section-dark relative">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-[1]">
         <div className="flex flex-wrap items-center gap-3 mb-2">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground">{p.title}</h2>
@@ -181,7 +181,7 @@ export default function PodcastSection() {
           </div>
 
           {/* Right — Tabbed charts */}
-          <div className="glass-card-dark flow-corner-br">
+          <div className="glass-card-dark flow-corner-br min-h-[540px] flex flex-col">
             <div className="flex gap-1 mb-4 overflow-x-auto">
               {TABS.map((tab) => (
                 <button
@@ -199,9 +199,11 @@ export default function PodcastSection() {
             </div>
 
             {activeTab === "Leaderboard" && (
-              <div>
+              <div className="flex-1 flex flex-col">
                 <p className="text-xs text-muted-foreground mb-3">Top episodes ranked by total streams</p>
-                <EpisodeLeaderboard />
+                <div className="flex-1 min-h-0">
+                  <EpisodeLeaderboard />
+                </div>
               </div>
             )}
 

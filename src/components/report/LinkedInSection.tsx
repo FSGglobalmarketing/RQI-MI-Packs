@@ -126,7 +126,7 @@ function EngagementHeatmap() {
 /* ── Organic vs Sponsored quarterly bar chart ── */
 function OrgVsSponsoredChart() {
   return (
-    <ResponsiveContainer width="100%" height={340}>
+    <ResponsiveContainer width="100%" height={420}>
       <BarChart data={linkedInQuarterlyData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
         <XAxis dataKey="quarter" tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} />
@@ -267,7 +267,7 @@ export default function LinkedInSection() {
           </div>
 
           {/* Right — Charts */}
-          <div className="glass-card-dark flow-corner-br">
+          <div className="glass-card-dark flow-corner-br min-h-[540px] flex flex-col">
             <div className="flex gap-1 mb-4 overflow-x-auto">
               {TABS.map((tab) => (
                 <button
@@ -285,9 +285,11 @@ export default function LinkedInSection() {
             </div>
 
             {activeTab === "Timeline" && (
-              <div>
+              <div className="flex-1 flex flex-col">
                 <p className="text-xs text-muted-foreground mb-3">Total impressions by month (organic + sponsored)</p>
-                <ImpressionsTimeline />
+                <div className="flex-1 min-h-0">
+                  <ImpressionsTimeline />
+                </div>
               </div>
             )}
 
