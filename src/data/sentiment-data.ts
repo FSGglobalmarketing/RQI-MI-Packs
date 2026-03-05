@@ -760,7 +760,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2026-03-04",
     link: "https://au.linkedin.com/jobs/view/investor-relations-associate-at-igneo-infrastructure-partners-4378556368",
-    followers: 26,
   },
   {
     title: "#marketingcommunications | Igneo Infrastructure Partners",
@@ -771,7 +770,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2026-03-03",
     link: "https://www.linkedin.com/posts/igneo-infrastructure-partners_marketingcommunications-activity-7434597793312251904-rLec",
-    followers: 26,
   },
   {
     title: "Investment Accounting Associate - Igneo Infrastructure Partners",
@@ -782,7 +780,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2026-03-01",
     link: "https://lu.linkedin.com/jobs/view/investment-accounting-associate-at-igneo-infrastructure-partners-4372621033",
-    followers: 26,
   },
   {
     title: "Igneo Infrastructure Partners - Investment Outlook 2026",
@@ -793,7 +790,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2026-02-28",
     link: "https://www.linkedin.com/posts/igneo-infrastructure-partners_investment-outlook-2026-pensions-investments-activity-7432429759873130496-RNoj",
-    followers: 26,
   },
   {
     title: "Associate / Senior Associate - Igneo Infrastructure Partners",
@@ -804,7 +800,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2026-02-27",
     link: "https://uk.linkedin.com/jobs/view/associate-senior-associate-at-igneo-infrastructure-partners-4375948585",
-    followers: 26,
   },
   {
     title: "Atmos welcomes Victorian Government's approval of 300-MW BESS in Heywood",
@@ -815,7 +810,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2026-02-25",
     link: "https://www.linkedin.com/posts/igneo-infrastructure-partners_marketingcommunications-activity-7432088794243428352-SRWt",
-    followers: 26,
   },
   {
     title: "#marketingcommunications | Igneo Infrastructure Partners",
@@ -826,7 +820,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2026-02-18",
     link: "https://www.linkedin.com/posts/igneo-infrastructure-partners_marketingcommunications-activity-7429900968928063488-aBBt",
-    followers: 26,
   },
   {
     title: "Igneo Infrastructure Partners at Global Infrastructure",
@@ -837,7 +830,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2026-02-18",
     link: "https://www.linkedin.com/posts/igneo-infrastructure-partners_igneo-infrastructure-partners-at-global-infrastructure-activity-7429535182178738176-goLA",
-    followers: 26,
   },
   {
     title: "The North American infrastructure opportunity",
@@ -848,7 +840,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2026-02-12",
     link: "https://www.linkedin.com/posts/igneo-infrastructure-partners_marketingcommunications-activity-7427693592816599040-7DP0",
-    followers: 26,
   },
   {
     title: "#marketingcommunications | Igneo Infrastructure Partners",
@@ -859,7 +850,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2026-02-12",
     link: "https://www.linkedin.com/posts/igneo-infrastructure-partners_marketingcommunications-activity-7427361733385609216-F9yM",
-    followers: 26,
   },
   {
     title: "Igneo Infrastructure Partners Acquires Indigo Generation",
@@ -870,7 +860,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2026-02-09",
     link: "https://www.linkedin.com/posts/institutional-investing-in-infrastructure-i3-_igneo-makes-inaugural-investment-in-thermal-activity-7424852365759057920-bING",
-    followers: 26,
   },
   {
     title: "Igneo Infrastructure Partners Announce Closing of Indigo Acquisition",
@@ -881,7 +870,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2026-02-04",
     link: "https://www.linkedin.com/posts/michael-ryder_igneo-infrastructure-partners-announce-closing-activity-7424623831673331712-Bahd",
-    followers: 26,
   },
   {
     title: "#marketingcommunications | Igneo Infrastructure Partners",
@@ -892,7 +880,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2026-01-13",
     link: "https://www.linkedin.com/posts/igneo-infrastructure-partners_marketingcommunications-activity-7416498308384464896-iqec",
-    followers: 26,
   },
   {
     title: "Snam, accordo con Igneo Infrastructure Partners per il 48.2%",
@@ -903,7 +890,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2025-12-28",
     link: "https://www.linkedin.com/posts/elena-busson-06ab7b89_snam-accordo-con-igneo-infrastructure-partners-activity-7409598160697794560-VX5k",
-    followers: 26,
   },
   {
     title: "Allegro Sells Strait Link to Igneo Infrastructure Partners",
@@ -914,7 +900,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2025-12-28",
     link: "https://www.linkedin.com/posts/allegro-funds-pty-ltd_we-are-pleased-to-share-that-allegro-has-activity-7408643884035104768-5wra",
-    followers: 26,
   },
   {
     title: "Strait Link Announces Sale to Igneo Infrastructure Partners",
@@ -925,7 +910,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2025-12-28",
     link: "https://www.linkedin.com/posts/straitlink_strait-link-announces-sale-to-igneo-infrastructure-activity-7408696623595364353-ZfuS",
-    followers: 26,
   },
   {
     title: "Igneo Infrastructure Partners Acquires Strait Link Logistics",
@@ -936,7 +920,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2025-12-28",
     link: "https://www.linkedin.com/posts/igneo-infrastructure-partners_igneo-infrastructure-partners-to-acquire-activity-7408619135200399360-YAfw",
-    followers: 26,
   },
   {
     title: "#marketingcommunication | Igneo Infrastructure Partners",
@@ -947,7 +930,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2025-12-11",
     link: "https://www.linkedin.com/posts/igneo-infrastructure-partners_marketingcommunication-activity-7404565122947428352-SEL3",
-    followers: 26,
   },
   {
     title: "Igneo Infrastructure Partners acquires Indigo Generation",
@@ -958,7 +940,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2025-11-15",
     link: "https://www.linkedin.com/posts/igneo-infrastructure-partners_igneo-infrastructure-partners-acquires-indigo-activity-7394713498800271360-utjA",
-    followers: 26,
   },
   {
     title: "Rebecca Arscott - Igneo Infrastructure Partners",
@@ -969,7 +950,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2025-11-09",
     link: "https://uk.linkedin.com/in/rebecca-arscott-92a668211",
-    followers: 26,
   },
   {
     title: "Investment Associate - Igneo Infrastructure Partners",
@@ -980,7 +960,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2025-11-07",
     link: "https://au.linkedin.com/jobs/view/investment-associate-at-igneo-infrastructure-partners-4338171913",
-    followers: 26,
   },
   {
     title: "Igneo Infrastructure Partners to Acquire City Green Light",
@@ -991,7 +970,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2025-11-03",
     link: "https://www.linkedin.com/posts/institutional-investing-in-infrastructure-i3-_igneo-infrastructure-partners-to-acquire-activity-7389325665642135552-U1Sb",
-    followers: 26,
   },
   {
     title: "Daniel Timms at Infrastructure Investor Asia Forum",
@@ -1002,7 +980,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2025-11-01",
     link: "https://www.linkedin.com/posts/igneo-infrastructure-partners_last-week-daniel-timms-partner-at-igneo-activity-7389550923037011968-6wbO",
-    followers: 26,
   },
   {
     title: "#marketingcommunications | Igneo Infrastructure Partners",
@@ -1013,7 +990,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2025-10-29",
     link: "https://www.linkedin.com/posts/igneo-infrastructure-partners_marketingcommunications-activity-7386762961333407744-SLd0",
-    followers: 26,
   },
   {
     title: "Investing in infrastructure | Igneo Infrastructure Partners",
@@ -1024,7 +1000,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2025-10-29",
     link: "https://www.linkedin.com/posts/igneo-infrastructure-partners_marketingcommunications-activity-7387082454928437248-ZAew",
-    followers: 26,
   },
   {
     title: "Igneo Infrastructure Partners to acquire 100% stake in City Green Light",
@@ -1035,7 +1010,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2025-10-29",
     link: "https://www.linkedin.com/posts/igneo-infrastructure-partners_igneo-infrastructure-partners-to-acquire-activity-7388611950273974272-4vGr",
-    followers: 26,
   },
   {
     title: "A dynamic moment for infrastructure investing | Pensions & Investments",
@@ -1046,7 +1020,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2025-10-18",
     link: "https://www.linkedin.com/posts/igneo-infrastructure-partners_a-dynamic-moment-for-infrastructure-investing-activity-7384551897350946816-D573",
-    followers: 26,
   },
   {
     title: "#marketingcommunications | Igneo Infrastructure Partners",
@@ -1057,7 +1030,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2025-10-08",
     link: "https://www.linkedin.com/posts/igneo-infrastructure-partners_marketingcommunications-activity-7381324771088576513-meop",
-    followers: 26,
   },
   {
     title: "Igneo Infrastructure Partners",
@@ -1068,7 +1040,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2025-10-07",
     link: "https://au.linkedin.com/company/igneo-infrastructure-partners",
-    followers: 26,
   },
   {
     title: "From Rail to Runway — Investing in America",
@@ -1079,7 +1050,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2025-10-05",
     link: "https://www.linkedin.com/posts/igneo-infrastructure-partners_from-rail-to-runway-investing-in-america-activity-7379543782565875712-MZ_X",
-    followers: 26,
   },
   {
     title: "Igneo Infrastructure Partners",
@@ -1090,7 +1060,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2025-10-04",
     link: "https://www.linkedin.com/company/igneo-infrastructure-partners",
-    followers: 26,
   },
   {
     title: "#marketingcommunications | Igneo Infrastructure Partners",
@@ -1101,7 +1070,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2025-10-02",
     link: "https://www.linkedin.com/posts/igneo-infrastructure-partners_marketingcommunications-activity-7379309074431205376--ooV",
-    followers: 26,
   },
   {
     title: "Igneo Infrastructure Partners to acquire Portuguese highway concessions",
@@ -1112,7 +1080,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2025-10-02",
     link: "https://www.linkedin.com/posts/igneo-infrastructure-partners_igneo-infrastructure-partners-to-acquire-activity-7379079322889768960-aDuu",
-    followers: 26,
   },
   {
     title: "#marketingcommunications #ipemparis2025 | Igneo Infrastructure Partners",
@@ -1123,7 +1090,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2025-09-28",
     link: "https://www.linkedin.com/posts/igneo-infrastructure-partners_marketingcommunications-ipemparis2025-activity-7376957085336535040-CKTW",
-    followers: 26,
   },
   {
     title: "Giant energy from waste facility connected | Igneo Infrastructure Partners",
@@ -1134,7 +1100,6 @@ export const recentHighlights: SentimentMention[] = [
     country: "US",
     date: "2025-09-05",
     link: "https://www.linkedin.com/posts/igneo-infrastructure-partners_giant-energy-from-waste-facility-connected-activity-7369351590182391811-grE1",
-    followers: 26,
   },
   /* ─── Reddit ─── */
   {
