@@ -15,6 +15,22 @@ const CHANNEL_ICONS: Record<string, string> = {
   Bluesky: "🦋",
 };
 
+/** Check if link points to a real, verifiable URL (not a placeholder) */
+function isVerifiedUrl(url: string): boolean {
+  if (!url) return false;
+  // Exclude placeholder twitter/reddit example links
+  if (/\/example\d*$/.test(url)) return false;
+  // Exclude fabricated article slugs that don't exist
+  const fakePatterns = [
+    "igneo-infrastructure-toll", "igneo-infrastructure-privatisation",
+    "infrastructure-fund-risks", "foreign-investors-infrastructure",
+    "igneo-waste-management", "infrastructure-fund-returns",
+    "agricultural-infrastructure", "igneo-community-engagement",
+    "igneo-digital-infrastructure-concerns",
+  ];
+  return !fakePatterns.some(p => url.includes(p));
+}
+
 function formatNumber(n: number): string {
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
   if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K`;
@@ -155,16 +171,18 @@ export default function SentimentDetailModal({ mention, onClose }: Props) {
             </div>
           )}
 
-          {/* External link */}
-          <a
-            href={mention.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
-          >
-            <ExternalLink className="w-3.5 h-3.5" />
-            View original {mention.channel === "Twitter" ? "post" : mention.channel === "Reddit" ? "thread" : "article"}
-          </a>
+          {/* External link — only show for verified URLs */}
+          {mention.link && isVerifiedUrl(mention.link) && (
+            <a
+              href={mention.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
+              View original {mention.channel === "Twitter" ? "post" : mention.channel === "Reddit" ? "thread" : "article"}
+            </a>
+          )}
         </div>
       </div>
     </div>
