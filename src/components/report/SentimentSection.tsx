@@ -17,7 +17,7 @@ type Tab = typeof TABS[number];
 const SENTIMENT_FILTERS = ["all", "positive", "neutral", "negative"] as const;
 type SentimentFilter = typeof SENTIMENT_FILTERS[number];
 
-const CHANNEL_FILTERS = ["all", "Web", "LinkedIn", "Twitter", "Bluesky", "Youtube"] as const;
+const CHANNEL_FILTERS = ["all", "Web", "Twitter", "Bluesky", "Youtube"] as const;
 type ChannelFilter = typeof CHANNEL_FILTERS[number];
 
 const COLORS = {
