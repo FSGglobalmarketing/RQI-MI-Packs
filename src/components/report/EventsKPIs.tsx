@@ -7,14 +7,14 @@ interface EventsKPIsProps {
   events: EventItem[];
 }
 
-/* Brand secondary palette for charts — Igneo always Magma */
+/* RQI gradient accent palette */
 const COLORS = [
-  "#FF5424",  // Magma
-  "#214E6F",  // Sodalite
-  "#29628A",  // Sapphire
-  "#3A8AC3",  // Aquamarine
-  "#506570",  // Basalt
-  "#423355",  // Amethyst
+  "#0F9AFF",  // RQI Blue
+  "#56658B",  // Slate blue
+  "#D37669",  // Coral
+  "#F99C46",  // Amber
+  "#FFCC00",  // Gold
+  "#666666",  // Grey
 ];
 
 export default function EventsKPIs({ events }: EventsKPIsProps) {
