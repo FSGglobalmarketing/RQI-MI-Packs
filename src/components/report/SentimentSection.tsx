@@ -78,7 +78,7 @@ function SentimentDonut() {
             <Pie data={data} cx="50%" cy="50%" innerRadius={70} outerRadius={110} paddingAngle={3} dataKey="value" stroke="none">
               {data.map((_, i) => <Cell key={i} fill={colors[i]} />)}
             </Pie>
-            <Tooltip contentStyle={{ background: "hsl(195 30% 12%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }} />
+            <Tooltip contentStyle={{ background: "hsl(0 0% 8%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }} />
           </PieChart>
         </ResponsiveContainer>
       </div>
