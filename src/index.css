@@ -52,6 +52,9 @@
     --cream: 0 0% 100%;
     --cream-foreground: 0 0% 0%;
 
+    /* Brand teal for pills & prominent UI */
+    --brand-teal: 182 97% 12%;   /* #01383a */
+
     /* RQI Gradient accent palette */
     --gradient-1: 222 24% 44%;   /* #56658B - Slate blue */
     --gradient-2: 210 100% 53%;  /* #0F9AFF - RQI Blue */
