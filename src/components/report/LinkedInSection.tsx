@@ -140,7 +140,7 @@ function OrgVsSponsoredChart() {
         <Bar dataKey="sponsored" stackId="a" fill="#56658B" radius={[4, 4, 0, 0]} />
         <Legend
           wrapperStyle={{ fontSize: 10, paddingTop: 8 }}
-          formatter={(value: string) => <span style={{ color: "hsl(195 15% 65%)" }}>{value === "organic" ? "Organic" : "Sponsored"}</span>}
+          formatter={(value: string) => <span style={{ color: "hsl(0 0% 60%)" }}>{value === "organic" ? "Organic" : "Sponsored"}</span>}
         />
       </BarChart>
     </ResponsiveContainer>

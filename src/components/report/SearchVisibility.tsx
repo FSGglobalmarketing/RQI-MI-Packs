@@ -269,7 +269,7 @@ export default function SearchVisibility() {
                     );
                   })}
                   {refAreaLeft !== null && refAreaRight !== null && (
-                    <ReferenceArea x1={allData[Math.min(refAreaLeft, refAreaRight)]?.month} x2={allData[Math.max(refAreaLeft, refAreaRight)]?.month} strokeOpacity={0.3} fill="rgba(232, 97, 58, 0.1)" />
+                    <ReferenceArea x1={allData[Math.min(refAreaLeft, refAreaRight)]?.month} x2={allData[Math.max(refAreaLeft, refAreaRight)]?.month} strokeOpacity={0.3} fill="rgba(15,154,255,0.1)" />
                   )}
                 </LineChart>
               </ResponsiveContainer>

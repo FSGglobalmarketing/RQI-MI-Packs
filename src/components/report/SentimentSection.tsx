@@ -133,9 +133,9 @@ function GeographyChart() {
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={countryBreakdown} layout="vertical" margin={{ top: 10, right: 20, left: 10, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" horizontal={false} />
-          <XAxis type="number" tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} />
-          <YAxis type="category" dataKey="country" tick={{ fontSize: 10, fill: "hsl(195 15% 65%)" }} width={100} />
-          <Tooltip contentStyle={{ background: "hsl(195 30% 12%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }} cursor={{ fill: "rgba(255,255,255,0.04)" }} />
+          <XAxis type="number" tick={{ fontSize: 9, fill: "hsl(0 0% 60%)" }} />
+          <YAxis type="category" dataKey="country" tick={{ fontSize: 10, fill: "hsl(0 0% 60%)" }} width={100} />
+          <Tooltip contentStyle={{ background: "hsl(0 0% 8%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }} cursor={{ fill: "rgba(255,255,255,0.04)" }} />
           <Bar dataKey="mentions" fill="#0F9AFF" radius={[0, 4, 4, 0]} />
         </BarChart>
       </ResponsiveContainer>
