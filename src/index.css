@@ -738,15 +738,10 @@
   overflow: hidden;
 }
 
-/* Section-level flow device: asymmetric curve — rounded left, swept up right */
-/* Cream sections sit ON TOP of previous dark sections */
+/* Section-level flow device: flat edges for RQI brand */
 .flow-section-cream,
 .flow-section-dark {
   position: relative;
-  margin-top: -60px;
-  padding-top: calc(60px + 5rem);
-  padding-bottom: calc(60px + 4rem);
-  border-radius: 0 120px 0 0;
   z-index: 1;
   overflow: hidden;
 }
