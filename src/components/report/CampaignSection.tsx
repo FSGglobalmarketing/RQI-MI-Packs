@@ -280,7 +280,7 @@ export function NorthAmericaExtra() {
 }
 
 /* ── DACH Charts ── */
-const DACH_COLORS = ["#FF5424", "#214E6F", "#29628A", "#506570"]; // Magma, Sodalite, Sapphire, Basalt
+const DACH_COLORS = ["#0F9AFF", "#56658B", "#D37669", "#F99C46"];
 
 export function DACHCharts() {
   const countries = [
