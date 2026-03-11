@@ -249,7 +249,7 @@ export function NorthAmericaChart() {
             <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} />
             <Tooltip content={<SortedTooltip />} />
             <Legend wrapperStyle={{ fontSize: 11 }} />
-            <Line type="monotone" dataKey="page1" stroke="#FF5424" strokeWidth={2.5} dot={false} animationDuration={1500} name="Page 1" />
+            <Line type="monotone" dataKey="page1" stroke="#0F9AFF" strokeWidth={2.5} dot={false} animationDuration={1500} name="Page 1" />
             <Line type="monotone" dataKey="page2" stroke="#214E6F" strokeWidth={2} dot={false} animationDuration={1500} name="Page 2" />
             <Line type="monotone" dataKey="page3" stroke="#29628A" strokeWidth={2} dot={false} animationDuration={1500} name="Page 3" />
             <Line type="monotone" dataKey="page4" stroke="#3A8AC3" strokeWidth={1.5} dot={false} animationDuration={1500} name="Page 4" />
