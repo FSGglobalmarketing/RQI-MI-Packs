@@ -80,13 +80,20 @@
     /* Brand teal for pills & prominent UI */
     --brand-teal: 182 97% 12%;   /* #01383a */
 
-    /* Moss - heading & accent color on white #347b7e */
+    /* Moss #347b7e */
     --moss: 182 42% 35%;
 
-    /* Mint - high contrast on Racing #c9f2e9 */
-    --mint: 162 60% 87%;
+    /* Mint #53b8bb */
+    --mint: 181 41% 53%;
 
-    /* Pollen - high contrast on Racing #f3f2c9 */
+    /* Pollen #f3f2c9 */
+    --pollen: 59 62% 87%;
+
+    /* Grass #7ba98b */
+    --grass: 145 19% 57%;
+
+    /* Ash #141414 */
+    --ash: 0 0% 8%;
     --pollen: 59 62% 87%;
 
     /* RQI Gradient accent palette */
