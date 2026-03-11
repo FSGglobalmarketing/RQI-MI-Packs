@@ -117,7 +117,7 @@ function ChannelChart({ onBarClick }: { onBarClick: (sentiment: SentimentFilter,
           <Legend
             wrapperStyle={{ fontSize: 10, paddingTop: 8 }}
             formatter={(value: string) => (
-              <span style={{ color: "hsl(195 15% 65%)", textTransform: "capitalize" }}>{value}</span>
+              <span style={{ color: "hsl(0 0% 60%)", textTransform: "capitalize" }}>{value}</span>
             )}
           />
         </BarChart>
