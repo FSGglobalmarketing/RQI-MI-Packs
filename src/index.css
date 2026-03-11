@@ -17,11 +17,11 @@
     --popover: 0 0% 4%;
     --popover-foreground: 0 0% 100%;
 
-    /* Primary accent - white */
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
+    /* Primary accent - RQI Blue */
+    --primary: 210 100% 53%;
+    --primary-foreground: 0 0% 100%;
 
-    /* Secondary - pure white (replaces Pollen/cream) */
+    /* Secondary - pure white */
     --secondary: 0 0% 100%;
     --secondary-foreground: 0 0% 0%;
 
@@ -29,8 +29,8 @@
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 60%;
 
-    --accent: 0 0% 100%;
-    --accent-foreground: 0 0% 0%;
+    --accent: 210 100% 53%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
@@ -38,7 +38,7 @@
     /* Black-based borders */
     --border: 0 0% 15%;
     --input: 0 0% 15%;
-    --ring: 0 0% 100%;
+    --ring: 210 100% 53%;
 
     --radius: 0.75rem;
 
@@ -52,28 +52,29 @@
     --cream: 0 0% 100%;
     --cream-foreground: 0 0% 0%;
 
-    /* Chart palette — RQI brand hex conversions */
-    --chart-racing: 181 100% 11%;
-    --chart-moss: 182 41% 35%;
-    --chart-mint: 181 42% 59%;
-    --chart-grass: 140 17% 57%;
-    --chart-pollen: 56 72% 87%;
-    --chart-ash: 0 0% 8%;
-    --chart-terracotta: 7 56% 62%;
-    --chart-sunset: 29 94% 63%;
-    --chart-harbour: 212 100% 53%;
-    --chart-aubergine: 223 24% 44%;
-    --chart-bottle: 139 41% 30%;
-    --chart-daffodil: 48 100% 50%;
+    /* RQI Gradient accent palette */
+    --gradient-1: 222 24% 44%;   /* #56658B - Slate blue */
+    --gradient-2: 210 100% 53%;  /* #0F9AFF - RQI Blue */
+    --gradient-3: 7 56% 62%;     /* #D37669 - Coral */
+    --gradient-4: 29 94% 63%;    /* #F99C46 - Amber */
+    --gradient-5: 48 100% 50%;   /* #FFCC00 - Gold */
+
+    /* Chart palette — RQI gradient spectrum */
+    --chart-1: 222 24% 44%;
+    --chart-2: 210 100% 53%;
+    --chart-3: 7 56% 62%;
+    --chart-4: 29 94% 63%;
+    --chart-5: 48 100% 50%;
+    --chart-6: 0 0% 40%;
 
     --sidebar-background: 0 0% 2%;
     --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 0 0% 100%;
-    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-primary: 210 100% 53%;
+    --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 0 0% 15%;
     --sidebar-accent-foreground: 0 0% 100%;
     --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 0 0% 100%;
+    --sidebar-ring: 210 100% 53%;
   }
 
   .dark {
@@ -83,27 +84,27 @@
     --card-foreground: 0 0% 100%;
     --popover: 0 0% 4%;
     --popover-foreground: 0 0% 100%;
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
+    --primary: 210 100% 53%;
+    --primary-foreground: 0 0% 100%;
     --secondary: 0 0% 100%;
     --secondary-foreground: 0 0% 0%;
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 60%;
-    --accent: 0 0% 100%;
-    --accent-foreground: 0 0% 0%;
+    --accent: 210 100% 53%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 100%;
     --border: 0 0% 15%;
     --input: 0 0% 15%;
-    --ring: 0 0% 100%;
+    --ring: 210 100% 53%;
     --sidebar-background: 0 0% 2%;
     --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 0 0% 100%;
-    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-primary: 210 100% 53%;
+    --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 0 0% 15%;
     --sidebar-accent-foreground: 0 0% 100%;
     --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 0 0% 100%;
+    --sidebar-ring: 210 100% 53%;
   }
 }
 

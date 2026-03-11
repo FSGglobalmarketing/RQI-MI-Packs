@@ -56,7 +56,7 @@ function formatK(v: number) {
 function UsersSessionsChart({ data, variant }: { data: GaMonthlyItem[]; variant: "dark" | "cream" }) {
   const isDark = variant === "dark";
   const gridStroke = isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)";
-  const tickFill = isDark ? "hsl(195 15% 65%)" : "#64748b";
+  const tickFill = isDark ? "hsl(0 0% 60%)" : "#64748b";
 
   return (
     <ResponsiveContainer width="100%" height={420}>
@@ -66,17 +66,17 @@ function UsersSessionsChart({ data, variant }: { data: GaMonthlyItem[]; variant:
         <YAxis tick={{ fontSize: 9, fill: tickFill }} tickFormatter={formatK} />
         <Tooltip
           contentStyle={{
-            background: isDark ? "hsl(195 30% 12%)" : "hsl(20 33% 93%)",
+            background: isDark ? "hsl(0 0% 8%)" : "hsl(0 0% 96%)",
             border: `1px solid ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"}`,
             borderRadius: 12,
             fontSize: 11,
-            color: isDark ? "#fff" : "#052332",
+            color: isDark ? "#fff" : "#000",
           }}
-          labelStyle={{ color: "#FF5424", fontWeight: 700 }}
+          labelStyle={{ color: "#0F9AFF", fontWeight: 700 }}
           formatter={(value: number, name: string) => [formatK(value), name === "users" ? "Users" : "Sessions"]}
         />
-        <Area type="monotone" dataKey="sessions" stackId="1" fill="#214E6F" stroke="#29628A" strokeWidth={1} fillOpacity={0.6} />
-        <Area type="monotone" dataKey="users" stackId="1" fill="#FF5424" stroke="#FF5424" strokeWidth={2} fillOpacity={0.8} />
+        <Area type="monotone" dataKey="sessions" stackId="1" fill="#56658B" stroke="#56658B" strokeWidth={1} fillOpacity={0.6} />
+        <Area type="monotone" dataKey="users" stackId="1" fill="#0F9AFF" stroke="#0F9AFF" strokeWidth={2} fillOpacity={0.8} />
         <Legend
           wrapperStyle={{ fontSize: 10, paddingTop: 8 }}
           formatter={(value: string) => (
@@ -92,7 +92,7 @@ function UsersSessionsChart({ data, variant }: { data: GaMonthlyItem[]; variant:
 function TopPagesChart({ data, variant }: { data: TopPageItem[]; variant: "dark" | "cream" }) {
   const isDark = variant === "dark";
   const gridStroke = isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)";
-  const tickFill = isDark ? "hsl(195 15% 65%)" : "#64748b";
+  const tickFill = isDark ? "hsl(0 0% 60%)" : "#64748b";
 
   return (
     <div className="space-y-3">
@@ -107,9 +107,9 @@ function TopPagesChart({ data, variant }: { data: TopPageItem[]; variant: "dark"
             <div className="flex-1 relative h-6 rounded-full overflow-hidden" style={{ backgroundColor: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)" }}>
               <div
                 className="absolute inset-y-0 left-0 rounded-full transition-all duration-700"
-                style={{
-                  width: `${widthPct}%`,
-                  backgroundColor: i === 0 ? "#FF5424" : "#214E6F",
+                 style={{
+                   width: `${widthPct}%`,
+                   backgroundColor: i === 0 ? "#0F9AFF" : "#56658B",
                   opacity: 1 - i * 0.12,
                 }}
               />
@@ -128,7 +128,7 @@ function TopPagesChart({ data, variant }: { data: TopPageItem[]; variant: "dark"
 /* ── Traffic Sources ── */
 function TrafficSourcesChart({ data, variant }: { data: TrafficSourceItem[]; variant: "dark" | "cream" }) {
   const isDark = variant === "dark";
-  const colors = ["#FF5424", "#214E6F", "#29628A", "#506570", "#829199"];
+  const colors = ["#0F9AFF", "#56658B", "#D37669", "#F99C46", "#FFCC00"];
 
   return (
     <div className="space-y-3">

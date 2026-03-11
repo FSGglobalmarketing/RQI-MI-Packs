@@ -141,8 +141,8 @@ function SortedTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   const sorted = [...payload].sort((a: any, b: any) => (b.value ?? 0) - (a.value ?? 0));
   return (
-    <div style={{ backgroundColor: "#1a2e35", borderRadius: 10, padding: "12px 16px", minWidth: 220, border: "1px solid rgba(255,255,255,0.12)" }}>
-      <p style={{ color: "#e8613a", fontWeight: 700, fontSize: 13, marginBottom: 8 }}>{label}</p>
+    <div style={{ backgroundColor: "#111", borderRadius: 10, padding: "12px 16px", minWidth: 220, border: "1px solid rgba(255,255,255,0.12)" }}>
+      <p style={{ color: "#0F9AFF", fontWeight: 700, fontSize: 13, marginBottom: 8 }}>{label}</p>
       {sorted.map((entry: any) => (
         <div key={entry.dataKey} style={{ display: "flex", justifyContent: "space-between", gap: 16, marginBottom: 2 }}>
           <span style={{ fontSize: 11, color: "rgba(255,255,255,0.6)" }}>{entry.name || entry.dataKey}</span>
@@ -249,12 +249,12 @@ export function NorthAmericaChart() {
             <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} />
             <Tooltip content={<SortedTooltip />} />
             <Legend wrapperStyle={{ fontSize: 11 }} />
-            <Line type="monotone" dataKey="page1" stroke="#FF5424" strokeWidth={2.5} dot={false} animationDuration={1500} name="Page 1" />
-            <Line type="monotone" dataKey="page2" stroke="#214E6F" strokeWidth={2} dot={false} animationDuration={1500} name="Page 2" />
-            <Line type="monotone" dataKey="page3" stroke="#29628A" strokeWidth={2} dot={false} animationDuration={1500} name="Page 3" />
-            <Line type="monotone" dataKey="page4" stroke="#3A8AC3" strokeWidth={1.5} dot={false} animationDuration={1500} name="Page 4" />
+            <Line type="monotone" dataKey="page1" stroke="#0F9AFF" strokeWidth={2.5} dot={false} animationDuration={1500} name="Page 1" />
+             <Line type="monotone" dataKey="page2" stroke="#56658B" strokeWidth={2} dot={false} animationDuration={1500} name="Page 2" />
+             <Line type="monotone" dataKey="page3" stroke="#D37669" strokeWidth={2} dot={false} animationDuration={1500} name="Page 3" />
+             <Line type="monotone" dataKey="page4" stroke="#F99C46" strokeWidth={1.5} dot={false} animationDuration={1500} name="Page 4" />
             {zoom.refAreaLeft !== null && zoom.refAreaRight !== null && (
-              <ReferenceArea x1={allData[Math.min(zoom.refAreaLeft, zoom.refAreaRight)]?.month} x2={allData[Math.max(zoom.refAreaLeft, zoom.refAreaRight)]?.month} strokeOpacity={0.3} fill="rgba(232,97,58,0.1)" />
+              <ReferenceArea x1={allData[Math.min(zoom.refAreaLeft, zoom.refAreaRight)]?.month} x2={allData[Math.max(zoom.refAreaLeft, zoom.refAreaRight)]?.month} strokeOpacity={0.3} fill="rgba(15,154,255,0.1)" />
             )}
           </LineChart>
         </ResponsiveContainer>
@@ -280,7 +280,7 @@ export function NorthAmericaExtra() {
 }
 
 /* ── DACH Charts ── */
-const DACH_COLORS = ["#FF5424", "#214E6F", "#29628A", "#506570"]; // Magma, Sodalite, Sapphire, Basalt
+const DACH_COLORS = ["#0F9AFF", "#56658B", "#D37669", "#F99C46"];
 
 export function DACHCharts() {
   const countries = [
@@ -319,8 +319,8 @@ export function DACHCharts() {
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
             <XAxis type="number" tick={{ fontSize: 11, fill: "#64748b" }} />
             <YAxis dataKey="company" type="category" width={120} tick={{ fontSize: 11, fill: "#64748b" }} />
-            <Tooltip contentStyle={{ backgroundColor: "#1a2e35", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", color: "#fff" }} />
-            <Bar dataKey="views" fill="#FF5424" radius={[0, 6, 6, 0]} animationDuration={1200} />
+            <Tooltip contentStyle={{ backgroundColor: "#111", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", color: "#fff" }} />
+            <Bar dataKey="views" fill="#0F9AFF" radius={[0, 6, 6, 0]} animationDuration={1200} />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -353,8 +353,8 @@ export function UKNordicsChart() {
           <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} tickFormatter={formatKUK} />
           <Tooltip content={<SortedTooltip />} cursor={{ fill: "rgba(255,255,255,0.04)" }} />
           <Legend wrapperStyle={{ fontSize: 11 }} />
-          <Bar dataKey="impressions" fill="#214E6F" radius={[4, 4, 0, 0]} animationDuration={1200} name="Impressions" />
-          <Bar dataKey="clicks" fill="#FF5424" radius={[4, 4, 0, 0]} animationDuration={1200} name="Clicks" />
+          <Bar dataKey="impressions" fill="#56658B" radius={[4, 4, 0, 0]} animationDuration={1200} name="Impressions" />
+          <Bar dataKey="clicks" fill="#0F9AFF" radius={[4, 4, 0, 0]} animationDuration={1200} name="Clicks" />
         </BarChart>
       </ResponsiveContainer>
     </div>

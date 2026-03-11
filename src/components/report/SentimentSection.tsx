@@ -21,9 +21,9 @@ const CHANNEL_FILTERS = ["all", "Web", "Twitter"] as const;
 type ChannelFilter = typeof CHANNEL_FILTERS[number];
 
 const COLORS = {
-  positive: "hsl(142 60% 45%)",
-  neutral: "hsl(205 30% 55%)",
-  negative: "hsl(14 100% 57%)",
+  positive: "#0F9AFF",
+  neutral: "#56658B",
+  negative: "#D37669",
 };
 
 function formatFollowers(n: number): string {
@@ -39,11 +39,11 @@ function TimelineChart() {
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={mentionsByMonth} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-          <XAxis dataKey="month" tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} />
-          <YAxis tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} />
+          <XAxis dataKey="month" tick={{ fontSize: 9, fill: "hsl(0 0% 60%)" }} />
+          <YAxis tick={{ fontSize: 9, fill: "hsl(0 0% 60%)" }} />
           <Tooltip
-            contentStyle={{ background: "hsl(195 30% 12%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }}
-            labelStyle={{ color: "hsl(14 78% 57%)", fontWeight: 700 }}
+            contentStyle={{ background: "hsl(0 0% 8%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }}
+            labelStyle={{ color: "#0F9AFF", fontWeight: 700 }}
           />
           <Area type="monotone" dataKey="negative" stackId="1" fill="hsl(14 100% 57% / 0.3)" stroke={COLORS.negative} strokeWidth={1.5} />
           <Area type="monotone" dataKey="neutral" stackId="1" fill="hsl(205 30% 55% / 0.25)" stroke={COLORS.neutral} strokeWidth={1.5} />
@@ -51,7 +51,7 @@ function TimelineChart() {
           <Legend
             wrapperStyle={{ fontSize: 10, paddingTop: 8 }}
             formatter={(value: string) => (
-              <span style={{ color: "hsl(195 15% 65%)", textTransform: "capitalize" }}>{value}</span>
+              <span style={{ color: "hsl(0 0% 60%)", textTransform: "capitalize" }}>{value}</span>
             )}
           />
         </AreaChart>
@@ -78,7 +78,7 @@ function SentimentDonut() {
             <Pie data={data} cx="50%" cy="50%" innerRadius={70} outerRadius={110} paddingAngle={3} dataKey="value" stroke="none">
               {data.map((_, i) => <Cell key={i} fill={colors[i]} />)}
             </Pie>
-            <Tooltip contentStyle={{ background: "hsl(195 30% 12%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }} />
+            <Tooltip contentStyle={{ background: "hsl(0 0% 8%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }} />
           </PieChart>
         </ResponsiveContainer>
       </div>
@@ -108,16 +108,16 @@ function ChannelChart({ onBarClick }: { onBarClick: (sentiment: SentimentFilter,
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={channelBreakdown} layout="vertical" margin={{ top: 10, right: 20, left: 10, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" horizontal={false} />
-          <XAxis type="number" tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} />
-          <YAxis type="category" dataKey="channel" tick={{ fontSize: 11, fill: "hsl(195 15% 65%)" }} width={70} />
-          <Tooltip contentStyle={{ background: "hsl(195 30% 12%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }} cursor={{ fill: "rgba(255,255,255,0.04)" }} />
+          <XAxis type="number" tick={{ fontSize: 9, fill: "hsl(0 0% 60%)" }} />
+          <YAxis type="category" dataKey="channel" tick={{ fontSize: 11, fill: "hsl(0 0% 60%)" }} width={70} />
+          <Tooltip contentStyle={{ background: "hsl(0 0% 8%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }} cursor={{ fill: "rgba(255,255,255,0.04)" }} />
           <Bar dataKey="positive" stackId="a" fill={COLORS.positive} radius={[0, 0, 0, 0]} className="cursor-pointer" onClick={(data) => handleClick(data, "positive")} />
           <Bar dataKey="neutral" stackId="a" fill={COLORS.neutral} className="cursor-pointer" onClick={(data) => handleClick(data, "neutral")} />
           <Bar dataKey="negative" stackId="a" fill={COLORS.negative} radius={[0, 4, 4, 0]} className="cursor-pointer" onClick={(data) => handleClick(data, "negative")} />
           <Legend
             wrapperStyle={{ fontSize: 10, paddingTop: 8 }}
             formatter={(value: string) => (
-              <span style={{ color: "hsl(195 15% 65%)", textTransform: "capitalize" }}>{value}</span>
+              <span style={{ color: "hsl(0 0% 60%)", textTransform: "capitalize" }}>{value}</span>
             )}
           />
         </BarChart>
@@ -133,10 +133,10 @@ function GeographyChart() {
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={countryBreakdown} layout="vertical" margin={{ top: 10, right: 20, left: 10, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" horizontal={false} />
-          <XAxis type="number" tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} />
-          <YAxis type="category" dataKey="country" tick={{ fontSize: 10, fill: "hsl(195 15% 65%)" }} width={100} />
-          <Tooltip contentStyle={{ background: "hsl(195 30% 12%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }} cursor={{ fill: "rgba(255,255,255,0.04)" }} />
-          <Bar dataKey="mentions" fill="hsl(14 100% 57%)" radius={[0, 4, 4, 0]} />
+          <XAxis type="number" tick={{ fontSize: 9, fill: "hsl(0 0% 60%)" }} />
+          <YAxis type="category" dataKey="country" tick={{ fontSize: 10, fill: "hsl(0 0% 60%)" }} width={100} />
+          <Tooltip contentStyle={{ background: "hsl(0 0% 8%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }} cursor={{ fill: "rgba(255,255,255,0.04)" }} />
+          <Bar dataKey="mentions" fill="#0F9AFF" radius={[0, 4, 4, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>

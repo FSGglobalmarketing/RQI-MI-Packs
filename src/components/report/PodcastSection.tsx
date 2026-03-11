@@ -27,10 +27,10 @@ function EpisodeLeaderboard() {
             <div className="relative h-2 rounded-full overflow-hidden bg-muted/30">
               <div
                 className="absolute inset-y-0 left-0 rounded-full transition-all duration-500"
-                style={{
-                  width: `${(ep.streams / maxStreams) * 100}%`,
-                  backgroundColor: i < 3 ? "hsl(14 78% 57%)" : "hsl(14 78% 57% / 0.4)",
-                }}
+                 style={{
+                   width: `${(ep.streams / maxStreams) * 100}%`,
+                   backgroundColor: i < 3 ? "#0F9AFF" : "#0F9AFF80",
+                 }}
               />
             </div>
           </div>
@@ -51,22 +51,22 @@ function StreamsOverTime() {
     <ResponsiveContainer width="100%" height={420}>
       <LineChart data={podcastMonthlyStreams} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-        <XAxis dataKey="month" tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} interval={5} />
-        <YAxis tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} />
+        <XAxis dataKey="month" tick={{ fontSize: 9, fill: "hsl(0 0% 60%)" }} interval={5} />
+        <YAxis tick={{ fontSize: 9, fill: "hsl(0 0% 60%)" }} />
         <Tooltip
-          contentStyle={{ background: "hsl(195 30% 12%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }}
-          labelStyle={{ color: "hsl(14 78% 57%)", fontWeight: 700 }}
+          contentStyle={{ background: "hsl(0 0% 8%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }}
+          labelStyle={{ color: "#0F9AFF", fontWeight: 700 }}
           formatter={(value: number) => [`${value} streams`, "Monthly Streams"]}
         />
-        <Line type="monotone" dataKey="streams" stroke="hsl(14 78% 57%)" strokeWidth={2.5} dot={false} />
+        <Line type="monotone" dataKey="streams" stroke="#0F9AFF" strokeWidth={2.5} dot={false} />
         {releaseMonths.map((m) => (
           <ReferenceDot
             key={m.month}
             x={m.month}
             y={m.streams}
             r={4}
-            fill="hsl(14 78% 57%)"
-            stroke="hsl(195 30% 12%)"
+            fill="#0F9AFF"
+            stroke="hsl(0 0% 0%)"
             strokeWidth={2}
           />
         ))}
