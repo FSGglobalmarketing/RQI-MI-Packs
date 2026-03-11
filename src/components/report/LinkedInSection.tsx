@@ -69,12 +69,13 @@ function EngagementHeatmap() {
   const dayLabels = ["S", "M", "T", "W", "T", "F", "S"];
 
   function getColor(rate: number) {
-    if (rate === 0) return "hsl(205 40% 18%)";
+    if (rate === 0) return "hsl(210 30% 18%)";
     const intensity = Math.min(rate / maxRate, 1);
-    // Wider range: from muted dark orange (68%) down to vivid bright orange (42%)
-    const lightness = 68 - intensity * 30;
-    const saturation = 60 + intensity * 40; // 60% → 100%
-    return `hsl(14 ${saturation}% ${lightness}%)`;
+    // Gradient from slate blue to bright RQI blue
+    const hue = 210 + intensity * 12;
+    const lightness = 65 - intensity * 25;
+    const saturation = 40 + intensity * 60;
+    return `hsl(${hue} ${saturation}% ${lightness}%)`;
   }
 
   return (
