@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Plus Jakarta Sans", "Avenir Next LT Pro", "Arial", "sans-serif"],
+        sans: ["Inter", "Suisse International", "Arial", "sans-serif"],
       },
       letterSpacing: {
         "brand-display": "-0.04em",

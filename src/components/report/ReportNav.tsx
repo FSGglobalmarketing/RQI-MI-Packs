@@ -78,7 +78,7 @@ export default function ReportNav() {
     >
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
-          <img src={igneoLogo} alt="Igneo Infrastructure Partners" className="h-7" />
+          <span className="text-primary font-extrabold text-lg tracking-brand-display">RQI <span className="text-foreground/60 font-medium text-xs tracking-widest uppercase ml-1">Investors</span></span>
 
           {/* Desktop nav */}
           <div className="hidden lg:flex flex-col items-end">

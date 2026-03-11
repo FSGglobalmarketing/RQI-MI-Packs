@@ -34,12 +34,12 @@ export interface EventItem {
 }
 
 export const reportData = {
-  brand: "Igneo",
-  brandFull: "Igneo Infrastructure Partners",
-  quarter: "Q4 2025",
+  brand: "RQI",
+  brandFull: "RQI Investors",
+  quarter: "Q1 2026",
   title: "Global marketing impact report",
   subtitle: "A quarterly review of global marketing activities and performance.",
-  tagline: "Middle market. Maximum impact.",
+  tagline: "Systematic. Scientific. Sustained.",
   dataPeriod: "1st Oct – 31st Dec 2025",
   dataSources: ["Salesforce", "Google Analytics", "LinkedIn", "Apple Music", "Spotify", "Brightedge"],
 
