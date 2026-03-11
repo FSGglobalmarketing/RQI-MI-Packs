@@ -30,39 +30,40 @@
 
 @layer base {
   :root {
-    /* Pure black background */
-    --background: 0 0% 0%;
+    /* Racing dark background #003638 */
+    --background: 181 100% 11%;
     --foreground: 0 0% 100%;
 
-    /* Card surfaces - near black */
-    --card: 0 0% 4%;
+    /* Card surfaces - slightly lighter Racing */
+    --card: 181 90% 13%;
     --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 4%;
+    --popover: 181 90% 13%;
     --popover-foreground: 0 0% 100%;
 
-    /* Primary accent - RQI Blue */
-    --primary: 210 100% 53%;
-    --primary-foreground: 0 0% 100%;
+    /* Primary accent - Mint (high contrast on Racing) */
+    --primary: 162 60% 80%;
+    --primary-foreground: 181 100% 11%;
 
     /* Secondary - pure white */
     --secondary: 0 0% 100%;
     --secondary-foreground: 0 0% 0%;
 
-    /* Muted - dark grays */
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 60%;
+    /* Muted - muted Racing */
+    --muted: 181 60% 18%;
+    --muted-foreground: 162 20% 70%;
 
-    --accent: 210 100% 53%;
-    --accent-foreground: 0 0% 100%;
+    /* Accent - Mint */
+    --accent: 162 60% 80%;
+    --accent-foreground: 181 100% 11%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Black-based borders */
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 210 100% 53%;
+    /* Racing-based borders */
+    --border: 181 50% 20%;
+    --input: 181 50% 20%;
+    --ring: 162 60% 80%;
 
     --radius: 0.75rem;
 
@@ -72,36 +73,45 @@
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
 
-    /* Cream replaced with white */
+    /* White sections */
     --cream: 0 0% 100%;
     --cream-foreground: 0 0% 0%;
 
     /* Brand teal for pills & prominent UI */
     --brand-teal: 182 97% 12%;   /* #01383a */
 
-    /* RQI Gradient accent palette */
-    --gradient-1: 222 24% 44%;   /* #56658B - Slate blue */
-    --gradient-2: 210 100% 53%;  /* #0F9AFF - RQI Blue */
-    --gradient-3: 7 56% 62%;     /* #D37669 - Coral */
-    --gradient-4: 29 94% 63%;    /* #F99C46 - Amber */
-    --gradient-5: 48 100% 50%;   /* #FFCC00 - Gold */
+    /* Moss - heading & accent color on white #347b7e */
+    --moss: 182 42% 35%;
 
-    /* Chart palette — RQI gradient spectrum */
-    --chart-1: 222 24% 44%;
-    --chart-2: 210 100% 53%;
-    --chart-3: 7 56% 62%;
+    /* Mint - high contrast on Racing #c9f2e9 */
+    --mint: 162 60% 87%;
+
+    /* Pollen - high contrast on Racing #f3f2c9 */
+    --pollen: 59 62% 87%;
+
+    /* RQI Gradient accent palette */
+    --gradient-1: 222 24% 44%;
+    --gradient-2: 210 100% 53%;
+    --gradient-3: 7 56% 62%;
+    --gradient-4: 29 94% 63%;
+    --gradient-5: 48 100% 50%;
+
+    /* Chart palette */
+    --chart-1: 162 60% 87%;
+    --chart-2: 59 62% 87%;
+    --chart-3: 182 42% 35%;
     --chart-4: 29 94% 63%;
     --chart-5: 48 100% 50%;
-    --chart-6: 0 0% 40%;
+    --chart-6: 181 50% 30%;
 
-    --sidebar-background: 0 0% 2%;
+    --sidebar-background: 181 100% 9%;
     --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 210 100% 53%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 15%;
+    --sidebar-primary: 162 60% 80%;
+    --sidebar-primary-foreground: 181 100% 11%;
+    --sidebar-accent: 181 60% 18%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 210 100% 53%;
+    --sidebar-border: 181 50% 20%;
+    --sidebar-ring: 162 60% 80%;
   }
 
   .dark {
