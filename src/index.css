@@ -52,6 +52,9 @@
     --cream: 0 0% 100%;
     --cream-foreground: 0 0% 0%;
 
+    /* Brand teal for pills & prominent UI */
+    --brand-teal: 182 97% 12%;   /* #01383a */
+
     /* RQI Gradient accent palette */
     --gradient-1: 222 24% 44%;   /* #56658B - Slate blue */
     --gradient-2: 210 100% 53%;  /* #0F9AFF - RQI Blue */
@@ -144,19 +147,19 @@
   }
 
   .kpi-pill-good {
-    background-color: hsl(var(--success));
-    color: hsl(var(--success-foreground));
+    background-color: hsl(var(--brand-teal));
+    color: hsl(0 0% 100%);
     @apply text-sm px-5 py-1.5 rounded-full font-medium;
   }
 
   .kpi-pill-below {
-    background-color: hsl(var(--primary));
-    color: hsl(var(--primary-foreground));
+    background-color: hsl(var(--brand-teal));
+    color: hsl(0 0% 100%);
   }
 
   .kpi-pill-orange {
-    background-color: hsl(var(--primary));
-    color: hsl(var(--primary-foreground));
+    background-color: hsl(var(--brand-teal));
+    color: hsl(0 0% 100%);
     @apply text-sm px-5 py-1.5 rounded-full font-medium;
   }
 
@@ -167,8 +170,8 @@
 
   .stage-badge {
     @apply inline-flex items-center gap-2 px-6 py-2 rounded-full text-sm font-semibold;
-    background-color: hsl(var(--primary));
-    color: hsl(var(--primary-foreground));
+    background-color: hsl(var(--brand-teal));
+    color: hsl(0 0% 100%);
   }
 
   .stat-highlight {
@@ -314,25 +317,17 @@
 
   /* ── Liquid Glass: Pills ── */
   .glass-pill-dark {
-    @apply text-sm px-5 py-2 rounded-full transition-all duration-200;
-    position: relative;
-    background: hsl(var(--foreground) / 0.06);
-    backdrop-filter: blur(12px) saturate(1.3);
-    -webkit-backdrop-filter: blur(12px) saturate(1.3);
-    border: 1px solid hsl(var(--foreground) / 0.12);
-    color: hsl(var(--muted-foreground));
-    box-shadow: inset 0 1px 0 0 hsl(var(--foreground) / 0.06);
+    @apply text-sm px-5 py-2 rounded-full transition-all duration-200 font-medium;
+    background: hsl(var(--brand-teal));
+    color: hsl(0 0% 100%);
+    border: 1px solid hsl(var(--brand-teal));
   }
 
   .glass-pill-cream {
-    @apply text-sm px-5 py-2 rounded-full transition-all duration-200;
-    position: relative;
-    background: hsl(var(--secondary-foreground) / 0.04);
-    backdrop-filter: blur(12px) saturate(1.3);
-    -webkit-backdrop-filter: blur(12px) saturate(1.3);
-    border: 1px solid hsl(var(--secondary-foreground) / 0.12);
-    color: hsl(var(--secondary-foreground) / 0.7);
-    box-shadow: inset 0 1px 0 0 hsl(0 0% 100% / 0.2);
+    @apply text-sm px-5 py-2 rounded-full transition-all duration-200 font-medium;
+    background: hsl(var(--brand-teal));
+    color: hsl(0 0% 100%);
+    border: 1px solid hsl(var(--brand-teal));
   }
 
   /* ── Liquid Glass: Hero card ── */
@@ -743,15 +738,10 @@
   overflow: hidden;
 }
 
-/* Section-level flow device: asymmetric curve — rounded left, swept up right */
-/* Cream sections sit ON TOP of previous dark sections */
+/* Section-level flow device: flat edges for RQI brand */
 .flow-section-cream,
 .flow-section-dark {
   position: relative;
-  margin-top: -60px;
-  padding-top: calc(60px + 5rem);
-  padding-bottom: calc(60px + 4rem);
-  border-radius: 0 120px 0 0;
   z-index: 1;
   overflow: hidden;
 }
