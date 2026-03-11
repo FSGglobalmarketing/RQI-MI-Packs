@@ -66,14 +66,14 @@
     --chart-bottle: 139 41% 30%;
     --chart-daffodil: 48 100% 50%;
 
-    --sidebar-background: 181 100% 9%;
-    --sidebar-foreground: 56 72% 87%;
-    --sidebar-primary: 181 42% 59%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 182 41% 35%;
-    --sidebar-accent-foreground: 56 72% 87%;
-    --sidebar-border: 181 60% 18%;
-    --sidebar-ring: 181 42% 59%;
+    --sidebar-background: 0 0% 2%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 0 0% 15%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-ring: 0 0% 100%;
   }
 
   .dark {
