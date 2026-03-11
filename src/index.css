@@ -147,19 +147,19 @@
   }
 
   .kpi-pill-good {
-    background-color: hsl(var(--success));
-    color: hsl(var(--success-foreground));
+    background-color: hsl(var(--brand-teal));
+    color: hsl(0 0% 100%);
     @apply text-sm px-5 py-1.5 rounded-full font-medium;
   }
 
   .kpi-pill-below {
-    background-color: hsl(var(--primary));
-    color: hsl(var(--primary-foreground));
+    background-color: hsl(var(--brand-teal));
+    color: hsl(0 0% 100%);
   }
 
   .kpi-pill-orange {
-    background-color: hsl(var(--primary));
-    color: hsl(var(--primary-foreground));
+    background-color: hsl(var(--brand-teal));
+    color: hsl(0 0% 100%);
     @apply text-sm px-5 py-1.5 rounded-full font-medium;
   }
 
@@ -170,8 +170,8 @@
 
   .stage-badge {
     @apply inline-flex items-center gap-2 px-6 py-2 rounded-full text-sm font-semibold;
-    background-color: hsl(var(--primary));
-    color: hsl(var(--primary-foreground));
+    background-color: hsl(var(--brand-teal));
+    color: hsl(0 0% 100%);
   }
 
   .stat-highlight {
