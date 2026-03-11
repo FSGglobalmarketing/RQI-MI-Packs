@@ -141,7 +141,7 @@ export default function EventsKPIs({ events }: EventsKPIsProps) {
                 contentStyle={{ fontSize: 11, background: "hsl(var(--secondary))", border: "1px solid hsl(var(--secondary-foreground) / 0.1)", borderRadius: 8 }}
                 cursor={{ fill: "hsl(var(--secondary-foreground) / 0.05)" }}
               />
-              <Bar dataKey="events" fill="hsl(14, 78%, 57%)" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="events" fill="#0F9AFF" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
