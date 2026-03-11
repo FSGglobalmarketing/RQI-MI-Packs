@@ -21,9 +21,9 @@ const CHANNEL_FILTERS = ["all", "Web", "Twitter"] as const;
 type ChannelFilter = typeof CHANNEL_FILTERS[number];
 
 const COLORS = {
-  positive: "hsl(142 60% 45%)",
-  neutral: "hsl(205 30% 55%)",
-  negative: "hsl(14 100% 57%)",
+  positive: "#0F9AFF",
+  neutral: "#56658B",
+  negative: "#D37669",
 };
 
 function formatFollowers(n: number): string {
