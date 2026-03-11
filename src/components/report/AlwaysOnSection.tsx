@@ -66,13 +66,13 @@ function UsersSessionsChart({ data, variant }: { data: GaMonthlyItem[]; variant:
         <YAxis tick={{ fontSize: 9, fill: tickFill }} tickFormatter={formatK} />
         <Tooltip
           contentStyle={{
-            background: isDark ? "hsl(195 30% 12%)" : "hsl(20 33% 93%)",
+            background: isDark ? "hsl(0 0% 8%)" : "hsl(0 0% 96%)",
             border: `1px solid ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"}`,
             borderRadius: 12,
             fontSize: 11,
-            color: isDark ? "#fff" : "#052332",
+            color: isDark ? "#fff" : "#000",
           }}
-          labelStyle={{ color: "#FF5424", fontWeight: 700 }}
+          labelStyle={{ color: "#0F9AFF", fontWeight: 700 }}
           formatter={(value: number, name: string) => [formatK(value), name === "users" ? "Users" : "Sessions"]}
         />
         <Area type="monotone" dataKey="sessions" stackId="1" fill="#56658B" stroke="#56658B" strokeWidth={1} fillOpacity={0.6} />
