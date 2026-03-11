@@ -96,7 +96,7 @@ export default function EventsSection() {
                         if (ev.marketingLead && !people.includes(ev.marketingLead)) people.push(ev.marketingLead);
                         if (ev.distributionLead) ev.distributionLead.split("/").map(s => s.trim()).forEach(s => { if (!people.includes(s)) people.push(s); });
                         if (people.length === 0) return <span className="text-secondary-foreground/30 text-xs">—</span>;
-                        const colors = ["#FF5424", "#214E6F", "#29628A", "#3A8AC3", "#506570"];
+                        const colors = ["#0F9AFF", "#56658B", "#D37669", "#F99C46", "#FFCC00"];
                         return people.slice(0, 3).map((name, i) => {
                           const initials = name.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
                           return (
