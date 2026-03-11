@@ -27,10 +27,10 @@ function EpisodeLeaderboard() {
             <div className="relative h-2 rounded-full overflow-hidden bg-muted/30">
               <div
                 className="absolute inset-y-0 left-0 rounded-full transition-all duration-500"
-                style={{
-                  width: `${(ep.streams / maxStreams) * 100}%`,
-                  backgroundColor: i < 3 ? "hsl(14 78% 57%)" : "hsl(14 78% 57% / 0.4)",
-                }}
+                 style={{
+                   width: `${(ep.streams / maxStreams) * 100}%`,
+                   backgroundColor: i < 3 ? "#0F9AFF" : "#0F9AFF80",
+                 }}
               />
             </div>
           </div>
