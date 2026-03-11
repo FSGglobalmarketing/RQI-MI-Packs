@@ -4,7 +4,7 @@ import heroBg from "@/assets/hero-bg.png";
 export default function HeroSection() {
   const d = reportData;
   return (
-    <section id="overview" className="section-dark topo-pattern topo-pattern-dark relative min-h-[80vh] flex items-center pt-20 pb-16 overflow-hidden">
+    <section id="overview" className="section-dark relative min-h-[80vh] flex items-center pt-20 pb-16 overflow-hidden">
       {/* Background cover image — horizontal scroll loop */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="hero-scroll-track absolute inset-y-0 flex w-[200%]">
