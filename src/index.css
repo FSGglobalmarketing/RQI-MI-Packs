@@ -2,43 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 @layer base {
   :root {
-    /* Obsidian #052332 - primary dark background */
-    --background: 200 82% 11%;
-    --foreground: 20 33% 93%;
+    /* Racing #003638 - primary dark background */
+    --background: 181 100% 11%;
+    --foreground: 56 72% 87%;
 
-    /* Card surfaces - slightly lighter Obsidian */
-    --card: 200 70% 9%;
-    --card-foreground: 20 33% 93%;
+    /* Card surfaces - slightly lighter Racing */
+    --card: 181 80% 9%;
+    --card-foreground: 56 72% 87%;
 
-    --popover: 200 70% 9%;
-    --popover-foreground: 20 33% 93%;
+    --popover: 181 80% 9%;
+    --popover-foreground: 56 72% 87%;
 
-    /* Magma #FF5424 - punchy accent, used sparingly */
-    --primary: 14 100% 57%;
+    /* Mint #53b8bb - teal accent */
+    --primary: 181 42% 59%;
     --primary-foreground: 0 0% 100%;
 
-    /* Pumice #F2EBE6 - warm cream background */
-    --secondary: 20 33% 93%;
-    --secondary-foreground: 200 82% 11%;
+    /* Pollen #f3f2c9 - warm cream background */
+    --secondary: 56 72% 87%;
+    --secondary-foreground: 181 100% 11%;
 
-    /* Sodalite #214E6F tones for muted elements */
-    --muted: 205 54% 28%;
-    --muted-foreground: 205 30% 60%;
+    /* Moss #347b7e tones for muted elements */
+    --muted: 182 41% 35%;
+    --muted-foreground: 181 25% 58%;
 
-    --accent: 14 100% 57%;
+    --accent: 181 42% 59%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    /* Sodalite-based borders */
-    --border: 205 40% 22%;
-    --input: 205 40% 22%;
-    --ring: 14 100% 57%;
+    /* Racing-based borders */
+    --border: 181 60% 18%;
+    --input: 181 60% 18%;
+    --ring: 181 42% 59%;
 
     --radius: 0.75rem;
 
@@ -48,62 +48,62 @@
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
 
-    /* Pumice */
-    --cream: 20 33% 93%;
-    --cream-foreground: 200 82% 11%;
+    /* Pollen */
+    --cream: 56 72% 87%;
+    --cream-foreground: 181 100% 11%;
 
-    /* Chart secondary palette — exact brand hex conversions */
-    --chart-obsidian: 200 82% 11%;
-    --chart-basalt: 200 17% 38%;
-    --chart-granite: 200 10% 55%;
-    --chart-molten: 13 100% 21%;
-    --chart-lava: 13 100% 36%;
-    --chart-magma: 14 100% 57%;
-    --chart-sodalite: 205 54% 28%;
-    --chart-sapphire: 205 54% 35%;
-    --chart-aquamarine: 207 54% 49%;
-    --chart-amethyst: 261 26% 26%;
-    --chart-rhodolite: 268 10% 48%;
-    --chart-tanzanite: 268 10% 59%;
+    /* Chart palette — RQI brand hex conversions */
+    --chart-racing: 181 100% 11%;
+    --chart-moss: 182 41% 35%;
+    --chart-mint: 181 42% 59%;
+    --chart-grass: 140 17% 57%;
+    --chart-pollen: 56 72% 87%;
+    --chart-ash: 0 0% 8%;
+    --chart-terracotta: 7 56% 62%;
+    --chart-sunset: 29 94% 63%;
+    --chart-harbour: 212 100% 53%;
+    --chart-aubergine: 223 24% 44%;
+    --chart-bottle: 139 41% 30%;
+    --chart-daffodil: 48 100% 50%;
 
-    --sidebar-background: 200 82% 9%;
-    --sidebar-foreground: 20 33% 93%;
-    --sidebar-primary: 14 100% 57%;
+    --sidebar-background: 181 100% 9%;
+    --sidebar-foreground: 56 72% 87%;
+    --sidebar-primary: 181 42% 59%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 205 54% 28%;
-    --sidebar-accent-foreground: 20 33% 93%;
-    --sidebar-border: 205 40% 22%;
-    --sidebar-ring: 14 100% 57%;
+    --sidebar-accent: 182 41% 35%;
+    --sidebar-accent-foreground: 56 72% 87%;
+    --sidebar-border: 181 60% 18%;
+    --sidebar-ring: 181 42% 59%;
   }
 
   .dark {
-    --background: 200 82% 11%;
-    --foreground: 20 33% 93%;
-    --card: 200 70% 9%;
-    --card-foreground: 20 33% 93%;
-    --popover: 200 70% 9%;
-    --popover-foreground: 20 33% 93%;
-    --primary: 14 100% 57%;
+    --background: 181 100% 11%;
+    --foreground: 56 72% 87%;
+    --card: 181 80% 9%;
+    --card-foreground: 56 72% 87%;
+    --popover: 181 80% 9%;
+    --popover-foreground: 56 72% 87%;
+    --primary: 181 42% 59%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 20 33% 93%;
-    --secondary-foreground: 200 82% 11%;
-    --muted: 205 54% 28%;
-    --muted-foreground: 205 30% 60%;
-    --accent: 14 100% 57%;
+    --secondary: 56 72% 87%;
+    --secondary-foreground: 181 100% 11%;
+    --muted: 182 41% 35%;
+    --muted-foreground: 181 25% 58%;
+    --accent: 181 42% 59%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 205 40% 22%;
-    --input: 205 40% 22%;
-    --ring: 14 100% 57%;
-    --sidebar-background: 200 82% 9%;
-    --sidebar-foreground: 20 33% 93%;
-    --sidebar-primary: 14 100% 57%;
+    --border: 181 60% 18%;
+    --input: 181 60% 18%;
+    --ring: 181 42% 59%;
+    --sidebar-background: 181 100% 9%;
+    --sidebar-foreground: 56 72% 87%;
+    --sidebar-primary: 181 42% 59%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 205 54% 28%;
-    --sidebar-accent-foreground: 20 33% 93%;
-    --sidebar-border: 205 40% 22%;
-    --sidebar-ring: 14 100% 57%;
+    --sidebar-accent: 182 41% 35%;
+    --sidebar-accent-foreground: 56 72% 87%;
+    --sidebar-border: 181 60% 18%;
+    --sidebar-ring: 181 42% 59%;
   }
 }
 
