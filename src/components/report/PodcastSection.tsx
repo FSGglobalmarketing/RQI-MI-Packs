@@ -131,7 +131,7 @@ export default function PodcastSection() {
   const totalStreams = podcastEpisodes.reduce((sum, ep) => sum + ep.streams, 0);
 
   return (
-    <section id="podcast" className="section-dark topo-pattern pumice-pattern-dark py-24 flow-section-dark relative">
+    <section id="podcast" className="section-dark py-24 flow-section-dark relative">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-[1]">
         <div className="flex flex-wrap items-center gap-3 mb-2">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground">{p.title}</h2>

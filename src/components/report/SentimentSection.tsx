@@ -180,7 +180,7 @@ export default function SentimentSection() {
   const activeFilterCount = (sentimentFilter !== "all" ? 1 : 0) + (channelFilter !== "all" ? 1 : 0);
 
   return (
-    <section id="sentiment" className="section-dark topo-pattern hex-pattern-dark py-24 flow-section-dark relative">
+    <section id="sentiment" className="section-dark py-24 flow-section-dark relative">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-[1]">
         {/* Header */}
         <div className="flex flex-wrap items-center gap-3 mb-2">

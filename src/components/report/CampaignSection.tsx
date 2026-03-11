@@ -33,7 +33,7 @@ interface CampaignChartPageProps {
 export function CampaignSection({ id, title, stage, subtitle, description, goals, formats, keyResults, variant, phoneImage }: CampaignProps) {
   const isDark = variant === "dark";
   return (
-    <section id={id} className={`${isDark ? "section-dark topo-pattern topo-pattern-dark flow-section-dark" : "section-cream topo-pattern topo-pattern-cream flow-section-cream"} py-24 relative`}>
+    <section id={id} className={`${isDark ? "section-dark flow-section-dark" : "section-cream flow-section-cream"} py-24 relative`}>
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-[1]">
         <div className="grid lg:grid-cols-2 gap-10 items-start">
           {/* Left column: all content */}
