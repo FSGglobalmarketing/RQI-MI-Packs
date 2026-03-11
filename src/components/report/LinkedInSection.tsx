@@ -135,8 +135,8 @@ function OrgVsSponsoredChart() {
           contentStyle={{ background: "hsl(195 30% 12%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }}
           formatter={(value: number, name: string) => [formatK(value), name === "organic" ? "Organic" : "Sponsored"]}
         />
-        <Bar dataKey="organic" stackId="a" fill="#FF5424" radius={[0, 0, 0, 0]} />
-        <Bar dataKey="sponsored" stackId="a" fill="#214E6F" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="organic" stackId="a" fill="#0F9AFF" radius={[0, 0, 0, 0]} />
+        <Bar dataKey="sponsored" stackId="a" fill="#56658B" radius={[4, 4, 0, 0]} />
         <Legend
           wrapperStyle={{ fontSize: 10, paddingTop: 8 }}
           formatter={(value: string) => <span style={{ color: "hsl(195 15% 65%)" }}>{value === "organic" ? "Organic" : "Sponsored"}</span>}
