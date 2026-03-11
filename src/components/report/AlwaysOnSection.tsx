@@ -75,8 +75,8 @@ function UsersSessionsChart({ data, variant }: { data: GaMonthlyItem[]; variant:
           labelStyle={{ color: "#FF5424", fontWeight: 700 }}
           formatter={(value: number, name: string) => [formatK(value), name === "users" ? "Users" : "Sessions"]}
         />
-        <Area type="monotone" dataKey="sessions" stackId="1" fill="#214E6F" stroke="#29628A" strokeWidth={1} fillOpacity={0.6} />
-        <Area type="monotone" dataKey="users" stackId="1" fill="#FF5424" stroke="#FF5424" strokeWidth={2} fillOpacity={0.8} />
+        <Area type="monotone" dataKey="sessions" stackId="1" fill="#56658B" stroke="#56658B" strokeWidth={1} fillOpacity={0.6} />
+        <Area type="monotone" dataKey="users" stackId="1" fill="#0F9AFF" stroke="#0F9AFF" strokeWidth={2} fillOpacity={0.8} />
         <Legend
           wrapperStyle={{ fontSize: 10, paddingTop: 8 }}
           formatter={(value: string) => (
