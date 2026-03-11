@@ -130,10 +130,10 @@ function OrgVsSponsoredChart() {
     <ResponsiveContainer width="100%" height={420}>
       <BarChart data={linkedInQuarterlyData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-        <XAxis dataKey="quarter" tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} />
-        <YAxis tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} tickFormatter={formatK} />
+        <XAxis dataKey="quarter" tick={{ fontSize: 9, fill: "hsl(0 0% 60%)" }} />
+        <YAxis tick={{ fontSize: 9, fill: "hsl(0 0% 60%)" }} tickFormatter={formatK} />
         <Tooltip
-          contentStyle={{ background: "hsl(195 30% 12%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }}
+          contentStyle={{ background: "hsl(0 0% 8%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }}
           formatter={(value: number, name: string) => [formatK(value), name === "organic" ? "Organic" : "Sponsored"]}
         />
         <Bar dataKey="organic" stackId="a" fill="#0F9AFF" radius={[0, 0, 0, 0]} />
