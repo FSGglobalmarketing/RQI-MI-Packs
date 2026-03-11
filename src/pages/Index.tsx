@@ -18,7 +18,7 @@ import SplashScreen from "@/components/report/SplashScreen";
 import { reportData } from "@/data/igneo-report";
 import railImage from "@/assets/rail-to-runway-us-backbone.jpg";
 
-import igneoLogo from "@/assets/igneo-footer-logo.svg";
+// RQI text logo rendered inline in footer
 
 const Index = () => {
   const [showSplash, setShowSplash] = useState(true);
