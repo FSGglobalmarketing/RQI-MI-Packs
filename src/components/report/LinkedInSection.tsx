@@ -187,7 +187,7 @@ function SparklineCards() {
               <polyline
                 points={points}
                 fill="none"
-                stroke="hsl(14 78% 57%)"
+                stroke="#0F9AFF"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"

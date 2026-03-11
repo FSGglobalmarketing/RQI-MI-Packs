@@ -77,7 +77,7 @@ export default function KpiRow({ value, label, comparison, variant = "dark" }: K
             <p className="font-bold mb-1" style={{ color: "#0F9AFF" }}>{label}</p>
             <p>{description}</p>
             <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent"
-              style={{ borderTopColor: isDark ? "hsl(195 30% 12%)" : "hsl(0 0% 100%)" }}
+              style={{ borderTopColor: isDark ? "hsl(0 0% 8%)" : "hsl(0 0% 100%)" }}
             />
           </div>
         )}

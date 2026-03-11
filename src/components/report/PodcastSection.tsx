@@ -65,8 +65,8 @@ function StreamsOverTime() {
             x={m.month}
             y={m.streams}
             r={4}
-            fill="hsl(14 78% 57%)"
-            stroke="hsl(195 30% 12%)"
+            fill="#0F9AFF"
+            stroke="hsl(0 0% 0%)"
             strokeWidth={2}
           />
         ))}

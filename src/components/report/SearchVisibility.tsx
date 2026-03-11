@@ -5,21 +5,21 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import { Switch } from "@/components/ui/switch";
 import KpiRow from "./KpiRow";
 
-/* Brand secondary colour hierarchy for chart lines */
+/* RQI gradient accent palette for chart lines */
 const LINE_CONFIG: { key: string; color: string; width: number; opacity: number }[] = [
-  { key: "Igneo", color: "#FF5424", width: 3, opacity: 1 },        // Magma — always
-  { key: "CIP", color: "#506570", width: 1.2, opacity: 0.75 },     // Basalt
-  { key: "Antin", color: "#829199", width: 1.2, opacity: 0.75 },   // Granite
-  { key: "IFM", color: "#214E6F", width: 1.2, opacity: 0.75 },     // Sodalite
-  { key: "Infravia", color: "#29628A", width: 1.2, opacity: 0.75 },// Sapphire
-  { key: "Global Infra", color: "#3A8AC3", width: 1.2, opacity: 0.75 }, // Aquamarine
-  { key: "CVC", color: "#423355", width: 1.2, opacity: 0.75 },     // Amethyst
-  { key: "DIF", color: "#7B7088", width: 1.2, opacity: 0.75 },     // Rhodolite
-  { key: "KKR", color: "#958C9F", width: 1.2, opacity: 0.75 },     // Tanzanite
-  { key: "Blackstone", color: "#6D1800", width: 1.2, opacity: 0.75 }, // Molten
-  { key: "Vauban", color: "#B62800", width: 1.2, opacity: 0.75 },  // Lava
-  { key: "Stonepeak", color: "#052332", width: 1.2, opacity: 0.6 },// Obsidian
-  { key: "Ardian", color: "#506570", width: 1.2, opacity: 0.5 },   // Basalt repeat
+  { key: "Igneo", color: "#0F9AFF", width: 3, opacity: 1 },        // RQI Blue — always prominent
+  { key: "CIP", color: "#56658B", width: 1.2, opacity: 0.75 },     // Slate
+  { key: "Antin", color: "#999999", width: 1.2, opacity: 0.75 },   // Grey
+  { key: "IFM", color: "#D37669", width: 1.2, opacity: 0.75 },     // Coral
+  { key: "Infravia", color: "#F99C46", width: 1.2, opacity: 0.75 },// Amber
+  { key: "Global Infra", color: "#FFCC00", width: 1.2, opacity: 0.75 }, // Gold
+  { key: "CVC", color: "#777777", width: 1.2, opacity: 0.75 },     // Grey
+  { key: "DIF", color: "#aaaaaa", width: 1.2, opacity: 0.75 },     // Light grey
+  { key: "KKR", color: "#888888", width: 1.2, opacity: 0.75 },     // Grey
+  { key: "Blackstone", color: "#555555", width: 1.2, opacity: 0.75 }, // Dark grey
+  { key: "Vauban", color: "#666666", width: 1.2, opacity: 0.75 },  // Grey
+  { key: "Stonepeak", color: "#444444", width: 1.2, opacity: 0.6 },// Dark grey
+  { key: "Ardian", color: "#bbbbbb", width: 1.2, opacity: 0.5 },   // Light grey
 ];
 
 const DATA_KEYS = LINE_CONFIG.map((l) => l.key);

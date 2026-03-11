@@ -128,7 +128,7 @@ function TopPagesChart({ data, variant }: { data: TopPageItem[]; variant: "dark"
 /* ── Traffic Sources ── */
 function TrafficSourcesChart({ data, variant }: { data: TrafficSourceItem[]; variant: "dark" | "cream" }) {
   const isDark = variant === "dark";
-  const colors = ["#FF5424", "#214E6F", "#29628A", "#506570", "#829199"];
+  const colors = ["#0F9AFF", "#56658B", "#D37669", "#F99C46", "#FFCC00"];
 
   return (
     <div className="space-y-3">
