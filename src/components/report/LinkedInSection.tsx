@@ -19,11 +19,11 @@ function ImpressionsTimeline() {
     <ResponsiveContainer width="100%" height={420}>
       <AreaChart data={linkedInMonthlyData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-        <XAxis dataKey="month" tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} interval={5} />
-        <YAxis tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} tickFormatter={formatK} />
+        <XAxis dataKey="month" tick={{ fontSize: 9, fill: "hsl(0 0% 60%)" }} interval={5} />
+        <YAxis tick={{ fontSize: 9, fill: "hsl(0 0% 60%)" }} tickFormatter={formatK} />
         <Tooltip
-          contentStyle={{ background: "hsl(195 30% 12%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }}
-          labelStyle={{ color: "hsl(14 78% 57%)", fontWeight: 700 }}
+          contentStyle={{ background: "hsl(0 0% 8%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }}
+          labelStyle={{ color: "#0F9AFF", fontWeight: 700 }}
           formatter={(value: number, name: string) => [formatK(value), name === "organic" ? "Organic" : "Sponsored"]}
         />
         <Area type="monotone" dataKey="sponsored" stackId="1" fill="#56658B" stroke="#56658B" strokeWidth={1} />
