@@ -41,8 +41,8 @@
     --popover: 181 90% 13%;
     --popover-foreground: 0 0% 100%;
 
-    /* Primary accent - Mint (high contrast on Racing) */
-    --primary: 162 60% 80%;
+    /* Primary accent - Mint #53b8bb */
+    --primary: 181 41% 53%;
     --primary-foreground: 181 100% 11%;
 
     /* Secondary - pure white */
