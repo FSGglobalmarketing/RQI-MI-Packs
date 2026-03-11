@@ -250,9 +250,9 @@ export function NorthAmericaChart() {
             <Tooltip content={<SortedTooltip />} />
             <Legend wrapperStyle={{ fontSize: 11 }} />
             <Line type="monotone" dataKey="page1" stroke="#0F9AFF" strokeWidth={2.5} dot={false} animationDuration={1500} name="Page 1" />
-            <Line type="monotone" dataKey="page2" stroke="#214E6F" strokeWidth={2} dot={false} animationDuration={1500} name="Page 2" />
-            <Line type="monotone" dataKey="page3" stroke="#29628A" strokeWidth={2} dot={false} animationDuration={1500} name="Page 3" />
-            <Line type="monotone" dataKey="page4" stroke="#3A8AC3" strokeWidth={1.5} dot={false} animationDuration={1500} name="Page 4" />
+             <Line type="monotone" dataKey="page2" stroke="#56658B" strokeWidth={2} dot={false} animationDuration={1500} name="Page 2" />
+             <Line type="monotone" dataKey="page3" stroke="#D37669" strokeWidth={2} dot={false} animationDuration={1500} name="Page 3" />
+             <Line type="monotone" dataKey="page4" stroke="#F99C46" strokeWidth={1.5} dot={false} animationDuration={1500} name="Page 4" />
             {zoom.refAreaLeft !== null && zoom.refAreaRight !== null && (
               <ReferenceArea x1={allData[Math.min(zoom.refAreaLeft, zoom.refAreaRight)]?.month} x2={allData[Math.max(zoom.refAreaLeft, zoom.refAreaRight)]?.month} strokeOpacity={0.3} fill="rgba(232,97,58,0.1)" />
             )}
