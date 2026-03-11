@@ -25,6 +25,8 @@ export default {
         "moss": "hsl(var(--moss))",
         "mint": "hsl(var(--mint))",
         "pollen": "hsl(var(--pollen))",
+        "grass": "hsl(var(--grass))",
+        "ash": "hsl(var(--ash))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
