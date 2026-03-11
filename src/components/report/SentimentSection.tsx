@@ -39,11 +39,11 @@ function TimelineChart() {
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={mentionsByMonth} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-          <XAxis dataKey="month" tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} />
-          <YAxis tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} />
+          <XAxis dataKey="month" tick={{ fontSize: 9, fill: "hsl(0 0% 60%)" }} />
+          <YAxis tick={{ fontSize: 9, fill: "hsl(0 0% 60%)" }} />
           <Tooltip
-            contentStyle={{ background: "hsl(195 30% 12%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }}
-            labelStyle={{ color: "hsl(14 78% 57%)", fontWeight: 700 }}
+            contentStyle={{ background: "hsl(0 0% 8%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }}
+            labelStyle={{ color: "#0F9AFF", fontWeight: 700 }}
           />
           <Area type="monotone" dataKey="negative" stackId="1" fill="hsl(14 100% 57% / 0.3)" stroke={COLORS.negative} strokeWidth={1.5} />
           <Area type="monotone" dataKey="neutral" stackId="1" fill="hsl(205 30% 55% / 0.25)" stroke={COLORS.neutral} strokeWidth={1.5} />
