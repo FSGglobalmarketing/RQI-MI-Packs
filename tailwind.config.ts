@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Inter", "Suisse International", "Arial", "sans-serif"],
+        sans: ["Suisse International", "Inter", "Arial", "sans-serif"],
       },
       letterSpacing: {
         "brand-display": "-0.04em",

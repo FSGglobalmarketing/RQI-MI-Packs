@@ -17,8 +17,7 @@ import SentimentSection from "@/components/report/SentimentSection";
 import SplashScreen from "@/components/report/SplashScreen";
 import { reportData } from "@/data/igneo-report";
 import railImage from "@/assets/rail-to-runway-us-backbone.jpg";
-
-// RQI text logo rendered inline in footer
+import rqiLogoWhite from "@/assets/RQI_Positive_White.svg";
 
 const Index = () => {
   const [showSplash, setShowSplash] = useState(true);
@@ -111,7 +110,7 @@ const Index = () => {
 
       <footer className="section-dark py-10 border-t border-border">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-4">
-          <span className="text-primary font-extrabold text-xl tracking-brand-display">RQI <span className="text-foreground/60 font-medium text-xs tracking-widest uppercase ml-1">Investors</span></span>
+          <img src={rqiLogoWhite} alt="RQI Investors" className="h-12 w-auto" />
           <p className="text-xs text-muted-foreground">{d.quarter} Marketing Impact Report · Internal Use</p>
         </div>
       </footer>
