@@ -21,6 +21,7 @@ export default {
         "brand-heading": "-0.02em",
       },
       colors: {
+        "brand-teal": "hsl(var(--brand-teal))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
