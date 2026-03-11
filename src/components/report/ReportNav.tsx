@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import igneoLogo from "@/assets/igneo-footer-logo.svg";
+// RQI text logo rendered inline
 
 const navItems = [
   { id: "overview", label: "Overview" },
