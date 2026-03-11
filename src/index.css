@@ -6,39 +6,39 @@
 
 @layer base {
   :root {
-    /* Racing #003638 - primary dark background */
-    --background: 181 100% 11%;
-    --foreground: 56 72% 87%;
+    /* Pure black background */
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
 
-    /* Card surfaces - slightly lighter Racing */
-    --card: 181 80% 9%;
-    --card-foreground: 56 72% 87%;
+    /* Card surfaces - near black */
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 181 80% 9%;
-    --popover-foreground: 56 72% 87%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 100%;
 
-    /* Mint #53b8bb - teal accent */
-    --primary: 181 42% 59%;
-    --primary-foreground: 0 0% 100%;
+    /* Primary accent - white */
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
 
-    /* Pollen #f3f2c9 - warm cream background */
-    --secondary: 56 72% 87%;
-    --secondary-foreground: 181 100% 11%;
+    /* Secondary - pure white (replaces Pollen/cream) */
+    --secondary: 0 0% 100%;
+    --secondary-foreground: 0 0% 0%;
 
-    /* Moss #347b7e tones for muted elements */
-    --muted: 182 41% 35%;
-    --muted-foreground: 181 25% 58%;
+    /* Muted - dark grays */
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
 
-    --accent: 181 42% 59%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 0 0% 100%;
+    --accent-foreground: 0 0% 0%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    /* Racing-based borders */
-    --border: 181 60% 18%;
-    --input: 181 60% 18%;
-    --ring: 181 42% 59%;
+    /* Black-based borders */
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 0 0% 100%;
 
     --radius: 0.75rem;
 
@@ -48,9 +48,9 @@
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
 
-    /* Pollen */
-    --cream: 56 72% 87%;
-    --cream-foreground: 181 100% 11%;
+    /* Cream replaced with white */
+    --cream: 0 0% 100%;
+    --cream-foreground: 0 0% 0%;
 
     /* Chart palette — RQI brand hex conversions */
     --chart-racing: 181 100% 11%;
