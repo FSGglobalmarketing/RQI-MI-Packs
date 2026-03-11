@@ -108,9 +108,9 @@ function ChannelChart({ onBarClick }: { onBarClick: (sentiment: SentimentFilter,
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={channelBreakdown} layout="vertical" margin={{ top: 10, right: 20, left: 10, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" horizontal={false} />
-          <XAxis type="number" tick={{ fontSize: 9, fill: "hsl(195 15% 65%)" }} />
-          <YAxis type="category" dataKey="channel" tick={{ fontSize: 11, fill: "hsl(195 15% 65%)" }} width={70} />
-          <Tooltip contentStyle={{ background: "hsl(195 30% 12%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }} cursor={{ fill: "rgba(255,255,255,0.04)" }} />
+          <XAxis type="number" tick={{ fontSize: 9, fill: "hsl(0 0% 60%)" }} />
+          <YAxis type="category" dataKey="channel" tick={{ fontSize: 11, fill: "hsl(0 0% 60%)" }} width={70} />
+          <Tooltip contentStyle={{ background: "hsl(0 0% 8%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }} cursor={{ fill: "rgba(255,255,255,0.04)" }} />
           <Bar dataKey="positive" stackId="a" fill={COLORS.positive} radius={[0, 0, 0, 0]} className="cursor-pointer" onClick={(data) => handleClick(data, "positive")} />
           <Bar dataKey="neutral" stackId="a" fill={COLORS.neutral} className="cursor-pointer" onClick={(data) => handleClick(data, "neutral")} />
           <Bar dataKey="negative" stackId="a" fill={COLORS.negative} radius={[0, 4, 4, 0]} className="cursor-pointer" onClick={(data) => handleClick(data, "negative")} />
