@@ -58,7 +58,7 @@ function StreamsOverTime() {
           labelStyle={{ color: "hsl(14 78% 57%)", fontWeight: 700 }}
           formatter={(value: number) => [`${value} streams`, "Monthly Streams"]}
         />
-        <Line type="monotone" dataKey="streams" stroke="hsl(14 78% 57%)" strokeWidth={2.5} dot={false} />
+        <Line type="monotone" dataKey="streams" stroke="#0F9AFF" strokeWidth={2.5} dot={false} />
         {releaseMonths.map((m) => (
           <ReferenceDot
             key={m.month}
