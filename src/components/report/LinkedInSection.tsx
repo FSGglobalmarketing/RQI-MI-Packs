@@ -30,7 +30,7 @@ function ImpressionsTimeline() {
         <Area type="monotone" dataKey="organic" stackId="1" fill="#0F9AFF" stroke="#0F9AFF" strokeWidth={2} />
         <Legend
           wrapperStyle={{ fontSize: 10, paddingTop: 8 }}
-          formatter={(value: string) => <span style={{ color: "hsl(195 15% 65%)" }}>{value === "organic" ? "Organic" : "Sponsored"}</span>}
+          formatter={(value: string) => <span style={{ color: "hsl(0 0% 60%)" }}>{value === "organic" ? "Organic" : "Sponsored"}</span>}
         />
       </AreaChart>
     </ResponsiveContainer>
