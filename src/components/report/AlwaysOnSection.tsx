@@ -56,7 +56,7 @@ function formatK(v: number) {
 function UsersSessionsChart({ data, variant }: { data: GaMonthlyItem[]; variant: "dark" | "cream" }) {
   const isDark = variant === "dark";
   const gridStroke = isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)";
-  const tickFill = isDark ? "hsl(195 15% 65%)" : "#64748b";
+  const tickFill = isDark ? "hsl(0 0% 60%)" : "#64748b";
 
   return (
     <ResponsiveContainer width="100%" height={420}>
