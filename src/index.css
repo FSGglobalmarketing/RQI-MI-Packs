@@ -159,14 +159,23 @@
     scroll-behavior: smooth;
   }
 
-  /* Brand heading tracking per Igneo type scale */
+  /* Brand heading tracking */
   h1, h2 {
-    letter-spacing: -0.04em;
-    color: hsl(var(--brand-teal));
+    letter-spacing: 0em;
+  }
+
+  /* Headings on white/cream sections use Moss */
+  .section-cream h1, .section-cream h2 {
+    color: hsl(var(--moss));
+  }
+
+  /* Headings on dark (Racing) sections use white */
+  .section-dark h1, .section-dark h2 {
+    color: hsl(0 0% 100%);
   }
 
   h3, h4, h5, h6 {
-    letter-spacing: -0.02em;
+    letter-spacing: 0em;
   }
 
   /* Brand spacing: heading → body */
