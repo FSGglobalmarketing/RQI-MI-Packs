@@ -107,9 +107,9 @@ function TopPagesChart({ data, variant }: { data: TopPageItem[]; variant: "dark"
             <div className="flex-1 relative h-6 rounded-full overflow-hidden" style={{ backgroundColor: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)" }}>
               <div
                 className="absolute inset-y-0 left-0 rounded-full transition-all duration-700"
-                style={{
-                  width: `${widthPct}%`,
-                  backgroundColor: i === 0 ? "#FF5424" : "#214E6F",
+                 style={{
+                   width: `${widthPct}%`,
+                   backgroundColor: i === 0 ? "#0F9AFF" : "#56658B",
                   opacity: 1 - i * 0.12,
                 }}
               />
