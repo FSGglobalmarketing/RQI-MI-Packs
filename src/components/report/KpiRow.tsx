@@ -69,12 +69,12 @@ export default function KpiRow({ value, label, comparison, variant = "dark" }: K
             ref={tooltipRef}
             className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 rounded-xl p-3 text-xs leading-relaxed shadow-lg border animate-in fade-in-0 zoom-in-95"
             style={{
-              backgroundColor: isDark ? "hsl(195 30% 12%)" : "hsl(0 0% 100%)",
-              color: isDark ? "hsl(195 15% 65%)" : "hsl(195 35% 15%)",
+              backgroundColor: isDark ? "hsl(0 0% 8%)" : "hsl(0 0% 100%)",
+              color: isDark ? "hsl(0 0% 60%)" : "hsl(0 0% 20%)",
               borderColor: isDark ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.08)",
             }}
           >
-            <p className="font-bold mb-1" style={{ color: "hsl(14 78% 57%)" }}>{label}</p>
+            <p className="font-bold mb-1" style={{ color: "#0F9AFF" }}>{label}</p>
             <p>{description}</p>
             <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent"
               style={{ borderTopColor: isDark ? "hsl(195 30% 12%)" : "hsl(0 0% 100%)" }}
