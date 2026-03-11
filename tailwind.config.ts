@@ -17,11 +17,14 @@ export default {
         sans: ["Suisse International", "Inter", "Arial", "sans-serif"],
       },
       letterSpacing: {
-        "brand-display": "-0.04em",
-        "brand-heading": "-0.02em",
+        "brand-display": "0em",
+        "brand-heading": "0em",
       },
       colors: {
         "brand-teal": "hsl(var(--brand-teal))",
+        "moss": "hsl(var(--moss))",
+        "mint": "hsl(var(--mint))",
+        "pollen": "hsl(var(--pollen))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
