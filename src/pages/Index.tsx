@@ -17,8 +17,7 @@ import SentimentSection from "@/components/report/SentimentSection";
 import SplashScreen from "@/components/report/SplashScreen";
 import { reportData } from "@/data/igneo-report";
 import railImage from "@/assets/rail-to-runway-us-backbone.jpg";
-
-// RQI text logo rendered inline in footer
+import rqiLogoWhite from "@/assets/RQI_Positive_White.svg";
 
 const Index = () => {
   const [showSplash, setShowSplash] = useState(true);
