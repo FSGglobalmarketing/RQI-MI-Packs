@@ -141,8 +141,8 @@ function SortedTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   const sorted = [...payload].sort((a: any, b: any) => (b.value ?? 0) - (a.value ?? 0));
   return (
-    <div style={{ backgroundColor: "#1a2e35", borderRadius: 10, padding: "12px 16px", minWidth: 220, border: "1px solid rgba(255,255,255,0.12)" }}>
-      <p style={{ color: "#e8613a", fontWeight: 700, fontSize: 13, marginBottom: 8 }}>{label}</p>
+    <div style={{ backgroundColor: "#111", borderRadius: 10, padding: "12px 16px", minWidth: 220, border: "1px solid rgba(255,255,255,0.12)" }}>
+      <p style={{ color: "#0F9AFF", fontWeight: 700, fontSize: 13, marginBottom: 8 }}>{label}</p>
       {sorted.map((entry: any) => (
         <div key={entry.dataKey} style={{ display: "flex", justifyContent: "space-between", gap: 16, marginBottom: 2 }}>
           <span style={{ fontSize: 11, color: "rgba(255,255,255,0.6)" }}>{entry.name || entry.dataKey}</span>
