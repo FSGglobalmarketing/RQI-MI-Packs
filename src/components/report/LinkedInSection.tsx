@@ -26,8 +26,8 @@ function ImpressionsTimeline() {
           labelStyle={{ color: "hsl(14 78% 57%)", fontWeight: 700 }}
           formatter={(value: number, name: string) => [formatK(value), name === "organic" ? "Organic" : "Sponsored"]}
         />
-        <Area type="monotone" dataKey="sponsored" stackId="1" fill="#214E6F" stroke="#29628A" strokeWidth={1} />
-        <Area type="monotone" dataKey="organic" stackId="1" fill="#FF5424" stroke="#FF5424" strokeWidth={2} />
+        <Area type="monotone" dataKey="sponsored" stackId="1" fill="#56658B" stroke="#56658B" strokeWidth={1} />
+        <Area type="monotone" dataKey="organic" stackId="1" fill="#0F9AFF" stroke="#0F9AFF" strokeWidth={2} />
         <Legend
           wrapperStyle={{ fontSize: 10, paddingTop: 8 }}
           formatter={(value: string) => <span style={{ color: "hsl(195 15% 65%)" }}>{value === "organic" ? "Organic" : "Sponsored"}</span>}
