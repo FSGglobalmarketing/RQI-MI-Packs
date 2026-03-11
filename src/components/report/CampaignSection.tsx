@@ -320,7 +320,7 @@ export function DACHCharts() {
             <XAxis type="number" tick={{ fontSize: 11, fill: "#64748b" }} />
             <YAxis dataKey="company" type="category" width={120} tick={{ fontSize: 11, fill: "#64748b" }} />
             <Tooltip contentStyle={{ backgroundColor: "#1a2e35", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", color: "#fff" }} />
-            <Bar dataKey="views" fill="#FF5424" radius={[0, 6, 6, 0]} animationDuration={1200} />
+            <Bar dataKey="views" fill="#0F9AFF" radius={[0, 6, 6, 0]} animationDuration={1200} />
           </BarChart>
         </ResponsiveContainer>
       </div>
