@@ -10,7 +10,7 @@ import UKNordicsAdShowcase from "@/components/report/UKNordicsAdShowcase";
 import DeviceMockup from "@/components/report/DeviceMockup";
 import AlwaysOnSection from "@/components/report/AlwaysOnSection";
 import LinkedInSection from "@/components/report/LinkedInSection";
-import PodcastSection from "@/components/report/PodcastSection";
+
 import EventsSection from "@/components/report/EventsSection";
 import SentimentSection from "@/components/report/SentimentSection";
 
@@ -104,7 +104,7 @@ const Index = () => {
 
       <LinkedInSection />
 
-      <PodcastSection />
+      
       <EventsSection />
       <SentimentSection />
 

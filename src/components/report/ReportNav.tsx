@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-// RQI text logo rendered inline
+import rqiLogo from "@/assets/RQI_Positive_White.svg";
 
 const navItems = [
   { id: "overview", label: "Overview" },
@@ -10,7 +10,7 @@ const navItems = [
   { id: "uk-nordics", label: "UK & Nordics" },
   { id: "website", label: "Website" },
   { id: "linkedin", label: "LinkedIn" },
-  { id: "podcast", label: "Podcast" },
+  
   { id: "events", label: "Events" },
   { id: "sentiment", label: "Sentiment" },
 ];
@@ -19,9 +19,9 @@ const navItems = [
 const funnelStages = [
   { label: "Summary", startIdx: 0, endIdx: 1 },
   { label: "Awareness", startIdx: 2, endIdx: 5 },
-  { label: "Consideration", startIdx: 6, endIdx: 8 },
-  { label: "Conversion", startIdx: 9, endIdx: 9 },
-  { label: "Monitoring", startIdx: 10, endIdx: 10 },
+  { label: "Consideration", startIdx: 6, endIdx: 7 },
+  { label: "Conversion", startIdx: 8, endIdx: 8 },
+  { label: "Monitoring", startIdx: 9, endIdx: 9 },
 ];
 
 export default function ReportNav() {
@@ -73,12 +73,12 @@ export default function ReportNav() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-card/95 backdrop-blur-md shadow-lg border-b border-border" : "bg-transparent"
+        scrolled ? "bg-ash/95 backdrop-blur-md shadow-lg border-b border-border" : "bg-ash"
       }`}
     >
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-14">
-          <span className="text-primary font-extrabold text-lg tracking-brand-display">RQI <span className="text-foreground/60 font-medium text-xs tracking-widest uppercase ml-1">Investors</span></span>
+        <div className="flex items-center justify-between h-[67px]">
+          <img src={rqiLogo} alt="RQI Investors" className="h-7 w-auto" />
 
           {/* Desktop nav */}
           <div className="hidden lg:flex flex-col items-end">
