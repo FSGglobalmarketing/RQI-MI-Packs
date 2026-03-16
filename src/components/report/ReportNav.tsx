@@ -173,7 +173,11 @@ export default function ReportNav() {
               <a
                 key={item.id}
                 href={`#${item.id}`}
-                onClick={() => setMobileOpen(false)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setMobileOpen(false);
+                  document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
+                }}
                 className={`px-3 py-2 rounded-md text-sm ${
                   active === item.id ? "text-primary bg-primary/10" : "text-muted-foreground"
                 }`}
