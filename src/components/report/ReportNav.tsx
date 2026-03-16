@@ -78,7 +78,7 @@ export default function ReportNav() {
     >
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-[67px]">
-          <img src={rqiLogo} alt="RQI Investors" className="h-7 w-auto" />
+          <img src={rqiLogo} alt="RQI Investors" className="h-14 w-auto" />
 
           {/* Desktop nav */}
           <div className="hidden lg:flex flex-col items-end">
@@ -89,6 +89,10 @@ export default function ReportNav() {
                   key={item.id}
                   ref={(el) => { navRefs.current[i] = el; }}
                   href={`#${item.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
+                  }}
                   className={`px-3 py-1.5 rounded-md text-[11px] tracking-wide uppercase transition-all whitespace-nowrap ${
                     active === item.id
                       ? "text-primary bg-primary/10 font-semibold border border-primary/30"
@@ -169,7 +173,11 @@ export default function ReportNav() {
               <a
                 key={item.id}
                 href={`#${item.id}`}
-                onClick={() => setMobileOpen(false)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setMobileOpen(false);
+                  document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
+                }}
                 className={`px-3 py-2 rounded-md text-sm ${
                   active === item.id ? "text-primary bg-primary/10" : "text-muted-foreground"
                 }`}
