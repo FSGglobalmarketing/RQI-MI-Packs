@@ -231,8 +231,13 @@
 
   .stage-badge {
     @apply inline-flex items-center gap-2 px-6 py-2 rounded-full text-sm font-semibold;
-    background-color: hsl(var(--brand-teal));
-    color: hsl(0 0% 100%);
+    background-color: hsl(var(--mint) / 0.15);
+    color: hsl(var(--mint));
+  }
+
+  .section-cream .stage-badge {
+    background-color: hsl(var(--moss) / 0.12);
+    color: hsl(var(--moss));
   }
 
   .stat-highlight {
