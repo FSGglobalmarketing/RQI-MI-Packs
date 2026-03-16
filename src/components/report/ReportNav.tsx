@@ -89,6 +89,10 @@ export default function ReportNav() {
                   key={item.id}
                   ref={(el) => { navRefs.current[i] = el; }}
                   href={`#${item.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
+                  }}
                   className={`px-3 py-1.5 rounded-md text-[11px] tracking-wide uppercase transition-all whitespace-nowrap ${
                     active === item.id
                       ? "text-primary bg-primary/10 font-semibold border border-primary/30"
