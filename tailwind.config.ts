@@ -23,9 +23,9 @@ export default {
       colors: {
         "brand-teal": "hsl(var(--brand-teal))",
         "moss": "hsl(var(--moss))",
-        "mint": "hsl(var(--mint))",
-        "pollen": "hsl(var(--pollen))",
-        "grass": "hsl(var(--grass))",
+        "mint": "hsl(var(--mint) / <alpha-value>)",
+        "pollen": "hsl(var(--pollen) / <alpha-value>)",
+        "grass": "hsl(var(--grass) / <alpha-value>)",
         "ash": "hsl(var(--ash) / <alpha-value>)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
