@@ -73,12 +73,12 @@ export default function ReportNav() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-card/95 backdrop-blur-md shadow-lg border-b border-border" : "bg-transparent"
+        scrolled ? "bg-ash/95 backdrop-blur-md shadow-lg border-b border-border" : "bg-ash"
       }`}
     >
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-14">
-          <span className="text-primary font-extrabold text-lg tracking-brand-display">RQI <span className="text-foreground/60 font-medium text-xs tracking-widest uppercase ml-1">Investors</span></span>
+        <div className="flex items-center justify-between h-[67px]">
+          <img src="/mockups/igneo-footer-logo.svg" alt="RQI Investors" className="h-7 w-auto" />
 
           {/* Desktop nav */}
           <div className="hidden lg:flex flex-col items-end">

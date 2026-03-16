@@ -26,13 +26,12 @@ export default function HeroSection() {
         <div className="animate-slide-up">
           <div className="flex items-center gap-4 mb-6">
             <span className="stage-badge inline-block">{d.quarter}</span>
-            <span className="text-foreground/60 text-sm font-medium">1st Oct – 31st Dec 2025</span>
+            <span className="text-foreground/60 text-sm font-medium">1st Jan – 31st March 2026</span>
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-4 text-foreground">
             {d.title}
           </h1>
           <p className="text-lg text-muted-foreground mb-6 max-w-lg">{d.subtitle}</p>
-          <p className="text-2xl font-bold text-primary">{d.tagline}</p>
         </div>
       </div>
     </section>

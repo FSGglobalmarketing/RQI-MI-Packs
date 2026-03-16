@@ -208,19 +208,19 @@
   }
 
   .kpi-pill-good {
-    background-color: hsl(var(--brand-teal));
-    color: hsl(0 0% 100%);
+    background-color: hsl(var(--mint) / 0.15);
+    color: hsl(var(--mint));
     @apply text-sm px-5 py-1.5 rounded-full font-medium;
   }
 
   .kpi-pill-below {
-    background-color: hsl(var(--brand-teal));
-    color: hsl(0 0% 100%);
+    background-color: hsl(var(--pollen) / 0.15);
+    color: hsl(var(--pollen));
   }
 
   .kpi-pill-orange {
-    background-color: hsl(var(--brand-teal));
-    color: hsl(0 0% 100%);
+    background-color: hsl(var(--pollen) / 0.15);
+    color: hsl(var(--pollen));
     @apply text-sm px-5 py-1.5 rounded-full font-medium;
   }
 

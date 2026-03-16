@@ -104,7 +104,7 @@ const Index = () => {
 
       <LinkedInSection />
 
-      <PodcastSection />
+      
       <EventsSection />
       <SentimentSection />
 
