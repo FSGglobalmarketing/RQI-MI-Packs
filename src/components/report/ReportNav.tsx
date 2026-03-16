@@ -19,9 +19,9 @@ const navItems = [
 const funnelStages = [
   { label: "Summary", startIdx: 0, endIdx: 1 },
   { label: "Awareness", startIdx: 2, endIdx: 5 },
-  { label: "Consideration", startIdx: 6, endIdx: 8 },
-  { label: "Conversion", startIdx: 9, endIdx: 9 },
-  { label: "Monitoring", startIdx: 10, endIdx: 10 },
+  { label: "Consideration", startIdx: 6, endIdx: 7 },
+  { label: "Conversion", startIdx: 8, endIdx: 8 },
+  { label: "Monitoring", startIdx: 9, endIdx: 9 },
 ];
 
 export default function ReportNav() {
