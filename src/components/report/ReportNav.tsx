@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-// RQI text logo rendered inline
+import rqiLogo from "@/assets/RQI_Positive_White.svg";
 
 const navItems = [
   { id: "overview", label: "Overview" },

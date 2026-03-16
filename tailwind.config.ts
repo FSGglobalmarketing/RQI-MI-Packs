@@ -26,7 +26,7 @@ export default {
         "mint": "hsl(var(--mint))",
         "pollen": "hsl(var(--pollen))",
         "grass": "hsl(var(--grass))",
-        "ash": "hsl(var(--ash))",
+        "ash": "hsl(var(--ash) / <alpha-value>)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
