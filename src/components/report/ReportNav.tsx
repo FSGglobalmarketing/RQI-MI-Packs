@@ -10,7 +10,7 @@ const navItems = [
   { id: "uk-nordics", label: "UK & Nordics" },
   { id: "website", label: "Website" },
   { id: "linkedin", label: "LinkedIn" },
-  { id: "podcast", label: "Podcast" },
+  
   { id: "events", label: "Events" },
   { id: "sentiment", label: "Sentiment" },
 ];
