@@ -19,7 +19,7 @@ export default function HeroSection() {
             className="w-1/2 h-full object-cover object-center shrink-0"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ash via-ash/85 to-transparent" />
       </div>
 
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
