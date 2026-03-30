@@ -44,11 +44,6 @@ const Index = () => {
         variant="dark"
         phoneImage={<DeviceMockup alt="North America campaign preview" />}
       />
-      {/* North America — Page 2: Charts & Data */}
-      <CampaignChartPage id="north-america" title={d.campaigns.northAmerica.title} variant="dark" backgroundImage={railImage}>
-        <NorthAmericaChart />
-        <NorthAmericaExtra />
-      </CampaignChartPage>
 
       {/* DACH — Page 1: Info */}
       <CampaignSection
