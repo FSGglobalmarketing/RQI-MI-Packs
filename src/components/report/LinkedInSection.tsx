@@ -123,7 +123,7 @@ function EngagementHeatmap() {
 /* ── Organic vs Sponsored quarterly bar chart ── */
 function OrgVsSponsoredChart() {
   return (
-    <ResponsiveContainer width="100%" height={420}>
+    <ResponsiveContainer width="100%" height={340}>
       <BarChart data={linkedInQuarterlyData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
         <XAxis dataKey="quarter" tick={{ fontSize: 9, fill: "hsl(0 0% 60%)" }} />
