@@ -11,6 +11,7 @@ import EventsSection from "@/components/report/EventsSection";
 import SentimentSection from "@/components/report/SentimentSection";
 import SplashScreen from "@/components/report/SplashScreen";
 import VideoCarousel from "@/components/report/VideoCarousel";
+import SneakPeekSection from "@/components/report/SneakPeekSection";
 import { reportData } from "@/data/igneo-report";
 import rqiLogoWhite from "@/assets/RQI_Positive_White.svg";
 
@@ -80,6 +81,8 @@ const Index = () => {
         topPages={d.website.topPages}
         trafficSources={d.website.trafficSources}
       />
+
+      <SneakPeekSection />
 
       <LinkedInSection />
       <EventsSection />
