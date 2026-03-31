@@ -21,17 +21,17 @@ export interface SentimentMention {
 
 /* ── KPI Summaries ── */
 export const sentimentKpis = {
-  totalMentions: 26,
-  positiveRate: "42%",
+  totalMentions: 20,
+  positiveRate: "50%",
   countriesReached: 4,
   topChannel: "Web — 100%",
 };
 
 /* ── Sentiment Breakdown ── */
 export const sentimentBreakdown = {
-  positive: 11,
-  neutral: 11,
-  negative: 4,
+  positive: 10,
+  neutral: 9,
+  negative: 2,
 };
 
 /* ── Monthly Timeline ── */
