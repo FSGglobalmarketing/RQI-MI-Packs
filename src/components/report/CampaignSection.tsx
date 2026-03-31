@@ -265,16 +265,9 @@ export function NorthAmericaChart() {
 }
 
 export function NorthAmericaExtra() {
-  const d = reportData.campaigns.northAmerica;
   return (
     <div className="metric-card grid grid-cols-3 gap-3">
-      {[d.searchAppearances, ...d.pageRankKPIs].map((kpi: any) => (
-        <div key={kpi.label} className="text-center">
-          <span className="text-2xl font-extrabold text-foreground">{kpi.value}</span>
-          <span className="kpi-pill-good block mt-1 mx-auto w-fit">{kpi.label}</span>
-          <span className="stat-positive block mt-1 text-xs">{kpi.comparison}</span>
-        </div>
-      ))}
+      <p className="text-muted-foreground text-sm col-span-3">No additional data for this section.</p>
     </div>
   );
 }
@@ -362,7 +355,7 @@ export function UKNordicsChart() {
 }
 
 export function UKNordicsLearnings() {
-  const learnings = reportData.campaigns.ukNordics.keyLearnings;
+  const learnings = ["Video ads were more than 20% more clicked than static ads."];
   return (
     <div className="glass-card-dark flow-corner-br border border-foreground/10">
       <h4 className="text-base font-bold text-foreground mb-4 flex items-center gap-2">

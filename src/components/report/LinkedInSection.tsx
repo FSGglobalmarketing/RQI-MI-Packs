@@ -4,7 +4,7 @@ import { linkedInMonthlyData, linkedInQuarterlyData, q4DailyEngagement } from "@
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import KpiRow from "./KpiRow";
 
-const TABS = ["Timeline", "Heatmap", "Org vs Spn", "Sparklines"] as const;
+const TABS = ["Timeline", "Heatmap", "Org vs Spn", "Top Posts"] as const;
 type Tab = typeof TABS[number];
 
 function formatK(v: number) {
@@ -19,7 +19,7 @@ function ImpressionsTimeline() {
     <ResponsiveContainer width="100%" height={420}>
       <AreaChart data={linkedInMonthlyData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-        <XAxis dataKey="month" tick={{ fontSize: 9, fill: "hsl(0 0% 60%)" }} interval={5} />
+        <XAxis dataKey="month" tick={{ fontSize: 9, fill: "hsl(0 0% 60%)" }} interval={2} />
         <YAxis tick={{ fontSize: 9, fill: "hsl(0 0% 60%)" }} tickFormatter={formatK} />
         <Tooltip
           contentStyle={{ background: "hsl(0 0% 8%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }}
@@ -44,10 +44,8 @@ function EngagementHeatmap() {
     let currentWeek: { date: string; day: number; rate: number }[] = [];
     let weekNum = 0;
 
-    // Start from first day and build week grid
     const firstDate = new Date(q4DailyEngagement[0].date);
-    const startDay = firstDate.getDay(); // 0=Sun
-    // Pad start
+    const startDay = firstDate.getDay();
     for (let i = 0; i < startDay; i++) {
       currentWeek.push({ date: "", day: i, rate: 0 });
     }
@@ -71,7 +69,6 @@ function EngagementHeatmap() {
   function getColor(rate: number) {
     if (rate === 0) return "hsl(210 30% 18%)";
     const intensity = Math.min(rate / maxRate, 1);
-    // Gradient from slate blue to bright RQI blue
     const hue = 210 + intensity * 12;
     const lightness = 65 - intensity * 25;
     const saturation = 40 + intensity * 60;
@@ -89,7 +86,6 @@ function EngagementHeatmap() {
         <div className="flex gap-1.5 overflow-x-auto flex-1">
           {weeks.map((week) => (
             <div key={week.week} className="flex flex-col gap-1.5 flex-1">
-              {/* Month label on first week */}
               <div className="h-5 text-[10px] text-muted-foreground text-center">
                 {week.cells[0]?.date
                   ? new Date(week.cells[0].date).getDate() <= 7
@@ -115,7 +111,7 @@ function EngagementHeatmap() {
       </div>
       <div className="flex items-center gap-2 mt-4 justify-center">
         <span className="text-[10px] text-muted-foreground">Less</span>
-        {[0, 1.5, 3, 5, 7].map((v) => (
+        {[0, 5, 10, 15, 20].map((v) => (
           <div key={v} className="h-4 w-4 rounded-sm" style={{ backgroundColor: getColor(v) }} />
         ))}
         <span className="text-[10px] text-muted-foreground">More</span>
@@ -147,58 +143,33 @@ function OrgVsSponsoredChart() {
   );
 }
 
-/* ── Monthly sparkline KPI cards ── */
-function SparklineCards() {
-  const recent = linkedInMonthlyData.slice(-6);
-  const metrics: { label: string; key: keyof typeof recent[0]; format: (v: number) => string }[] = [
-    { label: "Impressions", key: "organic", format: formatK },
-    { label: "Clicks", key: "clicks", format: formatK },
-    { label: "Reactions", key: "reactions", format: formatK },
-    { label: "Shares", key: "shares", format: (v) => String(v) },
-  ];
-
+/* ── Top Posts table ── */
+function TopPostsTable() {
+  const d = reportData.linkedin;
   return (
-    <div className="grid grid-cols-2 gap-3">
-      {metrics.map(({ label, key, format }) => {
-        const values = recent.map((d) => Number(d[key]));
-        const max = Math.max(...values);
-        const min = Math.min(...values);
-        const range = max - min || 1;
-        const latest = values[values.length - 1];
-        const prev = values[values.length - 2];
-        const change = prev ? ((latest - prev) / prev * 100).toFixed(0) : "0";
-        const isUp = Number(change) >= 0;
-
-        // Build simple SVG sparkline
-        const width = 120;
-        const height = 32;
-        const points = values.map((v, i) => `${(i / (values.length - 1)) * width},${height - ((v - min) / range) * height}`).join(" ");
-
-        return (
-          <div key={label} className="glass-card-dark p-4">
-            <div className="flex items-baseline justify-between mb-2">
-              <span className="text-[10px] text-muted-foreground uppercase tracking-wider">{label}</span>
-              <span className={`text-[10px] font-semibold ${isUp ? "text-[hsl(142_60%_45%)]" : "text-primary"}`}>
-                {isUp ? "+" : ""}{change}%
-              </span>
+    <div className="space-y-3">
+      {d.topPosts.map((post) => (
+        <div key={post.title} className="glass-card-dark p-3 flex items-center justify-between gap-4">
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-semibold text-foreground truncate">{post.title}</p>
+            <p className="text-[10px] text-muted-foreground">{post.date}</p>
+          </div>
+          <div className="flex gap-4 shrink-0 text-right">
+            <div>
+              <p className="text-xs font-bold text-foreground">{formatK(post.impressions)}</p>
+              <p className="text-[9px] text-muted-foreground">Impr.</p>
             </div>
-            <p className="text-lg font-bold text-foreground mb-1">{format(latest)}</p>
-            <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-8" preserveAspectRatio="none">
-              <polyline
-                points={points}
-                fill="none"
-                stroke="#0F9AFF"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <div className="flex justify-between text-[8px] text-muted-foreground mt-1">
-              {recent.map((d) => <span key={d.month}>{d.month.split(" ")[0]}</span>)}
+            <div>
+              <p className="text-xs font-bold text-foreground">{post.clicks}</p>
+              <p className="text-[9px] text-muted-foreground">Clicks</p>
+            </div>
+            <div>
+              <p className="text-xs font-bold text-mint">{post.engagement}%</p>
+              <p className="text-[9px] text-muted-foreground">Eng.</p>
             </div>
           </div>
-        );
-      })}
+        </div>
+      ))}
     </div>
   );
 }
@@ -255,7 +226,7 @@ export default function LinkedInSection() {
                 </ul>
               </div>
               <div className="glass-card-dark flow-corner-tr">
-                <h4 className="text-sm font-bold mb-3 text-foreground">Focus in Q1</h4>
+                <h4 className="text-sm font-bold mb-3 text-foreground">Focus in Q2</h4>
                 <ul className="space-y-2">
                   {d.focusQ1.map((f) => (
                     <li key={f} className="text-sm flex items-start gap-2 text-muted-foreground">
@@ -296,7 +267,7 @@ export default function LinkedInSection() {
 
             {activeTab === "Heatmap" && (
               <div>
-                <p className="text-xs text-muted-foreground mb-3">Daily engagement rate — Q4 2025</p>
+                <p className="text-xs text-muted-foreground mb-3">Daily engagement rate — Q1 2026</p>
                 <EngagementHeatmap />
               </div>
             )}
@@ -308,10 +279,10 @@ export default function LinkedInSection() {
               </div>
             )}
 
-            {activeTab === "Sparklines" && (
+            {activeTab === "Top Posts" && (
               <div>
-                <p className="text-xs text-muted-foreground mb-3">Last 6 months trend — key metrics</p>
-                <SparklineCards />
+                <p className="text-xs text-muted-foreground mb-3">Top performing posts — Q1 2026</p>
+                <TopPostsTable />
               </div>
             )}
           </div>

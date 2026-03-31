@@ -7,7 +7,7 @@ import KpiRow from "./KpiRow";
 
 /* RQI gradient accent palette for chart lines */
 const LINE_CONFIG: { key: string; color: string; width: number; opacity: number }[] = [
-  { key: "Igneo", color: "#0F9AFF", width: 3, opacity: 1 },        // RQI Blue — always prominent
+  { key: "RQI", color: "#0F9AFF", width: 3, opacity: 1 },          // RQI Blue — always prominent
   { key: "CIP", color: "#56658B", width: 1.2, opacity: 0.75 },     // Slate
   { key: "Antin", color: "#999999", width: 1.2, opacity: 0.75 },   // Grey
   { key: "IFM", color: "#D37669", width: 1.2, opacity: 0.75 },     // Coral
@@ -27,8 +27,8 @@ const DATA_KEYS = LINE_CONFIG.map((l) => l.key);
 function CustomTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   const sorted = [...payload].sort((a: any, b: any) => {
-    if (a.dataKey === "Igneo") return -1;
-    if (b.dataKey === "Igneo") return 1;
+    if (a.dataKey === "RQI") return -1;
+    if (b.dataKey === "RQI") return 1;
     return (b.value ?? 0) - (a.value ?? 0);
   });
 
@@ -38,10 +38,10 @@ function CustomTooltip({ active, payload, label }: any) {
       <div className="grid grid-cols-2 gap-x-6 gap-y-1">
         {sorted.map((entry: any) => (
           <div key={entry.dataKey} className="flex justify-between gap-3">
-            <span className={`text-[11px] ${entry.dataKey === "Igneo" ? "text-primary font-bold" : "text-foreground/60"}`}>
+            <span className={`text-[11px] ${entry.dataKey === "RQI" ? "text-primary font-bold" : "text-foreground/60"}`}>
               {entry.dataKey}
             </span>
-            <span className={`text-[11px] tabular-nums ${entry.dataKey === "Igneo" ? "text-primary font-bold" : "text-foreground/85"}`}>
+            <span className={`text-[11px] tabular-nums ${entry.dataKey === "RQI" ? "text-primary font-bold" : "text-foreground/85"}`}>
               {entry.value}
             </span>
           </div>
@@ -76,7 +76,7 @@ export default function SearchVisibility() {
   const dragging = useRef(false);
 
   const visibleData = allData.slice(left, right + 1);
-  const visibleKeys = DATA_KEYS.filter((k) => !hiddenLines.has(k) && (k === "Igneo" || showPeers));
+  const visibleKeys = DATA_KEYS.filter((k) => !hiddenLines.has(k) && (k === "RQI" || showPeers));
   let yMax = 0;
   visibleData.forEach((d: any) => {
     visibleKeys.forEach((k) => { if (d[k] > yMax) yMax = d[k]; });
@@ -236,14 +236,14 @@ export default function SearchVisibility() {
                       if (!payload?.length) return null;
                       const lastDataPoint = visibleData[visibleData.length - 1] || {};
                       const sorted = [...payload].sort((a: any, b: any) => {
-                        if (a.dataKey === "Igneo") return -1;
-                        if (b.dataKey === "Igneo") return 1;
+                        if (a.dataKey === "RQI") return -1;
+                        if (b.dataKey === "RQI") return 1;
                         return (lastDataPoint[b.dataKey as string] ?? 0) - (lastDataPoint[a.dataKey as string] ?? 0);
                       });
                       return (
                         <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 pt-2 text-[10px]">
                           {sorted.map((entry: any) => {
-                            const isHidden = hiddenLines.has(entry.dataKey) || (entry.dataKey !== "Igneo" && !showPeers);
+                            const isHidden = hiddenLines.has(entry.dataKey) || (entry.dataKey !== "RQI" && !showPeers);
                             return (
                               <span
                                 key={entry.dataKey}
@@ -263,7 +263,7 @@ export default function SearchVisibility() {
                     }}
                   />
                   {LINE_CONFIG.map(({ key, color, width, opacity }) => {
-                    const isHidden = hiddenLines.has(key) || (key !== "Igneo" && !showPeers);
+                    const isHidden = hiddenLines.has(key) || (key !== "RQI" && !showPeers);
                     return (
                       <Line key={key} type="monotone" dataKey={key} stroke={color} strokeWidth={width} dot={false} strokeOpacity={isHidden ? 0 : opacity} animationDuration={800} hide={isHidden} />
                     );

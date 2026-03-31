@@ -5,12 +5,11 @@ const navItems = [
   { id: "overview", label: "Overview" },
   { id: "performance", label: "KPI Framework" },
   { id: "search-visibility", label: "Search" },
-  { id: "north-america", label: "N. America" },
-  { id: "dach", label: "DACH" },
-  { id: "uk-nordics", label: "UK & Nordics" },
+  { id: "asia-campaign", label: "Asia Campaign" },
+  { id: "fmoty", label: "FMOTY" },
+  { id: "demystified", label: "Demystified" },
   { id: "website", label: "Website" },
   { id: "linkedin", label: "LinkedIn" },
-  
   { id: "events", label: "Events" },
   { id: "sentiment", label: "Sentiment" },
 ];

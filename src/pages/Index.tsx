@@ -4,19 +4,13 @@ import HeroSection from "@/components/report/HeroSection";
 import GlobalFocus from "@/components/report/GlobalFocus";
 import PerformanceResults from "@/components/report/PerformanceResults";
 import SearchVisibility from "@/components/report/SearchVisibility";
-import { CampaignSection, CampaignChartPage, NorthAmericaChart, NorthAmericaExtra, DACHCharts, UKNordicsChart, UKNordicsLearnings } from "@/components/report/CampaignSection";
-import DACHPhoneShowcase from "@/components/report/DACHPhoneShowcase";
-import UKNordicsAdShowcase from "@/components/report/UKNordicsAdShowcase";
-import DeviceMockup from "@/components/report/DeviceMockup";
+import { CampaignSection } from "@/components/report/CampaignSection";
 import AlwaysOnSection from "@/components/report/AlwaysOnSection";
 import LinkedInSection from "@/components/report/LinkedInSection";
-
 import EventsSection from "@/components/report/EventsSection";
 import SentimentSection from "@/components/report/SentimentSection";
-
 import SplashScreen from "@/components/report/SplashScreen";
 import { reportData } from "@/data/igneo-report";
-import railImage from "@/assets/rail-to-runway-us-backbone.jpg";
 import rqiLogoWhite from "@/assets/RQI_Positive_White.svg";
 
 const Index = () => {
@@ -31,56 +25,44 @@ const Index = () => {
       <PerformanceResults />
       <SearchVisibility />
 
-      {/* North America — Page 1: Info */}
+      {/* Highlight 1: RQI Asia Campaign Phase II */}
       <CampaignSection
-        id="north-america"
-        title={d.campaigns.northAmerica.title}
-        stage={d.campaigns.northAmerica.stage}
-        subtitle={d.campaigns.northAmerica.subtitle}
-        description={d.campaigns.northAmerica.description}
-        goals={d.campaigns.northAmerica.goals}
-        formats={d.campaigns.northAmerica.formats}
-        keyResults={d.campaigns.northAmerica.keyResults}
+        id="asia-campaign"
+        title={d.highlights.asiaCampaign.title}
+        stage={d.highlights.asiaCampaign.stage}
+        subtitle={d.highlights.asiaCampaign.subtitle}
+        description={d.highlights.asiaCampaign.description}
+        goals={d.highlights.asiaCampaign.goals}
+        formats={d.highlights.asiaCampaign.formats}
+        keyResults={d.highlights.asiaCampaign.keyResults}
         variant="dark"
-        phoneImage={<DeviceMockup alt="North America campaign preview" />}
       />
 
-      {/* DACH — Page 1: Info */}
+      {/* Highlight 2: Fund Manager of the Year */}
       <CampaignSection
-        id="dach"
-        title={d.campaigns.dach.title}
-        stage={d.campaigns.dach.stage}
-        subtitle={d.campaigns.dach.subtitle}
-        description={d.campaigns.dach.description}
-        goals={d.campaigns.dach.goals}
-        formats={d.campaigns.dach.formats}
-        keyResults={d.campaigns.dach.keyResults}
+        id="fmoty"
+        title={d.highlights.fundManagerOfYear.title}
+        stage={d.highlights.fundManagerOfYear.stage}
+        subtitle={d.highlights.fundManagerOfYear.subtitle}
+        description={d.highlights.fundManagerOfYear.description}
+        goals={d.highlights.fundManagerOfYear.goals}
+        formats={d.highlights.fundManagerOfYear.formats}
+        keyResults={d.highlights.fundManagerOfYear.keyResults}
         variant="cream"
-        phoneImage={<DACHPhoneShowcase />}
       />
-      {/* DACH — Page 2: Charts & Data */}
-      <CampaignChartPage id="dach" title={d.campaigns.dach.title} variant="cream">
-        <DACHCharts />
-      </CampaignChartPage>
 
-      {/* UK & Nordics — Page 1: Info */}
+      {/* Highlight 3: RQI Demystified */}
       <CampaignSection
-        id="uk-nordics"
-        title={d.campaigns.ukNordics.title}
-        stage={d.campaigns.ukNordics.stage}
-        subtitle={d.campaigns.ukNordics.subtitle}
-        description={d.campaigns.ukNordics.description}
-        goals={d.campaigns.ukNordics.goals}
-        formats={d.campaigns.ukNordics.formats}
-        keyResults={d.campaigns.ukNordics.keyResults}
+        id="demystified"
+        title={d.highlights.demystified.title}
+        stage={d.highlights.demystified.stage}
+        subtitle={d.highlights.demystified.subtitle}
+        description={d.highlights.demystified.description}
+        goals={d.highlights.demystified.goals}
+        formats={d.highlights.demystified.formats}
+        keyResults={d.highlights.demystified.keyResults}
         variant="dark"
-        phoneImage={<UKNordicsAdShowcase />}
       />
-      {/* UK & Nordics — Page 2: Charts & Data */}
-      <CampaignChartPage id="uk-nordics" title={d.campaigns.ukNordics.title} variant="dark">
-        <UKNordicsChart />
-        <UKNordicsLearnings />
-      </CampaignChartPage>
 
       <AlwaysOnSection
         id="website"
@@ -98,8 +80,6 @@ const Index = () => {
       />
 
       <LinkedInSection />
-
-      
       <EventsSection />
       <SentimentSection />
 
