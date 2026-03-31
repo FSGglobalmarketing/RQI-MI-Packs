@@ -79,9 +79,6 @@ function BeforeAfterSlider({
     <div
       ref={wrapRef}
       className="relative w-full h-full select-none"
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={onPointerUp}
     >
       {/* After (new) — full layer, scrollable */}
       <div
@@ -128,10 +125,13 @@ function BeforeAfterSlider({
         style={{ left: `${pos}%`, background: "hsl(var(--primary))" }}
       />
 
-      {/* Drag handle */}
+      {/* Drag handle — only this element triggers drag */}
       <div
         className="absolute z-30 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize"
         style={{ left: `${pos}%`, top: "50%" }}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
       >
         <div className="w-9 h-9 rounded-full bg-primary border-2 border-white shadow-lg flex items-center justify-center">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -140,6 +140,19 @@ function BeforeAfterSlider({
           </svg>
         </div>
       </div>
+
+      {/* Invisible drag track across full width */}
+      <div
+        className="absolute top-0 bottom-0 left-0 right-0 z-20 cursor-ew-resize"
+        style={{ pointerEvents: "none" }}
+      />
+      <div
+        className="absolute z-20 cursor-ew-resize"
+        style={{ left: `${pos}%`, top: 0, bottom: 0, width: "20px", transform: "translateX(-50%)" }}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+      />
     </div>
   );
 }

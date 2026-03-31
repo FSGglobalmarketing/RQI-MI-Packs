@@ -251,16 +251,16 @@ export default function SentimentSection() {
               <h4 className="text-sm font-bold mb-3 text-foreground">Coverage Summary</h4>
               <p className="text-sm leading-relaxed text-muted-foreground mb-4">
                 Monitoring of all public mentions of RQI Investors across global web and news channels.
-                Coverage spans Feb – Mar 2026 with 26 tracked mentions across 4 countries.
+                Coverage spans Feb – Mar 2026 with 20 tracked mentions across 4 countries.
               </p>
               <p className="text-sm leading-relaxed text-muted-foreground mb-4">
-                Positive coverage (42%) is driven by the RQI Global Value Fund launch in Hong Kong with
+                Positive coverage (50%) is driven by the RQI Global Value Fund launch in Hong Kong with
                 distribution partners DBS, Hang Seng Bank and Bank of East Asia, as well as Joanna Nash's
-                profile in Financial Standard and the "Far From Normal" thought leadership piece.
+                profile in Financial Standard.
               </p>
               <p className="text-sm leading-relaxed text-muted-foreground">
-                Negative sentiment is primarily risk-disclosure language on First Sentier Investors' own product pages
-                and a negative Sharpe ratio analysis on Benzinga. No reputational concerns identified.
+                Negative sentiment is limited to a negative Sharpe ratio analysis on Benzinga and general market
+                skepticism reporting. No reputational concerns identified. Own-site mentions (firstsentierinvestors.com.au, stewartinvestors.com) have been excluded.
               </p>
             </div>
             <div className="mt-4 flex items-center gap-6 text-xs text-muted-foreground">

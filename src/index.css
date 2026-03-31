@@ -221,13 +221,13 @@
   .kpi-pill-orange {
     background-color: hsl(var(--pollen) / 0.15);
     color: hsl(var(--pollen));
-    @apply text-sm px-5 py-1.5 rounded-full font-medium;
+    @apply text-sm px-5 py-1.5 rounded-full font-medium whitespace-nowrap;
   }
 
   .kpi-pill-cream {
     background-color: hsl(var(--moss) / 0.12);
     color: hsl(var(--moss));
-    @apply text-sm px-5 py-1.5 rounded-full font-medium;
+    @apply text-sm px-5 py-1.5 rounded-full font-medium whitespace-nowrap;
   }
 
   .kpi-pill-inactive {

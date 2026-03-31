@@ -21,17 +21,17 @@ export interface SentimentMention {
 
 /* ── KPI Summaries ── */
 export const sentimentKpis = {
-  totalMentions: 26,
-  positiveRate: "42%",
+  totalMentions: 20,
+  positiveRate: "50%",
   countriesReached: 4,
   topChannel: "Web — 100%",
 };
 
 /* ── Sentiment Breakdown ── */
 export const sentimentBreakdown = {
-  positive: 11,
-  neutral: 11,
-  negative: 4,
+  positive: 10,
+  neutral: 9,
+  negative: 2,
 };
 
 /* ── Monthly Timeline ── */
@@ -43,7 +43,7 @@ export const mentionsByMonth: {
   total: number;
 }[] = [
   { month: "Feb 26", positive: 0, neutral: 1, negative: 0, total: 1 },
-  { month: "Mar 26", positive: 11, neutral: 10, negative: 4, total: 25 },
+  { month: "Mar 26", positive: 10, neutral: 8, negative: 2, total: 20 },
 ];
 
 /* ── Channel Breakdown ── */
@@ -54,15 +54,15 @@ export const channelBreakdown: {
   neutral: number;
   negative: number;
 }[] = [
-  { channel: "Web", mentions: 26, positive: 11, neutral: 11, negative: 4 },
+  { channel: "Web", mentions: 20, positive: 10, neutral: 9, negative: 2 },
 ];
 
 /* ── Top Countries ── */
 export const countryBreakdown: { country: string; mentions: number }[] = [
   { country: "Germany", mentions: 5 },
-  { country: "Australia", mentions: 5 },
   { country: "United States", mentions: 4 },
   { country: "Singapore", mentions: 3 },
+  { country: "Australia", mentions: 2 },
 ];
 
 /* ── Notable Highlights (curated — News & Websites only, excluding job listings) ── */
@@ -73,7 +73,7 @@ export const recentHighlights: SentimentMention[] = [
   { title: "Malaysia $3.3 Billion Military Pension Fund LTAT to Allocate 20% Portfolio to Foreign Assets", source: "caproasia.com", channel: "Web", category: "Websites", sentiment: "positive", country: "", date: "2026-03-27", link: "https://www.caproasia.com/2026/03/27/malaysia-3-3-billion-military-pension-fund-armed-forces-fund-board-ltat-to-allocate-20-portfolio-to-foreign-assets/", snippet: "RQI Investors Partners Launched RQI Global Value Fund referenced in context of major Asian institutional allocations." },
   { title: "First Sentier Group $20B — RQI Investors Partners Launched RQI Global Value Fund", source: "caproasia.com", channel: "Web", category: "Websites", sentiment: "positive", country: "", date: "2026-03-27", link: "https://www.caproasia.com/2026/03/27/australia-asset-manager-first-sentier-group-20-billion-quantitative-equities-investor-rqi-investors-partners-launched-rqi-global-value-fund-quantitative-investment-strategy-to-investors-in-hong-kon/", snippet: "RQI Investors is an Australian-based active quantitative equities manager delivering investment performance by combining quantitative analysis with human insight." },
   { title: "iCapital & BlackRock Aladdin Wealth Form Partnership — RQI Global Value Fund", source: "caproasia.com", channel: "Web", category: "Websites", sentiment: "positive", country: "", date: "2026-03-27", link: "https://www.caproasia.com/2026/03/27/united-states-1-1-trillion-alternative-investment-marketplace-icapital-blackrock-aladdin-wealth-form-partnership/", snippet: "RQI Investors Partners Launched RQI Global Value Fund to Investors in Hong Kong with distribution partners including DBS, Hang Seng Bank & Bank of East Asia." },
-  { title: "Far From Normal: What drove equity markets in 2025?", source: "firstsentierinvestors.com.au", channel: "Web", category: "Websites", sentiment: "positive", country: "AU", date: "2026-03-26", link: "https://www.firstsentierinvestors.com.au/au/en/adviser/insights/far-from-normal.html", domainRank: 1391183, snippet: "RQI Investors combines powerful quantitative analysis with human insight, aiming to deliver strong investment performance." },
+  
   { title: "Cohen & Steers Quality Income Realty Fund (RQI) Stock Dividend History & Growth", source: "stockinvest.us", channel: "Web", category: "Websites", sentiment: "positive", country: "US", date: "2026-03-10", link: "https://stockinvest.us/dividends/RQI", domainRank: 74192, snippet: "Comprehensive dividend history and growth analysis for RQI." },
   { title: "Top investment teams built on diverse views, transparency", source: "financialstandard.com.au", channel: "Web", category: "News", sentiment: "positive", country: "AU", date: "2026-03-09", link: "https://www.financialstandard.com.au/news/top-investment-teams-built-on-diverse-views-transparency-179811797", domainRank: 903371, snippet: "RQI Investors head of portfolio management Joanna Nash believes good culture is very important for investment teams." },
   { title: "Quality Income Realty Fund posts 2.94% NAV return | RQI SEC Filing", source: "stocktitan.net", channel: "Web", category: "News", sentiment: "positive", country: "US", date: "2026-03-06", link: "https://www.stocktitan.net/sec-filings/RQI/n-csr-cohen-steers-quality-income-realty-fund-inc-sec-filing-3137755d5409.html", domainRank: 29588, snippet: "Quality Income Realty Fund (NYSE: RQI) reports NAV +2.94% in 2025; $710M borrowings." },
@@ -82,20 +82,18 @@ export const recentHighlights: SentimentMention[] = [
 
   /* ─── Neutral ─── */
   { title: "Special Stock Report: Mazda (5.06%) and Mitsubishi UFJ Financial Group", source: "moomoo.com", channel: "Web", category: "Websites", sentiment: "neutral", country: "DE", date: "2026-03-30", link: "https://www.moomoo.com/news/post/67594613/special-stock-report-mazda-5-06-and-mitsubishi-ufj-financial", domainRank: 18062, snippet: "First Sentier Investors RQI Pty Ltd holding 0.33% (2,078,202 shares) for pure investment purposes." },
-  { title: "Spotlight on sustainability: WEG", source: "stewartinvestors.com", channel: "Web", category: "Websites", sentiment: "neutral", country: "", date: "2026-03-29", link: "https://www.stewartinvestors.com/au/en/institutional/insights/spotlight-on-sustainability-WEG.html", snippet: "Reference to affiliate investment management team, RQI Investors." },
+  
   { title: "How Our 7-Funds Portfolio Earns 7.8% And Potentially Beats The Market", source: "seekingalpha.com", channel: "Web", category: "News", sentiment: "neutral", country: "US", date: "2026-03-28", link: "https://seekingalpha.com/article/4885508-how-our-7-funds-portfolio-earns-7-percent-and-potentially-beats-the-market", domainRank: 4522, snippet: "Portfolio strategy analysis featuring dividend-growing stocks with long-term horizon, including RQI." },
-  { title: "Stewart Investors Worldwide All Cap Fund (PCT)", source: "stewartinvestors.com", channel: "Web", category: "Websites", sentiment: "neutral", country: "", date: "2026-03-27", link: "https://www.stewartinvestors.com/au/en/adviser/our-strategies/our-funds/FSF1675AU.html", snippet: "The Stewart Investors Worldwide All Cap Fund will change to the RQI Global Diversified Alpha Fund effective April 2026." },
+  
   { title: "Cohen & Steers Quality Income Realty Fund To Go Ex-Dividend On April 14th", source: "futunn.com", channel: "Web", category: "Websites", sentiment: "neutral", country: "SG", date: "2026-03-26", link: "https://news.futunn.com/en/post/70627848/cohen-steers-quality-income-realty-fund-to-go-ex-dividend", domainRank: 35890, snippet: "Cohen & Steers Quality Income Realty Fund (RQI.US) ex-dividend date update." },
   { title: "Cohen & Steers Quality Income Realty Fund To Go Ex-Dividend On June 9th", source: "futunn.com", channel: "Web", category: "Websites", sentiment: "neutral", country: "SG", date: "2026-03-26", link: "https://news.futunn.com/en/post/70627930/cohen-steers-quality-income-realty-fund-to-go-ex-dividend", domainRank: 35890, snippet: "Cohen & Steers Quality Income Realty Fund (RQI.US) future dividend schedule." },
   { title: "BMO Capital Markets Issues Positive Forecast for DraftKings", source: "defenseworld.net", channel: "Web", category: "News", sentiment: "neutral", country: "", date: "2026-03-04", link: "https://www.defenseworld.net/2026/03/04/bmo-capital-markets-issues-positive-forecast-for-draftkings-nasdaqdkng-stock-price.html", snippet: "Cohen & Steers Quality Income Realty Fund (NYSE:RQI) shares pass above 200 Day Moving Average." },
-  { title: "Governance | FS Sustainability", source: "fssustainability.com.au", channel: "Web", category: "Websites", sentiment: "neutral", country: "AU", date: "2026-03-03", link: "https://www.fssustainability.com.au/section/governance", domainRank: 6760742, snippet: "First Sentier Investors RQI Pty Ltd referenced in governance context." },
+  
   { title: "CEF Faceoff: These 8% Dividends Look the Same. But One Is the Clear Winner", source: "nasdaq.com", channel: "Web", category: "News", sentiment: "neutral", country: "DE", date: "2026-03-02", link: "https://www.nasdaq.com/articles/cef-faceoff-these-8-dividends-look-same-one-clear-winner", domainRank: 5555, snippet: "Comparative analysis of RQI vs RFI discount and premium movements." },
   { title: "ACP or HQH or RQI - Pick the Best tool", source: "tickeron.com", channel: "Web", category: "Websites", sentiment: "neutral", country: "US", date: "2026-03-01", link: "https://tickeron.com/pick-the-best/ACP-or-HQH-or-RQI/", domainRank: 222386, snippet: "Comparative analysis tool for ACP, HQH and RQI investment funds." },
   { title: "Breaking: Company and actual controller investigated by CSRC", source: "futunn.com", channel: "Web", category: "Websites", sentiment: "neutral", country: "SG", date: "2026-02-25", link: "https://news.futunn.com/en/post/69225326/breaking-this-company-and-its-actual-controller-have-been-investigated", domainRank: 35890, snippet: "Investors advised to make rational decisions and be mindful of investment risks." },
 
   /* ─── Negative ─── */
   { title: "US Stock Market Today: Live Updates 30.03.2026", source: "ts2.tech", channel: "Web", category: "Websites", sentiment: "negative", country: "", date: "2026-03-30", link: "https://ts2.tech/en/stock-market-today-30-03-2026/", snippet: "Growing investor skepticism due to heavy investments in cloud and AI infrastructure." },
-  { title: "RQI Investors: Active quant funds | First Sentier Investors", source: "firstsentierinvestors.com.au", channel: "Web", category: "Websites", sentiment: "negative", country: "AU", date: "2026-03-27", link: "https://www.firstsentierinvestors.com.au/au/en/adviser/our-funds/rqi-investors.html", domainRank: 1391183, snippet: "Risk disclosure: Generally, the higher the potential return of an investment, the greater the risk." },
-  { title: "Diversified Alpha Strategy | RQI Investors", source: "firstsentierinvestors.com.au", channel: "Web", category: "Websites", sentiment: "negative", country: "AU", date: "2026-03-26", link: "https://www.firstsentierinvestors.com.au/au/en/adviser/our-funds/rqi-investors/diversified-alpha-strategy.html", domainRank: 1391183, snippet: "Risk disclosure for RQI Investors Diversified Alpha Strategy." },
   { title: "COHEN & STEERS QUALITY (RQI) Stock Analysis Report", source: "benzinga.com", channel: "Web", category: "News", sentiment: "negative", country: "DE", date: "2026-03-10", link: "https://jp.benzinga.com/quote/RQI/report", domainRank: 9122, snippet: "RQI Sharpe ratio over the past 5 years is -0.3331." },
 ];
