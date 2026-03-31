@@ -267,13 +267,7 @@ export function NorthAmericaChart() {
 export function NorthAmericaExtra() {
   return (
     <div className="metric-card grid grid-cols-3 gap-3">
-      {[d.searchAppearances, ...d.pageRankKPIs].map((kpi: any) => (
-        <div key={kpi.label} className="text-center">
-          <span className="text-2xl font-extrabold text-foreground">{kpi.value}</span>
-          <span className="kpi-pill-good block mt-1 mx-auto w-fit">{kpi.label}</span>
-          <span className="stat-positive block mt-1 text-xs">{kpi.comparison}</span>
-        </div>
-      ))}
+      <p className="text-muted-foreground text-sm col-span-3">No additional data for this section.</p>
     </div>
   );
 }
