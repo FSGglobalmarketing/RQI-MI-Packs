@@ -265,7 +265,6 @@ export function NorthAmericaChart() {
 }
 
 export function NorthAmericaExtra() {
-  const d = reportData.campaigns.northAmerica;
   return (
     <div className="metric-card grid grid-cols-3 gap-3">
       {[d.searchAppearances, ...d.pageRankKPIs].map((kpi: any) => (
