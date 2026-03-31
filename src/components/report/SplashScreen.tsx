@@ -457,6 +457,8 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
 
       {!unlocked && <PasswordGate onUnlock={() => setUnlocked(true)} />}
 
+      {/* Loading UI - only shown after password unlock */}
+      <div style={{ position: 'absolute', inset: 0, zIndex: 20, opacity: unlocked ? 1 : 0, transition: 'opacity 0.8s cubic-bezier(.4,0,.2,1)', pointerEvents: unlocked ? 'auto' : 'none' }}>
       {/* Top-left logo */}
       <div
         style={{
