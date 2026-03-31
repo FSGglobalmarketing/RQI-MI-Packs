@@ -254,9 +254,9 @@ export default function SentimentSection() {
                 Coverage spans Feb – Mar 2026 with 20 tracked mentions across 4 countries.
               </p>
               <p className="text-sm leading-relaxed text-muted-foreground mb-4">
-                Positive coverage (42%) is driven by the RQI Global Value Fund launch in Hong Kong with
+                Positive coverage (50%) is driven by the RQI Global Value Fund launch in Hong Kong with
                 distribution partners DBS, Hang Seng Bank and Bank of East Asia, as well as Joanna Nash's
-                profile in Financial Standard and the "Far From Normal" thought leadership piece.
+                profile in Financial Standard.
               </p>
               <p className="text-sm leading-relaxed text-muted-foreground">
                 Negative sentiment is primarily risk-disclosure language on First Sentier Investors' own product pages
