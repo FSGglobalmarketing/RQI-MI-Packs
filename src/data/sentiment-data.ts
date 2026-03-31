@@ -60,9 +60,9 @@ export const channelBreakdown: {
 /* ── Top Countries ── */
 export const countryBreakdown: { country: string; mentions: number }[] = [
   { country: "Germany", mentions: 5 },
-  { country: "Australia", mentions: 5 },
   { country: "United States", mentions: 4 },
   { country: "Singapore", mentions: 3 },
+  { country: "Australia", mentions: 2 },
 ];
 
 /* ── Notable Highlights (curated — News & Websites only, excluding job listings) ── */
