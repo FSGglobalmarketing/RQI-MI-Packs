@@ -455,6 +455,8 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
     >
       <canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
 
+      {!unlocked && <PasswordGate onUnlock={() => setUnlocked(true)} />}
+
       {/* Top-left logo */}
       <div
         style={{
