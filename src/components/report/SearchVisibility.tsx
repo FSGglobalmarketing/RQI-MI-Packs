@@ -7,7 +7,7 @@ import KpiRow from "./KpiRow";
 
 /* RQI gradient accent palette for chart lines */
 const LINE_CONFIG: { key: string; color: string; width: number; opacity: number }[] = [
-  { key: "Igneo", color: "#0F9AFF", width: 3, opacity: 1 },        // RQI Blue — always prominent
+  { key: "RQI", color: "#0F9AFF", width: 3, opacity: 1 },          // RQI Blue — always prominent
   { key: "CIP", color: "#56658B", width: 1.2, opacity: 0.75 },     // Slate
   { key: "Antin", color: "#999999", width: 1.2, opacity: 0.75 },   // Grey
   { key: "IFM", color: "#D37669", width: 1.2, opacity: 0.75 },     // Coral
