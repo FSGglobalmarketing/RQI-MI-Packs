@@ -12,7 +12,7 @@ export interface HeroSlide {
 
 const slides: HeroSlide[] = [
   {
-    image: "/hero/slide-1.jpg",
+    image: "/hero/slide-2.jpg",
     label: "Brand",
     heading: "Fund Manager of the Year",
     description:
@@ -20,7 +20,7 @@ const slides: HeroSlide[] = [
     sectionId: "fmoty",
   },
   {
-    image: "/hero/slide-2.jpg",
+    image: "/hero/slide-1.jpg",
     label: "Campaign",
     heading: "Asia Campaign Phase II",
     description:
