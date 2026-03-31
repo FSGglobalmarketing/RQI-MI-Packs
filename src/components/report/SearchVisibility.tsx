@@ -38,10 +38,10 @@ function CustomTooltip({ active, payload, label }: any) {
       <div className="grid grid-cols-2 gap-x-6 gap-y-1">
         {sorted.map((entry: any) => (
           <div key={entry.dataKey} className="flex justify-between gap-3">
-            <span className={`text-[11px] ${entry.dataKey === "Igneo" ? "text-primary font-bold" : "text-foreground/60"}`}>
+            <span className={`text-[11px] ${entry.dataKey === "RQI" ? "text-primary font-bold" : "text-foreground/60"}`}>
               {entry.dataKey}
             </span>
-            <span className={`text-[11px] tabular-nums ${entry.dataKey === "Igneo" ? "text-primary font-bold" : "text-foreground/85"}`}>
+            <span className={`text-[11px] tabular-nums ${entry.dataKey === "RQI" ? "text-primary font-bold" : "text-foreground/85"}`}>
               {entry.value}
             </span>
           </div>
