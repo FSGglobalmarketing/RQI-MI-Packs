@@ -60,6 +60,95 @@ interface Ring { r: number; w: number; color: string; a: number; spd: number; da
 interface Planet { r: number; sz: number; color: string; spd: number; angle: number; }
 interface DataNode { angle: number; orbitR: number; spd: number; label: string; o: number; color: string; sz: number; tw: number; ts: number; }
 
+const PASSWORD = "RQI2026";
+
+function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
+  const [value, setValue] = useState("");
+  const [error, setError] = useState(false);
+  const [shaking, setShaking] = useState(false);
+  const [unlocked, setUnlocked] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => { inputRef.current?.focus(); }, []);
+
+  const submit = () => {
+    if (value === PASSWORD) {
+      setUnlocked(true);
+      setTimeout(onUnlock, 700);
+    } else {
+      setError(true);
+      setShaking(true);
+      setValue("");
+      setTimeout(() => setShaking(false), 500);
+      setTimeout(() => setError(false), 2000);
+      inputRef.current?.focus();
+    }
+  };
+
+  const onKey = (e: React.KeyboardEvent) => { if (e.key === "Enter") submit(); };
+
+  return (
+    <div style={{
+      position: 'absolute', inset: 0, zIndex: 50,
+      display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+      opacity: unlocked ? 0 : 1, transition: 'opacity 0.7s cubic-bezier(.4,0,.2,1)',
+      background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(15,154,255,0.04) 0%, transparent 70%)',
+    }}>
+      {/* Logo */}
+      <div style={{ width: 140, marginBottom: 56, opacity: 0, animation: 'splashFadeIn 1s 0.2s cubic-bezier(.22,1,.36,1) forwards' }}
+        dangerouslySetInnerHTML={{ __html: RQI_LOGO_SVG }} />
+
+      {/* Label */}
+      <div style={{
+        fontFamily: "'Inter', sans-serif", fontWeight: 300, fontSize: 9,
+        letterSpacing: '0.6em', textTransform: 'uppercase',
+        color: 'rgba(15,154,255,0.7)', textShadow: '0 0 12px rgba(15,154,255,0.5)',
+        marginBottom: 32, opacity: 0, animation: 'splashFadeIn 1s 0.5s ease forwards',
+      }}>RESTRICTED ACCESS</div>
+
+      {/* Input */}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0, opacity: 0, animation: 'splashFadeIn 1s 0.7s ease forwards' }}>
+        <div style={{ position: 'relative', width: 240, animation: shaking ? 'pwdShake 0.45s ease' : 'none' }}>
+          <span style={{
+            position: 'absolute', left: 0, top: -18,
+            fontFamily: "'Inter', sans-serif", fontWeight: 300, fontSize: 8,
+            letterSpacing: '0.3em', textTransform: 'uppercase',
+            color: error ? 'rgba(211,118,105,0.9)' : 'rgba(255,255,255,0.3)',
+            transition: 'color 0.3s',
+          }}>{error ? 'INCORRECT PASSWORD' : 'ENTER PASSWORD'}</span>
+          <input
+            ref={inputRef}
+            type="password"
+            value={value}
+            onChange={e => setValue(e.target.value)}
+            onKeyDown={onKey}
+            style={{
+              width: '100%', padding: '10px 0', background: 'none',
+              border: 'none', borderBottom: `1px solid ${error ? 'rgba(211,118,105,0.6)' : 'rgba(15,154,255,0.3)'}`,
+              color: '#fff', fontFamily: "'Inter', monospace", fontSize: 14,
+              letterSpacing: '0.5em', outline: 'none', caretColor: '#0f9aff',
+              transition: 'border-color 0.3s',
+            }}
+          />
+        </div>
+
+        {/* Submit */}
+        <button onClick={submit} style={{
+          marginTop: 28, pointerEvents: 'auto',
+          fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 10,
+          letterSpacing: '0.3em', textTransform: 'uppercase',
+          color: '#0f9aff', background: 'none', border: '1px solid rgba(15,154,255,0.3)',
+          padding: '8px 28px', cursor: 'pointer',
+          transition: 'all 0.3s',
+        }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(15,154,255,0.1)'; e.currentTarget.style.borderColor = 'rgba(15,154,255,0.6)'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.borderColor = 'rgba(15,154,255,0.3)'; }}
+        >UNLOCK →</button>
+      </div>
+    </div>
+  );
+}
+
 export default function SplashScreen({ onComplete }: { onComplete: () => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [progress, setProgress] = useState(0);
@@ -67,6 +156,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
   const [msgFading, setMsgFading] = useState(false);
   const [done, setDone] = useState(false);
   const [showSkip, setShowSkip] = useState(false);
+  const [unlocked, setUnlocked] = useState(false);
   const progressRef = useRef(0);
   const animRef = useRef<number>(0);
 
@@ -304,8 +394,10 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
     };
   }, []);
 
-  // Progress bar & status messages
+  // Progress bar & status messages — only start after unlock
   useEffect(() => {
+    if (!unlocked) return;
+
     const startTime = performance.now();
     let msgIdx = 0;
     let msgTimer = 0;
@@ -351,7 +443,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
       cancelAnimationFrame(id);
       clearTimeout(skipTimer);
     };
-  }, [finish]);
+  }, [finish, unlocked]);
 
   return (
     <div
@@ -365,6 +457,10 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
     >
       <canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
 
+      {!unlocked && <PasswordGate onUnlock={() => setUnlocked(true)} />}
+
+      {/* Loading UI - only shown after password unlock */}
+      <div style={{ position: 'absolute', inset: 0, zIndex: 20, opacity: unlocked ? 1 : 0, transition: 'opacity 0.8s cubic-bezier(.4,0,.2,1)', pointerEvents: unlocked ? 'auto' : 'none' }}>
       {/* Top-left logo */}
       <div
         style={{
@@ -463,6 +559,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
             SKIP →
           </button>
         )}
+      </div>
       </div>
     </div>
   );
