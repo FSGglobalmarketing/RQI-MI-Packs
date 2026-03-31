@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback } from "react";
+import "@/styles/device-mockup.css";
 import currentHomepage from "@/assets/rqi-current-homepage.jpg";
 import newHomepage from "@/assets/rqi-new-homepage.jpg";
 
