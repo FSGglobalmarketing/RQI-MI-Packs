@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import "@/styles/device-mockup.css";
 import currentHomepage from "@/assets/rqi-current-homepage.jpg";
 import newHomepage from "@/assets/rqi-new-homepage.jpg";
@@ -15,12 +15,13 @@ function BeforeAfterSlider({
   alt: string;
 }) {
   const [pos, setPos] = useState(50);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
 
   const updatePos = useCallback((clientX: number) => {
-    const rect = containerRef.current?.getBoundingClientRect();
-    if (!rect) return;
+    const el = wrapRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
     const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
     setPos((x / rect.width) * 100);
   }, []);
@@ -46,53 +47,90 @@ function BeforeAfterSlider({
     dragging.current = false;
   }, []);
 
+  /* Sync scroll between the two layers */
+  const afterRef = useRef<HTMLDivElement>(null);
+  const beforeRef = useRef<HTMLDivElement>(null);
+  const syncing = useRef(false);
+
+  const syncScroll = useCallback((source: HTMLDivElement | null, target: HTMLDivElement | null) => {
+    if (!source || !target || syncing.current) return;
+    syncing.current = true;
+    target.scrollTop = source.scrollTop;
+    syncing.current = false;
+  }, []);
+
+  useEffect(() => {
+    const afterEl = afterRef.current;
+    const beforeEl = beforeRef.current;
+    if (!afterEl || !beforeEl) return;
+
+    const onAfterScroll = () => syncScroll(afterEl, beforeEl);
+    const onBeforeScroll = () => syncScroll(beforeEl, afterEl);
+
+    afterEl.addEventListener("scroll", onAfterScroll, { passive: true });
+    beforeEl.addEventListener("scroll", onBeforeScroll, { passive: true });
+    return () => {
+      afterEl.removeEventListener("scroll", onAfterScroll);
+      beforeEl.removeEventListener("scroll", onBeforeScroll);
+    };
+  }, [syncScroll]);
+
   return (
     <div
-      ref={containerRef}
-      className="relative w-full h-full select-none touch-none overflow-hidden"
+      ref={wrapRef}
+      className="relative w-full h-full select-none"
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
     >
-      {/* After (new) — full width behind */}
-      <img
-        src={afterSrc}
-        alt={`${alt} — new`}
-        draggable={false}
-        className="absolute inset-0 w-full h-auto pointer-events-none"
-      />
-
-      {/* Before (current) — clipped */}
+      {/* After (new) — full layer, scrollable */}
       <div
-        className="absolute inset-0 overflow-hidden"
-        style={{ width: `${pos}%` }}
+        ref={afterRef}
+        className="absolute inset-0 overflow-y-auto overflow-x-hidden scrollbar-none"
+        style={{ WebkitOverflowScrolling: "touch" }}
+      >
+        <img
+          src={afterSrc}
+          alt={`${alt} — new`}
+          draggable={false}
+          className="block w-full h-auto pointer-events-none"
+        />
+      </div>
+
+      {/* Before (current) — clipped layer, scrollable */}
+      <div
+        ref={beforeRef}
+        className="absolute inset-0 overflow-y-auto overflow-x-hidden scrollbar-none"
+        style={{
+          clipPath: `inset(0 ${100 - pos}% 0 0)`,
+          WebkitOverflowScrolling: "touch",
+        }}
       >
         <img
           src={beforeSrc}
           alt={`${alt} — current`}
           draggable={false}
-          className="absolute inset-0 w-full h-auto pointer-events-none"
-          style={{ width: containerRef.current ? `${containerRef.current.offsetWidth}px` : "100%" }}
+          className="block w-full h-auto pointer-events-none"
         />
       </div>
 
-      {/* Labels */}
-      <div className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-black/60 text-white">
+      {/* Labels — sticky to viewport */}
+      <div className="absolute top-2 left-2 z-30 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-black/60 text-white pointer-events-none">
         Current
       </div>
-      <div className="absolute top-2 right-2 z-10 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-primary/80 text-primary-foreground">
+      <div className="absolute top-2 right-2 z-30 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-primary/80 text-primary-foreground pointer-events-none">
         New
       </div>
 
       {/* Divider line */}
       <div
-        className="absolute top-0 bottom-0 z-10 w-[3px] -translate-x-1/2"
+        className="absolute top-0 bottom-0 z-20 w-[3px] -translate-x-1/2 pointer-events-none"
         style={{ left: `${pos}%`, background: "hsl(var(--primary))" }}
       />
 
-      {/* Handle */}
+      {/* Drag handle */}
       <div
-        className="absolute z-20 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize"
+        className="absolute z-30 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize"
         style={{ left: `${pos}%`, top: "50%" }}
       >
         <div className="w-9 h-9 rounded-full bg-primary border-2 border-white shadow-lg flex items-center justify-center">
@@ -162,7 +200,10 @@ export default function SneakPeekSection() {
                   </>
                 )}
 
-                <div className="device-scroll-viewport">
+                {/* Replace device-scroll-viewport with custom container */}
+                <div className="absolute inset-0 overflow-hidden" style={{
+                  borderRadius: device === "ipad" ? "24px" : "46px",
+                }}>
                   <BeforeAfterSlider
                     beforeSrc={currentHomepage}
                     afterSrc={newHomepage}
