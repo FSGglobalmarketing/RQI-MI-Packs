@@ -70,7 +70,7 @@ export const reportData = {
     ],
     consideration: [
       { channel: "LinkedIn Organic", metrics: ["22.5k Impressions", "1,594 Clicks"], comparison: "Q1 2026", status: "good" as const },
-      { channel: "Website", metrics: ["29.3k Active users", "39.3k Views"], comparison: "Q1 2026", status: "good" as const },
+      { channel: "Website", metrics: ["29.3k Active users", "39.3k Views"], comparison: "+9% views vs Q4", status: "good" as const },
     ],
     conversion: [
       { channel: "Webinars", metrics: ["Total views"], comparison: "", status: "inactive" as const },
