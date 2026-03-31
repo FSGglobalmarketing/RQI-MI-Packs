@@ -46,7 +46,7 @@ export default function SentimentDetailModal({ mention, onClose }: Props) {
                 {CHANNEL_ICONS[mention.channel]} {mention.channel}
               </span>
             </div>
-            <h2 className="text-lg sm:text-xl font-extrabold text-secondary-foreground leading-tight">
+            <h2 className="text-lg sm:text-xl font-extrabold leading-tight" style={{ color: "hsl(0 0% 10%)" }}>
               {mention.title}
             </h2>
           </div>
