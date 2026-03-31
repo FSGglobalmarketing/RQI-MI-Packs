@@ -355,7 +355,7 @@ export function UKNordicsChart() {
 }
 
 export function UKNordicsLearnings() {
-  const learnings = reportData.campaigns.ukNordics.keyLearnings;
+  const learnings = ["Video ads were more than 20% more clicked than static ads."];
   return (
     <div className="glass-card-dark flow-corner-br border border-foreground/10">
       <h4 className="text-base font-bold text-foreground mb-4 flex items-center gap-2">
