@@ -263,7 +263,7 @@ export default function SearchVisibility() {
                     }}
                   />
                   {LINE_CONFIG.map(({ key, color, width, opacity }) => {
-                    const isHidden = hiddenLines.has(key) || (key !== "Igneo" && !showPeers);
+                    const isHidden = hiddenLines.has(key) || (key !== "RQI" && !showPeers);
                     return (
                       <Line key={key} type="monotone" dataKey={key} stroke={color} strokeWidth={width} dot={false} strokeOpacity={isHidden ? 0 : opacity} animationDuration={800} hide={isHidden} />
                     );
