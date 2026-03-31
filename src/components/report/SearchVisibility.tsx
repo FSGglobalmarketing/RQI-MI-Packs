@@ -236,8 +236,8 @@ export default function SearchVisibility() {
                       if (!payload?.length) return null;
                       const lastDataPoint = visibleData[visibleData.length - 1] || {};
                       const sorted = [...payload].sort((a: any, b: any) => {
-                        if (a.dataKey === "Igneo") return -1;
-                        if (b.dataKey === "Igneo") return 1;
+                        if (a.dataKey === "RQI") return -1;
+                        if (b.dataKey === "RQI") return 1;
                         return (lastDataPoint[b.dataKey as string] ?? 0) - (lastDataPoint[a.dataKey as string] ?? 0);
                       });
                       return (
