@@ -43,7 +43,7 @@ export const mentionsByMonth: {
   total: number;
 }[] = [
   { month: "Feb 26", positive: 0, neutral: 1, negative: 0, total: 1 },
-  { month: "Mar 26", positive: 11, neutral: 10, negative: 4, total: 25 },
+  { month: "Mar 26", positive: 10, neutral: 8, negative: 2, total: 20 },
 ];
 
 /* ── Channel Breakdown ── */
