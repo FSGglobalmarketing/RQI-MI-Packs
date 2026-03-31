@@ -27,8 +27,8 @@ const DATA_KEYS = LINE_CONFIG.map((l) => l.key);
 function CustomTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   const sorted = [...payload].sort((a: any, b: any) => {
-    if (a.dataKey === "Igneo") return -1;
-    if (b.dataKey === "Igneo") return 1;
+    if (a.dataKey === "RQI") return -1;
+    if (b.dataKey === "RQI") return 1;
     return (b.value ?? 0) - (a.value ?? 0);
   });
 
