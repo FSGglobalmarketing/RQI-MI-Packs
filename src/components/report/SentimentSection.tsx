@@ -187,9 +187,9 @@ export default function SentimentSection() {
           <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground">Sentiment Monitoring</h2>
           <span className="stage-badge text-xs">Social Listening</span>
         </div>
-        <p className="text-muted-foreground mb-6">
-          Brand visibility and media sentiment tracking across web, social and news channels — powered by Brandwatch.
-        </p>
+         <p className="text-muted-foreground mb-6">
+           Brand visibility and media sentiment tracking across web and news channels — powered by Mentionlytics.
+         </p>
 
         {/* KPIs row */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
