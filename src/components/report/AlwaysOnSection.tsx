@@ -235,7 +235,7 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
 
               {activeTab === "Users & Sessions" && (
                 <div className="flex-1 flex flex-col">
-                  <p className={`text-xs mb-3 ${isDark ? "text-muted-foreground" : "text-secondary-foreground/60"}`}>Monthly active users and sessions — Google Analytics</p>
+                  <p className={`text-xs mb-3 ${isDark ? "text-muted-foreground" : "text-secondary-foreground/60"}`}>Monthly active users and page views — Google Analytics (Q4 2025 vs Q1 2026)</p>
                   <div className="flex-1 min-h-0">
                     <UsersSessionsChart data={gaMonthly!} variant={variant} />
                   </div>
