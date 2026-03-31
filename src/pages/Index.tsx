@@ -82,6 +82,8 @@ const Index = () => {
         trafficSources={d.website.trafficSources}
       />
 
+      <SneakPeekSection />
+
       <LinkedInSection />
       <EventsSection />
       <SentimentSection />
