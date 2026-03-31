@@ -19,11 +19,8 @@ jobs:
       - run: npm ci
       - run: npm run build
 
-      - name: Rename to single file
-        run: mv dist/index.html dist/RQI-Marketing-Impact-Report.html
-
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: RQI-Marketing-Impact-Report
-          path: dist/RQI-Marketing-Impact-Report.html
+          path: dist/
