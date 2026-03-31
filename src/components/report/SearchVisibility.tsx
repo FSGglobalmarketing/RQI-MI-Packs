@@ -76,7 +76,7 @@ export default function SearchVisibility() {
   const dragging = useRef(false);
 
   const visibleData = allData.slice(left, right + 1);
-  const visibleKeys = DATA_KEYS.filter((k) => !hiddenLines.has(k) && (k === "Igneo" || showPeers));
+  const visibleKeys = DATA_KEYS.filter((k) => !hiddenLines.has(k) && (k === "RQI" || showPeers));
   let yMax = 0;
   visibleData.forEach((d: any) => {
     visibleKeys.forEach((k) => { if (d[k] > yMax) yMax = d[k]; });
