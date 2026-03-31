@@ -558,6 +558,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
           </button>
         )}
       </div>
+      </div>
     </div>
   );
 }
