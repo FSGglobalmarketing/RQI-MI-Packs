@@ -251,7 +251,7 @@ export default function SentimentSection() {
               <h4 className="text-sm font-bold mb-3 text-foreground">Coverage Summary</h4>
               <p className="text-sm leading-relaxed text-muted-foreground mb-4">
                 Monitoring of all public mentions of RQI Investors across global web and news channels.
-                Coverage spans Feb – Mar 2026 with 26 tracked mentions across 4 countries.
+                Coverage spans Feb – Mar 2026 with 20 tracked mentions across 4 countries.
               </p>
               <p className="text-sm leading-relaxed text-muted-foreground mb-4">
                 Positive coverage (42%) is driven by the RQI Global Value Fund launch in Hong Kong with
