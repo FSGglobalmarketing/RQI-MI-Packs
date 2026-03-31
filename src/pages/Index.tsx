@@ -10,6 +10,7 @@ import LinkedInSection from "@/components/report/LinkedInSection";
 import EventsSection from "@/components/report/EventsSection";
 import SentimentSection from "@/components/report/SentimentSection";
 import SplashScreen from "@/components/report/SplashScreen";
+import VideoCarousel from "@/components/report/VideoCarousel";
 import { reportData } from "@/data/igneo-report";
 import rqiLogoWhite from "@/assets/RQI_Positive_White.svg";
 
