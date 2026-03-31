@@ -250,17 +250,17 @@ export default function SentimentSection() {
             <div>
               <h4 className="text-sm font-bold mb-3 text-foreground">Coverage Summary</h4>
               <p className="text-sm leading-relaxed text-muted-foreground mb-4">
-                Monitoring of all public mentions of Igneo Infrastructure Partners across global web, news, and Twitter/X.
-                Coverage spans Jan – Mar 2026 with 93 tracked mentions across 10 countries.
+                Monitoring of all public mentions of RQI Investors across global web and news channels.
+                Coverage spans Feb – Mar 2026 with 26 tracked mentions across 4 countries.
               </p>
               <p className="text-sm leading-relaxed text-muted-foreground mb-4">
-                Negative sentiment originates exclusively from German-language media, focused on the Deutsche Agrar Holding (DAH) acquisition
-                and themes of foreign ownership of agricultural land. High-authority outlets like Berliner Zeitung and Nachdenkseiten account for
-                the most impactful negative coverage by domain rank.
+                Positive coverage (42%) is driven by the RQI Global Value Fund launch in Hong Kong with
+                distribution partners DBS, Hang Seng Bank and Bank of East Asia, as well as Joanna Nash's
+                profile in Financial Standard and the "Far From Normal" thought leadership piece.
               </p>
               <p className="text-sm leading-relaxed text-muted-foreground">
-                Positive coverage is driven by the Snam/OLT completion, Strait Link acquisition, Terra-Gen energy storage operations,
-                and the Vault Digital Infrastructure portfolio exit, alongside Westconnect fiber rollout press releases across Germany.
+                Negative sentiment is primarily risk-disclosure language on First Sentier Investors' own product pages
+                and a negative Sharpe ratio analysis on Benzinga. No reputational concerns identified.
               </p>
             </div>
             <div className="mt-4 flex items-center gap-6 text-xs text-muted-foreground">
