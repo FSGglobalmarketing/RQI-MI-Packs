@@ -63,6 +63,7 @@ const Index = () => {
         formats={d.highlights.demystified.formats}
         keyResults={d.highlights.demystified.keyResults}
         variant="dark"
+        phoneImage={<VideoCarousel />}
       />
 
       <AlwaysOnSection
