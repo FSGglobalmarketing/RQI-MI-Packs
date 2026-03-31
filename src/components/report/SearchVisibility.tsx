@@ -243,7 +243,7 @@ export default function SearchVisibility() {
                       return (
                         <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 pt-2 text-[10px]">
                           {sorted.map((entry: any) => {
-                            const isHidden = hiddenLines.has(entry.dataKey) || (entry.dataKey !== "Igneo" && !showPeers);
+                            const isHidden = hiddenLines.has(entry.dataKey) || (entry.dataKey !== "RQI" && !showPeers);
                             return (
                               <span
                                 key={entry.dataKey}
