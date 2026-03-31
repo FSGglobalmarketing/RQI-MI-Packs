@@ -2,6 +2,42 @@ import { reportData } from "@/data/igneo-report";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Legend, Cell, PieChart, Pie, ReferenceArea } from "recharts";
 import { useState, useCallback, useRef, useEffect } from "react";
 import KpiRow from "./KpiRow";
+import { FileText, Video, Globe, Megaphone, Mail, Presentation, Image, Mic, PenTool, Newspaper, BarChart3, Layout } from "lucide-react";
+
+const FORMAT_ICON_MAP: Record<string, React.ElementType> = {
+  "Tram wraps": Image,
+  "Billboard ads": Image,
+  "Crossword puzzle game": Layout,
+  "Sponsored advertorials in HKEJ": Newspaper,
+  "Organic and paid LinkedIn": Globe,
+  "Organic LinkedIn posts": Globe,
+  "Paid LinkedIn posts": Megaphone,
+  "Client emails, website updates and email signatures": Mail,
+  "Always on SEM": BarChart3,
+  "Quarterly Global Value fund flyer (Asia only)": FileText,
+  "Andrew Francis Profile in Australian Financial Standard": PenTool,
+  "Corporate Culture paper in Journal of Portfolio Management": FileText,
+};
+
+function getFormatIcon(format: string): React.ElementType {
+  if (FORMAT_ICON_MAP[format]) return FORMAT_ICON_MAP[format];
+  const lower = format.toLowerCase();
+  if (lower.includes("video") || lower.includes("listen")) return Video;
+  if (lower.includes("linkedin")) return Globe;
+  if (lower.includes("email") || lower.includes("signature")) return Mail;
+  if (lower.includes("insight") || lower.includes("paper") || lower.includes("flyer")) return FileText;
+  if (lower.includes("page") || lower.includes("website") || lower.includes("landing")) return Layout;
+  if (lower.includes("webinar") || lower.includes("presentation")) return Presentation;
+  if (lower.includes("podcast") || lower.includes("audio")) return Mic;
+  if (lower.includes("ad") || lower.includes("paid") || lower.includes("sem") || lower.includes("display")) return Megaphone;
+  if (lower.includes("billboard") || lower.includes("tram") || lower.includes("ooh")) return Image;
+  return FileText;
+}
+
+function FormatIcon({ format, isDark }: { format: string; isDark: boolean }) {
+  const Icon = getFormatIcon(format);
+  return <Icon className={`w-4 h-4 shrink-0 ${isDark ? "text-mint" : "text-moss"}`} />;
+}
 
 interface KpiItem {
   value: string;
@@ -61,9 +97,12 @@ export function CampaignSection({ id, title, stage, subtitle, description, goals
 
             <div>
               <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Formats</h4>
-              <div className="flex flex-wrap gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {formats.map((f) => (
-                  <span key={f} className={isDark ? "glass-pill-dark" : "glass-pill-cream"}>{f}</span>
+                  <div key={f} className={`flex items-center gap-2.5 text-sm ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>
+                    <FormatIcon format={f} isDark={isDark} />
+                    <span>{f}</span>
+                  </div>
                 ))}
               </div>
             </div>

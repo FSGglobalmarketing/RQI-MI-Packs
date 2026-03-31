@@ -2,15 +2,12 @@ import { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { reportData } from "@/data/igneo-report";
 
-/**
- * Hero slide images — each should be 1920 × 800 px (landscape, 2.4:1 ratio).
- * Export as JPG/PNG at 2x (3840 × 1600) for retina crispness.
- */
 export interface HeroSlide {
-  image: string;          // URL or import path — 1920×800 recommended
-  label: string;          // short category / tag
-  heading: string;        // main title on the card
-  description: string;    // one-liner
+  image: string;
+  label: string;
+  heading: string;
+  description: string;
+  sectionId: string;
 }
 
 const slides: HeroSlide[] = [
@@ -20,6 +17,7 @@ const slides: HeroSlide[] = [
     heading: "Fund Manager of the Year",
     description:
       "Morningstar recognised RQI with the prestigious Fund Manager of the Year Award — a testament to our sustained, systematic investment approach.",
+    sectionId: "fmoty",
   },
   {
     image: "/hero/slide-2.jpg",
@@ -27,6 +25,7 @@ const slides: HeroSlide[] = [
     heading: "Asia Campaign Phase II",
     description:
       "Our continued push into Hong Kong and Singapore, supporting fund launches with Hang Seng Bank and DBS Bank across digital and OOH channels.",
+    sectionId: "asia-campaign",
   },
   {
     image: "/hero/slide-3.jpg",
@@ -34,6 +33,7 @@ const slides: HeroSlide[] = [
     heading: "RQI Demystified",
     description:
       "Short, jargon-free videos and dedicated webpages that simplify our investment strategies for a broader audience.",
+    sectionId: "demystified",
   },
 ];
 
@@ -46,12 +46,16 @@ export default function HeroSection() {
   const next = useCallback(() => setCurrent((c) => (c + 1) % total), [total]);
   const prev = useCallback(() => setCurrent((c) => (c - 1 + total) % total), [total]);
 
-  // Auto-advance every 6 s
   useEffect(() => {
     if (paused) return;
     const id = setInterval(next, 6000);
     return () => clearInterval(id);
   }, [paused, next]);
+
+  const handleJump = () => {
+    const el = document.getElementById(slides[current].sectionId);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <section
@@ -72,44 +76,56 @@ export default function HeroSection() {
             alt={slide.heading}
             className="w-full h-full object-cover object-center"
           />
-          {/* Darkening overlay */}
           <div className="absolute inset-0 bg-gradient-to-r from-ash/90 via-ash/50 to-transparent" />
         </div>
       ))}
 
-      {/* Static info card */}
+      {/* Title + date on bottom left */}
       <div className="absolute inset-0 z-10 flex items-end pb-16 sm:pb-20">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          {/* Quarter + date row */}
-          <div className="flex items-center gap-3 mb-6">
-            <span className="stage-badge inline-block">{d.quarter}</span>
-            <span className="text-sm font-medium text-foreground/60">{d.dataPeriod}</span>
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full flex justify-between items-end">
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <span className="stage-badge inline-block">{d.quarter}</span>
+              <span className="text-sm font-medium text-foreground/60">{d.dataPeriod}</span>
+            </div>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-foreground leading-tight">
+              Global Marketing<br />Impact Report
+            </h1>
           </div>
 
-          {/* Semi-transparent card */}
-          <div className="relative max-w-xl rounded-xl border border-white/10 bg-ash/60 backdrop-blur-md p-6 sm:p-8 transition-all duration-500">
-            <span className="inline-block text-xs font-semibold uppercase tracking-widest text-mint mb-2">
+          {/* Card on bottom right */}
+          <div className="relative max-w-sm rounded-xl border border-white/10 bg-ash/60 backdrop-blur-md p-5 sm:p-6 transition-all duration-500">
+            <span className="inline-block text-[10px] font-semibold uppercase tracking-widest text-mint mb-1.5">
               {slides[current].label}
             </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground leading-tight mb-2">
+            <h2 className="text-base font-bold text-foreground leading-snug mb-1.5" style={{ marginBottom: 6 }}>
               {slides[current].heading}
             </h2>
-            <p className="text-sm sm:text-base text-foreground/70 leading-relaxed">
+            <p className="text-xs text-foreground/70 leading-relaxed mb-4">
               {slides[current].description}
             </p>
 
-            {/* Slide indicators */}
-            <div className="flex items-center gap-2 mt-5">
-              {slides.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrent(i)}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    i === current ? "w-8 bg-mint" : "w-3 bg-white/30 hover:bg-white/50"
-                  }`}
-                  aria-label={`Go to slide ${i + 1}`}
-                />
-              ))}
+            <div className="flex items-center justify-between">
+              {/* Slide indicators */}
+              <div className="flex items-center gap-2">
+                {slides.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCurrent(i)}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      i === current ? "w-8 bg-mint" : "w-3 bg-white/30 hover:bg-white/50"
+                    }`}
+                    aria-label={`Go to slide ${i + 1}`}
+                  />
+                ))}
+              </div>
+
+              <button
+                onClick={handleJump}
+                className="px-4 py-1.5 rounded-full text-xs font-semibold bg-mint text-background hover:bg-mint/90 transition-colors"
+              >
+                Jump to section
+              </button>
             </div>
           </div>
         </div>

@@ -46,7 +46,7 @@ export default function SentimentDetailModal({ mention, onClose }: Props) {
                 {CHANNEL_ICONS[mention.channel]} {mention.channel}
               </span>
             </div>
-            <h2 className="text-lg sm:text-xl font-extrabold text-secondary-foreground leading-tight">
+            <h2 className="text-lg sm:text-xl font-extrabold leading-tight" style={{ color: "hsl(0 0% 10%)" }}>
               {mention.title}
             </h2>
           </div>
@@ -78,8 +78,8 @@ export default function SentimentDetailModal({ mention, onClose }: Props) {
           {/* Snippet */}
           {mention.snippet && (
             <div>
-              <p className="text-[10px] text-secondary-foreground/50 uppercase tracking-wider font-semibold mb-2">Summary</p>
-              <p className="text-sm text-secondary-foreground/80 leading-relaxed">
+              <p className="text-[10px] uppercase tracking-wider font-semibold mb-2" style={{ color: "hsl(0 0% 45%)" }}>Summary</p>
+              <p className="text-sm leading-relaxed" style={{ color: "hsl(0 0% 25%)" }}>
                 {mention.snippet}
               </p>
             </div>
