@@ -394,8 +394,10 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
     };
   }, []);
 
-  // Progress bar & status messages
+  // Progress bar & status messages — only start after unlock
   useEffect(() => {
+    if (!unlocked) return;
+
     const startTime = performance.now();
     let msgIdx = 0;
     let msgTimer = 0;
@@ -441,7 +443,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
       cancelAnimationFrame(id);
       clearTimeout(skipTimer);
     };
-  }, [finish]);
+  }, [finish, unlocked]);
 
   return (
     <div
