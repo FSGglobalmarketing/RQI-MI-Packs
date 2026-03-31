@@ -259,8 +259,8 @@ export default function SentimentSection() {
                 profile in Financial Standard.
               </p>
               <p className="text-sm leading-relaxed text-muted-foreground">
-                Negative sentiment is primarily risk-disclosure language on First Sentier Investors' own product pages
-                and a negative Sharpe ratio analysis on Benzinga. No reputational concerns identified.
+                Negative sentiment is limited to a negative Sharpe ratio analysis on Benzinga and general market
+                skepticism reporting. No reputational concerns identified. Own-site mentions (firstsentierinvestors.com.au, stewartinvestors.com) have been excluded.
               </p>
             </div>
             <div className="mt-4 flex items-center gap-6 text-xs text-muted-foreground">
