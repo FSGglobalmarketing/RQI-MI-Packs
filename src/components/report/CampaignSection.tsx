@@ -61,9 +61,12 @@ export function CampaignSection({ id, title, stage, subtitle, description, goals
 
             <div>
               <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Formats</h4>
-              <div className="flex flex-wrap gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {formats.map((f) => (
-                  <span key={f} className={isDark ? "glass-pill-dark" : "glass-pill-cream"}>{f}</span>
+                  <div key={f} className={`flex items-center gap-2.5 text-sm ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>
+                    <FormatIcon format={f} isDark={isDark} />
+                    <span>{f}</span>
+                  </div>
                 ))}
               </div>
             </div>
