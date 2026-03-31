@@ -79,9 +79,6 @@ function BeforeAfterSlider({
     <div
       ref={wrapRef}
       className="relative w-full h-full select-none"
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={onPointerUp}
     >
       {/* After (new) — full layer, scrollable */}
       <div
