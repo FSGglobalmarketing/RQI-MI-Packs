@@ -54,7 +54,7 @@ export const channelBreakdown: {
   neutral: number;
   negative: number;
 }[] = [
-  { channel: "Web", mentions: 26, positive: 11, neutral: 11, negative: 4 },
+  { channel: "Web", mentions: 20, positive: 10, neutral: 9, negative: 2 },
 ];
 
 /* ── Top Countries ── */
