@@ -228,8 +228,10 @@ export const reportData = {
     kpis: [
       { value: "29.3k", label: "Active users", comparison: "+3.7% vs Q4 2025" },
       { value: "39.3k", label: "Page views", comparison: "+9.0% vs Q4 2025" },
-      { value: "150k", label: "Total events", comparison: "Q1 2026" },
-      { value: "29", label: "Key events", comparison: "Q1 2026" },
+      // ⚠ FLAG: No Q4 2025 baseline available for total events
+      { value: "150k", label: "Total events", comparison: "⚠ No Q4 data" },
+      // ⚠ FLAG: No Q4 2025 baseline available for key events
+      { value: "29", label: "Key events", comparison: "⚠ No Q4 data" },
     ],
     goals: [
       "Create a platform for RQI content to stand alone with its own identity",
