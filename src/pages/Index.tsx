@@ -67,6 +67,8 @@ const Index = () => {
         phoneImage={<VideoCarousel />}
       />
 
+      <SneakPeekSection />
+
       <AlwaysOnSection
         id="website"
         title={d.website.title}
@@ -81,8 +83,6 @@ const Index = () => {
         topPages={d.website.topPages}
         trafficSources={d.website.trafficSources}
       />
-
-      <SneakPeekSection />
 
       <LinkedInSection />
       <EventsSection />

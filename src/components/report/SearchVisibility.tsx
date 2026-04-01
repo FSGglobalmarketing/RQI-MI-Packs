@@ -1,5 +1,5 @@
 import { reportData } from "@/data/igneo-report";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceArea } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceArea, ReferenceDot } from "recharts";
 import { CheckCircle, ArrowRight } from "lucide-react";
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Switch } from "@/components/ui/switch";
@@ -21,6 +21,29 @@ const LINE_CONFIG: { key: string; color: string; width: number; opacity: number 
   { key: "Stonepeak", color: "#444444", width: 1.2, opacity: 0.6 },// Dark grey
   { key: "Ardian", color: "#bbbbbb", width: 1.2, opacity: 0.5 },   // Light grey
 ];
+
+/* Custom X-axis tick with quarter labels for search chart */
+function SearchQuarterTick({ x, y, payload }: any) {
+  const month = payload.value as string;
+  let qLabel = "";
+  if (month.startsWith("Oct")) qLabel = "Q4";
+  if (month.startsWith("Jan")) qLabel = "Q1";
+  if (month.startsWith("Apr")) qLabel = "Q2";
+  if (month.startsWith("Jul")) qLabel = "Q3";
+
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <text x={0} y={0} dy={12} textAnchor="middle" fontSize={10} fill="#64748b">
+        {month}
+      </text>
+      {qLabel && (
+        <text x={0} y={0} dy={26} textAnchor="middle" fontSize={8} fontWeight={700} fill="hsl(210 100% 53%)">
+          {qLabel}
+        </text>
+      )}
+    </g>
+  );
+}
 
 const DATA_KEYS = LINE_CONFIG.map((l) => l.key);
 
@@ -226,7 +249,7 @@ export default function SearchVisibility() {
               <ResponsiveContainer width="100%" height={500}>
                 <LineChart data={visibleData} onMouseDown={onMouseDown} onMouseMove={onMouseMove} onMouseUp={onMouseUp}>
                   <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
-                  <XAxis dataKey="month" tick={{ fontSize: 10, fill: "#64748b" }} />
+                  <XAxis dataKey="month" tick={<SearchQuarterTick />} height={45} />
                   <YAxis tick={{ fontSize: 10, fill: "#64748b" }} domain={[0, yMax]} />
                   <Tooltip content={<CustomTooltip />} />
                   <Legend

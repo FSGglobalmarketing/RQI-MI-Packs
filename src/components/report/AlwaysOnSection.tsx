@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import { useState, useEffect, useRef } from "react";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine, ReferenceDot } from "recharts";
 import KpiRow from "./KpiRow";
 
 interface KpiItem {
@@ -28,6 +28,127 @@ interface TrafficSourceItem {
   percentage: number;
 }
 
+// Spike annotations for notable data points
+const WEBSITE_ANNOTATIONS: { month: string; dataKey: string; label: string }[] = [
+  { month: "Oct 25", dataKey: "users", label: "HK LinkedIn Ads launch" },
+  { month: "Jan 26", dataKey: "users", label: "HK LinkedIn Ads Phase II" },
+];
+
+/* ── Animated area path using stroke-dashoffset ── */
+function useLineDrawAnimation(deps: any[]) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const paths = el.querySelectorAll<SVGPathElement>(".recharts-area-curve");
+    paths.forEach((path) => {
+      const length = path.getTotalLength();
+      path.style.strokeDasharray = `${length}`;
+      path.style.strokeDashoffset = `${length}`;
+      path.style.animation = "none";
+      // force reflow
+      void path.getBoundingClientRect();
+      path.style.animation = `line-draw 1.5s ease-out forwards`;
+    });
+  }, deps);
+  return ref;
+}
+
+function formatK(v: number) {
+  if (v >= 1000) return `${(v / 1000).toFixed(1)}k`;
+  return String(v);
+}
+
+/* Custom X-axis tick with quarter labels */
+function QuarterTick({ x, y, payload, data }: any) {
+  const month = payload.value;
+  const idx = data.findIndex((d: any) => d.month === month);
+  // Show Q label at start of each quarter
+  let qLabel = "";
+  if (month.startsWith("Oct")) qLabel = "Q4";
+  if (month.startsWith("Jan")) qLabel = "Q1";
+
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <text x={0} y={0} dy={12} textAnchor="middle" fontSize={9} fill="#64748b">
+        {month}
+      </text>
+      {qLabel && (
+        <text x={0} y={0} dy={26} textAnchor="middle" fontSize={8} fontWeight={700} fill="hsl(210 100% 53%)">
+          {qLabel}
+        </text>
+      )}
+    </g>
+  );
+}
+
+/* Annotation label for spike dots */
+function SpikeLabel({ viewBox, label }: any) {
+  return (
+    <g>
+      <rect x={viewBox.x - 55} y={viewBox.y - 28} width={110} height={18} rx={4} fill="hsl(210 100% 53%)" fillOpacity={0.9} />
+      <text x={viewBox.x} y={viewBox.y - 16} textAnchor="middle" fontSize={8} fontWeight={600} fill="white">
+        {label}
+      </text>
+    </g>
+  );
+}
+
+/* ── Users & Sessions Chart ── */
+function UsersSessionsChart({ data, variant }: { data: GaMonthlyItem[]; variant: "dark" | "cream" }) {
+  const isDark = variant === "dark";
+  const gridStroke = isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)";
+  const animRef = useLineDrawAnimation([data]);
+
+  return (
+    <div ref={animRef}>
+      <ResponsiveContainer width="100%" height={340}>
+        <AreaChart data={data} margin={{ top: 10, right: 10, left: -10, bottom: 20 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
+          <XAxis dataKey="month" tick={<QuarterTick data={data} />} height={45} />
+          <YAxis tick={{ fontSize: 9, fill: "#64748b" }} tickFormatter={formatK} />
+          <Tooltip
+            contentStyle={{
+              background: isDark ? "hsl(0 0% 8%)" : "hsl(0 0% 96%)",
+              border: `1px solid ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"}`,
+              borderRadius: 12,
+              fontSize: 11,
+              color: isDark ? "#fff" : "#000",
+            }}
+            labelStyle={{ color: "#0F9AFF", fontWeight: 700 }}
+            formatter={(value: number, name: string) => [formatK(value), name === "users" ? "Users" : "Sessions"]}
+          />
+          <Area type="monotone" dataKey="sessions" stackId="1" fill="#56658B" stroke="#56658B" strokeWidth={1} fillOpacity={0.6} isAnimationActive={false} />
+          <Area type="monotone" dataKey="users" stackId="1" fill="#0F9AFF" stroke="#0F9AFF" strokeWidth={2} fillOpacity={0.8} isAnimationActive={false} />
+          {/* Spike annotations */}
+          {WEBSITE_ANNOTATIONS.map((ann) => {
+            const point = data.find((d) => d.month === ann.month);
+            if (!point) return null;
+            return (
+              <ReferenceDot
+                key={ann.month}
+                x={ann.month}
+                y={point[ann.dataKey as keyof GaMonthlyItem] as number}
+                r={5}
+                fill="#0F9AFF"
+                stroke="white"
+                strokeWidth={2}
+                label={<SpikeLabel label={ann.label} />}
+              />
+            );
+          })}
+          <Legend
+            wrapperStyle={{ fontSize: 10, paddingTop: 8 }}
+            formatter={(value: string) => (
+              <span style={{ color: "#64748b" }}>{value === "users" ? "Users" : "Sessions"}</span>
+            )}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
 interface AlwaysOnProps {
   id: string;
   title: string;
@@ -47,52 +168,9 @@ interface AlwaysOnProps {
 const TABS = ["Users & Sessions", "Top Pages", "Traffic Sources"] as const;
 type Tab = typeof TABS[number];
 
-function formatK(v: number) {
-  if (v >= 1000) return `${(v / 1000).toFixed(1)}k`;
-  return String(v);
-}
-
-/* ── Users & Sessions Chart ── */
-function UsersSessionsChart({ data, variant }: { data: GaMonthlyItem[]; variant: "dark" | "cream" }) {
-  const isDark = variant === "dark";
-  const gridStroke = isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)";
-  const tickFill = isDark ? "hsl(0 0% 60%)" : "#64748b";
-
-  return (
-    <ResponsiveContainer width="100%" height={340}>
-      <AreaChart data={data} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
-        <XAxis dataKey="month" tick={{ fontSize: 9, fill: tickFill }} />
-        <YAxis tick={{ fontSize: 9, fill: tickFill }} tickFormatter={formatK} />
-        <Tooltip
-          contentStyle={{
-            background: isDark ? "hsl(0 0% 8%)" : "hsl(0 0% 96%)",
-            border: `1px solid ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"}`,
-            borderRadius: 12,
-            fontSize: 11,
-            color: isDark ? "#fff" : "#000",
-          }}
-          labelStyle={{ color: "#0F9AFF", fontWeight: 700 }}
-          formatter={(value: number, name: string) => [formatK(value), name === "users" ? "Users" : "Sessions"]}
-        />
-        <Area type="monotone" dataKey="sessions" stackId="1" fill="#56658B" stroke="#56658B" strokeWidth={1} fillOpacity={0.6} />
-        <Area type="monotone" dataKey="users" stackId="1" fill="#0F9AFF" stroke="#0F9AFF" strokeWidth={2} fillOpacity={0.8} />
-        <Legend
-          wrapperStyle={{ fontSize: 10, paddingTop: 8 }}
-          formatter={(value: string) => (
-            <span style={{ color: tickFill }}>{value === "users" ? "Users" : "Sessions"}</span>
-          )}
-        />
-      </AreaChart>
-    </ResponsiveContainer>
-  );
-}
-
 /* ── Top Pages Bar Chart ── */
 function TopPagesChart({ data, variant }: { data: TopPageItem[]; variant: "dark" | "cream" }) {
   const isDark = variant === "dark";
-  const gridStroke = isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)";
-  const tickFill = isDark ? "hsl(0 0% 60%)" : "#64748b";
 
   return (
     <div className="space-y-3">

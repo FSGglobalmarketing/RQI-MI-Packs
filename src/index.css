@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Line-draw animation for SVG chart paths */
+@keyframes line-draw {
+  from { stroke-dashoffset: var(--line-length, 2000); }
+  to { stroke-dashoffset: 0; }
+}
+
+.recharts-line-curve {
+  animation: line-draw 1.5s ease-out forwards;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 @font-face {
