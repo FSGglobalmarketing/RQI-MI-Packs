@@ -1,6 +1,21 @@
 import { useState, useEffect, useRef } from "react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine, ReferenceDot } from "recharts";
 import KpiRow from "./KpiRow";
+import { Globe, FileText, Megaphone, Mail, Video, Mic, Layout, PenTool, Newspaper } from "lucide-react";
+
+function getActivityIcon(activity: string) {
+  const lower = activity.toLowerCase();
+  if (lower.includes("website") || lower.includes("page") || lower.includes("landing")) return Layout;
+  if (lower.includes("linkedin")) return Globe;
+  if (lower.includes("email") || lower.includes("signature")) return Mail;
+  if (lower.includes("video") || lower.includes("listen")) return Video;
+  if (lower.includes("insight") || lower.includes("paper") || lower.includes("flyer") || lower.includes("thought")) return FileText;
+  if (lower.includes("podcast") || lower.includes("audio")) return Mic;
+  if (lower.includes("ad") || lower.includes("sem") || lower.includes("display") || lower.includes("paid")) return Megaphone;
+  if (lower.includes("press") || lower.includes("advertorial")) return Newspaper;
+  if (lower.includes("profile") || lower.includes("content")) return PenTool;
+  return Globe;
+}
 
 interface KpiItem {
   value: string;
