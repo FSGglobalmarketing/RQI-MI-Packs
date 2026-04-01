@@ -331,18 +331,18 @@ export default function SentimentSection() {
         </div>
 
         {/* Coverage table — full width like events table */}
-        <div className="glass-card-dark flow-corner-bl overflow-x-auto">
-          <table className="w-full text-sm">
+        <div className="glass-card-dark flow-corner-bl overflow-hidden">
+          <table className="w-full text-sm table-fixed">
             <thead>
               <tr className="border-b border-white/10">
-                <th className="text-left py-3 px-4 text-foreground font-semibold w-6"></th>
-                <th className="text-left py-3 px-4 text-foreground font-semibold">Title</th>
-                <th className="text-left py-3 px-4 text-foreground font-semibold">Source</th>
-                <th className="text-left py-3 px-4 text-foreground font-semibold">Channel</th>
-                <th className="text-left py-3 px-4 text-foreground font-semibold">Country</th>
-                <th className="text-left py-3 px-4 text-foreground font-semibold">Date</th>
-                <th className="text-right py-3 px-4 text-foreground font-semibold">Reach</th>
-                <th className="text-right py-3 px-4 text-foreground font-semibold">Rank</th>
+                <th className="text-left py-3 px-3 text-foreground font-semibold w-8"></th>
+                <th className="text-left py-3 px-3 text-foreground font-semibold w-[30%]">Title</th>
+                <th className="text-left py-3 px-3 text-foreground font-semibold w-[15%]">Source</th>
+                <th className="text-left py-3 px-3 text-foreground font-semibold w-[8%]">Channel</th>
+                <th className="text-left py-3 px-3 text-foreground font-semibold w-[10%]">Country</th>
+                <th className="text-left py-3 px-3 text-foreground font-semibold w-[10%]">Date</th>
+                <th className="text-right py-3 px-3 text-foreground font-semibold w-[10%]">Reach</th>
+                <th className="text-right py-3 px-3 text-foreground font-semibold w-[8%]">Rank</th>
               </tr>
             </thead>
             <tbody>
@@ -359,26 +359,26 @@ export default function SentimentSection() {
                   onClick={() => setSelectedMention(m)}
                   className="border-b border-white/5 hover:bg-white/[0.03] transition-colors cursor-pointer group"
                 >
-                  <td className="py-3 px-4">
+                  <td className="py-3 px-3">
                     <SentimentDot sentiment={m.sentiment} />
                   </td>
-                  <td className="py-3 px-4 font-medium text-foreground group-hover:text-primary transition-colors max-w-[400px]">
+                  <td className="py-3 px-3 font-medium text-foreground group-hover:text-primary transition-colors">
                     <span className="line-clamp-1">{m.title}</span>
                   </td>
-                  <td className="py-3 px-4 text-muted-foreground whitespace-nowrap">{m.source}</td>
-                  <td className="py-3 px-4 text-muted-foreground">{m.channel}</td>
-                  <td className="py-3 px-4 text-muted-foreground">{m.country}</td>
-                  <td className="py-3 px-4 text-muted-foreground whitespace-nowrap">
+                  <td className="py-3 px-3 text-muted-foreground truncate">{m.source}</td>
+                  <td className="py-3 px-3 text-muted-foreground">{m.channel}</td>
+                  <td className="py-3 px-3 text-muted-foreground">{m.country}</td>
+                  <td className="py-3 px-3 text-muted-foreground whitespace-nowrap">
                     {new Date(m.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "2-digit" })}
                   </td>
-                  <td className="py-3 px-4 text-right">
+                  <td className="py-3 px-3 text-right">
                     {m.followers !== undefined && m.followers > 0 ? (
                       <span className="text-primary font-semibold">{formatFollowers(m.followers)}</span>
                     ) : (
                       <span className="text-muted-foreground/30">—</span>
                     )}
                   </td>
-                  <td className="py-3 px-4 text-right">
+                  <td className="py-3 px-3 text-right">
                     {m.domainRank !== undefined ? (
                       <span className={`font-semibold ${
                         m.domainRank < 1_000 ? "text-success" : m.domainRank < 10_000 ? "text-primary" : m.domainRank < 50_000 ? "text-warning" : "text-muted-foreground"

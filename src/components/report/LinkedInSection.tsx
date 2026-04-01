@@ -3,9 +3,22 @@ import { reportData } from "@/data/igneo-report";
 import { linkedInMonthlyData, linkedInQuarterlyData, q4DailyEngagement } from "@/data/linkedin-data";
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceDot } from "recharts";
 import KpiRow from "./KpiRow";
+import { Award, Globe, Users, FileText, Mic, Video, Megaphone } from "lucide-react";
 
 const TABS = ["Timeline", "Heatmap", "Org vs Spn", "Top Posts"] as const;
 type Tab = typeof TABS[number];
+
+function getActivityIcon(activity: string) {
+  const lower = activity.toLowerCase();
+  if (lower.includes("award") || lower.includes("manager of the year")) return Award;
+  if (lower.includes("campaign")) return Globe;
+  if (lower.includes("team") || lower.includes("announcement")) return Users;
+  if (lower.includes("insight") || lower.includes("paper")) return FileText;
+  if (lower.includes("podcast")) return Mic;
+  if (lower.includes("video") || lower.includes("demystified")) return Video;
+  if (lower.includes("paid") || lower.includes("ad")) return Megaphone;
+  return Globe;
+}
 
 function formatK(v: number) {
   if (v >= 1_000_000) return `${(v / 1_000_000).toFixed(1)}M`;
@@ -280,10 +293,16 @@ export default function LinkedInSection() {
             {d.activities && (
               <div>
                 <h4 className="text-sm font-bold mb-3 text-foreground">Activities</h4>
-                <div className="flex flex-wrap gap-2">
-                  {d.activities.map((a) => (
-                    <span key={a} className="glass-pill-dark">{a}</span>
-                  ))}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {d.activities.map((a) => {
+                    const Icon = getActivityIcon(a);
+                    return (
+                      <div key={a} className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                        <Icon className="w-4 h-4 shrink-0 text-mint" />
+                        <span>{a}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             )}

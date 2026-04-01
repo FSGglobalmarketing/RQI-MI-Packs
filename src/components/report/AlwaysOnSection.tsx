@@ -1,6 +1,21 @@
 import { useState, useEffect, useRef } from "react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine, ReferenceDot } from "recharts";
 import KpiRow from "./KpiRow";
+import { Globe, FileText, Megaphone, Mail, Video, Mic, Layout, PenTool, Newspaper } from "lucide-react";
+
+function getActivityIcon(activity: string) {
+  const lower = activity.toLowerCase();
+  if (lower.includes("website") || lower.includes("page") || lower.includes("landing")) return Layout;
+  if (lower.includes("linkedin")) return Globe;
+  if (lower.includes("email") || lower.includes("signature")) return Mail;
+  if (lower.includes("video") || lower.includes("listen")) return Video;
+  if (lower.includes("insight") || lower.includes("paper") || lower.includes("flyer") || lower.includes("thought")) return FileText;
+  if (lower.includes("podcast") || lower.includes("audio")) return Mic;
+  if (lower.includes("ad") || lower.includes("sem") || lower.includes("display") || lower.includes("paid")) return Megaphone;
+  if (lower.includes("press") || lower.includes("advertorial")) return Newspaper;
+  if (lower.includes("profile") || lower.includes("content")) return PenTool;
+  return Globe;
+}
 
 interface KpiItem {
   value: string;
@@ -258,10 +273,16 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
             {activities && (
               <div>
                 <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Activities</h4>
-                <div className="flex flex-wrap gap-2">
-                  {activities.map((a) => (
-                    <span key={a} className={isDark ? "glass-pill-dark" : "glass-pill-cream"}>{a}</span>
-                  ))}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {activities.map((a) => {
+                    const Icon = getActivityIcon(a);
+                    return (
+                      <div key={a} className={`flex items-center gap-2.5 text-sm ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>
+                        <Icon className={`w-4 h-4 shrink-0 ${isDark ? "text-mint" : "text-moss"}`} />
+                        <span>{a}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             )}
