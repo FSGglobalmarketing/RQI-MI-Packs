@@ -281,10 +281,16 @@ export default function LinkedInSection() {
             {d.activities && (
               <div>
                 <h4 className="text-sm font-bold mb-3 text-foreground">Activities</h4>
-                <div className="flex flex-wrap gap-2">
-                  {d.activities.map((a) => (
-                    <span key={a} className="glass-pill-dark">{a}</span>
-                  ))}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {d.activities.map((a) => {
+                    const Icon = getActivityIcon(a);
+                    return (
+                      <div key={a} className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                        <Icon className="w-4 h-4 shrink-0 text-mint" />
+                        <span>{a}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             )}
