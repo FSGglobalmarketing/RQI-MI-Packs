@@ -35,6 +35,7 @@ interface GaMonthlyItem {
 interface TopPageItem {
   page: string;
   views: number;
+  q4Views?: number;
   change: string;
 }
 
