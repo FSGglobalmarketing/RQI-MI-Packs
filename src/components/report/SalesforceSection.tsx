@@ -17,23 +17,23 @@ function SalesforceSection() {
   const [activeTab, setActiveTab] = useState<Tab>("Activity");
 
   return (
-    <section id="salesforce" className="section-dark py-16 sm:py-20 border-t border-border">
+    <section id="salesforce" className="py-16 sm:py-20 border-t border-border" style={{ backgroundColor: "hsl(var(--ash))", color: "hsl(0 0% 100%)" }}>
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex flex-wrap items-center gap-3 mb-2">
-          <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white">
             Salesforce Engagement
           </h2>
           <span className="stage-badge self-center">Marketing Funnel</span>
         </div>
-        <p className="text-muted-foreground mb-8 max-w-3xl">
+        <p className="text-white/60 mb-8 max-w-3xl">
           Q1 saw 2,434 marketing interactions from 709 unique contacts across 559 accounts — a +11.5% increase in activity vs Q4. File downloads grew +73%, indicating deeper content engagement. 19 accounts in the active opportunity pipeline had direct marketing touches.
         </p>
 
-        {/* KPIs */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+        {/* KPIs - 2 rows */}
+        <div className="grid grid-cols-2 gap-4 mb-8">
           {salesforceMarketingKpis.map((kpi) => (
-            <KpiRow key={kpi.label} value={kpi.value} label={kpi.label} comparison={kpi.comparison} />
+            <KpiRow key={kpi.label} value={kpi.value} label={kpi.label} comparison={kpi.comparison} variant="dark" />
           ))}
         </div>
 
@@ -45,8 +45,8 @@ function SalesforceSection() {
               onClick={() => setActiveTab(tab)}
               className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
                 activeTab === tab
-                  ? "bg-foreground text-background"
-                  : "bg-muted text-muted-foreground hover:bg-muted/80"
+                  ? "bg-white text-black"
+                  : "bg-white/10 text-white/70 hover:bg-white/15"
               }`}
             >
               {tab}
@@ -55,7 +55,7 @@ function SalesforceSection() {
         </div>
 
         {/* Tab content */}
-        <div className="glass-card-cream rounded-2xl p-6 overflow-hidden">
+        <div className="rounded-2xl p-6 overflow-hidden" style={{ backgroundColor: "hsl(0 0% 12%)" }}>
           {activeTab === "Activity" && <ActivityTab />}
           {activeTab === "Targeting" && <TargetingTab />}
           {activeTab === "Opp Match" && <OppMatchTab />}
