@@ -17,7 +17,7 @@ function SalesforceSection() {
   const [activeTab, setActiveTab] = useState<Tab>("Activity");
 
   return (
-    <section id="salesforce" className="section-cream py-16 sm:py-20 border-t border-border">
+    <section id="salesforce" className="section-dark py-16 sm:py-20 border-t border-border">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex flex-wrap items-center gap-3 mb-2">

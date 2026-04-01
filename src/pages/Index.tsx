@@ -88,7 +88,6 @@ const Index = () => {
 
       <LinkedInSection />
       <EventsSection />
-      <SalesforceSection />
       <SentimentSection />
 
       <footer className="section-dark py-10 border-t border-border">
