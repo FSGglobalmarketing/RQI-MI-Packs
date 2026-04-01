@@ -79,8 +79,8 @@ export const reportData = {
       { channel: "LinkedIn Paid", metrics: ["0.46% Engagement", "0.48% CTR"], comparison: "CTR -35% vs FS (0.74%)", status: "below" as const },
     ],
     consideration: [
-      // No impression/click benchmark in doc. Compared vs Q4 2025: Impressions 22,517 vs 14,910 = +51%. Clicks 1,594 vs 1,805 = -12%.
-      { channel: "LinkedIn Organic", metrics: ["22.5k Impressions", "1,594 Clicks"], comparison: "+51% impressions vs Q4", status: "good" as const },
+      // No impression/click benchmark in doc. Compared vs Q4 2025: Impressions 22,517 vs 14,910 = +51%. Clicks 1,594 vs 1,805 = -12%. CTR = 1,594/22,517 = 7.08%. FS Organic CTR benchmark: 2.58%. → +174%.
+      { channel: "LinkedIn Organic", metrics: ["22.5k Impressions", "7.08% CTR"], comparison: "+174% CTR vs FS (2.58%)", status: "good" as const },
       { channel: "Website", metrics: ["29.3k Active users", "39.3k Views"], comparison: "+9% views vs Q4", status: "good" as const },
     ],
     conversion: [
