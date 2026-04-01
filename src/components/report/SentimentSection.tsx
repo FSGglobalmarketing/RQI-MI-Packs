@@ -359,16 +359,16 @@ export default function SentimentSection() {
                   onClick={() => setSelectedMention(m)}
                   className="border-b border-white/5 hover:bg-white/[0.03] transition-colors cursor-pointer group"
                 >
-                  <td className="py-3 px-4">
+                  <td className="py-3 px-3">
                     <SentimentDot sentiment={m.sentiment} />
                   </td>
-                  <td className="py-3 px-4 font-medium text-foreground group-hover:text-primary transition-colors max-w-[400px]">
+                  <td className="py-3 px-3 font-medium text-foreground group-hover:text-primary transition-colors">
                     <span className="line-clamp-1">{m.title}</span>
                   </td>
-                  <td className="py-3 px-4 text-muted-foreground whitespace-nowrap">{m.source}</td>
-                  <td className="py-3 px-4 text-muted-foreground">{m.channel}</td>
-                  <td className="py-3 px-4 text-muted-foreground">{m.country}</td>
-                  <td className="py-3 px-4 text-muted-foreground whitespace-nowrap">
+                  <td className="py-3 px-3 text-muted-foreground truncate">{m.source}</td>
+                  <td className="py-3 px-3 text-muted-foreground">{m.channel}</td>
+                  <td className="py-3 px-3 text-muted-foreground">{m.country}</td>
+                  <td className="py-3 px-3 text-muted-foreground whitespace-nowrap">
                     {new Date(m.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "2-digit" })}
                   </td>
                   <td className="py-3 px-4 text-right">
