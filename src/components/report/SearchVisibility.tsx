@@ -226,7 +226,7 @@ export default function SearchVisibility() {
               <ResponsiveContainer width="100%" height={500}>
                 <LineChart data={visibleData} onMouseDown={onMouseDown} onMouseMove={onMouseMove} onMouseUp={onMouseUp}>
                   <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
-                  <XAxis dataKey="month" tick={{ fontSize: 10, fill: "#64748b" }} />
+                  <XAxis dataKey="month" tick={<SearchQuarterTick />} height={45} />
                   <YAxis tick={{ fontSize: 10, fill: "#64748b" }} domain={[0, yMax]} />
                   <Tooltip content={<CustomTooltip />} />
                   <Legend
