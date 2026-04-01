@@ -26,6 +26,7 @@ const Index = () => {
       <HeroSection />
       <GlobalFocus />
       <PerformanceResults />
+      <SalesforceSection />
       <SearchVisibility />
 
       {/* Highlight 1: RQI Asia Campaign Phase II */}
