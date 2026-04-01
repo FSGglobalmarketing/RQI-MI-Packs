@@ -371,14 +371,14 @@ export default function SentimentSection() {
                   <td className="py-3 px-3 text-muted-foreground whitespace-nowrap">
                     {new Date(m.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "2-digit" })}
                   </td>
-                  <td className="py-3 px-4 text-right">
+                  <td className="py-3 px-3 text-right">
                     {m.followers !== undefined && m.followers > 0 ? (
                       <span className="text-primary font-semibold">{formatFollowers(m.followers)}</span>
                     ) : (
                       <span className="text-muted-foreground/30">—</span>
                     )}
                   </td>
-                  <td className="py-3 px-4 text-right">
+                  <td className="py-3 px-3 text-right">
                     {m.domainRank !== undefined ? (
                       <span className={`font-semibold ${
                         m.domainRank < 1_000 ? "text-success" : m.domainRank < 10_000 ? "text-primary" : m.domainRank < 50_000 ? "text-warning" : "text-muted-foreground"
