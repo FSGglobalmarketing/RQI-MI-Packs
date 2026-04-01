@@ -71,8 +71,8 @@ export const reportData = {
     awareness: [
       // ⚠ FLAG: SEM CTR 3.97% is below FS Search Paid benchmark (5–8%). If this includes display ads, benchmark may differ. No Q4 SEM data available for QoQ comparison.
       { channel: "Search engine marketing", metrics: ["13k Impressions", "3.97% CTR"], comparison: "Below FS benchmark (5–8%)", status: "below" as const },
-      // ⚠ FLAG: No SEO keyword/ranking benchmark in benchmark doc. Previous "+21% vs peers" was from BrightEdge competitor data — source unverified against benchmark doc.
-      { channel: "Search engine optimisation", metrics: ["142 Keywords ranked", "10th Av ranking"], comparison: "⚠ No industry benchmark", status: "good" as const },
+      // ⚠ FLAG: Still waiting for Search and SEM data from Agency. No Q4 baseline available.
+      { channel: "Search engine optimisation", metrics: ["⚠ Awaiting data"], comparison: "⚠ Awaiting agency data", status: "inactive" as const },
       // ⚠ FLAG: No display impression benchmark available in doc. "Phase II" is a status label, not a comparison.
       { channel: "Display ads (HK)", metrics: ["2M+ Impressions"], comparison: "Phase II", status: "good" as const },
       // FS Paid CTR benchmark: 0.74%. RQI: 0.48% → -35%. FS Paid Engagement benchmark: 1–2%. RQI: 0.46% → below.
