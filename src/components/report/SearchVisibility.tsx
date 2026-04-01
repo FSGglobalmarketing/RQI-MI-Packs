@@ -22,6 +22,29 @@ const LINE_CONFIG: { key: string; color: string; width: number; opacity: number 
   { key: "Ardian", color: "#bbbbbb", width: 1.2, opacity: 0.5 },   // Light grey
 ];
 
+/* Custom X-axis tick with quarter labels for search chart */
+function SearchQuarterTick({ x, y, payload }: any) {
+  const month = payload.value as string;
+  let qLabel = "";
+  if (month.startsWith("Oct")) qLabel = "Q4";
+  if (month.startsWith("Jan")) qLabel = "Q1";
+  if (month.startsWith("Apr")) qLabel = "Q2";
+  if (month.startsWith("Jul")) qLabel = "Q3";
+
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <text x={0} y={0} dy={12} textAnchor="middle" fontSize={10} fill="#64748b">
+        {month}
+      </text>
+      {qLabel && (
+        <text x={0} y={0} dy={26} textAnchor="middle" fontSize={8} fontWeight={700} fill="hsl(210 100% 53%)">
+          {qLabel}
+        </text>
+      )}
+    </g>
+  );
+}
+
 const DATA_KEYS = LINE_CONFIG.map((l) => l.key);
 
 function CustomTooltip({ active, payload, label }: any) {
