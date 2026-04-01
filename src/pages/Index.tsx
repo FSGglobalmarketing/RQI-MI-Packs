@@ -26,6 +26,7 @@ const Index = () => {
       <HeroSection />
       <GlobalFocus />
       <PerformanceResults />
+      <SalesforceSection />
       <SearchVisibility />
 
       {/* Highlight 1: RQI Asia Campaign Phase II */}
@@ -87,7 +88,6 @@ const Index = () => {
 
       <LinkedInSection />
       <EventsSection />
-      <SalesforceSection />
       <SentimentSection />
 
       <footer className="section-dark py-10 border-t border-border">
