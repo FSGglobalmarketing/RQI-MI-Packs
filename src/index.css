@@ -252,11 +252,9 @@
     line-height: 1;
   }
 
-  /* Ensure headings next to badges align properly */
-  .flex > h2 + .stage-badge,
-  .flex > h2 ~ .stage-badge {
-    margin-top: 0;
-    align-self: center;
+  /* Tighten heading line-height when paired with badge for vertical centering */
+  .flex > h2 {
+    line-height: 1;
   }
 
   .section-cream .stage-badge {
