@@ -312,8 +312,10 @@ export const reportData = {
 
   email: {
     kpis: [
-      { value: "22%", label: "CTOR", comparison: "+80% vs industry" },
-      { value: "44%", label: "Open rates", comparison: "+84% vs industry" },
+      // FS CTOR benchmark: 13.4%. RQI: 22% → +64%.
+      { value: "22%", label: "CTOR", comparison: "+64% vs FS benchmark (13.4%)" },
+      // FS Open Rate benchmark: 27.4%. RQI: 44% → +60%.
+      { value: "44%", label: "Open rates", comparison: "+60% vs FS benchmark (27.4%)" },
     ],
   },
 
