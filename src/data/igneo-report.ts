@@ -284,9 +284,12 @@ export const reportData = {
       "RQI Demystified launch",
     ],
     kpis: [
-      { value: "22.5k", label: "Organic impressions", comparison: "Q1 2026" },
-      { value: "1,594", label: "Clicks", comparison: "Q1 2026" },
-      { value: "541", label: "Reactions", comparison: "Q1 2026" },
+      // No impression benchmark in doc. Q4 organic: 14,910. Q1: 22,517 → +51%.
+      { value: "22.5k", label: "Organic impressions", comparison: "+51% vs Q4" },
+      // Q4 clicks: 1,805. Q1: 1,594 → -12%.
+      { value: "1,594", label: "Clicks", comparison: "-12% vs Q4" },
+      // Q4 reactions: 255. Q1: 541 → +112%.
+      { value: "541", label: "Reactions", comparison: "+112% vs Q4" },
     ],
     focusQ4: [
       "Morningstar FMOTY global comms",
