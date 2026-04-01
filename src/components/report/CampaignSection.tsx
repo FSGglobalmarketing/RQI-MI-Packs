@@ -96,7 +96,7 @@ export function CampaignSection({ id, title, stage, subtitle, description, goals
             </div>
 
             <div>
-              <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Formats</h4>
+              <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Activities</h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {formats.map((f) => (
                   <div key={f} className={`flex items-center gap-2.5 text-sm ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>
