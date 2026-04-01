@@ -246,9 +246,10 @@
   }
 
   .stage-badge {
-    @apply inline-flex items-center gap-2 px-4 py-1 rounded-full text-xs font-semibold self-center;
+    @apply inline-flex items-center gap-2 px-4 py-1 rounded-full text-xs font-semibold;
     background-color: hsl(var(--mint) / 0.15);
     color: hsl(var(--mint));
+    vertical-align: middle;
   }
 
   .section-cream .stage-badge {
