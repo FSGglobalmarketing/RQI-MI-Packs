@@ -1,82 +1,83 @@
 // ═══════════════════════════════════════════════════════════════════════
-// SOURCE: RQI_Opportunities_Report_-_MKT-2026-04-01-14-07-51.csv
-// Filtered: RQI-only opportunities, deduplicated by Institution+Opportunity
-// Client = 7-Account Funded; Won = 5-Won; rest = Prospect
+// SOURCE: Salesforce_Activity.xlsx (Prospect Activity + Prospect Data)
+// + RQI_Opportunities_Report CSV for opportunity cross-reference
+// Filtered: RQI/Realindex campaigns only, external accounts only
 // ═══════════════════════════════════════════════════════════════════════
 
-export interface PipelineStage {
-  stage: string;
-  shortLabel: string;
-  q1: number;
-  q4: number;
-}
-
-export interface RegionBreakdown {
-  region: string;
-  q1: number;
-  q4: number;
-}
-
-export interface ProductSplit {
-  product: string;
-  q1: number;
-  q4: number;
-}
-
-export interface SalesforceHighlight {
-  institution: string;
-  stage: string;
-  region: string;
-  product: string;
-}
-
-export const salesforceKpis = [
-  { value: "48", label: "New opportunities (Q1)", comparison: "Same as Q4 (48)" },
-  { value: "6", label: "Won / Funded (Q1)", comparison: "vs 12 in Q4", status: "below" as const },
-  { value: "47", label: "Active pipeline", comparison: "Same as Q4 (47)" },
-  { value: "17", label: "Diversified Alpha opps", comparison: "+1,600% vs Q4 (1)" },
+export const salesforceMarketingKpis = [
+  { value: "2,434", label: "Marketing interactions (Q1)", comparison: "+11.5% vs Q4 (2,178)" },
+  { value: "709", label: "Unique contacts engaged", comparison: "-7.6% vs Q4 (767)" },
+  { value: "559", label: "Unique accounts reached", comparison: "-3.8% vs Q4 (581)" },
+  { value: "19", label: "Opp accounts w/ marketing touch", comparison: "Active pipeline match" },
 ];
 
-// Pipeline funnel: stage distribution Q1 vs Q4
-export const pipelineStages: PipelineStage[] = [
-  { stage: "0-Target Investor", shortLabel: "Target", q1: 1, q4: 0 },
-  { stage: "1-Initiated Dialogue", shortLabel: "Dialogue", q1: 16, q4: 12 },
-  { stage: "2-Active Engagement", shortLabel: "Active", q1: 10, q4: 11 },
-  { stage: "3-DD Long List", shortLabel: "Long List", q1: 10, q4: 11 },
-  { stage: "4-DD Short List", shortLabel: "Short List", q1: 5, q4: 1 },
-  { stage: "5-Won", shortLabel: "Won", q1: 2, q4: 4 },
-  { stage: "7-Account Funded", shortLabel: "Funded", q1: 4, q4: 8 },
-  { stage: "Lost", shortLabel: "Lost", q1: 0, q4: 1 },
+// Activity breakdown Q1 vs Q4
+export const activityBreakdown = [
+  { type: "Email Opens", q1: 1593, q4: 1518 },
+  { type: "Email Clicks", q1: 614, q4: 524 },
+  { type: "File Downloads", q1: 262, q4: 151 },
+  { type: "Website Visits", q1: 3, q4: 1 },
+  { type: "Other", q1: 9, q4: 31 },
 ];
 
-// Regional breakdown
-export const regionBreakdown: RegionBreakdown[] = [
-  { region: "ANZ", q1: 31, q4: 28 },
-  { region: "Asia", q1: 10, q4: 7 },
-  { region: "EMEA", q1: 3, q4: 9 },
-  { region: "US", q1: 2, q4: 2 },
-  { region: "Other", q1: 2, q4: 2 },
+// Monthly trend Q1
+export const monthlyTrend = [
+  { month: "Jan 26", interactions: 921 },
+  { month: "Feb 26", interactions: 369 },
+  { month: "Mar 26", interactions: 1144 },
 ];
 
-// Product split
-export const productSplit: ProductSplit[] = [
-  { product: "Value", q1: 28, q4: 42 },
-  { product: "Diversified Alpha", q1: 17, q4: 1 },
-  { product: "Other", q1: 3, q4: 5 },
+// Job title targeting effectiveness
+export const jobTitleBreakdown = [
+  { title: "Director", count: 404 },
+  { title: "Principal", count: 199 },
+  { title: "Financial Advisor", count: 158 },
+  { title: "Financial Planner", count: 94 },
+  { title: "Managing Director", count: 79 },
+  { title: "Fund Research Manager", count: 77 },
+  { title: "Investment Analyst", count: 65 },
+  { title: "Portfolio Manager", count: 62 },
+  { title: "Partner", count: 47 },
+  { title: "Chief Investment Officer", count: 43 },
 ];
 
-// Q1 Won / Funded highlights
-export const q1WonFunded: SalesforceHighlight[] = [
-  { institution: "Infocus Securities Australia", stage: "Funded", region: "ANZ Wholesale", product: "Value" },
-  { institution: "Emergency Services & State Super", stage: "Funded", region: "ANZ Institutional", product: "Diversified Alpha" },
-  { institution: "Harrison Family Trust", stage: "Funded", region: "ANZ Institutional", product: "Diversified Alpha + Value" },
-  { institution: "Evidentia Group", stage: "Won", region: "ANZ Institutional", product: "Value" },
-  { institution: "Crofts Financial Services", stage: "Won", region: "ANZ Wholesale", product: "Value" },
+// Top engaged accounts (external only, excluding RQI Investors)
+export const topEngagedAccounts = [
+  { account: "Mercer Investments", interactions: 261, isOpp: true },
+  { account: "HUB24", interactions: 77, isOpp: false },
+  { account: "Team Super", interactions: 51, isOpp: true },
+  { account: "Funds SA", interactions: 42, isOpp: false },
+  { account: "Commonwealth Super", interactions: 42, isOpp: false },
+  { account: "CBUS Super", interactions: 41, isOpp: false },
+  { account: "JANA Investment Advisers", interactions: 35, isOpp: false },
+  { account: "St Peter's College", interactions: 33, isOpp: false },
+  { account: "ANZ Staff Super", interactions: 23, isOpp: false },
+  { account: "Future Group", interactions: 23, isOpp: false },
+  { account: "Fiducian Financial", interactions: 22, isOpp: false },
+  { account: "Evidentia Group", interactions: 20, isOpp: true },
 ];
 
-// CRM Activity data (from Salesforce_Activity.xlsx — RQI filtered)
-export const crmActivity = {
-  q1: { activities: 3355, emailClicks: 280, uniqueAccounts: 560 },
-  q4: { activities: 3002, emailClicks: 239, uniqueAccounts: 498 },
-  change: { activities: "+11.8%", emailClicks: "+17.2%", uniqueAccounts: "+12.4%" },
-};
+// Opportunity accounts that had marketing touches in Q1
+export const oppAccountMatches = [
+  { account: "Mercer Investments", interactions: 261, stage: "Active Engagement" },
+  { account: "Team Super", interactions: 51, stage: "Active Engagement" },
+  { account: "Evidentia Group", interactions: 20, stage: "Won" },
+  { account: "Equipsuper", interactions: 16, stage: "DD Long List" },
+  { account: "Hostplus Super", interactions: 12, stage: "Initiated Dialogue" },
+  { account: "Emergency Services & State Super", interactions: 10, stage: "Funded" },
+  { account: "REST Industry Super", interactions: 9, stage: "Active Engagement" },
+  { account: "Infocus Securities", interactions: 8, stage: "Funded" },
+  { account: "Forward Financial Group", interactions: 7, stage: "DD Long List" },
+  { account: "Bastion Financial Group", interactions: 6, stage: "DD Long List" },
+  { account: "Lonsec", interactions: 5, stage: "Initiated Dialogue" },
+  { account: "Catapult Wealth", interactions: 4, stage: "DD Long List" },
+];
+
+// Top campaigns driving activity
+export const topCampaigns = [
+  { campaign: "ANZ Campaigns (always-on)", interactions: 2140 },
+  { campaign: "RQI Monthly Newsletter (Dec)", interactions: 33 },
+  { campaign: "RQI Monthly Newsletter (Nov)", interactions: 15 },
+  { campaign: "Morningstar FMOTY Award", interactions: 5 },
+  { campaign: "LinkedIn", interactions: 3 },
+];

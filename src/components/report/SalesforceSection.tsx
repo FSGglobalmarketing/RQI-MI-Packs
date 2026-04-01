@@ -1,28 +1,20 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
-  ResponsiveContainer, Legend, PieChart, Pie, Cell,
+  ResponsiveContainer, Legend,
 } from "recharts";
 import KpiRow from "./KpiRow";
 import {
-  salesforceKpis, pipelineStages, regionBreakdown,
-  productSplit, q1WonFunded, crmActivity,
+  salesforceMarketingKpis, activityBreakdown, monthlyTrend,
+  jobTitleBreakdown, topEngagedAccounts, oppAccountMatches, topCampaigns,
 } from "@/data/salesforce-data";
-import { TrendingUp, Building2, Award, Target, Users, BarChart3 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 
-const TABS = ["Pipeline", "Regions", "Products", "Won & Funded"] as const;
+const TABS = ["Activity", "Targeting", "Opp Match", "Campaigns"] as const;
 type Tab = (typeof TABS)[number];
 
-const PIE_COLORS = [
-  "hsl(var(--primary))",
-  "hsl(var(--accent))",
-  "hsl(210 30% 60%)",
-  "hsl(210 20% 45%)",
-  "hsl(210 15% 70%)",
-];
-
 function SalesforceSection() {
-  const [activeTab, setActiveTab] = useState<Tab>("Pipeline");
+  const [activeTab, setActiveTab] = useState<Tab>("Activity");
 
   return (
     <section id="salesforce" className="section-cream py-16 sm:py-20 border-t border-border">
@@ -32,31 +24,16 @@ function SalesforceSection() {
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
             Salesforce Engagement
           </h2>
-          <span className="stage-badge self-center">Conversion</span>
+          <span className="stage-badge self-center">Marketing Funnel</span>
         </div>
         <p className="text-muted-foreground mb-8 max-w-3xl">
-          Q1 saw a steady pipeline with 48 new RQI opportunities matching Q4. Diversified Alpha saw significant growth (+1,600%), while the short-list stage strengthened from 1 to 5 opportunities. 6 accounts were won or funded.
+          Q1 saw 2,434 marketing interactions from 709 unique contacts across 559 accounts — a +11.5% increase in activity vs Q4. File downloads grew +73%, indicating deeper content engagement. 19 accounts in the active opportunity pipeline had direct marketing touches.
         </p>
 
         {/* KPIs */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-2">
-          {salesforceKpis.map((kpi) => (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+          {salesforceMarketingKpis.map((kpi) => (
             <KpiRow key={kpi.label} value={kpi.value} label={kpi.label} comparison={kpi.comparison} />
-          ))}
-        </div>
-
-        {/* CRM Activity Summary */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 mb-8">
-          {[
-            { label: "CRM Activities", q1: crmActivity.q1.activities, q4: crmActivity.q4.activities, change: crmActivity.change.activities },
-            { label: "Email Clicks", q1: crmActivity.q1.emailClicks, q4: crmActivity.q4.emailClicks, change: crmActivity.change.emailClicks },
-            { label: "Unique Accounts", q1: crmActivity.q1.uniqueAccounts, q4: crmActivity.q4.uniqueAccounts, change: crmActivity.change.uniqueAccounts },
-          ].map((item) => (
-            <div key={item.label} className="glass-card-cream rounded-xl p-4 text-center">
-              <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{item.label}</p>
-              <p className="text-2xl font-bold text-foreground">{item.q1.toLocaleString()}</p>
-              <p className="text-xs text-primary font-medium mt-1">{item.change} vs Q4</p>
-            </div>
           ))}
         </div>
 
@@ -79,187 +56,182 @@ function SalesforceSection() {
 
         {/* Tab content */}
         <div className="glass-card-cream rounded-2xl p-6 overflow-hidden">
-          {activeTab === "Pipeline" && <PipelineChart />}
-          {activeTab === "Regions" && <RegionChart />}
-          {activeTab === "Products" && <ProductChart />}
-          {activeTab === "Won & Funded" && <WonFundedTable />}
+          {activeTab === "Activity" && <ActivityTab />}
+          {activeTab === "Targeting" && <TargetingTab />}
+          {activeTab === "Opp Match" && <OppMatchTab />}
+          {activeTab === "Campaigns" && <CampaignsTab />}
         </div>
       </div>
     </section>
   );
 }
 
-/* ── Pipeline Funnel (horizontal bar) ── */
-function PipelineChart() {
-  // Exclude "Lost" and "Target" for cleaner funnel view
-  const data = pipelineStages.filter(
-    (s) => s.shortLabel !== "Lost" && s.shortLabel !== "Target"
-  );
+/* ── Activity Breakdown ── */
+function ActivityTab() {
   return (
-    <div>
-      <h3 className="text-lg font-semibold mb-4 text-foreground">
-        Pipeline Stage Distribution — Q1 vs Q4
-      </h3>
-      <ResponsiveContainer width="100%" height={320}>
-        <BarChart data={data} layout="vertical" margin={{ left: 10, right: 30, top: 5, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="hsl(var(--border))" />
-          <XAxis type="number" tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} />
-          <YAxis
-            type="category"
-            dataKey="shortLabel"
-            width={80}
-            tick={{ fontSize: 12, fill: "hsl(var(--foreground))" }}
-          />
-          <Tooltip
-            contentStyle={{
-              background: "hsl(var(--card))",
-              border: "1px solid hsl(var(--border))",
-              borderRadius: 12,
-              fontSize: 13,
-            }}
-          />
-          <Legend />
-          <Bar dataKey="q1" name="Q1 2026" fill="hsl(var(--primary))" radius={[0, 6, 6, 0]} barSize={14} />
-          <Bar dataKey="q4" name="Q4 2025" fill="hsl(var(--muted-foreground))" radius={[0, 6, 6, 0]} barSize={14} />
-        </BarChart>
-      </ResponsiveContainer>
-      <p className="text-xs text-muted-foreground mt-3">
-        Q1 shows stronger short-listing activity (5 vs 1 in Q4). Won/Funded lower at 6 vs 12 — typical Q1 pattern.
-      </p>
-    </div>
-  );
-}
-
-/* ── Regional Breakdown ── */
-function RegionChart() {
-  return (
-    <div>
-      <h3 className="text-lg font-semibold mb-4 text-foreground">
-        Opportunities by Region — Q1 vs Q4
-      </h3>
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={regionBreakdown} margin={{ left: 0, right: 30, top: 5, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-          <XAxis dataKey="region" tick={{ fontSize: 12, fill: "hsl(var(--foreground))" }} />
-          <YAxis tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} />
-          <Tooltip
-            contentStyle={{
-              background: "hsl(var(--card))",
-              border: "1px solid hsl(var(--border))",
-              borderRadius: 12,
-              fontSize: 13,
-            }}
-          />
-          <Legend />
-          <Bar dataKey="q1" name="Q1 2026" fill="hsl(var(--primary))" radius={[6, 6, 0, 0]} barSize={24} />
-          <Bar dataKey="q4" name="Q4 2025" fill="hsl(var(--muted-foreground))" radius={[6, 6, 0, 0]} barSize={24} />
-        </BarChart>
-      </ResponsiveContainer>
-      <p className="text-xs text-muted-foreground mt-3">
-        ANZ remains the strongest region. Asia grew from 7 to 10. EMEA decreased from 9 to 3 — likely timing of European outreach cycles.
-      </p>
-    </div>
-  );
-}
-
-/* ── Product Split ── */
-function ProductChart() {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div className="space-y-8">
       <div>
-        <h3 className="text-lg font-semibold mb-4 text-foreground">Q1 2026 Product Split</h3>
-        <ResponsiveContainer width="100%" height={250}>
-          <PieChart>
-            <Pie
-              data={productSplit}
-              dataKey="q1"
-              nameKey="product"
-              cx="50%"
-              cy="50%"
-              outerRadius={90}
-              innerRadius={50}
-              paddingAngle={3}
-              label={({ product, q1 }) => `${product}: ${q1}`}
-            >
-              {productSplit.map((_, i) => (
-                <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip />
-          </PieChart>
+        <h3 className="text-lg font-semibold mb-4 text-foreground">
+          Interaction Types — Q1 vs Q4
+        </h3>
+        <ResponsiveContainer width="100%" height={280}>
+          <BarChart data={activityBreakdown} margin={{ left: 0, right: 30, top: 5, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+            <XAxis dataKey="type" tick={{ fontSize: 11, fill: "hsl(var(--foreground))" }} />
+            <YAxis tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} />
+            <Tooltip contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 12, fontSize: 13 }} />
+            <Legend />
+            <Bar dataKey="q1" name="Q1 2026" fill="hsl(var(--primary))" radius={[6, 6, 0, 0]} barSize={28} />
+            <Bar dataKey="q4" name="Q4 2025" fill="hsl(var(--muted-foreground))" radius={[6, 6, 0, 0]} barSize={28} />
+          </BarChart>
         </ResponsiveContainer>
+        <p className="text-xs text-muted-foreground mt-3">
+          Email clicks grew +17.2% and file downloads surged +73.5% — signalling stronger content engagement in Q1. The Morningstar FMOTY and Demystified campaigns drove deeper interactions.
+        </p>
       </div>
+
       <div>
-        <h3 className="text-lg font-semibold mb-4 text-foreground">Q4 2025 Product Split</h3>
-        <ResponsiveContainer width="100%" height={250}>
-          <PieChart>
-            <Pie
-              data={productSplit}
-              dataKey="q4"
-              nameKey="product"
-              cx="50%"
-              cy="50%"
-              outerRadius={90}
-              innerRadius={50}
-              paddingAngle={3}
-              label={({ product, q4 }) => `${product}: ${q4}`}
-            >
-              {productSplit.map((_, i) => (
-                <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip />
-          </PieChart>
+        <h3 className="text-lg font-semibold mb-4 text-foreground">Monthly Interaction Volume</h3>
+        <ResponsiveContainer width="100%" height={200}>
+          <BarChart data={monthlyTrend} margin={{ left: 0, right: 30, top: 5, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+            <XAxis dataKey="month" tick={{ fontSize: 12, fill: "hsl(var(--foreground))" }} />
+            <YAxis tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} />
+            <Tooltip contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 12, fontSize: 13 }} />
+            <Bar dataKey="interactions" name="Interactions" fill="hsl(var(--primary))" radius={[6, 6, 0, 0]} barSize={40} />
+          </BarChart>
         </ResponsiveContainer>
-      </div>
-      <div className="md:col-span-2">
-        <p className="text-xs text-muted-foreground">
-          Diversified Alpha grew from 1 opportunity in Q4 to 17 in Q1 (+1,600%) — indicating successful positioning of the strategy with institutional investors. Value remains the core product but share is diversifying.
+        <p className="text-xs text-muted-foreground mt-3">
+          March spike driven by Morningstar FMOTY announcement and newsletter distribution. February dip is typical seasonally.
         </p>
       </div>
     </div>
   );
 }
 
-/* ── Won & Funded Table ── */
-function WonFundedTable() {
+/* ── Targeting Effectiveness ── */
+function TargetingTab() {
+  return (
+    <div className="space-y-8">
+      <div>
+        <h3 className="text-lg font-semibold mb-4 text-foreground">
+          Who Are We Reaching? — Job Title Breakdown
+        </h3>
+        <ResponsiveContainer width="100%" height={340}>
+          <BarChart data={jobTitleBreakdown} layout="vertical" margin={{ left: 10, right: 30, top: 5, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="hsl(var(--border))" />
+            <XAxis type="number" tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} />
+            <YAxis type="category" dataKey="title" width={140} tick={{ fontSize: 11, fill: "hsl(var(--foreground))" }} />
+            <Tooltip contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 12, fontSize: 13 }} />
+            <Bar dataKey="count" name="Interactions" fill="hsl(var(--primary))" radius={[0, 6, 6, 0]} barSize={16} />
+          </BarChart>
+        </ResponsiveContainer>
+        <p className="text-xs text-muted-foreground mt-3">
+          Directors and Principals dominate — aligned with wholesale gatekeeper targeting. CIOs (43 interactions) and Portfolio Managers (62) confirm institutional reach. Fund Research Managers are a strong signal for DD progression.
+        </p>
+      </div>
+
+      <div>
+        <h3 className="text-lg font-semibold mb-4 text-foreground">
+          Top Engaged Accounts
+        </h3>
+        <div className="overflow-hidden rounded-xl border border-border">
+          <table className="w-full text-sm table-fixed">
+            <thead>
+              <tr className="bg-muted/50">
+                <th className="text-left p-3 font-medium text-muted-foreground w-[50%]">Account</th>
+                <th className="text-right p-3 font-medium text-muted-foreground w-[25%]">Interactions</th>
+                <th className="text-center p-3 font-medium text-muted-foreground w-[25%]">In Pipeline?</th>
+              </tr>
+            </thead>
+            <tbody>
+              {topEngagedAccounts.map((item, i) => (
+                <tr key={i} className="border-t border-border">
+                  <td className="p-3 font-medium text-foreground truncate">{item.account}</td>
+                  <td className="p-3 text-right tabular-nums text-foreground">{item.interactions}</td>
+                  <td className="p-3 text-center">
+                    {item.isOpp ? (
+                      <CheckCircle2 className="w-4 h-4 text-primary mx-auto" />
+                    ) : (
+                      <span className="text-muted-foreground text-xs">—</span>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="text-xs text-muted-foreground mt-3">
+          Mercer (261 interactions) leads engagement — they are in active DD. Several high-engagement accounts not yet in pipeline may represent new opportunity leads for distribution.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/* ── Opportunity Account Match ── */
+function OppMatchTab() {
   return (
     <div>
-      <h3 className="text-lg font-semibold mb-4 text-foreground">
-        Q1 2026 — Won & Funded
+      <h3 className="text-lg font-semibold mb-2 text-foreground">
+        Opportunity Accounts with Marketing Touches
       </h3>
+      <p className="text-sm text-muted-foreground mb-4">
+        19 accounts in the active Salesforce pipeline had direct marketing interactions in Q1 — validating that campaigns are reaching target prospects. Below are the 12 with highest activity.
+      </p>
       <div className="overflow-hidden rounded-xl border border-border">
         <table className="w-full text-sm table-fixed">
           <thead>
             <tr className="bg-muted/50">
-              <th className="text-left p-3 font-medium text-muted-foreground w-[35%]">Institution</th>
-              <th className="text-left p-3 font-medium text-muted-foreground w-[15%]">Status</th>
-              <th className="text-left p-3 font-medium text-muted-foreground w-[25%]">Region</th>
-              <th className="text-left p-3 font-medium text-muted-foreground w-[25%]">Product</th>
+              <th className="text-left p-3 font-medium text-muted-foreground w-[40%]">Account</th>
+              <th className="text-right p-3 font-medium text-muted-foreground w-[20%]">Interactions</th>
+              <th className="text-left p-3 font-medium text-muted-foreground w-[40%]">Opp Stage</th>
             </tr>
           </thead>
           <tbody>
-            {q1WonFunded.map((item, i) => (
+            {oppAccountMatches.map((item, i) => (
               <tr key={i} className="border-t border-border">
-                <td className="p-3 font-medium text-foreground truncate">{item.institution}</td>
+                <td className="p-3 font-medium text-foreground truncate">{item.account}</td>
+                <td className="p-3 text-right tabular-nums text-foreground">{item.interactions}</td>
                 <td className="p-3">
                   <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
-                    item.stage === "Funded"
-                      ? "bg-emerald-100 text-emerald-800"
-                      : "bg-blue-100 text-blue-800"
+                    item.stage === "Funded" ? "bg-primary/15 text-primary" :
+                    item.stage === "Won" ? "bg-accent/15 text-accent-foreground" :
+                    "bg-muted text-muted-foreground"
                   }`}>
                     {item.stage}
                   </span>
                 </td>
-                <td className="p-3 text-muted-foreground truncate">{item.region}</td>
-                <td className="p-3 text-muted-foreground truncate">{item.product}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      <p className="text-xs text-muted-foreground mt-4">
+        Evidentia Group (Won) and Emergency Services & State Super + Infocus (Funded) all had marketing touches before conversion — suggesting marketing contributed to pipeline progression.
+      </p>
+    </div>
+  );
+}
+
+/* ── Campaigns ── */
+function CampaignsTab() {
+  return (
+    <div>
+      <h3 className="text-lg font-semibold mb-4 text-foreground">
+        Top Campaigns Driving Activity
+      </h3>
+      <ResponsiveContainer width="100%" height={220}>
+        <BarChart data={topCampaigns} layout="vertical" margin={{ left: 10, right: 30, top: 5, bottom: 5 }}>
+          <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="hsl(var(--border))" />
+          <XAxis type="number" tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} />
+          <YAxis type="category" dataKey="campaign" width={200} tick={{ fontSize: 11, fill: "hsl(var(--foreground))" }} />
+          <Tooltip contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 12, fontSize: 13 }} />
+          <Bar dataKey="interactions" name="Interactions" fill="hsl(var(--primary))" radius={[0, 6, 6, 0]} barSize={18} />
+        </BarChart>
+      </ResponsiveContainer>
       <p className="text-xs text-muted-foreground mt-3">
-        All Q1 wins are in ANZ. ESSSuper and Harrison Family Trust represent institutional Diversified Alpha wins — signalling growing demand for the strategy.
+        Always-on ANZ campaigns drive the majority of interactions. The Morningstar FMOTY campaign is early but showing traction. Newsletter engagement remains strong with institutional contacts.
       </p>
     </div>
   );
