@@ -184,34 +184,34 @@ interface AlwaysOnProps {
 const TABS = ["Users & Sessions", "Top Pages", "Traffic Sources"] as const;
 type Tab = typeof TABS[number];
 
-/* ── Top Pages Bar Chart ── */
+/* ── Top Pages Stacked Horizontal Bar Chart ── */
 function TopPagesChart({ data, variant }: { data: TopPageItem[]; variant: "dark" | "cream" }) {
   const isDark = variant === "dark";
+  const maxViews = Math.max(...data.map((p) => (p.views || 0) + (p.q4Views || 0)));
 
   return (
-    <div className="space-y-3">
-      {data.map((page, i) => {
-        const maxViews = data[0]?.views || 1;
-        const widthPct = (page.views / maxViews) * 100;
+    <div className="space-y-4">
+      <div className="flex items-center gap-4 mb-1">
+        <span className="flex items-center gap-1.5 text-[10px] font-semibold"><span className="w-3 h-3 rounded-sm inline-block" style={{ backgroundColor: "#0F9AFF" }} /> Q1 2026</span>
+        <span className="flex items-center gap-1.5 text-[10px] font-semibold"><span className="w-3 h-3 rounded-sm inline-block" style={{ backgroundColor: "#56658B" }} /> Q4 2025</span>
+      </div>
+      {data.map((page) => {
+        const q1Pct = (page.views / maxViews) * 100;
+        const q4Pct = ((page.q4Views || 0) / maxViews) * 100;
+        const changeColor = page.change.startsWith("-") ? "text-[hsl(0_70%_55%)]" : "text-[hsl(142_60%_45%)]";
         return (
-          <div key={page.page} className="flex items-center gap-3">
-            <span className={`text-xs font-mono w-36 truncate shrink-0 ${isDark ? "text-muted-foreground" : "text-secondary-foreground/60"}`}>
-              {page.page}
-            </span>
-            <div className="flex-1 relative h-6 rounded-full overflow-hidden" style={{ backgroundColor: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)" }}>
-              <div
-                className="absolute inset-y-0 left-0 rounded-full transition-all duration-700"
-                 style={{
-                   width: `${widthPct}%`,
-                   backgroundColor: i === 0 ? "#0F9AFF" : "#56658B",
-                  opacity: 1 - i * 0.12,
-                }}
-              />
+          <div key={page.page} className="space-y-1">
+            <div className="flex justify-between items-baseline">
+              <span className={`text-xs font-medium ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>{page.page}</span>
+              <div className="flex items-center gap-2">
+                <span className={`text-xs font-semibold tabular-nums ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{formatK(page.views)}</span>
+                <span className={`text-xs font-bold tabular-nums w-14 text-right ${changeColor}`}>{page.change}</span>
+              </div>
             </div>
-            <span className={`text-xs font-semibold tabular-nums w-12 text-right ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>
-              {formatK(page.views)}
-            </span>
-            <span className="text-xs font-semibold text-[hsl(142_60%_45%)] w-10 text-right">{page.change}</span>
+            <div className="relative h-5 rounded-full overflow-hidden" style={{ backgroundColor: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)" }}>
+              <div className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${q4Pct}%`, backgroundColor: "#56658B" }} />
+              <div className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${q1Pct}%`, backgroundColor: "#0F9AFF" }} />
+            </div>
           </div>
         );
       })}
