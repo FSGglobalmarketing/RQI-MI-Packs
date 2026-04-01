@@ -1,7 +1,7 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { reportData } from "@/data/igneo-report";
 import { linkedInMonthlyData, linkedInQuarterlyData, q4DailyEngagement } from "@/data/linkedin-data";
-import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceDot } from "recharts";
 import KpiRow from "./KpiRow";
 
 const TABS = ["Timeline", "Heatmap", "Org vs Spn", "Top Posts"] as const;
@@ -13,27 +13,102 @@ function formatK(v: number) {
   return String(v);
 }
 
+/* ── Animated line draw hook ── */
+function useLineDrawAnimation(deps: any[]) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const paths = el.querySelectorAll<SVGPathElement>(".recharts-area-curve");
+    paths.forEach((path) => {
+      const length = path.getTotalLength();
+      path.style.strokeDasharray = `${length}`;
+      path.style.strokeDashoffset = `${length}`;
+      path.style.animation = "none";
+      void path.getBoundingClientRect();
+      path.style.animation = `line-draw 1.5s ease-out forwards`;
+    });
+  }, deps);
+  return ref;
+}
+
+/* Custom X-axis tick with quarter labels */
+function QuarterTick({ x, y, payload }: any) {
+  const month = payload.value as string;
+  let qLabel = "";
+  if (month.startsWith("Oct")) qLabel = "Q4";
+  if (month.startsWith("Jan")) qLabel = "Q1";
+  if (month.startsWith("Apr")) qLabel = "Q2";
+  if (month.startsWith("Jul")) qLabel = "Q3";
+
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <text x={0} y={0} dy={12} textAnchor="middle" fontSize={9} fill="hsl(0 0% 60%)">
+        {month}
+      </text>
+      {qLabel && (
+        <text x={0} y={0} dy={26} textAnchor="middle" fontSize={8} fontWeight={700} fill="hsl(210 100% 53%)">
+          {qLabel}
+        </text>
+      )}
+    </g>
+  );
+}
+
+/* Spike annotation label */
+function SpikeLabel({ viewBox, label }: any) {
+  return (
+    <g>
+      <rect x={viewBox.x - 55} y={viewBox.y - 28} width={110} height={18} rx={4} fill="hsl(210 100% 53%)" fillOpacity={0.9} />
+      <text x={viewBox.x} y={viewBox.y - 16} textAnchor="middle" fontSize={8} fontWeight={600} fill="white">
+        {label}
+      </text>
+    </g>
+  );
+}
+
+// Notable spike annotations
+const LINKEDIN_ANNOTATIONS = [
+  { month: "Oct 22", dataKey: "organic", label: "Asia Campaign Phase I" },
+  { month: "Jul 24", dataKey: "sponsored", label: "HK Paid Campaign" },
+  { month: "Jan 26", dataKey: "organic", label: "FMOTY + Team posts" },
+];
+
 /* ── Timeline: stacked area chart ── */
 function ImpressionsTimeline() {
+  const animRef = useLineDrawAnimation([]);
+
   return (
-    <ResponsiveContainer width="100%" height={340}>
-      <AreaChart data={linkedInMonthlyData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-        <XAxis dataKey="month" tick={{ fontSize: 9, fill: "hsl(0 0% 60%)" }} interval={2} />
-        <YAxis tick={{ fontSize: 9, fill: "hsl(0 0% 60%)" }} tickFormatter={formatK} />
-        <Tooltip
-          contentStyle={{ background: "hsl(0 0% 8%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }}
-          labelStyle={{ color: "#0F9AFF", fontWeight: 700 }}
-          formatter={(value: number, name: string) => [formatK(value), name === "organic" ? "Organic" : "Sponsored"]}
-        />
-        <Area type="monotone" dataKey="sponsored" stackId="1" fill="#56658B" stroke="#56658B" strokeWidth={1} />
-        <Area type="monotone" dataKey="organic" stackId="1" fill="#0F9AFF" stroke="#0F9AFF" strokeWidth={2} />
-        <Legend
-          wrapperStyle={{ fontSize: 10, paddingTop: 8 }}
-          formatter={(value: string) => <span style={{ color: "hsl(0 0% 60%)" }}>{value === "organic" ? "Organic" : "Sponsored"}</span>}
-        />
-      </AreaChart>
-    </ResponsiveContainer>
+    <div ref={animRef}>
+      <ResponsiveContainer width="100%" height={340}>
+        <AreaChart data={linkedInMonthlyData} margin={{ top: 10, right: 10, left: -10, bottom: 20 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+          <XAxis dataKey="month" tick={<QuarterTick />} interval={2} height={45} />
+          <YAxis tick={{ fontSize: 9, fill: "hsl(0 0% 60%)" }} tickFormatter={formatK} />
+          <Tooltip
+            contentStyle={{ background: "hsl(0 0% 8%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }}
+            labelStyle={{ color: "#0F9AFF", fontWeight: 700 }}
+            formatter={(value: number, name: string) => [formatK(value), name === "organic" ? "Organic" : "Sponsored"]}
+          />
+          <Area type="monotone" dataKey="sponsored" stackId="1" fill="#56658B" stroke="#56658B" strokeWidth={1} isAnimationActive={false} />
+          <Area type="monotone" dataKey="organic" stackId="1" fill="#0F9AFF" stroke="#0F9AFF" strokeWidth={2} isAnimationActive={false} />
+          {LINKEDIN_ANNOTATIONS.map((ann) => {
+            const point = linkedInMonthlyData.find((d) => d.month === ann.month);
+            if (!point) return null;
+            const val = (point as any)[ann.dataKey] + (ann.dataKey === "organic" ? (point.sponsored || 0) : 0);
+            return (
+              <ReferenceDot key={ann.month} x={ann.month} y={val} r={5} fill="#0F9AFF" stroke="white" strokeWidth={2}
+                label={<SpikeLabel label={ann.label} />}
+              />
+            );
+          })}
+          <Legend
+            wrapperStyle={{ fontSize: 10, paddingTop: 8 }}
+            formatter={(value: string) => <span style={{ color: "hsl(0 0% 60%)" }}>{value === "organic" ? "Organic" : "Sponsored"}</span>}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
   );
 }
 
