@@ -230,10 +230,10 @@ export const reportData = {
     kpis: [
       { value: "29.3k", label: "Active users", comparison: "+3.7% vs Q4 2025" },
       { value: "39.3k", label: "Page views", comparison: "+9.0% vs Q4 2025" },
-      // ⚠ FLAG: No Q4 2025 baseline available for total events
-      { value: "150k", label: "Total events", comparison: "⚠ No Q4 data" },
-      // ⚠ FLAG: No Q4 2025 baseline available for key events
-      { value: "29", label: "Key events", comparison: "⚠ No Q4 data" },
+      // Q4: 136,729. Q1: 150,354 → +10.0%
+      { value: "150k", label: "Total events", comparison: "+10.0% vs Q4" },
+      // Q4: 75. Q1: 29 → -61.3%. Significant drop.
+      { value: "29", label: "Key events", comparison: "-61.3% vs Q4 (75)", status: "below" },
     ],
     goals: [
       "Create a platform for RQI content to stand alone with its own identity",
@@ -248,13 +248,13 @@ export const reportData = {
       { month: "Mar 26", users: 5165, sessions: 7172, pageViews: 7172, bounceRate: 0, avgDuration: 0 },
     ],
     topPages: [
-      { page: "/hk/zh/.../rqi-investors", views: 13980, change: "+695%" },
-      { page: "/au/.../rqi-investors", views: 8697, change: "~0%" },
-      { page: "/hk/en/.../rqi-investors", views: 7716, change: "+640%" },
-      { page: "/au/.../institutional", views: 664, change: "+80%" },
-      { page: "/au/.../individual", views: 603, change: "+16%" },
-      { page: "/au/.../team-members", views: 574, change: "+22%" },
-      { page: "/sg/.../rqi-investors", views: 468, change: "-97%" },
+      { page: "HK Retail (Chinese)", views: 13980, q4Views: 1759, change: "+695%" },
+      { page: "AU Adviser", views: 8696, q4Views: 8733, change: "~0%" },
+      { page: "HK Retail (English)", views: 7715, q4Views: 1042, change: "+640%" },
+      { page: "AU Institutional", views: 664, q4Views: 369, change: "+80%" },
+      { page: "AU Individual", views: 603, q4Views: 522, change: "+16%" },
+      { page: "AU Team Members", views: 573, q4Views: 470, change: "+22%" },
+      { page: "SG Retail", views: 468, q4Views: 17552, change: "-97%" },
     ],
     trafficSources: [
       { source: "Paid / Display", percentage: 57 },
