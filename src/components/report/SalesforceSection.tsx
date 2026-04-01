@@ -38,8 +38,12 @@ function SalesforceSection() {
           Q1 saw a steady pipeline with 48 new RQI opportunities matching Q4. Diversified Alpha saw significant growth (+1,600%), while the short-list stage strengthened from 1 to 5 opportunities. 6 accounts were won or funded.
         </p>
 
-        {/* KPI Row */}
-        <KpiRow kpis={salesforceKpis} />
+        {/* KPIs */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-2">
+          {salesforceKpis.map((kpi) => (
+            <KpiRow key={kpi.label} value={kpi.value} label={kpi.label} comparison={kpi.comparison} />
+          ))}
+        </div>
 
         {/* CRM Activity Summary */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 mb-8">
