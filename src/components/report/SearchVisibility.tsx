@@ -1,5 +1,5 @@
 import { reportData } from "@/data/igneo-report";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceArea } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceArea, ReferenceDot } from "recharts";
 import { CheckCircle, ArrowRight } from "lucide-react";
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Switch } from "@/components/ui/switch";

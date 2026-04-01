@@ -149,11 +149,28 @@ function UsersSessionsChart({ data, variant }: { data: GaMonthlyItem[]; variant:
   );
 }
 
+interface AlwaysOnProps {
+  id: string;
+  title: string;
+  stage: string;
+  subtitle: string;
+  description: string;
+  kpis: KpiItem[];
+  focusQ4: string[];
+  focusQ1: string[];
+  variant: "dark" | "cream";
+  activities?: string[];
+  gaMonthly?: GaMonthlyItem[];
+  topPages?: TopPageItem[];
+  trafficSources?: TrafficSourceItem[];
+}
+
+const TABS = ["Users & Sessions", "Top Pages", "Traffic Sources"] as const;
+type Tab = typeof TABS[number];
+
 /* ── Top Pages Bar Chart ── */
 function TopPagesChart({ data, variant }: { data: TopPageItem[]; variant: "dark" | "cream" }) {
   const isDark = variant === "dark";
-  const gridStroke = isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)";
-  const tickFill = isDark ? "hsl(0 0% 60%)" : "#64748b";
 
   return (
     <div className="space-y-3">
