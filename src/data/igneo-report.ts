@@ -91,8 +91,8 @@ export const reportData = {
       { channel: "Email", metrics: ["22% CTOR", "44% Open rates"], comparison: "+64% CTOR vs FS (13.4%)", status: "good" as const },
     ],
     serviceLoyalty: [
-      // ⚠ FLAG: No form completion benchmark in doc. No Q4 2025 data available. Previous comparison was vs Q3 — Q4 data missing.
-      { channel: "Data capture", metrics: ["87 Form completions"], comparison: "⚠ No Q4 data", status: "good" as const },
+      // Q4 2025: 0 form submissions. Q1: 87. No QoQ % calc (division by zero). Absolute change: +87.
+      { channel: "Data capture", metrics: ["87 Form completions"], comparison: "+87 vs Q4 (0)", status: "good" as const },
     ],
   },
 
