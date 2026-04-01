@@ -69,7 +69,7 @@ export default function EventsSection() {
         <EventsLeafletMap filteredEvents={filteredEvents} />
 
         {/* Events table */}
-        <div className="glass-card-cream flow-corner-br overflow-x-auto mt-8">
+        <div className="glass-card-cream flow-corner-br overflow-hidden mt-8">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-secondary-foreground/10">

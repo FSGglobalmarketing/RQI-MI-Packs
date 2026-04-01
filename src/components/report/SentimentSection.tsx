@@ -331,7 +331,7 @@ export default function SentimentSection() {
         </div>
 
         {/* Coverage table — full width like events table */}
-        <div className="glass-card-dark flow-corner-bl overflow-x-auto">
+        <div className="glass-card-dark flow-corner-bl overflow-hidden">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-white/10">
