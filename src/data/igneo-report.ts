@@ -84,8 +84,8 @@ export const reportData = {
       { channel: "Website", metrics: ["29.3k Active users", "39.3k Views"], comparison: "+9% views vs Q4", status: "good" as const },
     ],
     conversion: [
-      // ⚠ FLAG: FS Webinar benchmark is 33–57% attendance rate, but no RQI webinar attendance data provided.
-      { channel: "Webinars", metrics: ["Total views"], comparison: "⚠ No data", status: "inactive" as const },
+      // No webinars run in Q1 or Q4
+      { channel: "Webinars", metrics: ["No webinars in Q1 or Q4"], comparison: "Not activated", status: "inactive" as const },
       { channel: "Events", metrics: ["Distribution feedback"], comparison: "", status: "inactive" as const },
       // FS CTOR benchmark: 13.4%. RQI: 22% → +64%. FS Open Rate benchmark: 27.4%. RQI: 44% → +60%.
       { channel: "Email", metrics: ["22% CTOR", "44% Open rates"], comparison: "+64% CTOR vs FS (13.4%)", status: "good" as const },
