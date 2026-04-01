@@ -9,6 +9,7 @@ import AlwaysOnSection from "@/components/report/AlwaysOnSection";
 import LinkedInSection from "@/components/report/LinkedInSection";
 import EventsSection from "@/components/report/EventsSection";
 import SentimentSection from "@/components/report/SentimentSection";
+import SalesforceSection from "@/components/report/SalesforceSection";
 import SplashScreen from "@/components/report/SplashScreen";
 import VideoCarousel from "@/components/report/VideoCarousel";
 import SneakPeekSection from "@/components/report/SneakPeekSection";
