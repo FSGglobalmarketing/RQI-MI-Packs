@@ -124,8 +124,10 @@ export const reportData = {
       "Vinva",
     ],
     kpis: [
-      { value: "142", label: "Ranking keywords", comparison: "+21% more than competitors" },
-      { value: "10th", label: "Av brand ranking", comparison: "+5 higher than competitors" },
+      // ⚠ FLAG: No keyword count benchmark in doc. Previous "+21% vs competitors" was from BrightEdge — unverified.
+      { value: "142", label: "Ranking keywords", comparison: "⚠ No industry benchmark" },
+      // ⚠ FLAG: No ranking position benchmark in doc. Previous "+5 higher" was from BrightEdge — unverified.
+      { value: "10th", label: "Av brand ranking", comparison: "⚠ No industry benchmark" },
     ],
     chartData: [
       { month: "Mar 24", CIP: 112, Antin: 124, RQI: 23, Stonepeak: 9, Macquarie: 0, Blackstone: 39, Infravia: 91, Vauban: 19, IFM: 176, Ardian: 0, "Global Infra": 445, CVC: 0, DIF: 101, KKR: 12, JPM: 0 },
