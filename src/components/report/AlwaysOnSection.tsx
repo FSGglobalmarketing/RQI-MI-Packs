@@ -273,10 +273,16 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
             {activities && (
               <div>
                 <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Activities</h4>
-                <div className="flex flex-wrap gap-2">
-                  {activities.map((a) => (
-                    <span key={a} className={isDark ? "glass-pill-dark" : "glass-pill-cream"}>{a}</span>
-                  ))}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {activities.map((a) => {
+                    const Icon = getActivityIcon(a);
+                    return (
+                      <div key={a} className={`flex items-center gap-2.5 text-sm ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>
+                        <Icon className={`w-4 h-4 shrink-0 ${isDark ? "text-mint" : "text-moss"}`} />
+                        <span>{a}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             )}
