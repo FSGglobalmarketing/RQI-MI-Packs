@@ -69,8 +69,8 @@ export const reportData = {
   // ═══════════════════════════════════════════════════════════════════════════
   performanceResults: {
     awareness: [
-      // ⚠ FLAG: SEM CTR 3.97% is below FS Search Paid benchmark (5–8%). If this includes display ads, benchmark may differ. No Q4 SEM data available for QoQ comparison.
-      { channel: "Search engine marketing", metrics: ["13k Impressions", "3.97% CTR"], comparison: "Below FS benchmark (5–8%)", status: "below" as const },
+      // ⚠ FLAG: Still waiting for Search and SEM data from Agency. No Q4 baseline available.
+      { channel: "Search engine marketing", metrics: ["⚠ Awaiting data"], comparison: "⚠ Awaiting agency data", status: "inactive" as const },
       // ⚠ FLAG: Still waiting for Search and SEM data from Agency. No Q4 baseline available.
       { channel: "Search engine optimisation", metrics: ["⚠ Awaiting data"], comparison: "⚠ Awaiting agency data", status: "inactive" as const },
       // ⚠ FLAG: No display impression benchmark available in doc. "Phase II" is a status label, not a comparison.
