@@ -3,6 +3,7 @@ import { reportData } from "@/data/igneo-report";
 import { linkedInMonthlyData, linkedInQuarterlyData, q4DailyEngagement } from "@/data/linkedin-data";
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceDot } from "recharts";
 import KpiRow from "./KpiRow";
+import { Award, Globe, Users, FileText, Mic, Video, Megaphone } from "lucide-react";
 
 const TABS = ["Timeline", "Heatmap", "Org vs Spn", "Top Posts"] as const;
 type Tab = typeof TABS[number];
