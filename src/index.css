@@ -249,7 +249,14 @@
     @apply inline-flex items-center gap-2 px-4 py-1 rounded-full text-xs font-semibold;
     background-color: hsl(var(--mint) / 0.15);
     color: hsl(var(--mint));
-    vertical-align: middle;
+    line-height: 1;
+  }
+
+  /* Ensure headings next to badges align properly */
+  .flex > h2 + .stage-badge,
+  .flex > h2 ~ .stage-badge {
+    margin-top: 0;
+    align-self: center;
   }
 
   .section-cream .stage-badge {
