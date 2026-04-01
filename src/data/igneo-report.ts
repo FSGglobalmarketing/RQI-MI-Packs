@@ -61,24 +61,38 @@ export const reportData = {
     },
   ],
 
+  // ═══════════════════════════════════════════════════════════════════════════
+  // BENCHMARK SOURCE: Financial_Sector_Marketing_Benchmarks_2026.xlsx
+  // KPIs WITH a benchmark → compared vs FS benchmark
+  // KPIs WITHOUT a benchmark → compared vs Q4 2025
+  // ⚠ FLAG = missing data — do NOT infer or use dummy values
+  // ═══════════════════════════════════════════════════════════════════════════
   performanceResults: {
     awareness: [
-      { channel: "Search engine marketing", metrics: ["13k Impressions", "3.97% CTR"], comparison: "+166% vs industry", status: "good" as const },
-      { channel: "Search engine optimisation", metrics: ["142 Keywords ranked", "10th Av ranking"], comparison: "+21% vs peers", status: "good" as const },
+      // ⚠ FLAG: SEM CTR 3.97% is below FS Search Paid benchmark (5–8%). If this includes display ads, benchmark may differ. No Q4 SEM data available for QoQ comparison.
+      { channel: "Search engine marketing", metrics: ["13k Impressions", "3.97% CTR"], comparison: "Below FS benchmark (5–8%)", status: "below" as const },
+      // ⚠ FLAG: No SEO keyword/ranking benchmark in benchmark doc. Previous "+21% vs peers" was from BrightEdge competitor data — source unverified against benchmark doc.
+      { channel: "Search engine optimisation", metrics: ["142 Keywords ranked", "10th Av ranking"], comparison: "⚠ No industry benchmark", status: "good" as const },
+      // ⚠ FLAG: No display impression benchmark available in doc. "Phase II" is a status label, not a comparison.
       { channel: "Display ads (HK)", metrics: ["2M+ Impressions"], comparison: "Phase II", status: "good" as const },
-      { channel: "LinkedIn Paid", metrics: ["0.46% Engagement", "0.48% CTR"], comparison: "+15% vs industry", status: "good" as const },
+      // FS Paid CTR benchmark: 0.74%. RQI: 0.48% → -35%. FS Paid Engagement benchmark: 1–2%. RQI: 0.46% → below.
+      { channel: "LinkedIn Paid", metrics: ["0.46% Engagement", "0.48% CTR"], comparison: "CTR -35% vs FS (0.74%)", status: "below" as const },
     ],
     consideration: [
-      { channel: "LinkedIn Organic", metrics: ["22.5k Impressions", "1,594 Clicks"], comparison: "Q1 2026", status: "good" as const },
+      // No impression/click benchmark in doc. Compared vs Q4 2025: Impressions 22,517 vs 14,910 = +51%. Clicks 1,594 vs 1,805 = -12%.
+      { channel: "LinkedIn Organic", metrics: ["22.5k Impressions", "1,594 Clicks"], comparison: "+51% impressions vs Q4", status: "good" as const },
       { channel: "Website", metrics: ["29.3k Active users", "39.3k Views"], comparison: "+9% views vs Q4", status: "good" as const },
     ],
     conversion: [
-      { channel: "Webinars", metrics: ["Total views"], comparison: "", status: "inactive" as const },
+      // ⚠ FLAG: FS Webinar benchmark is 33–57% attendance rate, but no RQI webinar attendance data provided.
+      { channel: "Webinars", metrics: ["Total views"], comparison: "⚠ No data", status: "inactive" as const },
       { channel: "Events", metrics: ["Distribution feedback"], comparison: "", status: "inactive" as const },
-      { channel: "Email", metrics: ["22% CTOR", "44% Open rates"], comparison: "+80% vs industry", status: "good" as const },
+      // FS CTOR benchmark: 13.4%. RQI: 22% → +64%. FS Open Rate benchmark: 27.4%. RQI: 44% → +60%.
+      { channel: "Email", metrics: ["22% CTOR", "44% Open rates"], comparison: "+64% CTOR vs FS (13.4%)", status: "good" as const },
     ],
     serviceLoyalty: [
-      { channel: "Data capture", metrics: ["87 Form completions"], comparison: "+14% vs Q3", status: "good" as const },
+      // ⚠ FLAG: No form completion benchmark in doc. No Q4 2025 data available. Previous comparison was vs Q3 — Q4 data missing.
+      { channel: "Data capture", metrics: ["87 Form completions"], comparison: "⚠ No Q4 data", status: "good" as const },
     ],
   },
 
@@ -110,8 +124,10 @@ export const reportData = {
       "Vinva",
     ],
     kpis: [
-      { value: "142", label: "Ranking keywords", comparison: "+21% more than competitors" },
-      { value: "10th", label: "Av brand ranking", comparison: "+5 higher than competitors" },
+      // ⚠ FLAG: No keyword count benchmark in doc. Previous "+21% vs competitors" was from BrightEdge — unverified.
+      { value: "142", label: "Ranking keywords", comparison: "⚠ No industry benchmark" },
+      // ⚠ FLAG: No ranking position benchmark in doc. Previous "+5 higher" was from BrightEdge — unverified.
+      { value: "10th", label: "Av brand ranking", comparison: "⚠ No industry benchmark" },
     ],
     chartData: [
       { month: "Mar 24", CIP: 112, Antin: 124, RQI: 23, Stonepeak: 9, Macquarie: 0, Blackstone: 39, Infravia: 91, Vauban: 19, IFM: 176, Ardian: 0, "Global Infra": 445, CVC: 0, DIF: 101, KKR: 12, JPM: 0 },
@@ -214,8 +230,10 @@ export const reportData = {
     kpis: [
       { value: "29.3k", label: "Active users", comparison: "+3.7% vs Q4 2025" },
       { value: "39.3k", label: "Page views", comparison: "+9.0% vs Q4 2025" },
-      { value: "150k", label: "Total events", comparison: "Q1 2026" },
-      { value: "29", label: "Key events", comparison: "Q1 2026" },
+      // ⚠ FLAG: No Q4 2025 baseline available for total events
+      { value: "150k", label: "Total events", comparison: "⚠ No Q4 data" },
+      // ⚠ FLAG: No Q4 2025 baseline available for key events
+      { value: "29", label: "Key events", comparison: "⚠ No Q4 data" },
     ],
     goals: [
       "Create a platform for RQI content to stand alone with its own identity",
@@ -270,9 +288,12 @@ export const reportData = {
       "RQI Demystified launch",
     ],
     kpis: [
-      { value: "22.5k", label: "Organic impressions", comparison: "Q1 2026" },
-      { value: "1,594", label: "Clicks", comparison: "Q1 2026" },
-      { value: "541", label: "Reactions", comparison: "Q1 2026" },
+      // No impression benchmark in doc. Q4 organic: 14,910. Q1: 22,517 → +51%.
+      { value: "22.5k", label: "Organic impressions", comparison: "+51% vs Q4" },
+      // Q4 clicks: 1,805. Q1: 1,594 → -12%.
+      { value: "1,594", label: "Clicks", comparison: "-12% vs Q4" },
+      // Q4 reactions: 255. Q1: 541 → +112%.
+      { value: "541", label: "Reactions", comparison: "+112% vs Q4" },
     ],
     focusQ4: [
       "Morningstar FMOTY global comms",
@@ -295,8 +316,10 @@ export const reportData = {
 
   email: {
     kpis: [
-      { value: "22%", label: "CTOR", comparison: "+80% vs industry" },
-      { value: "44%", label: "Open rates", comparison: "+84% vs industry" },
+      // FS CTOR benchmark: 13.4%. RQI: 22% → +64%.
+      { value: "22%", label: "CTOR", comparison: "+64% vs FS benchmark (13.4%)" },
+      // FS Open Rate benchmark: 27.4%. RQI: 44% → +60%.
+      { value: "44%", label: "Open rates", comparison: "+60% vs FS benchmark (27.4%)" },
     ],
   },
 
