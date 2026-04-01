@@ -332,17 +332,17 @@ export default function SentimentSection() {
 
         {/* Coverage table — full width like events table */}
         <div className="glass-card-dark flow-corner-bl overflow-hidden">
-          <table className="w-full text-sm">
+          <table className="w-full text-sm table-fixed">
             <thead>
               <tr className="border-b border-white/10">
-                <th className="text-left py-3 px-4 text-foreground font-semibold w-6"></th>
-                <th className="text-left py-3 px-4 text-foreground font-semibold">Title</th>
-                <th className="text-left py-3 px-4 text-foreground font-semibold">Source</th>
-                <th className="text-left py-3 px-4 text-foreground font-semibold">Channel</th>
-                <th className="text-left py-3 px-4 text-foreground font-semibold">Country</th>
-                <th className="text-left py-3 px-4 text-foreground font-semibold">Date</th>
-                <th className="text-right py-3 px-4 text-foreground font-semibold">Reach</th>
-                <th className="text-right py-3 px-4 text-foreground font-semibold">Rank</th>
+                <th className="text-left py-3 px-3 text-foreground font-semibold w-8"></th>
+                <th className="text-left py-3 px-3 text-foreground font-semibold w-[30%]">Title</th>
+                <th className="text-left py-3 px-3 text-foreground font-semibold w-[15%]">Source</th>
+                <th className="text-left py-3 px-3 text-foreground font-semibold w-[8%]">Channel</th>
+                <th className="text-left py-3 px-3 text-foreground font-semibold w-[10%]">Country</th>
+                <th className="text-left py-3 px-3 text-foreground font-semibold w-[10%]">Date</th>
+                <th className="text-right py-3 px-3 text-foreground font-semibold w-[10%]">Reach</th>
+                <th className="text-right py-3 px-3 text-foreground font-semibold w-[8%]">Rank</th>
               </tr>
             </thead>
             <tbody>
