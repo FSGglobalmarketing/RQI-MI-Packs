@@ -55,7 +55,7 @@ function SalesforceSection() {
             <div key={item.label} className="glass-card-cream rounded-xl p-4 text-center">
               <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{item.label}</p>
               <p className="text-2xl font-bold text-foreground">{item.q1.toLocaleString()}</p>
-              <p className="text-xs text-emerald-600 font-medium mt-1">{item.change} vs Q4</p>
+              <p className="text-xs text-primary font-medium mt-1">{item.change} vs Q4</p>
             </div>
           ))}
         </div>
