@@ -8,6 +8,18 @@ import { Award, Globe, Users, FileText, Mic, Video, Megaphone } from "lucide-rea
 const TABS = ["Timeline", "Heatmap", "Org vs Spn", "Top Posts"] as const;
 type Tab = typeof TABS[number];
 
+function getActivityIcon(activity: string) {
+  const lower = activity.toLowerCase();
+  if (lower.includes("award") || lower.includes("manager of the year")) return Award;
+  if (lower.includes("campaign")) return Globe;
+  if (lower.includes("team") || lower.includes("announcement")) return Users;
+  if (lower.includes("insight") || lower.includes("paper")) return FileText;
+  if (lower.includes("podcast")) return Mic;
+  if (lower.includes("video") || lower.includes("demystified")) return Video;
+  if (lower.includes("paid") || lower.includes("ad")) return Megaphone;
+  return Globe;
+}
+
 function formatK(v: number) {
   if (v >= 1_000_000) return `${(v / 1_000_000).toFixed(1)}M`;
   if (v >= 1000) return `${(v / 1000).toFixed(0)}k`;
