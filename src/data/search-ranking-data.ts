@@ -17,11 +17,11 @@ export interface SearchRegionMeta {
 }
 
 export const REGION_META: Record<SearchRegion, SearchRegionMeta> = {
-  global: { label: "Global", flag: "🌍" },
-  uk: { label: "UK", flag: "🇬🇧" },
-  aus: { label: "Australia", flag: "🇦🇺" },
-  sg: { label: "Singapore", flag: "🇸🇬" },
-  de: { label: "Germany", flag: "🇩🇪" },
+  global: { label: "Global", flag: "" },
+  uk: { label: "United Kingdom", flag: "" },
+  aus: { label: "Australia", flag: "" },
+  sg: { label: "Singapore", flag: "" },
+  de: { label: "Germany", flag: "" },
 };
 
 /* Raw data per region — keys are clean brand names */

@@ -144,16 +144,13 @@ export const reportData = {
       { month: "Feb 25", CIP: 215, Antin: 195, RQI: 99, Stonepeak: 7, Macquarie: 0, Blackstone: 51, Infravia: 161, Vauban: 29, IFM: 277, Ardian: 0, "Global Infra": 1859, CVC: 148, DIF: 100, KKR: 59, JPM: 0 },
       { month: "Mar 25", CIP: 286, Antin: 227, RQI: 142, Stonepeak: 7, Macquarie: 0, Blackstone: 75, Infravia: 160, Vauban: 39, IFM: 376, Ardian: 25, "Global Infra": 2244, CVC: 161, DIF: 109, KKR: 63, JPM: 0 },
     ],
-    focusAreas: [
+    focusQ1: [
       "Concentrate on visibility in Hong Kong",
-      "Capture more search terms around Value Investing",
-      "Website architecture and page builds",
-      "SEM always-on (branded and non-branded)",
+      "Capture more search terms around value investing",
     ],
-    nextQuarter: [
-      "Capture more share of voice in Hong Kong",
-      "Increase share of voice in UK and Nordics",
-      "Gather benchmark data for Germany",
+    focusQ2: [
+      "Gather and analyse search data in Germany",
+      "Fine-tune our always-on search engine advertising programme in Australia",
     ],
   },
 
@@ -219,6 +216,30 @@ export const reportData = {
         { value: "2", label: "Landing pages", comparison: "Bespoke" },
       ],
       regions: ["Global English speaking audiences"],
+    },
+    asiaCampaignPhaseIII: {
+      title: "RQI Asia Campaign Phase III",
+      stage: "Awareness",
+      subtitle: "Sustaining momentum and strengthening RQI's brand visibility across Asia through an integrated multi-channel approach",
+      description: "Building on the foundation established in Phases I and II, we have incorporated bus-wrap advertising to reinforce brand recall and core messaging in Hong Kong. This phase is complemented by advertorial content, targeted social media advertising, and continued digital engagement to ensure consistent messaging across touchpoints.",
+      goals: [
+        "Continue building brand awareness and increasing brand recall",
+        "Maintain mindshare with the intermediaries",
+        "Drive consideration and conversion",
+      ],
+      formats: [
+        "Sponsored event (APB DPM Leaders Conversation)",
+        "Sponsored advertorials in HKEJ",
+        "Targeted LinkedIn ads",
+        "Bus advertising (30 buses) + bus shelters in HK",
+        "Always-on SEM",
+      ],
+      keyResults: [
+        { value: "117+", label: "Gatekeepers reached", comparison: "APB DPM event" },
+        { value: "61", label: "Companies represented", comparison: "At sponsored event" },
+        { value: "30", label: "Bus wraps", comparison: "Hong Kong outdoor" },
+      ],
+      regions: ["Hong Kong", "Singapore"],
     },
   },
 

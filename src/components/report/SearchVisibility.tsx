@@ -3,7 +3,6 @@ import { SEARCH_DATA, REGION_META, getActiveCompetitors, type SearchRegion } fro
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceArea } from "recharts";
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Switch } from "@/components/ui/switch";
-import KpiRow from "./KpiRow";
 import { ChevronDown } from "lucide-react";
 
 /* Brand-aligned palette — RQI uses primary Racing teal, peers get muted tones */
@@ -101,7 +100,7 @@ function RegionDropdown({ region, setRegion }: { region: SearchRegion; setRegion
         onClick={() => setOpen(!open)}
         className="region-pulse-btn flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all"
       >
-        {REGION_META[region].flag} {REGION_META[region].label}
+        {REGION_META[region].label}
         <ChevronDown className={`w-4 h-4 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
       {open && (
@@ -114,7 +113,7 @@ function RegionDropdown({ region, setRegion }: { region: SearchRegion; setRegion
                 region === r ? "font-bold text-primary" : "text-secondary-foreground"
               }`}
             >
-              {REGION_META[r].flag} {REGION_META[r].label}
+              {REGION_META[r].label}
             </button>
           ))}
         </div>
@@ -243,29 +242,11 @@ export default function SearchVisibility() {
               </ul>
             </div>
 
-            <div>
-              <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Focus Areas</h4>
-              <div className="flex flex-wrap gap-2">
-                {s.focusAreas.map((f) => (
-                  <span key={f} className="glass-pill-cream">{f}</span>
-                ))}
-              </div>
-            </div>
-
-            {/* KPIs benchmarked against global peer average */}
-            <div>
-              <h4 className="text-sm font-bold mb-4 text-secondary-foreground">Key Results — {REGION_META[region].label}</h4>
-              <div className="space-y-3">
-                <KpiRow value={String(latestRQI)} label="Ranking keywords (Mar 26)" comparison={rqiChange >= 0 ? `+${rqiChange}% vs Mar 25` : `${rqiChange}% vs Mar 25`} variant="cream" />
-                <KpiRow value={String(globalPeerAvg)} label="Global peer average" comparison={vsPeerAvg <= 0 ? `${vsPeerAvg}% vs RQI` : `+${vsPeerAvg}% vs RQI`} variant="cream" />
-              </div>
-            </div>
-
             <div className="grid grid-cols-2 gap-4">
               <div className="glass-card-cream flow-corner-bl">
-                <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Focus in Q4</h4>
+                <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Q1</h4>
                 <ul className="space-y-2">
-                  {s.focusAreas.map((item) => (
+                  {s.focusQ1.map((item) => (
                     <li key={item} className="text-sm flex items-start gap-2 text-secondary-foreground/70">
                       <svg className="w-4 h-4 text-primary shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
                       {item}
@@ -274,9 +255,9 @@ export default function SearchVisibility() {
                 </ul>
               </div>
               <div className="glass-card-cream flow-corner-tr">
-                <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Focus in Q1</h4>
+                <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Q2</h4>
                 <ul className="space-y-2">
-                  {s.nextQuarter.map((item) => (
+                  {s.focusQ2.map((item) => (
                     <li key={item} className="text-sm flex items-start gap-2 text-secondary-foreground/70">
                       <span className="text-primary mt-0.5 shrink-0">+</span>{item}
                     </li>
