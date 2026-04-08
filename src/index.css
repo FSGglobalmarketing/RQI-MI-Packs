@@ -430,6 +430,32 @@
     border: 1px solid hsl(var(--brand-teal));
   }
 
+  /* Pulsating region selector button */
+  .region-pulse-btn {
+    background: transparent;
+    color: hsl(var(--secondary-foreground));
+    border: 2px solid hsl(var(--brand-teal));
+    position: relative;
+    z-index: 1;
+  }
+  .region-pulse-btn::before,
+  .region-pulse-btn::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 9999px;
+    border: 2px solid hsl(var(--brand-teal));
+    opacity: 0;
+    animation: region-pulse 2.4s ease-out infinite;
+  }
+  .region-pulse-btn::after {
+    animation-delay: 1.2s;
+  }
+  @keyframes region-pulse {
+    0% { opacity: 0.7; transform: scale(1); }
+    100% { opacity: 0; transform: scale(1.35); }
+  }
+
   /* ── Liquid Glass: Hero card ── */
   .hero-glass-card {
     @apply rounded-2xl p-6;

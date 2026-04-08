@@ -4,10 +4,11 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Switch } from "@/components/ui/switch";
 import KpiRow from "./KpiRow";
+import { ChevronDown } from "lucide-react";
 
 /* Brand-aligned palette — RQI uses primary Racing teal, peers get muted tones */
 const PEER_COLORS: Record<string, string> = {
-  RQI: "hsl(var(--primary))",
+  RQI: "hsl(181 39% 35%)",
   AQR: "#56658B",
   Robeco: "#D37669",
   Macquarie: "#F99C46",
@@ -33,7 +34,7 @@ function SearchQuarterTick({ x, y, payload }: any) {
   if (month.startsWith("Jul")) qLabel = "Q3";
   return (
     <g transform={`translate(${x},${y})`}>
-      <text x={0} y={0} dy={12} textAnchor="middle" fontSize={10} fill="#64748b">{month}</text>
+      <text x={0} y={0} dy={12} textAnchor="middle" fontSize={10} fill="#94a3b8">{month}</text>
       {qLabel && (
         <text x={0} y={0} dy={26} textAnchor="middle" fontSize={8} fontWeight={700} fill="hsl(181 39% 35%)">
           {qLabel}
@@ -52,14 +53,14 @@ function CustomTooltip({ active, payload, label }: any) {
   });
   return (
     <div className="bg-secondary-foreground rounded-[10px] px-4 py-3 min-w-[280px] border border-foreground/10">
-      <p className="text-primary font-bold text-[13px] mb-2">{label}</p>
+      <p className="font-bold text-[13px] mb-2" style={{ color: "hsl(181 39% 35%)" }}>{label}</p>
       <div className="grid grid-cols-2 gap-x-6 gap-y-1">
         {sorted.map((entry: any) => (
           <div key={entry.dataKey} className="flex justify-between gap-3">
-            <span className={`text-[11px] ${entry.dataKey === "RQI" ? "font-bold" : "opacity-60"}`} style={{ color: entry.dataKey === "RQI" ? "hsl(181 39% 35%)" : "#fff" }}>
+            <span className={`text-[11px] ${entry.dataKey === "RQI" ? "font-bold" : "opacity-70"}`} style={{ color: entry.dataKey === "RQI" ? "hsl(181 39% 35%)" : "#fff" }}>
               {entry.dataKey}
             </span>
-            <span className={`text-[11px] tabular-nums ${entry.dataKey === "RQI" ? "font-bold" : "opacity-80"}`} style={{ color: entry.dataKey === "RQI" ? "hsl(181 39% 35%)" : "#fff" }}>
+            <span className={`text-[11px] tabular-nums ${entry.dataKey === "RQI" ? "font-bold" : "opacity-90"}`} style={{ color: entry.dataKey === "RQI" ? "hsl(181 39% 35%)" : "#fff" }}>
               {entry.value}
             </span>
           </div>
@@ -81,6 +82,47 @@ function ChartScrollContainer({ children, onWheelHandler }: { children: React.Re
   return <div ref={ref} onWheel={onWheelHandler} className="select-none">{children}</div>;
 }
 
+/* Pulsating region selector button */
+function RegionDropdown({ region, setRegion }: { region: SearchRegion; setRegion: (r: SearchRegion) => void }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => setOpen(!open)}
+        className="region-pulse-btn flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all"
+      >
+        {REGION_META[region].flag} {REGION_META[region].label}
+        <ChevronDown className={`w-4 h-4 transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
+      {open && (
+        <div className="absolute right-0 top-full mt-2 bg-white rounded-xl shadow-lg border border-secondary-foreground/10 py-1 z-50 min-w-[180px]">
+          {(Object.keys(REGION_META) as SearchRegion[]).map((r) => (
+            <button
+              key={r}
+              onClick={() => { setRegion(r); setOpen(false); }}
+              className={`w-full text-left px-4 py-2.5 text-sm flex items-center gap-2 hover:bg-muted transition-colors ${
+                region === r ? "font-bold text-primary" : "text-secondary-foreground"
+              }`}
+            >
+              {REGION_META[r].flag} {REGION_META[r].label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function SearchVisibility() {
   const s = reportData.searchVisibility;
   const [region, setRegion] = useState<SearchRegion>("global");
@@ -96,7 +138,6 @@ export default function SearchVisibility() {
   const [refAreaRight, setRefAreaRight] = useState<number | null>(null);
   const dragging = useRef(false);
 
-  // Reset zoom when region changes
   useEffect(() => {
     setLeft(0);
     setRight(SEARCH_DATA[region].length - 1);
@@ -157,50 +198,45 @@ export default function SearchVisibility() {
   const resetZoom = useCallback(() => { setLeft(0); setRight(allData.length - 1); }, [allData.length]);
   const isZoomed = left !== 0 || right !== allData.length - 1;
 
-  // Compute RQI's latest value for the selected region
+  // KPIs: RQI latest + change vs start
   const latestRQI = allData[allData.length - 1]?.["RQI"] as number ?? 0;
   const firstRQI = allData[0]?.["RQI"] as number ?? 0;
   const rqiChange = firstRQI > 0 ? Math.round(((latestRQI - firstRQI) / firstRQI) * 100) : 0;
 
+  // Global peer average (excluding RQI) for benchmarking
+  const globalData = SEARCH_DATA["global"];
+  const globalPeers = getActiveCompetitors("global").filter(k => k !== "RQI");
+  const latestGlobalPeerValues = globalPeers.map(k => Number(globalData[globalData.length - 1]?.[k]) || 0).filter(v => v > 0);
+  const globalPeerAvg = latestGlobalPeerValues.length > 0
+    ? Math.round(latestGlobalPeerValues.reduce((a, b) => a + b, 0) / latestGlobalPeerValues.length)
+    : 0;
+
+  // RQI's global value for peer comparison
+  const rqiGlobal = Number(globalData[globalData.length - 1]?.["RQI"]) || 0;
+  const vsPeerAvg = globalPeerAvg > 0 ? Math.round(((rqiGlobal - globalPeerAvg) / globalPeerAvg) * 100) : 0;
+
   return (
-    <section id="search-visibility" className="section-ash py-24 flow-section-ash relative">
+    <section id="search-visibility" className="section-cream py-24 flow-section-cream relative">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-[1]">
         {/* Header */}
         <div className="flex flex-wrap items-center gap-3 mb-2">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-secondary-foreground">
             Organic search performance
           </h2>
           <span className="stage-badge text-xs">Awareness</span>
         </div>
-        <p className="text-white/70 mb-8">{s.description}</p>
-
-        {/* Region selector */}
-        <div className="flex flex-wrap gap-2 mb-8">
-          {(Object.keys(REGION_META) as SearchRegion[]).map((r) => (
-            <button
-              key={r}
-              onClick={() => setRegion(r)}
-              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
-                region === r
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-white/8 text-white/60 hover:bg-white/12 hover:text-white"
-              }`}
-            >
-              {REGION_META[r].flag} {REGION_META[r].label}
-            </button>
-          ))}
-        </div>
+        <p className="text-secondary-foreground/70 mb-8">{s.description}</p>
 
         <div className="grid lg:grid-cols-2 gap-10">
           {/* Left column */}
           <div className="space-y-6">
-            <p className="text-sm leading-relaxed text-white/70">{s.goal}</p>
+            <p className="text-sm leading-relaxed text-secondary-foreground/70">{s.goal}</p>
 
             <div>
-              <h4 className="text-sm font-bold mb-3 text-white">Marketing Activities</h4>
+              <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Marketing Activities</h4>
               <ul className="space-y-2">
                 {s.marketingActivities.map((a) => (
-                  <li key={a} className="text-sm flex items-start gap-2 text-white/70">
+                  <li key={a} className="text-sm flex items-start gap-2 text-secondary-foreground/70">
                     <span className="text-primary mt-0.5 shrink-0">+</span>{a}
                   </li>
                 ))}
@@ -208,43 +244,40 @@ export default function SearchVisibility() {
             </div>
 
             <div>
-              <h4 className="text-sm font-bold mb-3 text-white">Focus Areas</h4>
+              <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Focus Areas</h4>
               <div className="flex flex-wrap gap-2">
                 {s.focusAreas.map((f) => (
-                  <span key={f} className="glass-pill">{f}</span>
+                  <span key={f} className="glass-pill-cream">{f}</span>
                 ))}
               </div>
             </div>
 
-            {/* KPIs — dynamic based on region */}
+            {/* KPIs benchmarked against global peer average */}
             <div>
-              <h4 className="text-sm font-bold mb-4 text-white">Key Results — {REGION_META[region].label}</h4>
+              <h4 className="text-sm font-bold mb-4 text-secondary-foreground">Key Results — {REGION_META[region].label}</h4>
               <div className="space-y-3">
-                <KpiRow value={String(latestRQI)} label="Ranking keywords (Mar 26)" comparison={rqiChange >= 0 ? `+${rqiChange}% vs Mar 25` : `${rqiChange}% vs Mar 25`} variant="dark" />
-                <KpiRow value={`#${activeKeys.filter(k => {
-                  const v = allData[allData.length - 1]?.[k] as number ?? 0;
-                  return v > latestRQI;
-                }).length + 1}`} label="Ranking position vs peers" comparison={`of ${activeKeys.filter(k => (allData[allData.length - 1]?.[k] as number ?? 0) > 0).length} active competitors`} variant="dark" />
+                <KpiRow value={String(latestRQI)} label="Ranking keywords (Mar 26)" comparison={rqiChange >= 0 ? `+${rqiChange}% vs Mar 25` : `${rqiChange}% vs Mar 25`} variant="cream" />
+                <KpiRow value={String(globalPeerAvg)} label="Global peer average" comparison={vsPeerAvg <= 0 ? `${vsPeerAvg}% vs RQI` : `+${vsPeerAvg}% vs RQI`} variant="cream" />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div className="glass-card flow-corner-bl">
-                <h4 className="text-sm font-bold mb-3 text-white">Focus in Q4</h4>
+              <div className="glass-card-cream flow-corner-bl">
+                <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Focus in Q4</h4>
                 <ul className="space-y-2">
                   {s.focusAreas.map((item) => (
-                    <li key={item} className="text-sm flex items-start gap-2 text-white/70">
+                    <li key={item} className="text-sm flex items-start gap-2 text-secondary-foreground/70">
                       <svg className="w-4 h-4 text-primary shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
                       {item}
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="glass-card flow-corner-tr">
-                <h4 className="text-sm font-bold mb-3 text-white">Focus in Q1</h4>
+              <div className="glass-card-cream flow-corner-tr">
+                <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Focus in Q1</h4>
                 <ul className="space-y-2">
                   {s.nextQuarter.map((item) => (
-                    <li key={item} className="text-sm flex items-start gap-2 text-white/70">
+                    <li key={item} className="text-sm flex items-start gap-2 text-secondary-foreground/70">
                       <span className="text-primary mt-0.5 shrink-0">+</span>{item}
                     </li>
                   ))}
@@ -254,26 +287,29 @@ export default function SearchVisibility() {
           </div>
 
           {/* Right column — chart */}
-          <div className="glass-card flow-corner-br min-h-[540px] flex flex-col">
+          <div className="glass-card-cream flow-corner-br min-h-[540px] flex flex-col">
             <div className="flex items-start justify-between mb-1">
               <div>
-                <h4 className="text-sm font-bold text-white mb-1">Non-branded keyword positions — {REGION_META[region].label}</h4>
-                <p className="text-xs text-white/50 mb-4">Number of non-branded keywords ranking on pages 1–3 of Google.</p>
+                <h4 className="text-sm font-bold text-secondary-foreground mb-1">Non-branded keyword positions</h4>
+                <p className="text-xs text-secondary-foreground/50 mb-4">Number of non-branded keywords ranking on pages 1–3 of Google.</p>
               </div>
-              {isZoomed && (
-                <button onClick={resetZoom} className="text-xs font-semibold text-primary hover:underline shrink-0">Reset zoom</button>
-              )}
+              <div className="flex items-center gap-3 shrink-0">
+                {isZoomed && (
+                  <button onClick={resetZoom} className="text-xs font-semibold text-primary hover:underline">Reset zoom</button>
+                )}
+                <RegionDropdown region={region} setRegion={setRegion} />
+              </div>
             </div>
             <div className="flex items-center gap-2 mb-4">
               <Switch checked={showPeers} onCheckedChange={setShowPeers} className="scale-75" />
-              <span className="text-xs text-white/50">Show peers</span>
+              <span className="text-xs text-secondary-foreground/50">Show peers</span>
             </div>
             <ChartScrollContainer onWheelHandler={handleWheel}>
               <ResponsiveContainer width="100%" height={500}>
                 <LineChart data={visibleData} onMouseDown={onMouseDown} onMouseMove={onMouseMove} onMouseUp={onMouseUp}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
                   <XAxis dataKey="month" tick={<SearchQuarterTick />} height={45} />
-                  <YAxis tick={{ fontSize: 10, fill: "#64748b" }} domain={[0, yMax]} />
+                  <YAxis tick={{ fontSize: 10, fill: "#94a3b8" }} domain={[0, yMax]} />
                   <Tooltip content={<CustomTooltip />} />
                   <Legend
                     wrapperStyle={{ fontSize: 10, cursor: "pointer" }}
@@ -291,7 +327,15 @@ export default function SearchVisibility() {
                           {sorted.map((entry: any) => {
                             const isHidden = hiddenLines.has(entry.dataKey) || (entry.dataKey !== "RQI" && !showPeers);
                             return (
-                              <span key={entry.dataKey} onClick={() => handleLegendClick(entry)} className="cursor-pointer" style={{ color: isHidden ? "rgba(255,255,255,0.2)" : entry.color, textDecoration: isHidden ? "line-through" : undefined }}>
+                              <span
+                                key={entry.dataKey}
+                                onClick={() => handleLegendClick(entry)}
+                                className="cursor-pointer font-medium"
+                                style={{
+                                  color: isHidden ? "rgba(0,0,0,0.15)" : entry.color,
+                                  textDecoration: isHidden ? "line-through" : undefined,
+                                }}
+                              >
                                 ● {entry.dataKey}
                               </span>
                             );
@@ -317,12 +361,12 @@ export default function SearchVisibility() {
                     );
                   })}
                   {refAreaLeft !== null && refAreaRight !== null && (
-                    <ReferenceArea x1={allData[Math.min(refAreaLeft, refAreaRight)]?.month as string} x2={allData[Math.max(refAreaLeft, refAreaRight)]?.month as string} strokeOpacity={0.3} fill="rgba(52,123,126,0.15)" />
+                    <ReferenceArea x1={allData[Math.min(refAreaLeft, refAreaRight)]?.month as string} x2={allData[Math.max(refAreaLeft, refAreaRight)]?.month as string} strokeOpacity={0.3} fill="rgba(52,123,126,0.1)" />
                   )}
                 </LineChart>
               </ResponsiveContainer>
             </ChartScrollContainer>
-            <p className="text-[10px] text-white/30 mt-2 text-center">Scroll to zoom · Drag to select range · Click legend to toggle</p>
+            <p className="text-[10px] text-secondary-foreground/30 mt-2 text-center">Scroll to zoom · Drag to select range · Click legend to toggle</p>
           </div>
         </div>
       </div>
