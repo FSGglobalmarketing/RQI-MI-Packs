@@ -55,6 +55,7 @@ const Index = () => {
         formats={d.highlights.asiaCampaignPhaseIII.formats}
         keyResults={d.highlights.asiaCampaignPhaseIII.keyResults}
         variant="cream"
+        phoneImage={<AsiaPhaseIIIShowcase />}
       />
 
       {/* Highlight 3: Fund Manager of the Year */}
