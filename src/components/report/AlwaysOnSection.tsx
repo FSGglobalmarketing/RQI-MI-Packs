@@ -290,7 +290,7 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
 
             <div className="grid grid-cols-2 gap-4">
               <div className={isDark ? "glass-card-dark flow-corner-bl" : "glass-card-cream flow-corner-bl"}>
-                <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Focus in Q4</h4>
+                <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Focus in Q1</h4>
                 <ul className="space-y-2">
                   {focusQ4.map((f) => (
                     <li key={f} className={`text-sm flex items-start gap-2 ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>
@@ -302,7 +302,7 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
               </div>
 
               <div className={isDark ? "glass-card-dark flow-corner-tr" : "glass-card-cream flow-corner-tr"}>
-                <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Focus in Q1</h4>
+                <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Focus in Q2</h4>
                 <ul className="space-y-2">
                   {focusQ1.map((f) => (
                     <li key={f} className={`text-sm flex items-start gap-2 ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>

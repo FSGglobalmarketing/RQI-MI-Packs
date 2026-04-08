@@ -309,7 +309,7 @@ export default function LinkedInSection() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="glass-card-dark flow-corner-bl">
-                <h4 className="text-sm font-bold mb-3 text-foreground">Focus in Q4</h4>
+                <h4 className="text-sm font-bold mb-3 text-foreground">Focus in Q1</h4>
                 <ul className="space-y-2">
                   {d.focusQ4.map((f) => (
                     <li key={f} className="text-sm flex items-start gap-2 text-muted-foreground">

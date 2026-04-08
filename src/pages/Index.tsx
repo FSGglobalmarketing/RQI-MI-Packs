@@ -42,34 +42,7 @@ const Index = () => {
         variant="dark"
       />
 
-      {/* Highlight 2: Fund Manager of the Year */}
-      <CampaignSection
-        id="fmoty"
-        title={d.highlights.fundManagerOfYear.title}
-        stage={d.highlights.fundManagerOfYear.stage}
-        subtitle={d.highlights.fundManagerOfYear.subtitle}
-        description={d.highlights.fundManagerOfYear.description}
-        goals={d.highlights.fundManagerOfYear.goals}
-        formats={d.highlights.fundManagerOfYear.formats}
-        keyResults={d.highlights.fundManagerOfYear.keyResults}
-        variant="cream"
-      />
-
-      {/* Highlight 3: RQI Demystified */}
-      <CampaignSection
-        id="demystified"
-        title={d.highlights.demystified.title}
-        stage={d.highlights.demystified.stage}
-        subtitle={d.highlights.demystified.subtitle}
-        description={d.highlights.demystified.description}
-        goals={d.highlights.demystified.goals}
-        formats={d.highlights.demystified.formats}
-        keyResults={d.highlights.demystified.keyResults}
-        variant="dark"
-        phoneImage={<VideoCarousel />}
-      />
-
-      {/* Highlight 4: RQI Asia Campaign Phase III */}
+      {/* Highlight 2: RQI Asia Campaign Phase III */}
       <CampaignSection
         id="asia-campaign-iii"
         title={d.highlights.asiaCampaignPhaseIII.title}
@@ -80,6 +53,33 @@ const Index = () => {
         formats={d.highlights.asiaCampaignPhaseIII.formats}
         keyResults={d.highlights.asiaCampaignPhaseIII.keyResults}
         variant="cream"
+      />
+
+      {/* Highlight 3: Fund Manager of the Year */}
+      <CampaignSection
+        id="fmoty"
+        title={d.highlights.fundManagerOfYear.title}
+        stage={d.highlights.fundManagerOfYear.stage}
+        subtitle={d.highlights.fundManagerOfYear.subtitle}
+        description={d.highlights.fundManagerOfYear.description}
+        goals={d.highlights.fundManagerOfYear.goals}
+        formats={d.highlights.fundManagerOfYear.formats}
+        keyResults={d.highlights.fundManagerOfYear.keyResults}
+        variant="dark"
+      />
+
+      {/* Highlight 4: RQI Demystified */}
+      <CampaignSection
+        id="demystified"
+        title={d.highlights.demystified.title}
+        stage={d.highlights.demystified.stage}
+        subtitle={d.highlights.demystified.subtitle}
+        description={d.highlights.demystified.description}
+        goals={d.highlights.demystified.goals}
+        formats={d.highlights.demystified.formats}
+        keyResults={d.highlights.demystified.keyResults}
+        variant="cream"
+        phoneImage={<VideoCarousel />}
       />
 
       <SneakPeekSection />
