@@ -61,7 +61,7 @@ export default function EventsSection() {
         </p>
 
         <EventsFilterBar
-          events={e.list}
+          events={rqiEvents}
           activeFilters={filters}
           onToggleFilter={toggleFilter}
           onClearAll={clearAll}
