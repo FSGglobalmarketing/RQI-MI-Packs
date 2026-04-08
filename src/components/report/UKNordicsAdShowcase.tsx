@@ -113,7 +113,7 @@ function MetricsBar({ ad }: { ad: Ad }) {
             <Metric label="Completions" value={fmtK(ad.completions!)} />
             <Metric label="Comp. Rate" value={ad.completionRate!} />
           </div>
-          <div className="flex items-center justify-between text-[10px] text-muted-foreground px-1 pt-0.5">
+          <div className="flex items-center justify-between text-[10px] text-white/50 px-1 pt-0.5">
             <span>Duration: {ad.duration}</span>
             <span>Spent: {ad.spent}</span>
           </div>
@@ -127,7 +127,7 @@ function Metric({ label, value, highlight }: { label: string; value: string; hig
   return (
     <div className="rounded-lg bg-foreground/[0.06] py-2 px-1">
       <p className={`text-sm font-extrabold ${highlight ? "text-primary" : "text-foreground"}`}>{value}</p>
-      <p className="text-[9px] text-muted-foreground mt-0.5">{label}</p>
+      <p className="text-[9px] text-white/50 mt-0.5">{label}</p>
     </div>
   );
 }
@@ -149,7 +149,7 @@ export default function UKNordicsAdShowcase() {
     <div className="w-full max-w-lg mx-auto space-y-3">
       {/* Header + toggle */}
       <div className="flex items-center justify-between">
-        <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Ad Creatives</h4>
+        <h4 className="text-xs font-bold uppercase tracking-wider text-white/50">Ad Creatives</h4>
         <div className="flex rounded-full bg-foreground/10 p-1">
           {MODES.map((m) => (
             <button
@@ -158,7 +158,7 @@ export default function UKNordicsAdShowcase() {
               className={`px-3 py-1.5 rounded-full text-[11px] font-semibold transition-all ${
                 mode === m.key
                   ? "bg-primary text-primary-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
+                  : "text-white/50 hover:text-foreground"
               }`}
             >
               {m.label}
@@ -179,7 +179,7 @@ export default function UKNordicsAdShowcase() {
         <div className="flex items-center gap-2 mt-3 px-0.5">
           <p className="text-sm font-semibold text-foreground leading-snug truncate">{ad.name}</p>
           {ad.duration && (
-            <span className="text-[9px] font-bold uppercase tracking-wider text-muted-foreground bg-foreground/10 px-1.5 py-0.5 rounded shrink-0">
+            <span className="text-[9px] font-bold uppercase tracking-wider text-white/50 bg-foreground/10 px-1.5 py-0.5 rounded shrink-0">
               {ad.duration}
             </span>
           )}
