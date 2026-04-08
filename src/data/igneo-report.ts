@@ -144,16 +144,13 @@ export const reportData = {
       { month: "Feb 25", CIP: 215, Antin: 195, RQI: 99, Stonepeak: 7, Macquarie: 0, Blackstone: 51, Infravia: 161, Vauban: 29, IFM: 277, Ardian: 0, "Global Infra": 1859, CVC: 148, DIF: 100, KKR: 59, JPM: 0 },
       { month: "Mar 25", CIP: 286, Antin: 227, RQI: 142, Stonepeak: 7, Macquarie: 0, Blackstone: 75, Infravia: 160, Vauban: 39, IFM: 376, Ardian: 25, "Global Infra": 2244, CVC: 161, DIF: 109, KKR: 63, JPM: 0 },
     ],
-    focusAreas: [
+    focusQ1: [
       "Concentrate on visibility in Hong Kong",
-      "Capture more search terms around Value Investing",
-      "Website architecture and page builds",
-      "SEM always-on (branded and non-branded)",
+      "Capture more search terms around value investing",
     ],
-    nextQuarter: [
-      "Capture more share of voice in Hong Kong",
-      "Increase share of voice in UK and Nordics",
-      "Gather benchmark data for Germany",
+    focusQ2: [
+      "Gather and analyse search data in Germany",
+      "Fine-tune our always-on search engine advertising programme in Australia",
     ],
   },
 
