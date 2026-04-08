@@ -3,7 +3,6 @@ import { SEARCH_DATA, REGION_META, getActiveCompetitors, type SearchRegion } fro
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceArea } from "recharts";
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Switch } from "@/components/ui/switch";
-import KpiRow from "./KpiRow";
 import { ChevronDown } from "lucide-react";
 
 /* Brand-aligned palette — RQI uses primary Racing teal, peers get muted tones */
@@ -98,10 +97,10 @@ function RegionDropdown({ region, setRegion }: { region: SearchRegion; setRegion
   return (
     <div ref={ref} className="relative">
       <button
-101:         onClick={() => setOpen(!open)}
-102:         className="region-pulse-btn flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all"
-103:       >
-104:         {REGION_META[region].label}
+        onClick={() => setOpen(!open)}
+        className="region-pulse-btn flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all"
+      >
+        {REGION_META[region].label}
         <ChevronDown className={`w-4 h-4 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
       {open && (
