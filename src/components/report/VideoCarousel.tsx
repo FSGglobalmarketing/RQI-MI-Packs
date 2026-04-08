@@ -57,14 +57,14 @@ export default function VideoCarousel() {
         {/* Navigation arrows */}
         <button
           onClick={prev}
-          className="absolute -left-4 top-1/3 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-background/80 border border-foreground/10 flex items-center justify-center text-foreground/60 hover:text-foreground hover:bg-background transition-all"
+          className="absolute -left-4 top-1/3 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-primary/90 border border-primary flex items-center justify-center text-white hover:bg-primary transition-all shadow-md"
           aria-label="Previous video"
         >
           <ChevronLeft className="w-4 h-4" />
         </button>
         <button
           onClick={next}
-          className="absolute -right-4 top-1/3 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-background/80 border border-foreground/10 flex items-center justify-center text-foreground/60 hover:text-foreground hover:bg-background transition-all"
+          className="absolute -right-4 top-1/3 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-primary/90 border border-primary flex items-center justify-center text-white hover:bg-primary transition-all shadow-md"
           aria-label="Next video"
         >
           <ChevronRight className="w-4 h-4" />
