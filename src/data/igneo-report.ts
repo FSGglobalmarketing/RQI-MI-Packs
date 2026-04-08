@@ -361,7 +361,7 @@ export const reportData = {
     stage: "Conversion",
     list: [
       // ─── Q1 2026 ───
-      { name: "APB DPM HK", format: "Conference", audience: "Wholesale", region: "ASIA", quarter: "Q1", status: "committed" as const, category: "Conference", city: "Hong Kong", lat: 22.3193, lng: 114.1694, startDate: "2026-03-24", brand: "RQI", host: "APB", assetClass: "Global Value", marketingLead: "Judi Chung", distributionLead: "Nelson Ng" },
+      { name: "APB DPM HK", format: "Conference", audience: "Wholesale", region: "ASIA", quarter: "Q1", status: "committed" as const, category: "Conference", city: "Hong Kong", lat: 22.3193, lng: 114.1694, startDate: "2026-03-24", brand: "RQI", host: "APB", assetClass: "Global Value", marketingLead: "Judi Chung", distributionLead: "Nelson Ng", description: "APB DPM Leaders Conversation 2026 — RQI Investors sponsored conference bringing together 117+ gatekeepers from 61 companies.", images: [apbDpm1, apbDpm2, apbDpm3, apbDpm4] },
       { name: "IPP/RQI client event", format: "Client event", audience: "Wholesale", region: "ASIA", quarter: "Q1", status: "distribution-owned" as const, category: "Client event", city: "Hong Kong", lat: 22.3193, lng: 114.1694, startDate: "2026-03-26", brand: "RQI", host: "IPP", assetClass: "Global Value", marketingLead: "Judi Chung", distributionLead: "Nelson Ng" },
 
       // ─── Q2 2026 ───
