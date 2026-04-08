@@ -85,7 +85,7 @@ export default function VideoCarousel() {
         </div>
 
         {/* Title + stats card */}
-        <div className="mt-4 rounded-xl border border-foreground/10 bg-foreground/[0.03] p-5">
+        <div className="mt-4 rounded-xl border border-border bg-muted/50 p-5">
           <p className="text-sm font-semibold text-foreground mb-4">{video.title}</p>
           <div className="grid grid-cols-3 gap-4">
             <div className="flex items-center gap-2.5">
