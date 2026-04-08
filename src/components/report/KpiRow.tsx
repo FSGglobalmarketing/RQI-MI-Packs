@@ -60,10 +60,10 @@ export default function KpiRow({ value, label, comparison, variant = "dark" }: K
   );
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-3 flex-wrap">
       <span className="text-primary shrink-0 text-sm">+</span>
-      <span className={`text-lg font-extrabold min-w-[70px] ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{value}</span>
-      <span className="relative">
+      <span className={`text-lg font-extrabold shrink-0 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{value}</span>
+      <span className="relative shrink-0">
         {description ? (
           <TooltipProvider delayDuration={200}>
             <Tooltip>
@@ -87,7 +87,7 @@ export default function KpiRow({ value, label, comparison, variant = "dark" }: K
         ) : pill}
       </span>
       <span
-        className={`text-xs whitespace-nowrap font-semibold ${
+        className={`text-xs whitespace-nowrap font-semibold shrink-0 ${
           isNegative ? "stat-negative" : isNeutral ? "text-muted-foreground" : "stat-positive"
         }`}
       >
