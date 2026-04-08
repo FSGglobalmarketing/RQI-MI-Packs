@@ -293,7 +293,7 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
                 <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Focus in Q1</h4>
                 <ul className="space-y-2">
                   {focusQ4.map((f) => (
-                    <li key={f} className={`text-sm flex items-start gap-2 ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>
+                    <li key={f} className={`text-sm flex items-start gap-2 ${isDark ? "text-foreground/80" : "text-secondary-foreground/70"}`}>
                       <svg className="w-4 h-4 text-success shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
                       {f}
                     </li>
@@ -305,7 +305,7 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
                 <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Focus in Q2</h4>
                 <ul className="space-y-2">
                   {focusQ1.map((f) => (
-                    <li key={f} className={`text-sm flex items-start gap-2 ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>
+                    <li key={f} className={`text-sm flex items-start gap-2 ${isDark ? "text-foreground/80" : "text-secondary-foreground/70"}`}>
                       <span className="text-primary mt-0.5 shrink-0">+</span>{f}
                     </li>
                   ))}
