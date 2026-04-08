@@ -50,6 +50,10 @@ export default function KpiRow({ value, label, comparison, variant = "dark" }: K
 
   const description = PILL_DESCRIPTIONS[label];
 
+  // Only show comparison text if it's a benchmark comparison (contains "vs FS" or "vs Q4" or "vs Q" or "vs benchmark")
+  const isBenchmark = /vs\s+(FS|Q\d|benchmark|industry)/i.test(comparison) || comparison.startsWith("⚠");
+  const showComparison = isBenchmark && comparison.length > 0;
+
   // Choose pill class based on variant
   const pillClass = isDark ? "kpi-pill-orange" : "kpi-pill-cream";
 
@@ -86,13 +90,15 @@ export default function KpiRow({ value, label, comparison, variant = "dark" }: K
           </TooltipProvider>
         ) : pill}
       </span>
-      <span
-        className={`text-xs whitespace-nowrap font-semibold shrink-0 ${
-          isNegative ? "stat-negative" : isNeutral ? "text-muted-foreground" : "stat-positive"
-        }`}
-      >
-        {comparison}
-      </span>
+      {showComparison && (
+        <span
+          className={`text-xs whitespace-nowrap font-semibold shrink-0 ${
+            isNegative ? "stat-negative" : isNeutral ? "text-white/50" : "stat-positive"
+          }`}
+        >
+          {comparison}
+        </span>
+      )}
     </div>
   );
 }

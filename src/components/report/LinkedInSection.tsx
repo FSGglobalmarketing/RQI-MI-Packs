@@ -1,11 +1,11 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { reportData } from "@/data/igneo-report";
 import { linkedInMonthlyData, linkedInQuarterlyData, q4DailyEngagement } from "@/data/linkedin-data";
-import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceDot } from "recharts";
+import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceDot, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from "recharts";
 import KpiRow from "./KpiRow";
 import { Award, Globe, Users, FileText, Mic, Video, Megaphone } from "lucide-react";
 
-const TABS = ["Timeline", "Heatmap", "Org vs Spn", "Top Posts"] as const;
+const TABS = ["Timeline", "Engagement", "Org vs Spn", "Top Posts"] as const;
 type Tab = typeof TABS[number];
 
 function getActivityIcon(activity: string) {
@@ -125,85 +125,69 @@ function ImpressionsTimeline() {
   );
 }
 
-/* ── Engagement Heatmap ── */
-function EngagementHeatmap() {
-  const weeks = useMemo(() => {
-    const result: { week: number; cells: { date: string; day: number; rate: number }[] }[] = [];
-    let currentWeek: { date: string; day: number; rate: number }[] = [];
-    let weekNum = 0;
+/* ── Polar chart: Engagement Rate vs CTR by theme ── */
+function EngagementPolarChart() {
+  // Categorize top posts by theme
+  const d = reportData.linkedin;
+  const themes = useMemo(() => {
+    const categories: Record<string, { engagementRates: number[]; ctrs: number[] }> = {
+      Events: { engagementRates: [], ctrs: [] },
+      Strategy: { engagementRates: [], ctrs: [] },
+      Insights: { engagementRates: [], ctrs: [] },
+    };
 
-    const firstDate = new Date(q4DailyEngagement[0].date);
-    const startDay = firstDate.getDay();
-    for (let i = 0; i < startDay; i++) {
-      currentWeek.push({ date: "", day: i, rate: 0 });
-    }
-
-    q4DailyEngagement.forEach((d) => {
-      const date = new Date(d.date);
-      const day = date.getDay();
-      if (day === 0 && currentWeek.length > 0) {
-        result.push({ week: weekNum++, cells: currentWeek });
-        currentWeek = [];
+    d.topPosts.forEach((post) => {
+      const title = post.title.toLowerCase();
+      let theme = "Insights";
+      if (title.includes("tram") || title.includes("campaign") || title.includes("event") || title.includes("conference") || title.includes("hong kong")) {
+        theme = "Events";
+      } else if (title.includes("quant") || title.includes("fund manager") || title.includes("morningstar") || title.includes("invest")) {
+        theme = "Strategy";
+      } else if (title.includes("women") || title.includes("team") || title.includes("welcome") || title.includes("financial standard")) {
+        theme = "Insights";
       }
-      currentWeek.push({ date: d.date, day, rate: d.rate });
+
+      const ctr = post.impressions > 0 ? (post.clicks / post.impressions) * 100 : 0;
+      categories[theme].engagementRates.push(post.engagement);
+      categories[theme].ctrs.push(ctr);
     });
-    if (currentWeek.length) result.push({ week: weekNum, cells: currentWeek });
-    return result;
-  }, []);
 
-  const maxRate = Math.max(...q4DailyEngagement.map((d) => d.rate));
-  const dayLabels = ["S", "M", "T", "W", "T", "F", "S"];
-
-  function getColor(rate: number) {
-    if (rate === 0) return "hsl(210 30% 18%)";
-    const intensity = Math.min(rate / maxRate, 1);
-    const hue = 210 + intensity * 12;
-    const lightness = 65 - intensity * 25;
-    const saturation = 40 + intensity * 60;
-    return `hsl(${hue} ${saturation}% ${lightness}%)`;
-  }
+    return Object.entries(categories).map(([name, data]) => ({
+      theme: name,
+      engagementRate: data.engagementRates.length > 0
+        ? Number((data.engagementRates.reduce((a, b) => a + b, 0) / data.engagementRates.length).toFixed(1))
+        : 0,
+      ctr: data.ctrs.length > 0
+        ? Number((data.ctrs.reduce((a, b) => a + b, 0) / data.ctrs.length).toFixed(1))
+        : 0,
+    }));
+  }, [d.topPosts]);
 
   return (
-    <div className="flex flex-col">
-      <div className="flex gap-1.5">
-        <div className="flex flex-col gap-1.5 mr-1 pt-6">
-          {dayLabels.map((d, i) => (
-            <div key={i} className="h-7 w-6 flex items-center justify-center text-[10px] text-muted-foreground">{d}</div>
-          ))}
-        </div>
-        <div className="flex gap-1.5 overflow-x-auto flex-1">
-          {weeks.map((week) => (
-            <div key={week.week} className="flex flex-col gap-1.5 flex-1">
-              <div className="h-5 text-[10px] text-muted-foreground text-center">
-                {week.cells[0]?.date
-                  ? new Date(week.cells[0].date).getDate() <= 7
-                    ? new Date(week.cells[0].date).toLocaleDateString("en", { month: "short" })
-                    : ""
-                  : ""}
-              </div>
-              {Array.from({ length: 7 }, (_, dayIndex) => {
-                const cell = week.cells.find((c) => c.day === dayIndex);
-                if (!cell || !cell.date) return <div key={dayIndex} className="h-7 rounded-md bg-muted/20 w-full" />;
-                return (
-                  <div
-                    key={dayIndex}
-                    className="h-7 rounded-md cursor-default transition-transform hover:scale-110 w-full"
-                    style={{ backgroundColor: getColor(cell.rate) }}
-                    title={`${cell.date}: ${cell.rate.toFixed(2)}%`}
-                  />
-                );
-              })}
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="flex items-center gap-2 mt-4 justify-center">
-        <span className="text-[10px] text-muted-foreground">Less</span>
-        {[0, 5, 10, 15, 20].map((v) => (
-          <div key={v} className="h-4 w-4 rounded-sm" style={{ backgroundColor: getColor(v) }} />
-        ))}
-        <span className="text-[10px] text-muted-foreground">More</span>
-      </div>
+    <div>
+      <ResponsiveContainer width="100%" height={340}>
+        <RadarChart data={themes} cx="50%" cy="50%" outerRadius="70%">
+          <PolarGrid stroke="rgba(255,255,255,0.1)" />
+          <PolarAngleAxis
+            dataKey="theme"
+            tick={{ fontSize: 11, fill: "white", fontWeight: 600 }}
+          />
+          <PolarRadiusAxis
+            angle={90}
+            tick={{ fontSize: 9, fill: "rgba(255,255,255,0.5)" }}
+          />
+          <Radar name="Engagement %" dataKey="engagementRate" stroke="#0F9AFF" fill="#0F9AFF" fillOpacity={0.3} strokeWidth={2} />
+          <Radar name="CTR %" dataKey="ctr" stroke="#F99C46" fill="#F99C46" fillOpacity={0.2} strokeWidth={2} />
+          <Legend
+            wrapperStyle={{ fontSize: 10, paddingTop: 8 }}
+            formatter={(value: string) => <span style={{ color: "rgba(255,255,255,0.7)" }}>{value}</span>}
+          />
+          <Tooltip
+            contentStyle={{ background: "hsl(0 0% 8%)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, fontSize: 11 }}
+            formatter={(value: number, name: string) => [`${value}%`, name]}
+          />
+        </RadarChart>
+      </ResponsiveContainer>
     </div>
   );
 }
@@ -240,20 +224,20 @@ function TopPostsTable() {
         <div key={post.title} className="glass-card-dark p-3 flex items-center justify-between gap-4">
           <div className="flex-1 min-w-0">
             <p className="text-xs font-semibold text-foreground truncate">{post.title}</p>
-            <p className="text-[10px] text-muted-foreground">{post.date}</p>
+            <p className="text-[10px] text-white/50">{post.date}</p>
           </div>
           <div className="flex gap-4 shrink-0 text-right">
             <div>
               <p className="text-xs font-bold text-foreground">{formatK(post.impressions)}</p>
-              <p className="text-[9px] text-muted-foreground">Impr.</p>
+              <p className="text-[9px] text-white/50">Impr.</p>
             </div>
             <div>
               <p className="text-xs font-bold text-foreground">{post.clicks}</p>
-              <p className="text-[9px] text-muted-foreground">Clicks</p>
+              <p className="text-[9px] text-white/50">Clicks</p>
             </div>
             <div>
               <p className="text-xs font-bold text-mint">{post.engagement}%</p>
-              <p className="text-[9px] text-muted-foreground">Eng.</p>
+              <p className="text-[9px] text-white/50">Eng.</p>
             </div>
           </div>
         </div>
@@ -274,12 +258,12 @@ export default function LinkedInSection() {
           <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground">{d.title}</h2>
           <span className="stage-badge text-xs">{d.stage}</span>
         </div>
-        <p className="text-muted-foreground mb-8">{d.subtitle}</p>
+        <p className="text-white/60 mb-8">{d.subtitle}</p>
 
         <div className="grid lg:grid-cols-2 gap-10">
           {/* Left — Info + Focus boxes */}
           <div className="space-y-6">
-            <p className="text-sm leading-relaxed text-muted-foreground">{d.description}</p>
+            <p className="text-sm leading-relaxed text-white/60">{d.description}</p>
 
             <div>
               <h4 className="text-sm font-bold mb-4 text-foreground">Key Results</h4>
@@ -297,7 +281,7 @@ export default function LinkedInSection() {
                   {d.activities.map((a) => {
                     const Icon = getActivityIcon(a);
                     return (
-                      <div key={a} className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                      <div key={a} className="flex items-center gap-2.5 text-sm text-white/60">
                         <Icon className="w-4 h-4 shrink-0 text-mint" />
                         <span>{a}</span>
                       </div>
@@ -342,7 +326,7 @@ export default function LinkedInSection() {
                   className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all whitespace-nowrap ${
                     activeTab === tab
                       ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:text-foreground"
+                      : "text-white/50 hover:text-foreground"
                   }`}
                 >
                   {tab}
@@ -352,30 +336,30 @@ export default function LinkedInSection() {
 
             {activeTab === "Timeline" && (
               <div className="flex-1 flex flex-col">
-                <p className="text-xs text-muted-foreground mb-3">Total impressions by month (organic + sponsored)</p>
+                <p className="text-xs text-white/50 mb-3">Total impressions by month (organic + sponsored)</p>
                 <div className="flex-1 min-h-0">
                   <ImpressionsTimeline />
                 </div>
               </div>
             )}
 
-            {activeTab === "Heatmap" && (
+            {activeTab === "Engagement" && (
               <div>
-                <p className="text-xs text-muted-foreground mb-3">Daily engagement rate — Q1 2026</p>
-                <EngagementHeatmap />
+                <p className="text-xs text-white/50 mb-3">Engagement rate vs CTR by post theme — Q1 2026</p>
+                <EngagementPolarChart />
               </div>
             )}
 
             {activeTab === "Org vs Spn" && (
               <div>
-                <p className="text-xs text-muted-foreground mb-3">Quarterly impressions split: organic vs sponsored</p>
+                <p className="text-xs text-white/50 mb-3">Quarterly impressions split: organic vs sponsored</p>
                 <OrgVsSponsoredChart />
               </div>
             )}
 
             {activeTab === "Top Posts" && (
               <div>
-                <p className="text-xs text-muted-foreground mb-3">Top performing posts — Q1 2026</p>
+                <p className="text-xs text-white/50 mb-3">Top performing posts — Q1 2026</p>
                 <TopPostsTable />
               </div>
             )}

@@ -17,6 +17,7 @@ const PEER_COLORS: Record<string, string> = {
   Osmosis: "#888888",
   Plato: "#bbbbbb",
   Arrowstreet: "#666666",
+  Fidelity: "#2563eb",
 };
 
 function getColor(key: string) {

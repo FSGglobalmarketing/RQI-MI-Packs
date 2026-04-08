@@ -118,17 +118,17 @@ export default function PerformanceResults() {
               Performance<br />& Results
             </h2>
             <h3 className="text-lg font-bold text-foreground mb-3">What does good look like?</h3>
-            <p className="text-sm text-muted-foreground mb-8">
+            <p className="text-sm text-white/50 mb-8">
               A birds-eye view of performance across channel and where we exceeded our targets.
             </p>
             <div className="space-y-3">
-              <span className="flex items-center gap-3 text-sm text-muted-foreground">
+              <span className="flex items-center gap-3 text-sm text-white/50">
                 <span className="inline-block w-4 h-4 rounded-full bg-success" /> Good
               </span>
-              <span className="flex items-center gap-3 text-sm text-muted-foreground">
+              <span className="flex items-center gap-3 text-sm text-white/50">
                 <span className="inline-block w-4 h-4 rounded-full bg-primary" /> Below target
               </span>
-              <span className="flex items-center gap-3 text-sm text-muted-foreground">
+              <span className="flex items-center gap-3 text-sm text-white/50">
                 <span className="inline-block w-4 h-4 rounded-full bg-muted-foreground/40" /> Not activated / finished
               </span>
             </div>
@@ -343,7 +343,7 @@ export default function PerformanceResults() {
                       <span className={`inline-block w-2 h-2 rounded-full ${item.status === "good" ? "bg-success" : item.status === "below" ? "bg-primary" : "bg-muted-foreground"}`} />
                       <span className="text-xs font-semibold text-foreground">{item.channel}</span>
                     </div>
-                    <span className="text-xs text-muted-foreground">{item.metrics.join(" · ")}{item.comparison && ` · ${item.comparison}`}</span>
+                    <span className="text-xs text-white/50">{item.metrics.join(" · ")}{item.comparison && ` · ${item.comparison}`}</span>
                   </div>
                 ))}
               </div>
