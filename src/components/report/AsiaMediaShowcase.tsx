@@ -59,10 +59,10 @@ export default function AsiaMediaShowcase() {
   const InfoPin = ({ className = "" }: { className?: string }) => (
     <button
       onClick={() => setShowInfo(!showInfo)}
-      className={`absolute z-30 w-7 h-7 rounded-full bg-primary/90 backdrop-blur-sm flex items-center justify-center shadow-lg hover:bg-primary transition-all hover:scale-110 ${className}`}
+      className={`absolute z-30 w-9 h-9 rounded-full bg-primary flex items-center justify-center shadow-[0_0_0_4px_hsl(var(--primary)/0.25)] hover:shadow-[0_0_0_6px_hsl(var(--primary)/0.3)] transition-all hover:scale-110 ${className}`}
       title="Ad info"
     >
-      {showInfo ? <X className="w-3.5 h-3.5 text-primary-foreground" /> : <Info className="w-3.5 h-3.5 text-primary-foreground" />}
+      {showInfo ? <X className="w-4 h-4 text-primary-foreground" /> : <Info className="w-4 h-4 text-primary-foreground" />}
     </button>
   );
 

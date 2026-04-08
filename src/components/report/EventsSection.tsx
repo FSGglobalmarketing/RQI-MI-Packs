@@ -3,6 +3,7 @@ import { reportData, type EventItem } from "@/data/igneo-report";
 import EventsLeafletMap from "./EventsLeafletMap";
 import EventsFilterBar from "./EventsFilterBar";
 import EventsKPIs from "./EventsKPIs";
+import EventDetailModal from "./EventDetailModal";
 
 type FilterState = {
   category: string[];
@@ -13,6 +14,7 @@ type FilterState = {
 
 export default function EventsSection() {
   const e = reportData.events;
+  const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
   const [filters, setFilters] = useState<FilterState>({
     category: [],
     region: [],
@@ -86,7 +88,7 @@ export default function EventsSection() {
             </thead>
             <tbody>
               {filteredEvents.map((ev) => (
-                <tr key={`${ev.name}-${ev.city}`} className="border-b border-secondary-foreground/5 hover:bg-secondary-foreground/5 transition-colors">
+                <tr key={`${ev.name}-${ev.city}`} className="border-b border-secondary-foreground/5 hover:bg-secondary-foreground/5 transition-colors cursor-pointer" onClick={() => setSelectedEvent(ev)}>
                   <td className="py-3 px-4 font-medium text-secondary-foreground">
                     <div>{ev.name}</div>
                     <div className="text-[10px] text-secondary-foreground/40">{ev.city} · {ev.quarter}</div>
@@ -140,6 +142,10 @@ export default function EventsSection() {
           </table>
         </div>
       </div>
+
+      {selectedEvent && (
+        <EventDetailModal event={selectedEvent} onClose={() => setSelectedEvent(null)} />
+      )}
     </section>
   );
 }

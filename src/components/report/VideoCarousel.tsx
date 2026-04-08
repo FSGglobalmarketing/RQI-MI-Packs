@@ -48,7 +48,7 @@ export default function VideoCarousel() {
 
   return (
     <div className="mt-10">
-      <h4 className="text-sm font-bold text-foreground mb-6 flex items-center gap-2">
+      <h4 className="text-sm font-bold text-secondary-foreground mb-6 flex items-center gap-2">
         <Play className="w-4 h-4 text-primary" />
         Demystified Video Series
       </h4>

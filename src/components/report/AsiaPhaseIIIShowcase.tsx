@@ -3,13 +3,11 @@ import { ChevronLeft, ChevronRight, Info, X } from "lucide-react";
 import bus1 from "@/assets/asia-phase3-bus-1.jpg";
 import bus2 from "@/assets/asia-phase3-bus-2.jpg";
 import busShelter from "@/assets/asia-phase3-bus-shelter.jpg";
-import advertorial from "@/assets/asia-phase3-advertorial.jpg";
 
 const IMAGES = [
   { src: bus1, label: "Bus Wrap — Route 3700", info: { market: "Hong Kong", format: "Bus Wrap", detail: "30 buses across HK", liveDate: "Q1 2026" } },
   { src: bus2, label: "Bus Wrap — Route 4160", info: { market: "Hong Kong", format: "Bus Wrap", detail: "30 buses across HK", liveDate: "Q1 2026" } },
   { src: busShelter, label: "Bus Shelter PP", info: { market: "Hong Kong", format: "Bus Shelter Poster", detail: "3820×1710mm display", liveDate: "24 Mar 2026" } },
-  { src: advertorial, label: "HKEJ Advertorial", info: { market: "Hong Kong", format: "Sponsored Advertorial", detail: "HKEJ (信報)", liveDate: "23 Mar 2026" } },
 ];
 
 export default function AsiaPhaseIIIShowcase() {
@@ -27,10 +25,10 @@ export default function AsiaPhaseIIIShowcase() {
         {/* Info pin */}
         <button
           onClick={() => setShowInfo(!showInfo)}
-          className="absolute top-3 right-3 z-30 w-7 h-7 rounded-full bg-primary/90 backdrop-blur-sm flex items-center justify-center shadow-lg hover:bg-primary transition-all hover:scale-110"
+          className="absolute top-3 right-3 z-30 w-9 h-9 rounded-full bg-primary flex items-center justify-center shadow-[0_0_0_4px_hsl(var(--primary)/0.25)] hover:shadow-[0_0_0_6px_hsl(var(--primary)/0.3)] transition-all hover:scale-110"
           title="Ad info"
         >
-          {showInfo ? <X className="w-3.5 h-3.5 text-primary-foreground" /> : <Info className="w-3.5 h-3.5 text-primary-foreground" />}
+          {showInfo ? <X className="w-4 h-4 text-primary-foreground" /> : <Info className="w-4 h-4 text-primary-foreground" />}
         </button>
 
         {/* Info overlay */}
