@@ -202,7 +202,7 @@ function TopPagesChart({ data, variant }: { data: TopPageItem[]; variant: "dark"
         return (
           <div key={page.page} className="space-y-1">
             <div className="flex justify-between items-baseline">
-              <span className={`text-xs font-medium ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>{page.page}</span>
+              <span className={`text-xs font-medium ${isDark ? "text-white/50" : "text-secondary-foreground/70"}`}>{page.page}</span>
               <div className="flex items-center gap-2">
                 <span className={`text-xs font-semibold tabular-nums ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{formatK(page.views)}</span>
                 <span className={`text-xs font-bold tabular-nums w-14 text-right ${changeColor}`}>{page.change}</span>
@@ -229,7 +229,7 @@ function TrafficSourcesChart({ data, variant }: { data: TrafficSourceItem[]; var
       {data.map((source, i) => (
         <div key={source.source} className="space-y-1">
           <div className="flex justify-between">
-            <span className={`text-xs font-medium ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>{source.source}</span>
+            <span className={`text-xs font-medium ${isDark ? "text-white/50" : "text-secondary-foreground/70"}`}>{source.source}</span>
             <span className={`text-xs font-bold ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{source.percentage}%</span>
           </div>
           <div className="h-2 rounded-full overflow-hidden" style={{ backgroundColor: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)" }}>
@@ -256,11 +256,11 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
           <h2 className={`text-3xl sm:text-4xl font-extrabold ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{title}</h2>
           <span className="stage-badge text-xs">{stage}</span>
         </div>
-        <p className={`mb-8 ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>{subtitle}</p>
+        <p className={`mb-8 ${isDark ? "text-white/50" : "text-secondary-foreground/70"}`}>{subtitle}</p>
 
         <div className="grid lg:grid-cols-2 gap-10">
           <div className="space-y-6">
-            <p className={`text-sm leading-relaxed ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>{description}</p>
+            <p className={`text-sm leading-relaxed ${isDark ? "text-white/50" : "text-secondary-foreground/70"}`}>{description}</p>
 
             <div>
               <h4 className={`text-sm font-bold mb-4 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Key Results</h4>
@@ -278,7 +278,7 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
                   {activities.map((a) => {
                     const Icon = getActivityIcon(a);
                     return (
-                      <div key={a} className={`flex items-center gap-2.5 text-sm ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>
+                      <div key={a} className={`flex items-center gap-2.5 text-sm ${isDark ? "text-white/50" : "text-secondary-foreground/70"}`}>
                         <Icon className={`w-4 h-4 shrink-0 ${isDark ? "text-mint" : "text-moss"}`} />
                         <span>{a}</span>
                       </div>
@@ -325,7 +325,7 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
                     className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all whitespace-nowrap ${
                       activeTab === tab
                         ? "bg-primary text-primary-foreground"
-                        : isDark ? "text-muted-foreground hover:text-foreground" : "text-secondary-foreground/50 hover:text-secondary-foreground"
+                        : isDark ? "text-white/50 hover:text-foreground" : "text-secondary-foreground/50 hover:text-secondary-foreground"
                     }`}
                   >
                     {tab}
@@ -335,7 +335,7 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
 
               {activeTab === "Users & Sessions" && (
                 <div className="flex-1 flex flex-col">
-                  <p className={`text-xs mb-3 ${isDark ? "text-muted-foreground" : "text-secondary-foreground/60"}`}>Monthly active users and page views — Google Analytics (Q4 2025 vs Q1 2026)</p>
+                  <p className={`text-xs mb-3 ${isDark ? "text-white/50" : "text-secondary-foreground/60"}`}>Monthly active users and page views — Google Analytics (Q4 2025 vs Q1 2026)</p>
                   <div className="flex-1 min-h-0">
                     <UsersSessionsChart data={gaMonthly!} variant={variant} />
                   </div>
@@ -344,21 +344,21 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
 
               {activeTab === "Top Pages" && topPages && (
                 <div>
-                  <p className={`text-xs mb-3 ${isDark ? "text-muted-foreground" : "text-secondary-foreground/60"}`}>Most visited pages by total views</p>
+                  <p className={`text-xs mb-3 ${isDark ? "text-white/50" : "text-secondary-foreground/60"}`}>Most visited pages by total views</p>
                   <TopPagesChart data={topPages} variant={variant} />
                 </div>
               )}
 
               {activeTab === "Traffic Sources" && trafficSources && (
                 <div>
-                  <p className={`text-xs mb-3 ${isDark ? "text-muted-foreground" : "text-secondary-foreground/60"}`}>Where our visitors come from</p>
+                  <p className={`text-xs mb-3 ${isDark ? "text-white/50" : "text-secondary-foreground/60"}`}>Where our visitors come from</p>
                   <TrafficSourcesChart data={trafficSources} variant={variant} />
                 </div>
               )}
             </div>
           ) : (
             <div className={isDark ? "glass-card-dark" : "glass-card-cream"}>
-              <p className={`text-sm leading-relaxed ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>
+              <p className={`text-sm leading-relaxed ${isDark ? "text-white/50" : "text-secondary-foreground/70"}`}>
                 Analytics data visualisation coming soon.
               </p>
             </div>

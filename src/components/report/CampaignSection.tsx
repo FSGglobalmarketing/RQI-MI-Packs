@@ -79,16 +79,16 @@ export function CampaignSection({ id, title, stage, subtitle, description, goals
                 <h2 className={`text-3xl sm:text-4xl font-extrabold ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{title}</h2>
                 <span className="stage-badge text-xs">{stage}</span>
               </div>
-              <p className={`mb-0 ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>{subtitle}</p>
+              <p className={`mb-0 ${isDark ? "text-white/50" : "text-secondary-foreground/70"}`}>{subtitle}</p>
             </div>
 
-            <p className={`text-sm leading-relaxed ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>{description}</p>
+            <p className={`text-sm leading-relaxed ${isDark ? "text-white/50" : "text-secondary-foreground/70"}`}>{description}</p>
 
             <div>
               <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Goals</h4>
               <ul className="space-y-2">
                 {goals.map((g) => (
-                  <li key={g} className={`text-sm flex items-start gap-2 ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>
+                  <li key={g} className={`text-sm flex items-start gap-2 ${isDark ? "text-white/50" : "text-secondary-foreground/70"}`}>
                     <span className="text-primary mt-0.5 shrink-0">+</span>{g}
                   </li>
                 ))}
@@ -99,7 +99,7 @@ export function CampaignSection({ id, title, stage, subtitle, description, goals
               <h4 className={`text-sm font-bold mb-3 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>Activities</h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {formats.map((f) => (
-                  <div key={f} className={`flex items-center gap-2.5 text-sm ${isDark ? "text-muted-foreground" : "text-secondary-foreground/70"}`}>
+                  <div key={f} className={`flex items-center gap-2.5 text-sm ${isDark ? "text-white/50" : "text-secondary-foreground/70"}`}>
                     <FormatIcon format={f} isDark={isDark} />
                     <span>{f}</span>
                   </div>
@@ -276,7 +276,7 @@ export function NorthAmericaChart() {
       <div className="flex items-start justify-between mb-4">
         <div>
           <h4 className="text-sm font-bold text-foreground">Page ranking positions for North American content</h4>
-          <p className="text-xs text-muted-foreground/60 mt-1">Monthly page ranking distribution across search result pages.</p>
+          <p className="text-xs text-white/50/60 mt-1">Monthly page ranking distribution across search result pages.</p>
         </div>
         {zoom.isZoomed && <button onClick={zoom.resetZoom} className="text-xs font-semibold text-primary hover:underline shrink-0">Reset zoom</button>}
       </div>
@@ -298,7 +298,7 @@ export function NorthAmericaChart() {
           </LineChart>
         </ResponsiveContainer>
       </ChartScrollWrapper>
-      <p className="text-[10px] text-muted-foreground/40 mt-2 text-center">Scroll to zoom · Drag to select range</p>
+      <p className="text-[10px] text-white/50/40 mt-2 text-center">Scroll to zoom · Drag to select range</p>
     </div>
   );
 }
@@ -306,7 +306,7 @@ export function NorthAmericaChart() {
 export function NorthAmericaExtra() {
   return (
     <div className="metric-card grid grid-cols-3 gap-3">
-      <p className="text-muted-foreground text-sm col-span-3">No additional data for this section.</p>
+      <p className="text-white/50 text-sm col-span-3">No additional data for this section.</p>
     </div>
   );
 }
@@ -402,7 +402,7 @@ export function UKNordicsLearnings() {
       </h4>
       <ul className="space-y-3">
         {learnings.map((l: string) => (
-          <li key={l} className="text-sm text-muted-foreground flex items-start gap-3">
+          <li key={l} className="text-sm text-white/50 flex items-start gap-3">
             <span className="text-primary mt-0.5 shrink-0 font-bold">+</span>{l}
           </li>
         ))}

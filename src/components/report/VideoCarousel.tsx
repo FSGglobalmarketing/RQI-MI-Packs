@@ -94,7 +94,7 @@ export default function VideoCarousel() {
               </div>
               <div>
                 <p className="text-lg font-bold text-foreground leading-none">{video.totalViews}</p>
-                <p className="text-[10px] text-muted-foreground mt-0.5">Total views</p>
+                <p className="text-[10px] text-white/50 mt-0.5">Total views</p>
               </div>
             </div>
             <div className="flex items-center gap-2.5">
@@ -103,7 +103,7 @@ export default function VideoCarousel() {
               </div>
               <div>
                 <p className="text-lg font-bold text-foreground leading-none">{video.avgCompletion}%</p>
-                <p className="text-[10px] text-muted-foreground mt-0.5">Avg completion</p>
+                <p className="text-[10px] text-white/50 mt-0.5">Avg completion</p>
               </div>
             </div>
             <div className="flex items-center gap-2.5">
@@ -112,7 +112,7 @@ export default function VideoCarousel() {
               </div>
               <div>
                 <p className="text-lg font-bold text-foreground leading-none">{video.peakEngagement}x</p>
-                <p className="text-[10px] text-muted-foreground mt-0.5">Peak engagement</p>
+                <p className="text-[10px] text-white/50 mt-0.5">Peak engagement</p>
               </div>
             </div>
           </div>
