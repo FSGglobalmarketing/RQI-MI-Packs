@@ -127,33 +127,25 @@ function ImpressionsTimeline() {
 
 /* ── Polar chart: Engagement Rate vs CTR by theme ── */
 function EngagementPolarChart() {
-  // Categorize top posts by theme
   const d = reportData.linkedin;
   const themes = useMemo(() => {
-    const categories: Record<string, { engagementRates: number[]; ctrs: number[] }> = {
-      Events: { engagementRates: [], ctrs: [] },
-      Strategy: { engagementRates: [], ctrs: [] },
-      Insights: { engagementRates: [], ctrs: [] },
+    const categories: Record<string, { engagementRates: number[]; ctrs: number[]; count: number }> = {
+      Events: { engagementRates: [], ctrs: [], count: 0 },
+      Strategy: { engagementRates: [], ctrs: [], count: 0 },
+      Insights: { engagementRates: [], ctrs: [], count: 0 },
     };
 
-    d.topPosts.forEach((post) => {
-      const title = post.title.toLowerCase();
-      let theme = "Insights";
-      if (title.includes("tram") || title.includes("campaign") || title.includes("event") || title.includes("conference") || title.includes("hong kong")) {
-        theme = "Events";
-      } else if (title.includes("quant") || title.includes("fund manager") || title.includes("morningstar") || title.includes("invest")) {
-        theme = "Strategy";
-      } else if (title.includes("women") || title.includes("team") || title.includes("welcome") || title.includes("financial standard")) {
-        theme = "Insights";
-      }
-
+    d.topPosts.forEach((post: any) => {
+      const theme = post.category || "Insights";
+      if (!categories[theme]) return;
       const ctr = post.impressions > 0 ? (post.clicks / post.impressions) * 100 : 0;
       categories[theme].engagementRates.push(post.engagement);
       categories[theme].ctrs.push(ctr);
+      categories[theme].count++;
     });
 
     return Object.entries(categories).map(([name, data]) => ({
-      theme: name,
+      theme: `${name} (${data.count})`,
       engagementRate: data.engagementRates.length > 0
         ? Number((data.engagementRates.reduce((a, b) => a + b, 0) / data.engagementRates.length).toFixed(1))
         : 0,
@@ -216,14 +208,27 @@ function OrgVsSponsoredChart() {
 }
 
 /* ── Top Posts table ── */
+const CATEGORY_COLORS: Record<string, string> = {
+  Events: "bg-primary/20 text-primary border-primary/30",
+  Strategy: "bg-[#F99C46]/20 text-[#F99C46] border-[#F99C46]/30",
+  Insights: "bg-mint/20 text-mint border-mint/30",
+};
+
 function TopPostsTable() {
   const d = reportData.linkedin;
   return (
     <div className="space-y-3">
-      {d.topPosts.map((post) => (
+      {d.topPosts.map((post: any) => (
         <div key={post.title} className="glass-card-dark p-3 flex items-center justify-between gap-4">
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-semibold text-foreground truncate">{post.title}</p>
+            <div className="flex items-center gap-2 mb-0.5">
+              <p className="text-xs font-semibold text-foreground truncate">{post.title}</p>
+              {post.category && (
+                <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full border shrink-0 ${CATEGORY_COLORS[post.category] || "bg-white/10 text-white/60 border-white/20"}`}>
+                  {post.category}
+                </span>
+              )}
+            </div>
             <p className="text-[10px] text-white/50">{post.date}</p>
           </div>
           <div className="flex gap-4 shrink-0 text-right">
