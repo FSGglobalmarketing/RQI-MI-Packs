@@ -4,6 +4,10 @@ import iphoneMockup from "@/assets/iphone-mockup.png";
 import asiaOoh from "@/assets/asia-ooh.jpg";
 import asiaAdv1 from "@/assets/asia-advertorial-1.jpg";
 import asiaAdv2 from "@/assets/asia-advertorial-2.jpg";
+import asiaNative1 from "@/assets/asia-native-1.jpg";
+import asiaNative2 from "@/assets/asia-native-2.jpg";
+import asiaLinkedin1 from "@/assets/asia-linkedin-1.jpg";
+import asiaLinkedin2 from "@/assets/asia-linkedin-2.jpg";
 
 const MEDIA_TABS = ["Out of Home", "Advertorial", "Native", "LinkedIn"] as const;
 type MediaTab = typeof MEDIA_TABS[number];
@@ -13,8 +17,8 @@ type DeviceType = "laptop" | "phone" | "none";
 const TAB_CONFIG: Record<MediaTab, { device: DeviceType; images: string[] }> = {
   "Out of Home": { device: "none", images: [asiaOoh] },
   "Advertorial": { device: "laptop", images: [asiaAdv1, asiaAdv2] },
-  "Native": { device: "phone", images: [] },
-  "LinkedIn": { device: "phone", images: [] },
+  "Native": { device: "phone", images: [asiaNative1, asiaNative2] },
+  "LinkedIn": { device: "phone", images: [asiaLinkedin1, asiaLinkedin2] },
 };
 
 export default function AsiaMediaShowcase() {
