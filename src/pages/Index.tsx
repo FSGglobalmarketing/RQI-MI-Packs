@@ -13,6 +13,7 @@ import SalesforceSection from "@/components/report/SalesforceSection";
 import SplashScreen from "@/components/report/SplashScreen";
 import VideoCarousel from "@/components/report/VideoCarousel";
 import SneakPeekSection from "@/components/report/SneakPeekSection";
+import AsiaMediaShowcase from "@/components/report/AsiaMediaShowcase";
 import { reportData } from "@/data/igneo-report";
 import rqiLogoWhite from "@/assets/RQI_Positive_White.svg";
 
@@ -40,6 +41,7 @@ const Index = () => {
         formats={d.highlights.asiaCampaign.formats}
         keyResults={d.highlights.asiaCampaign.keyResults}
         variant="dark"
+        phoneImage={<AsiaMediaShowcase />}
       />
 
       {/* Highlight 2: RQI Asia Campaign Phase III */}
