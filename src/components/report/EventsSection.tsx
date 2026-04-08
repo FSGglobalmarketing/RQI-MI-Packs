@@ -32,15 +32,18 @@ export default function EventsSection() {
 
   const clearAll = () => setFilters({ category: [], region: [], quarter: [], status: [] });
 
+  // Only show RQI brand events
+  const rqiEvents = useMemo(() => e.list.filter((ev) => ev.brand === "RQI"), [e.list]);
+
   const filteredEvents = useMemo(() => {
-    return e.list.filter((ev) => {
+    return rqiEvents.filter((ev) => {
       if (filters.category.length && !filters.category.includes(ev.category)) return false;
       if (filters.region.length && !filters.region.includes(ev.region)) return false;
       if (filters.quarter.length && !filters.quarter.includes(ev.quarter)) return false;
       if (filters.status.length && !filters.status.includes(ev.status)) return false;
       return true;
     });
-  }, [e.list, filters]);
+  }, [rqiEvents, filters]);
 
   const committedCount = filteredEvents.filter((ev) => ev.status === "committed").length;
   const proposedCount = filteredEvents.filter((ev) => ev.status === "proposed").length;
@@ -58,7 +61,7 @@ export default function EventsSection() {
         </p>
 
         <EventsFilterBar
-          events={e.list}
+          events={rqiEvents}
           activeFilters={filters}
           onToggleFilter={toggleFilter}
           onClearAll={clearAll}
