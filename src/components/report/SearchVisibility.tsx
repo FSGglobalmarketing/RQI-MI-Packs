@@ -284,7 +284,7 @@ export default function SearchVisibility() {
                       const sorted = [...payload].sort((a: any, b: any) => {
                         if (a.dataKey === "RQI") return -1;
                         if (b.dataKey === "RQI") return 1;
-                        return (lastDataPoint[b.dataKey as string] ?? 0) - (lastDataPoint[a.dataKey as string] ?? 0);
+                        return (Number(lastDataPoint[b.dataKey as string]) || 0) - (Number(lastDataPoint[a.dataKey as string]) || 0);
                       });
                       return (
                         <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 pt-2 text-[10px]">
