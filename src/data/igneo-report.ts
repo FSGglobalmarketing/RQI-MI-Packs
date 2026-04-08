@@ -217,6 +217,30 @@ export const reportData = {
       ],
       regions: ["Global English speaking audiences"],
     },
+    asiaCampaignPhaseIII: {
+      title: "RQI Asia Campaign Phase III",
+      stage: "Awareness",
+      subtitle: "Sustaining momentum and strengthening RQI's brand visibility across Asia through an integrated multi-channel approach",
+      description: "Building on the foundation established in Phases I and II, we have incorporated bus-wrap advertising to reinforce brand recall and core messaging in Hong Kong. This phase is complemented by advertorial content, targeted social media advertising, and continued digital engagement to ensure consistent messaging across touchpoints.",
+      goals: [
+        "Continue building brand awareness and increasing brand recall",
+        "Maintain mindshare with the intermediaries",
+        "Drive consideration and conversion",
+      ],
+      formats: [
+        "Sponsored event (APB DPM Leaders Conversation)",
+        "Sponsored advertorials in HKEJ",
+        "Targeted LinkedIn ads",
+        "Bus advertising (30 buses) + bus shelters in HK",
+        "Always-on SEM",
+      ],
+      keyResults: [
+        { value: "117+", label: "Gatekeepers reached", comparison: "APB DPM event" },
+        { value: "61", label: "Companies represented", comparison: "At sponsored event" },
+        { value: "30", label: "Bus wraps", comparison: "Hong Kong outdoor" },
+      ],
+      regions: ["Hong Kong", "Singapore"],
+    },
   },
 
   website: {

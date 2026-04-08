@@ -69,6 +69,19 @@ const Index = () => {
         phoneImage={<VideoCarousel />}
       />
 
+      {/* Highlight 4: RQI Asia Campaign Phase III */}
+      <CampaignSection
+        id="asia-campaign-iii"
+        title={d.highlights.asiaCampaignPhaseIII.title}
+        stage={d.highlights.asiaCampaignPhaseIII.stage}
+        subtitle={d.highlights.asiaCampaignPhaseIII.subtitle}
+        description={d.highlights.asiaCampaignPhaseIII.description}
+        goals={d.highlights.asiaCampaignPhaseIII.goals}
+        formats={d.highlights.asiaCampaignPhaseIII.formats}
+        keyResults={d.highlights.asiaCampaignPhaseIII.keyResults}
+        variant="cream"
+      />
+
       <SneakPeekSection />
 
       <AlwaysOnSection
