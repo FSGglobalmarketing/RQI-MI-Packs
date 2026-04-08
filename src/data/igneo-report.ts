@@ -1,3 +1,8 @@
+import apbDpm1 from "@/assets/apb-dpm-1.jpg";
+import apbDpm2 from "@/assets/apb-dpm-2.jpg";
+import apbDpm3 from "@/assets/apb-dpm-3.jpg";
+import apbDpm4 from "@/assets/apb-dpm-4.jpg";
+
 export interface EventTeamMember {
   name: string;
   role: string;
