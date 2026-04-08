@@ -5,6 +5,7 @@ import GlobalFocus from "@/components/report/GlobalFocus";
 import PerformanceResults from "@/components/report/PerformanceResults";
 import SearchVisibility from "@/components/report/SearchVisibility";
 import { CampaignSection } from "@/components/report/CampaignSection";
+import AsiaPhaseIIIShowcase from "@/components/report/AsiaPhaseIIIShowcase";
 import AlwaysOnSection from "@/components/report/AlwaysOnSection";
 import LinkedInSection from "@/components/report/LinkedInSection";
 import EventsSection from "@/components/report/EventsSection";
