@@ -1,28 +1,29 @@
 import { reportData } from "@/data/igneo-report";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceArea, ReferenceDot } from "recharts";
-import { CheckCircle, ArrowRight } from "lucide-react";
+import { SEARCH_DATA, REGION_META, getActiveCompetitors, type SearchRegion } from "@/data/search-ranking-data";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceArea } from "recharts";
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Switch } from "@/components/ui/switch";
 import KpiRow from "./KpiRow";
 
-/* RQI gradient accent palette for chart lines */
-const LINE_CONFIG: { key: string; color: string; width: number; opacity: number }[] = [
-  { key: "RQI", color: "#0F9AFF", width: 3, opacity: 1 },          // RQI Blue — always prominent
-  { key: "CIP", color: "#56658B", width: 1.2, opacity: 0.75 },     // Slate
-  { key: "Antin", color: "#999999", width: 1.2, opacity: 0.75 },   // Grey
-  { key: "IFM", color: "#D37669", width: 1.2, opacity: 0.75 },     // Coral
-  { key: "Infravia", color: "#F99C46", width: 1.2, opacity: 0.75 },// Amber
-  { key: "Global Infra", color: "#FFCC00", width: 1.2, opacity: 0.75 }, // Gold
-  { key: "CVC", color: "#777777", width: 1.2, opacity: 0.75 },     // Grey
-  { key: "DIF", color: "#aaaaaa", width: 1.2, opacity: 0.75 },     // Light grey
-  { key: "KKR", color: "#888888", width: 1.2, opacity: 0.75 },     // Grey
-  { key: "Blackstone", color: "#555555", width: 1.2, opacity: 0.75 }, // Dark grey
-  { key: "Vauban", color: "#666666", width: 1.2, opacity: 0.75 },  // Grey
-  { key: "Stonepeak", color: "#444444", width: 1.2, opacity: 0.6 },// Dark grey
-  { key: "Ardian", color: "#bbbbbb", width: 1.2, opacity: 0.5 },   // Light grey
-];
+/* Brand-aligned palette — RQI uses primary Racing teal, peers get muted tones */
+const PEER_COLORS: Record<string, string> = {
+  RQI: "hsl(var(--primary))",
+  AQR: "#56658B",
+  Robeco: "#D37669",
+  Macquarie: "#F99C46",
+  PIMCO: "#FFCC00",
+  Acadian: "#7ba98b",
+  Platinum: "#999999",
+  Osmosis: "#888888",
+  Plato: "#bbbbbb",
+  Arrowstreet: "#666666",
+};
 
-/* Custom X-axis tick with quarter labels for search chart */
+function getColor(key: string) {
+  return PEER_COLORS[key] || "#777777";
+}
+
+/* Custom X-axis tick with quarter labels */
 function SearchQuarterTick({ x, y, payload }: any) {
   const month = payload.value as string;
   let qLabel = "";
@@ -30,22 +31,17 @@ function SearchQuarterTick({ x, y, payload }: any) {
   if (month.startsWith("Jan")) qLabel = "Q1";
   if (month.startsWith("Apr")) qLabel = "Q2";
   if (month.startsWith("Jul")) qLabel = "Q3";
-
   return (
     <g transform={`translate(${x},${y})`}>
-      <text x={0} y={0} dy={12} textAnchor="middle" fontSize={10} fill="#64748b">
-        {month}
-      </text>
+      <text x={0} y={0} dy={12} textAnchor="middle" fontSize={10} fill="#64748b">{month}</text>
       {qLabel && (
-        <text x={0} y={0} dy={26} textAnchor="middle" fontSize={8} fontWeight={700} fill="hsl(210 100% 53%)">
+        <text x={0} y={0} dy={26} textAnchor="middle" fontSize={8} fontWeight={700} fill="hsl(181 39% 35%)">
           {qLabel}
         </text>
       )}
     </g>
   );
 }
-
-const DATA_KEYS = LINE_CONFIG.map((l) => l.key);
 
 function CustomTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
@@ -54,17 +50,16 @@ function CustomTooltip({ active, payload, label }: any) {
     if (b.dataKey === "RQI") return 1;
     return (b.value ?? 0) - (a.value ?? 0);
   });
-
   return (
-    <div className="bg-background rounded-[10px] px-4 py-3 min-w-[320px] max-w-[420px] border border-foreground/12">
+    <div className="bg-secondary-foreground rounded-[10px] px-4 py-3 min-w-[280px] border border-foreground/10">
       <p className="text-primary font-bold text-[13px] mb-2">{label}</p>
       <div className="grid grid-cols-2 gap-x-6 gap-y-1">
         {sorted.map((entry: any) => (
           <div key={entry.dataKey} className="flex justify-between gap-3">
-            <span className={`text-[11px] ${entry.dataKey === "RQI" ? "text-primary font-bold" : "text-foreground/60"}`}>
+            <span className={`text-[11px] ${entry.dataKey === "RQI" ? "font-bold" : "opacity-60"}`} style={{ color: entry.dataKey === "RQI" ? "hsl(181 39% 35%)" : "#fff" }}>
               {entry.dataKey}
             </span>
-            <span className={`text-[11px] tabular-nums ${entry.dataKey === "RQI" ? "text-primary font-bold" : "text-foreground/85"}`}>
+            <span className={`text-[11px] tabular-nums ${entry.dataKey === "RQI" ? "font-bold" : "opacity-80"}`} style={{ color: entry.dataKey === "RQI" ? "hsl(181 39% 35%)" : "#fff" }}>
               {entry.value}
             </span>
           </div>
@@ -88,9 +83,12 @@ function ChartScrollContainer({ children, onWheelHandler }: { children: React.Re
 
 export default function SearchVisibility() {
   const s = reportData.searchVisibility;
-  const allData = s.chartData;
+  const [region, setRegion] = useState<SearchRegion>("global");
   const [hiddenLines, setHiddenLines] = useState<Set<string>>(new Set());
   const [showPeers, setShowPeers] = useState(true);
+
+  const allData = SEARCH_DATA[region];
+  const activeKeys = getActiveCompetitors(region);
 
   const [left, setLeft] = useState(0);
   const [right, setRight] = useState(allData.length - 1);
@@ -98,8 +96,15 @@ export default function SearchVisibility() {
   const [refAreaRight, setRefAreaRight] = useState<number | null>(null);
   const dragging = useRef(false);
 
+  // Reset zoom when region changes
+  useEffect(() => {
+    setLeft(0);
+    setRight(SEARCH_DATA[region].length - 1);
+    setHiddenLines(new Set());
+  }, [region]);
+
   const visibleData = allData.slice(left, right + 1);
-  const visibleKeys = DATA_KEYS.filter((k) => !hiddenLines.has(k) && (k === "RQI" || showPeers));
+  const visibleKeys = activeKeys.filter((k) => !hiddenLines.has(k) && (k === "RQI" || showPeers));
   let yMax = 0;
   visibleData.forEach((d: any) => {
     visibleKeys.forEach((k) => { if (d[k] > yMax) yMax = d[k]; });
@@ -135,18 +140,11 @@ export default function SearchVisibility() {
   }, [allData.length]);
 
   const onMouseDown = useCallback((e: any) => {
-    if (e?.activeLabel) {
-      setRefAreaLeft(allData.findIndex((d) => d.month === e.activeLabel));
-      dragging.current = true;
-    }
+    if (e?.activeLabel) { setRefAreaLeft(allData.findIndex((d) => d.month === e.activeLabel)); dragging.current = true; }
   }, [allData]);
-
   const onMouseMove = useCallback((e: any) => {
-    if (dragging.current && e?.activeLabel) {
-      setRefAreaRight(allData.findIndex((d) => d.month === e.activeLabel));
-    }
+    if (dragging.current && e?.activeLabel) setRefAreaRight(allData.findIndex((d) => d.month === e.activeLabel));
   }, [allData]);
-
   const onMouseUp = useCallback(() => {
     if (refAreaLeft !== null && refAreaRight !== null) {
       const l = Math.min(refAreaLeft, refAreaRight);
@@ -159,28 +157,50 @@ export default function SearchVisibility() {
   const resetZoom = useCallback(() => { setLeft(0); setRight(allData.length - 1); }, [allData.length]);
   const isZoomed = left !== 0 || right !== allData.length - 1;
 
+  // Compute RQI's latest value for the selected region
+  const latestRQI = allData[allData.length - 1]?.["RQI"] as number ?? 0;
+  const firstRQI = allData[0]?.["RQI"] as number ?? 0;
+  const rqiChange = firstRQI > 0 ? Math.round(((latestRQI - firstRQI) / firstRQI) * 100) : 0;
+
   return (
-    <section id="search-visibility" className="section-cream py-24 flow-section-cream relative">
+    <section id="search-visibility" className="section-ash py-24 flow-section-ash relative">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-[1]">
         {/* Header */}
         <div className="flex flex-wrap items-center gap-3 mb-2">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-secondary-foreground">
-            Search engine visibility
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
+            Organic search performance
           </h2>
           <span className="stage-badge text-xs">Awareness</span>
         </div>
-        <p className="text-secondary-foreground/70 mb-8">{s.description}</p>
+        <p className="text-white/70 mb-8">{s.description}</p>
+
+        {/* Region selector */}
+        <div className="flex flex-wrap gap-2 mb-8">
+          {(Object.keys(REGION_META) as SearchRegion[]).map((r) => (
+            <button
+              key={r}
+              onClick={() => setRegion(r)}
+              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
+                region === r
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-white/8 text-white/60 hover:bg-white/12 hover:text-white"
+              }`}
+            >
+              {REGION_META[r].flag} {REGION_META[r].label}
+            </button>
+          ))}
+        </div>
 
         <div className="grid lg:grid-cols-2 gap-10">
           {/* Left column */}
           <div className="space-y-6">
-            <p className="text-sm leading-relaxed text-secondary-foreground/70">{s.goal}</p>
+            <p className="text-sm leading-relaxed text-white/70">{s.goal}</p>
 
             <div>
-              <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Marketing Activities</h4>
+              <h4 className="text-sm font-bold mb-3 text-white">Marketing Activities</h4>
               <ul className="space-y-2">
                 {s.marketingActivities.map((a) => (
-                  <li key={a} className="text-sm flex items-start gap-2 text-secondary-foreground/70">
+                  <li key={a} className="text-sm flex items-start gap-2 text-white/70">
                     <span className="text-primary mt-0.5 shrink-0">+</span>{a}
                   </li>
                 ))}
@@ -188,40 +208,43 @@ export default function SearchVisibility() {
             </div>
 
             <div>
-              <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Focus Areas</h4>
+              <h4 className="text-sm font-bold mb-3 text-white">Focus Areas</h4>
               <div className="flex flex-wrap gap-2">
                 {s.focusAreas.map((f) => (
-                  <span key={f} className="glass-pill-cream">{f}</span>
+                  <span key={f} className="glass-pill">{f}</span>
                 ))}
               </div>
             </div>
 
-            {/* Key Results — KPI list style with pills */}
+            {/* KPIs — dynamic based on region */}
             <div>
-              <h4 className="text-sm font-bold mb-4 text-secondary-foreground">Key Results</h4>
+              <h4 className="text-sm font-bold mb-4 text-white">Key Results — {REGION_META[region].label}</h4>
               <div className="space-y-3">
-                {s.kpis.map((kpi) => (
-                  <KpiRow key={kpi.label} value={kpi.value} label={kpi.label} comparison={kpi.comparison} variant="cream" />
-                ))}
+                <KpiRow value={String(latestRQI)} label="Ranking keywords (Mar 26)" comparison={rqiChange >= 0 ? `+${rqiChange}% vs Mar 25` : `${rqiChange}% vs Mar 25`} variant="dark" />
+                <KpiRow value={`#${activeKeys.filter(k => {
+                  const v = allData[allData.length - 1]?.[k] as number ?? 0;
+                  return v > latestRQI;
+                }).length + 1}`} label="Ranking position vs peers" comparison={`of ${activeKeys.filter(k => (allData[allData.length - 1]?.[k] as number ?? 0) > 0).length} active competitors`} variant="dark" />
               </div>
             </div>
+
             <div className="grid grid-cols-2 gap-4">
-              <div className="glass-card-cream flow-corner-bl">
-                <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Focus in Q4</h4>
+              <div className="glass-card flow-corner-bl">
+                <h4 className="text-sm font-bold mb-3 text-white">Focus in Q4</h4>
                 <ul className="space-y-2">
                   {s.focusAreas.map((item) => (
-                    <li key={item} className="text-sm flex items-start gap-2 text-secondary-foreground/70">
-                      <svg className="w-4 h-4 text-success shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                    <li key={item} className="text-sm flex items-start gap-2 text-white/70">
+                      <svg className="w-4 h-4 text-primary shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
                       {item}
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="glass-card-cream flow-corner-tr">
-                <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Focus in Q1</h4>
+              <div className="glass-card flow-corner-tr">
+                <h4 className="text-sm font-bold mb-3 text-white">Focus in Q1</h4>
                 <ul className="space-y-2">
                   {s.nextQuarter.map((item) => (
-                    <li key={item} className="text-sm flex items-start gap-2 text-secondary-foreground/70">
+                    <li key={item} className="text-sm flex items-start gap-2 text-white/70">
                       <span className="text-primary mt-0.5 shrink-0">+</span>{item}
                     </li>
                   ))}
@@ -231,11 +254,11 @@ export default function SearchVisibility() {
           </div>
 
           {/* Right column — chart */}
-          <div className="glass-card-cream flow-corner-br min-h-[540px] flex flex-col">
+          <div className="glass-card flow-corner-br min-h-[540px] flex flex-col">
             <div className="flex items-start justify-between mb-1">
               <div>
-                <h4 className="text-sm font-bold text-secondary-foreground mb-1">Search engine visibility</h4>
-                <p className="text-xs text-secondary-foreground/60 mb-4">Number of times we show up in infrastructure searches between pages 1-3.</p>
+                <h4 className="text-sm font-bold text-white mb-1">Non-branded keyword positions — {REGION_META[region].label}</h4>
+                <p className="text-xs text-white/50 mb-4">Number of non-branded keywords ranking on pages 1–3 of Google.</p>
               </div>
               {isZoomed && (
                 <button onClick={resetZoom} className="text-xs font-semibold text-primary hover:underline shrink-0">Reset zoom</button>
@@ -243,12 +266,12 @@ export default function SearchVisibility() {
             </div>
             <div className="flex items-center gap-2 mb-4">
               <Switch checked={showPeers} onCheckedChange={setShowPeers} className="scale-75" />
-              <span className="text-xs text-secondary-foreground/60">Show peers</span>
+              <span className="text-xs text-white/50">Show peers</span>
             </div>
             <ChartScrollContainer onWheelHandler={handleWheel}>
               <ResponsiveContainer width="100%" height={500}>
                 <LineChart data={visibleData} onMouseDown={onMouseDown} onMouseMove={onMouseMove} onMouseUp={onMouseUp}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
                   <XAxis dataKey="month" tick={<SearchQuarterTick />} height={45} />
                   <YAxis tick={{ fontSize: 10, fill: "#64748b" }} domain={[0, yMax]} />
                   <Tooltip content={<CustomTooltip />} />
@@ -268,15 +291,7 @@ export default function SearchVisibility() {
                           {sorted.map((entry: any) => {
                             const isHidden = hiddenLines.has(entry.dataKey) || (entry.dataKey !== "RQI" && !showPeers);
                             return (
-                              <span
-                                key={entry.dataKey}
-                                onClick={() => handleLegendClick(entry)}
-                                className="cursor-pointer"
-                                style={{
-                                  color: isHidden ? "#ccc" : entry.color,
-                                  textDecoration: isHidden ? "line-through" : undefined,
-                                }}
-                              >
+                              <span key={entry.dataKey} onClick={() => handleLegendClick(entry)} className="cursor-pointer" style={{ color: isHidden ? "rgba(255,255,255,0.2)" : entry.color, textDecoration: isHidden ? "line-through" : undefined }}>
                                 ● {entry.dataKey}
                               </span>
                             );
@@ -285,19 +300,29 @@ export default function SearchVisibility() {
                       );
                     }}
                   />
-                  {LINE_CONFIG.map(({ key, color, width, opacity }) => {
+                  {activeKeys.map((key) => {
                     const isHidden = hiddenLines.has(key) || (key !== "RQI" && !showPeers);
                     return (
-                      <Line key={key} type="monotone" dataKey={key} stroke={color} strokeWidth={width} dot={false} strokeOpacity={isHidden ? 0 : opacity} animationDuration={800} hide={isHidden} />
+                      <Line
+                        key={key}
+                        type="monotone"
+                        dataKey={key}
+                        stroke={getColor(key)}
+                        strokeWidth={key === "RQI" ? 3 : 1.2}
+                        dot={false}
+                        strokeOpacity={isHidden ? 0 : key === "RQI" ? 1 : 0.75}
+                        animationDuration={800}
+                        hide={isHidden}
+                      />
                     );
                   })}
                   {refAreaLeft !== null && refAreaRight !== null && (
-                    <ReferenceArea x1={allData[Math.min(refAreaLeft, refAreaRight)]?.month} x2={allData[Math.max(refAreaLeft, refAreaRight)]?.month} strokeOpacity={0.3} fill="rgba(15,154,255,0.1)" />
+                    <ReferenceArea x1={allData[Math.min(refAreaLeft, refAreaRight)]?.month as string} x2={allData[Math.max(refAreaLeft, refAreaRight)]?.month as string} strokeOpacity={0.3} fill="rgba(52,123,126,0.15)" />
                   )}
                 </LineChart>
               </ResponsiveContainer>
             </ChartScrollContainer>
-            <p className="text-[10px] text-secondary-foreground/40 mt-2 text-center">Scroll to zoom · Drag to select range · Click legend to toggle</p>
+            <p className="text-[10px] text-white/30 mt-2 text-center">Scroll to zoom · Drag to select range · Click legend to toggle</p>
           </div>
         </div>
       </div>
