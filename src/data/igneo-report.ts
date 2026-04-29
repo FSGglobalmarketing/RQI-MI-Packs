@@ -72,6 +72,8 @@ export const reportData = {
   // Benchmarks: "vs industry" = Financial-Services benchmarks; "vs peers"
   // = competitor set; "vs Q4 2025" = our own QoQ; "vs previous webinar" =
   // last RQI webinar; "Not applicable" = qualitative metric only.
+  // Industry sources: WordStream FS Email benchmark (Open 27.4%, CTOR 13.4%);
+  // FS LinkedIn organic engagement benchmark ~3.0%.
   // ⚠ Awaiting data = not yet supplied by source system / agency.
   // ═══════════════════════════════════════════════════════════════════════════
   performanceResults: {
@@ -82,15 +84,19 @@ export const reportData = {
       { channel: "Search engine optimisation (SEO)", metrics: ["Keywords ranked ⚠", "Av position ⚠"], comparison: "vs peers — awaiting data", status: "inactive" as const },
       // Display ads: per framework note — "No display campaigns ran in Q1"
       { channel: "Display ads", metrics: ["No campaigns in Q1"], comparison: "Not activated", status: "inactive" as const },
-      // Podcast: Streams vs Q4 2025
-      { channel: "Podcast", metrics: ["Streams ⚠"], comparison: "vs Q4 2025 — awaiting data", status: "inactive" as const },
+      // Podcast: RQI did not run a podcast series in Q1.
+      { channel: "Podcast", metrics: ["No streams in Q1"], comparison: "Not activated", status: "inactive" as const },
       // LinkedIn Paid: per framework note — "No paid campaigns ran in Q1"
       { channel: "LinkedIn Paid", metrics: ["No campaigns in Q1"], comparison: "Not activated", status: "inactive" as const },
     ],
     consideration: [
-      // LinkedIn Organic: Total posts, Engagement rate vs peers. RQI Q1 engagement rate strong vs FS Organic peer benchmark (2.58%).
-      { channel: "LinkedIn Organic", metrics: ["Total posts: 38", "7.08% Engagement rate"], comparison: "+174% engagement vs peers (2.58%)", status: "good" as const },
-      // Website: Visitors, Dwell time vs Q4 2025. Q1 visitors 29.3k (+9% vs Q4); dwell time TBC from GA.
+      // LinkedIn Organic: Total posts, Engagement rate vs peers.
+      // Q1 posts: 32 (linkedInHeadline.q1.posts). Engagement rate avg of monthly
+      // rates from linkedInMonthlyData Jan/Feb/Mar 26: (10% + 8% + 7%) / 3 ≈ 8.3%.
+      // FS organic engagement benchmark ~3.0% → +177% vs peers.
+      { channel: "LinkedIn Organic", metrics: ["32 Posts", "8.3% Engagement rate"], comparison: "+177% engagement vs peers (3.0%)", status: "good" as const },
+      // Website: Visitors, Dwell time vs Q4 2025. Q1 visitors 29.3k (+9% vs Q4 ~26.9k);
+      // dwell time still TBC from GA / RQI website analytics export.
       { channel: "Website", metrics: ["29.3k Visitors", "Dwell time ⚠"], comparison: "Visitors +9% vs Q4 2025", status: "good" as const },
     ],
     conversion: [
@@ -98,8 +104,11 @@ export const reportData = {
       { channel: "Webinars", metrics: ["No webinars in Q1 or Q4"], comparison: "Not activated", status: "inactive" as const },
       // Events: Client feedback (qualitative). Not applicable for quantitative comparison.
       { channel: "Events", metrics: ["Client feedback"], comparison: "Not applicable", status: "inactive" as const },
-      // Email: Open rate, CTOR vs industry. RQI 44% open / 22% CTOR vs FS 27.4% / 13.4% — strong performance.
-      { channel: "Email", metrics: ["44% Open rate", "22% CTOR"], comparison: "+64% CTOR vs industry (13.4%)", status: "good" as const },
+      // Email: Open rate, CTOR vs industry.
+      // Computed from emailQuarterCompare Q1: 1,040 unique opens / 2,910 delivered = 35.7%
+      // open rate; 237 unique clicks / 1,040 unique opens = 22.8% CTOR. FS benchmarks:
+      // 27.4% open / 13.4% CTOR → +30% open, +70% CTOR vs industry.
+      { channel: "Email", metrics: ["35.7% Open rate", "22.8% CTOR"], comparison: "+70% CTOR vs industry (13.4%)", status: "good" as const },
     ],
     serviceLoyalty: [
       // Data capture: Conversions vs Q4 2025. Q4 2025: 0; Q1: 87 form completions.
