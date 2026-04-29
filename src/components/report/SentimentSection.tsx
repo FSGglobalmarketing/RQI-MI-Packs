@@ -86,7 +86,7 @@ function SentimentDonut() {
         {data.map((d, i) => (
           <div key={d.name} className="flex items-center gap-2 text-xs">
             <div className="w-3 h-3 rounded-full" style={{ backgroundColor: colors[i] }} />
-            <span className="text-white/50">{d.name}</span>
+            <span className="text-white">{d.name}</span>
             <span className="font-bold text-foreground">{((d.value / total) * 100).toFixed(0)}%</span>
           </div>
         ))}
@@ -183,11 +183,9 @@ export default function SentimentSection() {
     <section id="sentiment" className="section-dark py-24 flow-section-dark relative">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-[1]">
         {/* Header */}
-        <div className="flex flex-wrap items-center gap-3 mb-2">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground">Sentiment Monitoring</h2>
-          <span className="stage-badge text-xs">Social Listening</span>
-        </div>
-         <p className="text-white/50 mb-6">
+        <span className="stage-badge text-xs inline-block mb-3">Social Listening</span>
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground mb-2">Sentiment Monitoring</h2>
+         <p className="text-white mb-6">
            Brand visibility and media sentiment tracking across web and news channels — powered by Mentionlytics.
          </p>
 
@@ -211,7 +209,7 @@ export default function SentimentSection() {
                   className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all whitespace-nowrap ${
                     activeTab === tab
                       ? "bg-primary text-primary-foreground"
-                      : "text-white/50 hover:text-foreground"
+                      : "text-white hover:text-foreground"
                   }`}
                 >
                   {tab}
@@ -221,25 +219,25 @@ export default function SentimentSection() {
 
             {activeTab === "Timeline" && (
               <div className="flex flex-col flex-1 min-h-0">
-                <p className="text-xs text-white/50 mb-3">Monthly mentions by sentiment (stacked)</p>
+                <p className="text-xs text-white mb-3">Monthly mentions by sentiment (stacked)</p>
                 <TimelineChart />
               </div>
             )}
             {activeTab === "Sentiment" && (
               <div className="flex flex-col flex-1 min-h-0">
-                <p className="text-xs text-white/50 mb-3">Overall sentiment distribution — Sep 2025 to Mar 2026</p>
+                <p className="text-xs text-white mb-3">Overall sentiment distribution — Sep 2025 to Mar 2026</p>
                 <SentimentDonut />
               </div>
             )}
             {activeTab === "Channels" && (
               <div className="flex flex-col flex-1 min-h-0">
-                <p className="text-xs text-white/50 mb-3">Click a bar segment to filter coverage below</p>
+                <p className="text-xs text-white mb-3">Click a bar segment to filter coverage below</p>
                 <ChannelChart onBarClick={handleBarClick} />
               </div>
             )}
             {activeTab === "Geography" && (
               <div className="flex flex-col flex-1 min-h-0">
-                <p className="text-xs text-white/50 mb-3">Top 10 countries by mention volume</p>
+                <p className="text-xs text-white mb-3">Top 10 countries by mention volume</p>
                 <GeographyChart />
               </div>
             )}
@@ -249,21 +247,21 @@ export default function SentimentSection() {
           <div className="glass-card-dark flow-corner-bl min-h-[420px] flex flex-col justify-between">
             <div>
               <h4 className="text-sm font-bold mb-3 text-foreground">Coverage Summary</h4>
-              <p className="text-sm leading-relaxed text-white/50 mb-4">
+              <p className="text-sm leading-relaxed text-white mb-4">
                 Monitoring of all public mentions of RQI Investors across global web and news channels.
                 Coverage spans Feb – Mar 2026 with 20 tracked mentions across 4 countries.
               </p>
-              <p className="text-sm leading-relaxed text-white/50 mb-4">
+              <p className="text-sm leading-relaxed text-white mb-4">
                 Positive coverage (50%) is driven by the RQI Global Value Fund launch in Hong Kong with
                 distribution partners DBS, Hang Seng Bank and Bank of East Asia, as well as Joanna Nash's
                 profile in Financial Standard.
               </p>
-              <p className="text-sm leading-relaxed text-white/50">
+              <p className="text-sm leading-relaxed text-white">
                 Negative sentiment is limited to a negative Sharpe ratio analysis on Benzinga and general market
                 skepticism reporting. No reputational concerns identified. Own-site mentions (firstsentierinvestors.com.au, stewartinvestors.com) have been excluded.
               </p>
             </div>
-            <div className="mt-4 flex items-center gap-6 text-xs text-white/50">
+            <div className="mt-4 flex items-center gap-6 text-xs text-white">
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: COLORS.positive }} />
                 <span>{sentimentBreakdown.positive} positive</span>
@@ -293,16 +291,16 @@ export default function SentimentSection() {
                 sentimentFilter === f
                   ? f === "positive" ? "bg-success/20 text-success"
                   : f === "negative" ? "bg-destructive/20 text-destructive"
-                  : f === "neutral" ? "bg-muted/30 text-white/50"
+                  : f === "neutral" ? "bg-muted/30 text-white"
                   : "bg-primary text-primary-foreground"
-                  : "text-white/50 hover:text-foreground"
+                  : "text-white hover:text-foreground"
               }`}
             >
               {f}
             </button>
           ))}
 
-          <span className="text-white/50/30 mx-1">|</span>
+          <span className="text-white/30 mx-1">|</span>
 
           {/* Channel filters */}
           {CHANNEL_FILTERS.map((f) => (
@@ -312,7 +310,7 @@ export default function SentimentSection() {
               className={`px-2.5 py-1 rounded-full text-[10px] font-semibold transition-all ${
                 channelFilter === f
                   ? "bg-primary text-primary-foreground"
-                  : "text-white/50 hover:text-foreground"
+                  : "text-white hover:text-foreground"
               }`}
             >
               {f === "all" ? "All Channels" : f}
@@ -325,7 +323,7 @@ export default function SentimentSection() {
             </button>
           )}
 
-          <span className="text-xs text-white/50 ml-auto">
+          <span className="text-xs text-white ml-auto">
             {filteredHighlights.length} mention{filteredHighlights.length !== 1 ? "s" : ""}
           </span>
         </div>
@@ -348,7 +346,7 @@ export default function SentimentSection() {
             <tbody>
               {filteredHighlights.length === 0 && (
                 <tr>
-                  <td colSpan={8} className="text-center py-8 text-white/50 text-xs">
+                  <td colSpan={8} className="text-center py-8 text-white text-xs">
                     No mentions match the current filters.
                   </td>
                 </tr>
@@ -365,28 +363,28 @@ export default function SentimentSection() {
                   <td className="py-3 px-3 font-medium text-foreground group-hover:text-primary transition-colors">
                     <span className="line-clamp-1">{m.title}</span>
                   </td>
-                  <td className="py-3 px-3 text-white/50 truncate">{m.source}</td>
-                  <td className="py-3 px-3 text-white/50">{m.channel}</td>
-                  <td className="py-3 px-3 text-white/50">{m.country}</td>
-                  <td className="py-3 px-3 text-white/50 whitespace-nowrap">
+                  <td className="py-3 px-3 text-white truncate">{m.source}</td>
+                  <td className="py-3 px-3 text-white">{m.channel}</td>
+                  <td className="py-3 px-3 text-white">{m.country}</td>
+                  <td className="py-3 px-3 text-white whitespace-nowrap">
                     {new Date(m.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "2-digit" })}
                   </td>
                   <td className="py-3 px-3 text-right">
                     {m.followers !== undefined && m.followers > 0 ? (
                       <span className="text-primary font-semibold">{formatFollowers(m.followers)}</span>
                     ) : (
-                      <span className="text-white/50/30">—</span>
+                      <span className="text-white/30">—</span>
                     )}
                   </td>
                   <td className="py-3 px-3 text-right">
                     {m.domainRank !== undefined ? (
                       <span className={`font-semibold ${
-                        m.domainRank < 1_000 ? "text-success" : m.domainRank < 10_000 ? "text-primary" : m.domainRank < 50_000 ? "text-warning" : "text-white/50"
+                        m.domainRank < 1_000 ? "text-success" : m.domainRank < 10_000 ? "text-primary" : m.domainRank < 50_000 ? "text-warning" : "text-white"
                       }`}>
                         #{m.domainRank.toLocaleString()}
                       </span>
                     ) : (
-                      <span className="text-white/50/30">—</span>
+                      <span className="text-white/30">—</span>
                     )}
                   </td>
                 </tr>

@@ -21,26 +21,32 @@ export default function AsiaPhaseIIIShowcase() {
   return (
     <div className="flex flex-col items-center justify-center h-full space-y-3">
       {/* Image container */}
-      <div className="relative w-full max-w-[560px]">
+      <div className="relative w-full max-w-[720px]">
         {/* Info pin */}
         <button
-          onClick={() => setShowInfo(!showInfo)}
-          className="absolute top-3 right-3 z-30 w-9 h-9 rounded-full bg-primary flex items-center justify-center shadow-[0_0_0_4px_hsl(var(--primary)/0.25)] hover:shadow-[0_0_0_6px_hsl(var(--primary)/0.3)] transition-all hover:scale-110"
-          title="Ad info"
+          onClick={(e) => { e.stopPropagation(); setShowInfo(!showInfo); }}
+          className="absolute top-3 right-3 z-40 w-9 h-9 rounded-full bg-primary flex items-center justify-center shadow-[0_0_0_4px_hsl(var(--primary)/0.25)] hover:shadow-[0_0_0_6px_hsl(var(--primary)/0.3)] transition-all hover:scale-110"
+          title={showInfo ? "Close" : "Ad info"}
         >
           {showInfo ? <X className="w-4 h-4 text-primary-foreground" /> : <Info className="w-4 h-4 text-primary-foreground" />}
         </button>
 
         {/* Info overlay */}
         {showInfo && (
-          <div className="absolute inset-0 z-30 bg-black/75 backdrop-blur-sm flex items-center justify-center rounded-xl p-4 animate-in fade-in duration-200">
+          <div
+            onClick={() => setShowInfo(false)}
+            role="button"
+            aria-label="Close ad info"
+            className="absolute inset-0 z-30 bg-black/75 backdrop-blur-sm flex items-center justify-center rounded-xl p-4 animate-in fade-in duration-200 cursor-pointer"
+          >
             <div className="text-center space-y-2">
               <p className="text-xs font-bold text-primary uppercase tracking-wider">{current.info.format}</p>
               <div className="space-y-1">
-                <p className="text-white text-sm"><span className="text-white/50">Market:</span> {current.info.market}</p>
-                <p className="text-white text-sm"><span className="text-white/50">Detail:</span> {current.info.detail}</p>
-                <p className="text-white text-sm"><span className="text-white/50">Live:</span> {current.info.liveDate}</p>
+                <p className="text-white text-sm"><span className="text-white">Market:</span> {current.info.market}</p>
+                <p className="text-white text-sm"><span className="text-white">Detail:</span> {current.info.detail}</p>
+                <p className="text-white text-sm"><span className="text-white">Live:</span> {current.info.liveDate}</p>
               </div>
+              <p className="text-[10px] text-white/60 uppercase tracking-wider pt-2">Tap to close</p>
             </div>
           </div>
         )}

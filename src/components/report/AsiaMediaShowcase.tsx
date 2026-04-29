@@ -58,23 +58,29 @@ export default function AsiaMediaShowcase() {
 
   const InfoPin = ({ className = "" }: { className?: string }) => (
     <button
-      onClick={() => setShowInfo(!showInfo)}
-      className={`absolute z-30 w-9 h-9 rounded-full bg-primary flex items-center justify-center shadow-[0_0_0_4px_hsl(var(--primary)/0.25)] hover:shadow-[0_0_0_6px_hsl(var(--primary)/0.3)] transition-all hover:scale-110 ${className}`}
-      title="Ad info"
+      onClick={(e) => { e.stopPropagation(); setShowInfo(!showInfo); }}
+      className={`absolute z-40 w-9 h-9 rounded-full bg-primary flex items-center justify-center shadow-[0_0_0_4px_hsl(var(--primary)/0.25)] hover:shadow-[0_0_0_6px_hsl(var(--primary)/0.3)] transition-all hover:scale-110 ${className}`}
+      title={showInfo ? "Close" : "Ad info"}
     >
       {showInfo ? <X className="w-4 h-4 text-primary-foreground" /> : <Info className="w-4 h-4 text-primary-foreground" />}
     </button>
   );
 
   const InfoOverlay = () => (
-    <div className="absolute inset-0 z-30 bg-black/75 backdrop-blur-sm flex items-center justify-center rounded-xl p-4 animate-in fade-in duration-200">
+    <div
+      onClick={() => setShowInfo(false)}
+      role="button"
+      aria-label="Close ad info"
+      className="absolute inset-0 z-30 bg-black/75 backdrop-blur-sm flex items-center justify-center rounded-xl p-4 animate-in fade-in duration-200 cursor-pointer"
+    >
       <div className="text-center space-y-2">
         <p className="text-xs font-bold text-primary uppercase tracking-wider">{info.format}</p>
         <div className="space-y-1">
-          <p className="text-white text-sm"><span className="text-white/50">Market:</span> {info.market}</p>
-          <p className="text-white text-sm"><span className="text-white/50">Platform:</span> {info.platform}</p>
-          <p className="text-white text-sm"><span className="text-white/50">Live:</span> {info.liveDate}</p>
+          <p className="text-white text-sm"><span className="text-white">Market:</span> {info.market}</p>
+          <p className="text-white text-sm"><span className="text-white">Platform:</span> {info.platform}</p>
+          <p className="text-white text-sm"><span className="text-white">Live:</span> {info.liveDate}</p>
         </div>
+        <p className="text-[10px] text-white/60 uppercase tracking-wider pt-2">Tap to close</p>
       </div>
     </div>
   );
@@ -105,7 +111,7 @@ export default function AsiaMediaShowcase() {
             key={i}
             onClick={() => setImgIdx(i)}
             className={`w-2 h-2 rounded-full transition-all ${
-              i === imgIdx ? "bg-primary scale-125" : "bg-white/30 hover:bg-white/50"
+              i === imgIdx ? "bg-primary scale-125" : "bg-white/30 hover:bg-white"
             }`}
           />
         ))}
@@ -123,7 +129,7 @@ export default function AsiaMediaShowcase() {
             className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all whitespace-nowrap ${
               activeTab === tab
                 ? "bg-primary text-primary-foreground"
-                : "text-white/50 hover:text-white"
+                : "text-white hover:text-white"
             }`}
           >
             {tab}
@@ -132,7 +138,7 @@ export default function AsiaMediaShowcase() {
       </div>
 
       {config.device === "laptop" ? (
-        <div className="relative w-full max-w-[600px]">
+        <div className="relative w-full max-w-[760px]">
           <InfoPin className="top-2 right-2" />
           {showInfo && <InfoOverlay />}
           <Arrows onPrev={prev} onNext={next} />
@@ -143,7 +149,7 @@ export default function AsiaMediaShowcase() {
           <Dots />
         </div>
       ) : config.device === "phone" ? (
-        <div className="relative w-full max-w-[260px]">
+        <div className="relative w-full max-w-[340px]">
           <InfoPin className="top-2 right-[-12px]" />
           {showInfo && <InfoOverlay />}
           <Arrows onPrev={prev} onNext={next} />
@@ -154,7 +160,7 @@ export default function AsiaMediaShowcase() {
           <Dots />
         </div>
       ) : (
-        <div className="relative w-full max-w-[600px]">
+        <div className="relative w-full max-w-[760px]">
           <InfoPin className="top-4 right-4" />
           {showInfo && <InfoOverlay />}
           <div className="rounded-xl overflow-hidden">

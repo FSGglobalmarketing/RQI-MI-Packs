@@ -169,7 +169,7 @@ export default function SneakPeekSection() {
           <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground">
             Sneak Peek: RQI's Dedicated Website
           </h2>
-          <p className="mt-3 text-sm text-white/50 max-w-xl mx-auto">
+          <p className="mt-3 text-sm text-white max-w-xl mx-auto">
             Drag the slider to compare the current website with the new design
           </p>
         </div>
@@ -179,7 +179,7 @@ export default function SneakPeekSection() {
           {/* Left text */}
           <div className="space-y-4 text-center lg:text-right">
             <h3 className="text-lg font-bold text-foreground">A New Digital Home</h3>
-            <p className="text-sm text-white/50 leading-relaxed">
+            <p className="text-sm text-white leading-relaxed">
               A purpose-built platform designed to showcase RQI's investment philosophy, strategies and team — delivering a premium digital experience for advisers, consultants and institutional investors.
             </p>
           </div>
@@ -230,7 +230,7 @@ export default function SneakPeekSection() {
           {/* Right text */}
           <div className="space-y-4 text-center lg:text-left">
             <h3 className="text-lg font-bold text-foreground">Built for Impact</h3>
-            <p className="text-sm text-white/50 leading-relaxed">
+            <p className="text-sm text-white leading-relaxed">
               Optimised for speed, SEO and accessibility — the new site will serve as the central hub for all RQI content, fund information and thought leadership, with a seamless experience across every device.
             </p>
           </div>

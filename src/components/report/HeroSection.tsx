@@ -1,6 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { reportData } from "@/data/igneo-report";
+import heroSlide1 from "@/assets/hero-slide-1.jpg";
+import heroSlide2 from "@/assets/hero-slide-2.jpg";
+import heroSlide3 from "@/assets/hero-slide-3.jpg";
 
 export interface HeroSlide {
   image: string;
@@ -12,7 +15,7 @@ export interface HeroSlide {
 
 const slides: HeroSlide[] = [
   {
-    image: "/hero/slide-2.jpg",
+    image: heroSlide2,
     label: "Brand",
     heading: "Fund Manager of the Year",
     description:
@@ -20,7 +23,7 @@ const slides: HeroSlide[] = [
     sectionId: "fmoty",
   },
   {
-    image: "/hero/slide-1.jpg",
+    image: heroSlide1,
     label: "Campaign",
     heading: "Asia Campaign Phase II",
     description:
@@ -28,7 +31,7 @@ const slides: HeroSlide[] = [
     sectionId: "asia-campaign",
   },
   {
-    image: "/hero/slide-3.jpg",
+    image: heroSlide3,
     label: "Content",
     heading: "RQI Demystified",
     description:
@@ -113,7 +116,7 @@ export default function HeroSection() {
                     key={i}
                     onClick={() => setCurrent(i)}
                     className={`h-1.5 rounded-full transition-all duration-300 ${
-                      i === current ? "w-8 bg-mint" : "w-3 bg-white/30 hover:bg-white/50"
+                      i === current ? "w-8 bg-mint" : "w-3 bg-white/30 hover:bg-white"
                     }`}
                     aria-label={`Go to slide ${i + 1}`}
                   />

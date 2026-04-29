@@ -4,7 +4,7 @@ import rqiLogo from "@/assets/RQI_Positive_White.svg";
 const navItems = [
   { id: "overview", label: "Overview" },
   { id: "performance", label: "KPI Framework" },
-  { id: "salesforce", label: "CRM" },
+  { id: "salesforce", label: "Engagement" },
   { id: "search-visibility", label: "Search" },
   { id: "asia-campaign", label: "Asia Campaign" },
   { id: "fmoty", label: "FMOTY" },

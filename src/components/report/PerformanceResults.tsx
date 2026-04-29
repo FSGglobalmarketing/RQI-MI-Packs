@@ -5,13 +5,13 @@ type Status = "good" | "below" | "inactive";
 
 const statusFill: Record<Status, string> = {
   good: "hsl(var(--success))",
-  below: "hsl(var(--primary))",
+  below: "hsl(var(--accent-orange))",
   inactive: "hsl(var(--muted-foreground))",
 };
 
 const statusBg: Record<Status, string> = {
   good: "hsl(var(--success) / 0.15)",
-  below: "hsl(var(--primary) / 0.15)",
+  below: "hsl(var(--accent-orange) / 0.15)",
   inactive: "hsl(var(--muted-foreground) / 0.08)",
 };
 
@@ -118,17 +118,17 @@ export default function PerformanceResults() {
               Performance<br />& Results
             </h2>
             <h3 className="text-lg font-bold text-foreground mb-3">What does good look like?</h3>
-            <p className="text-sm text-white/50 mb-8">
+            <p className="text-sm text-white mb-8">
               A birds-eye view of performance across channel and where we exceeded our targets.
             </p>
             <div className="space-y-3">
-              <span className="flex items-center gap-3 text-sm text-white/50">
+              <span className="flex items-center gap-3 text-sm text-white">
                 <span className="inline-block w-4 h-4 rounded-full bg-success" /> Good
               </span>
-              <span className="flex items-center gap-3 text-sm text-white/50">
-                <span className="inline-block w-4 h-4 rounded-full bg-primary" /> Below target
+              <span className="flex items-center gap-3 text-sm text-white">
+                <span className="inline-block w-4 h-4 rounded-full bg-accent-orange" /> Below target
               </span>
-              <span className="flex items-center gap-3 text-sm text-white/50">
+              <span className="flex items-center gap-3 text-sm text-white">
                 <span className="inline-block w-4 h-4 rounded-full bg-muted-foreground/40" /> Not activated / finished
               </span>
             </div>
@@ -305,7 +305,7 @@ export default function PerformanceResults() {
                               dominantBaseline="central"
                               fontSize={13}
                               fontWeight={600}
-                              fill={row.status === "good" ? "hsl(var(--success))" : row.status === "below" ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))"}
+                              fill={row.status === "good" ? "hsl(var(--success))" : row.status === "below" ? "hsl(var(--accent-orange))" : "hsl(var(--muted-foreground))"}
                             >
                               {row.comparison}
                             </text>
@@ -340,10 +340,10 @@ export default function PerformanceResults() {
                 {items.map((item) => (
                   <div key={item.channel} className="metric-card mb-2">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className={`inline-block w-2 h-2 rounded-full ${item.status === "good" ? "bg-success" : item.status === "below" ? "bg-primary" : "bg-muted-foreground"}`} />
+                      <span className={`inline-block w-2 h-2 rounded-full ${item.status === "good" ? "bg-success" : item.status === "below" ? "bg-accent-orange" : "bg-muted-foreground"}`} />
                       <span className="text-xs font-semibold text-foreground">{item.channel}</span>
                     </div>
-                    <span className="text-xs text-white/50">{item.metrics.join(" · ")}{item.comparison && ` · ${item.comparison}`}</span>
+                    <span className="text-xs text-white">{item.metrics.join(" · ")}{item.comparison && ` · ${item.comparison}`}</span>
                   </div>
                 ))}
               </div>

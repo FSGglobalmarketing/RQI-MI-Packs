@@ -72,7 +72,7 @@ export default function DACHPhoneShowcase() {
           </DialogHeader>
           {openAd && (
             <div className="space-y-5">
-              <p className="text-sm text-white/50 leading-relaxed">
+              <p className="text-sm text-white leading-relaxed">
                 {openAd.summary}
               </p>
               <div className="grid grid-cols-2 gap-3">

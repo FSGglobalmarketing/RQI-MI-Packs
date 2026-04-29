@@ -219,12 +219,10 @@ export default function SearchVisibility() {
     <section id="search-visibility" className="section-cream py-24 flow-section-cream relative">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-[1]">
         {/* Header */}
-        <div className="flex flex-wrap items-center gap-3 mb-2">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-secondary-foreground">
-            Organic search performance
-          </h2>
-          <span className="stage-badge text-xs">Awareness</span>
-        </div>
+        <span className="stage-badge text-xs inline-block mb-3">Awareness</span>
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-secondary-foreground mb-2">
+          Organic search performance
+        </h2>
         <p className="text-secondary-foreground/70 mb-8">{s.description}</p>
 
         <div className="grid lg:grid-cols-2 gap-10">
@@ -243,7 +241,9 @@ export default function SearchVisibility() {
               </ul>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div>
+              <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Our focus in</h4>
+              <div className="grid grid-cols-2 gap-4">
               <div className="glass-card-cream flow-corner-bl">
                 <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Q1</h4>
                 <ul className="space-y-2">
@@ -264,6 +264,7 @@ export default function SearchVisibility() {
                     </li>
                   ))}
                 </ul>
+              </div>
               </div>
             </div>
           </div>

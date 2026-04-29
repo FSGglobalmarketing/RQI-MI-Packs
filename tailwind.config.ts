@@ -27,6 +27,7 @@ export default {
         "pollen": "hsl(var(--pollen) / <alpha-value>)",
         "grass": "hsl(var(--grass) / <alpha-value>)",
         "ash": "hsl(var(--ash) / <alpha-value>)",
+        "accent-orange": "hsl(var(--accent-orange) / <alpha-value>)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

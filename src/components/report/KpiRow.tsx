@@ -93,7 +93,7 @@ export default function KpiRow({ value, label, comparison, variant = "dark" }: K
       {showComparison && (
         <span
           className={`text-xs whitespace-nowrap font-semibold shrink-0 ${
-            isNegative ? "stat-negative" : isNeutral ? "text-white/50" : "stat-positive"
+            isNegative ? "stat-negative" : isNeutral ? "text-white" : "stat-positive"
           }`}
         >
           {comparison}

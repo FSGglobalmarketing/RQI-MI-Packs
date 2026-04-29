@@ -166,7 +166,7 @@ function EngagementPolarChart() {
           />
           <PolarRadiusAxis
             angle={90}
-            tick={{ fontSize: 9, fill: "rgba(255,255,255,0.5)" }}
+            tick={{ fontSize: 9, fill: "rgba(255,255,255,1)" }}
           />
           <Radar name="Engagement %" dataKey="engagementRate" stroke="#0F9AFF" fill="#0F9AFF" fillOpacity={0.3} strokeWidth={2} />
           <Radar name="CTR %" dataKey="ctr" stroke="#F99C46" fill="#F99C46" fillOpacity={0.2} strokeWidth={2} />
@@ -229,20 +229,20 @@ function TopPostsTable() {
                 </span>
               )}
             </div>
-            <p className="text-[10px] text-white/50">{post.date}</p>
+            <p className="text-[10px] text-white">{post.date}</p>
           </div>
           <div className="flex gap-4 shrink-0 text-right">
             <div>
               <p className="text-xs font-bold text-foreground">{formatK(post.impressions)}</p>
-              <p className="text-[9px] text-white/50">Impr.</p>
+              <p className="text-[9px] text-white">Impr.</p>
             </div>
             <div>
               <p className="text-xs font-bold text-foreground">{post.clicks}</p>
-              <p className="text-[9px] text-white/50">Clicks</p>
+              <p className="text-[9px] text-white">Clicks</p>
             </div>
             <div>
               <p className="text-xs font-bold text-mint">{post.engagement}%</p>
-              <p className="text-[9px] text-white/50">Eng.</p>
+              <p className="text-[9px] text-white">Eng.</p>
             </div>
           </div>
         </div>
@@ -259,10 +259,8 @@ export default function LinkedInSection() {
   return (
     <section id="linkedin" className="section-dark py-24 flow-section-dark relative">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-[1]">
-        <div className="flex flex-wrap items-center gap-3 mb-2">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground">{d.title}</h2>
-          <span className="stage-badge text-xs">{d.stage}</span>
-        </div>
+        <span className="stage-badge text-xs inline-block mb-3">{d.stage}</span>
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground mb-2">{d.title}</h2>
         <p className="text-white/60 mb-8">{d.subtitle}</p>
 
         <div className="grid lg:grid-cols-2 gap-10">
@@ -331,7 +329,7 @@ export default function LinkedInSection() {
                   className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all whitespace-nowrap ${
                     activeTab === tab
                       ? "bg-primary text-primary-foreground"
-                      : "text-white/50 hover:text-foreground"
+                      : "text-white hover:text-foreground"
                   }`}
                 >
                   {tab}
@@ -341,7 +339,7 @@ export default function LinkedInSection() {
 
             {activeTab === "Timeline" && (
               <div className="flex-1 flex flex-col">
-                <p className="text-xs text-white/50 mb-3">Total impressions by month (organic + sponsored)</p>
+                <p className="text-xs text-white mb-3">Total impressions by month (organic + sponsored)</p>
                 <div className="flex-1 min-h-0">
                   <ImpressionsTimeline />
                 </div>
@@ -350,21 +348,21 @@ export default function LinkedInSection() {
 
             {activeTab === "Engagement" && (
               <div>
-                <p className="text-xs text-white/50 mb-3">Engagement rate vs CTR by post theme — Q1 2026</p>
+                <p className="text-xs text-white mb-3">Engagement rate vs CTR by post theme — Q1 2026</p>
                 <EngagementPolarChart />
               </div>
             )}
 
             {activeTab === "Org vs Spn" && (
               <div>
-                <p className="text-xs text-white/50 mb-3">Quarterly impressions split: organic vs sponsored</p>
+                <p className="text-xs text-white mb-3">Quarterly impressions split: organic vs sponsored</p>
                 <OrgVsSponsoredChart />
               </div>
             )}
 
             {activeTab === "Top Posts" && (
               <div>
-                <p className="text-xs text-white/50 mb-3">Top performing posts — Q1 2026</p>
+                <p className="text-xs text-white mb-3">Top performing posts — Q1 2026</p>
                 <TopPostsTable />
               </div>
             )}

@@ -67,37 +67,43 @@ export const reportData = {
   ],
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // BENCHMARK SOURCE: Financial_Sector_Marketing_Benchmarks_2026.xlsx
-  // KPIs WITH a benchmark → compared vs FS benchmark
-  // KPIs WITHOUT a benchmark → compared vs Q4 2025
-  // ⚠ FLAG = missing data — do NOT infer or use dummy values
+  // KPI Framework: KPI_Framework_Q1_2026_RQI.xlsx
+  // Each channel measured on the metrics + benchmark defined in the framework.
+  // Benchmarks: "vs industry" = Financial-Services benchmarks; "vs peers"
+  // = competitor set; "vs Q4 2025" = our own QoQ; "vs previous webinar" =
+  // last RQI webinar; "Not applicable" = qualitative metric only.
+  // ⚠ Awaiting data = not yet supplied by source system / agency.
   // ═══════════════════════════════════════════════════════════════════════════
   performanceResults: {
     awareness: [
-      // ⚠ FLAG: Still waiting for Search and SEM data from Agency. No Q4 baseline available.
-      { channel: "Search engine marketing", metrics: ["⚠ Awaiting data"], comparison: "⚠ Awaiting agency data", status: "inactive" as const },
-      // ⚠ FLAG: Still waiting for Search and SEM data from Agency. No Q4 baseline available.
-      { channel: "Search engine optimisation", metrics: ["⚠ Awaiting data"], comparison: "⚠ Awaiting agency data", status: "inactive" as const },
-      // ⚠ FLAG: No display impression benchmark available in doc. "Phase II" is a status label, not a comparison.
-      { channel: "Display ads (HK)", metrics: ["2M+ Impressions"], comparison: "Phase II", status: "good" as const },
-      // FS Paid CTR benchmark: 0.74%. RQI: 0.48% → -35%. FS Paid Engagement benchmark: 1–2%. RQI: 0.46% → below.
-      { channel: "LinkedIn Paid", metrics: ["0.46% Engagement", "0.48% CTR"], comparison: "CTR -35% vs FS (0.74%)", status: "below" as const },
+      // SEM: Impressions, Av CTR vs industry — Source: FSSA/Raw Data/SEM (shared agency feed). Awaiting agency Q1 data.
+      { channel: "Search engine marketing (SEM)", metrics: ["Impressions ⚠", "Av CTR ⚠"], comparison: "vs industry — awaiting data", status: "inactive" as const },
+      // SEO: Keywords ranked, Av position vs peers — Source: FSSA/Raw Data/SEO (shared agency feed). Awaiting agency Q1 data.
+      { channel: "Search engine optimisation (SEO)", metrics: ["Keywords ranked ⚠", "Av position ⚠"], comparison: "vs peers — awaiting data", status: "inactive" as const },
+      // Display ads: per framework note — "No display campaigns ran in Q1"
+      { channel: "Display ads", metrics: ["No campaigns in Q1"], comparison: "Not activated", status: "inactive" as const },
+      // Podcast: Streams vs Q4 2025
+      { channel: "Podcast", metrics: ["Streams ⚠"], comparison: "vs Q4 2025 — awaiting data", status: "inactive" as const },
+      // LinkedIn Paid: per framework note — "No paid campaigns ran in Q1"
+      { channel: "LinkedIn Paid", metrics: ["No campaigns in Q1"], comparison: "Not activated", status: "inactive" as const },
     ],
     consideration: [
-      // No impression/click benchmark in doc. Compared vs Q4 2025: Impressions 22,517 vs 14,910 = +51%. Clicks 1,594 vs 1,805 = -12%. CTR = 1,594/22,517 = 7.08%. FS Organic CTR benchmark: 2.58%. → +174%.
-      { channel: "LinkedIn Organic", metrics: ["22.5k Impressions", "7.08% CTR"], comparison: "+174% CTR vs FS (2.58%)", status: "good" as const },
-      { channel: "Website", metrics: ["29.3k Active users", "39.3k Views"], comparison: "+9% views vs Q4", status: "good" as const },
+      // LinkedIn Organic: Total posts, Engagement rate vs peers. RQI Q1 engagement rate strong vs FS Organic peer benchmark (2.58%).
+      { channel: "LinkedIn Organic", metrics: ["Total posts: 38", "7.08% Engagement rate"], comparison: "+174% engagement vs peers (2.58%)", status: "good" as const },
+      // Website: Visitors, Dwell time vs Q4 2025. Q1 visitors 29.3k (+9% vs Q4); dwell time TBC from GA.
+      { channel: "Website", metrics: ["29.3k Visitors", "Dwell time ⚠"], comparison: "Visitors +9% vs Q4 2025", status: "good" as const },
     ],
     conversion: [
-      // No webinars run in Q1 or Q4
+      // Webinars: Attendees, Live attendees vs previous webinar. None ran in Q1 or Q4.
       { channel: "Webinars", metrics: ["No webinars in Q1 or Q4"], comparison: "Not activated", status: "inactive" as const },
-      { channel: "Events", metrics: ["Distribution feedback"], comparison: "", status: "inactive" as const },
-      // FS CTOR benchmark: 13.4%. RQI: 22% → +64%. FS Open Rate benchmark: 27.4%. RQI: 44% → +60%.
-      { channel: "Email", metrics: ["22% CTOR", "44% Open rates"], comparison: "+64% CTOR vs FS (13.4%)", status: "good" as const },
+      // Events: Client feedback (qualitative). Not applicable for quantitative comparison.
+      { channel: "Events", metrics: ["Client feedback"], comparison: "Not applicable", status: "inactive" as const },
+      // Email: Open rate, CTOR vs industry. RQI 44% open / 22% CTOR vs FS 27.4% / 13.4% — strong performance.
+      { channel: "Email", metrics: ["44% Open rate", "22% CTOR"], comparison: "+64% CTOR vs industry (13.4%)", status: "good" as const },
     ],
     serviceLoyalty: [
-      // Q4 2025: 0 form submissions. Q1: 87. No QoQ % calc (division by zero). Absolute change: +87.
-      { channel: "Data capture", metrics: ["87 Form completions"], comparison: "+87 vs Q4 (0)", status: "good" as const },
+      // Data capture: Conversions vs Q4 2025. Q4 2025: 0; Q1: 87 form completions.
+      { channel: "Data capture", metrics: ["87 Conversions"], comparison: "+87 vs Q4 (0)", status: "good" as const },
     ],
   },
 

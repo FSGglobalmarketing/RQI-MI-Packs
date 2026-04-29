@@ -118,6 +118,9 @@
     --ash: 0 0% 8%;
     --pollen: 59 62% 87%;
 
+    /* On-brand orange #F99C46 — used to flag below-target KPIs */
+    --accent-orange: 29 94% 63%;
+
     /* RQI Gradient accent palette */
     --gradient-1: 222 24% 44%;
     --gradient-2: 210 100% 53%;
