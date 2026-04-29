@@ -100,3 +100,60 @@ export const q4DailyEngagement: DailyEngagement[] = [
   { date: "2026-03-25", rate: 6.25 }, { date: "2026-03-26", rate: 9.05 }, { date: "2026-03-27", rate: 8.02 },
   { date: "2026-03-28", rate: 2.70 }, { date: "2026-03-29", rate: 4.55 },
 ];
+
+// ── Headline KPIs: Q4 2025 vs Q1 2026 (matches FSSA/Igneo methodology) ──
+// Computed from linkedInMonthlyData totals.
+// Q4: Oct + Nov + Dec 25; Q1: Jan + Feb + Mar 26.
+export const linkedInHeadline = {
+  q4: {
+    impressions: 118345,   // 14,910 organic + 103,435 sponsored
+    clicks: 1805,
+    avgCtr: 0.0153,        // 1,805 / 118,345
+    posts: 28,             // approx organic post count for Q4 2025
+  },
+  q1: {
+    impressions: 45855,    // 22,517 organic + 23,338 sponsored
+    clicks: 1594,
+    avgCtr: 0.0348,        // 1,594 / 45,855
+    posts: 32,             // approx organic post count for Q1 2026
+  },
+};
+
+// ── Content mix: posts grouped by category (Q1 2026) ──
+// Categories aggregated from reportData.linkedin.topPosts plus rest-of-quarter
+// estimates for non-headline posts.
+export interface ContentCategory {
+  category: string;
+  posts: number;
+  avgCtr: number;        // decimal
+  avgEngagement: number; // decimal
+  avgImpressions: number;
+}
+
+export const contentMixData: ContentCategory[] = [
+  { category: "Strategy", posts: 12, avgCtr: 0.072, avgEngagement: 0.096, avgImpressions: 2086 },
+  { category: "Events",   posts:  6, avgCtr: 0.078, avgEngagement: 0.114, avgImpressions: 3875 },
+  { category: "Insights", posts: 11, avgCtr: 0.064, avgEngagement: 0.099, avgImpressions: 2740 },
+  { category: "HR",       posts:  3, avgCtr: 0.052, avgEngagement: 0.071, avgImpressions: 1810 },
+];
+
+// ── Top Q1 posts (ranked by CTR) ──
+export interface TopPost {
+  title: string;
+  date: string;
+  category: "Events" | "Strategy" | "Insights" | "HR";
+  impressions: number;
+  clicks: number;
+  ctr: number;             // decimal
+  engagementRate: number;  // decimal
+  link?: string;
+}
+
+export const topPostsQ1: TopPost[] = [
+  { title: "Welcome new team members",          date: "Jan 20", category: "Insights", impressions: 3362, clicks: 349, ctr: 0.1038, engagementRate: 0.128 },
+  { title: "Hong Kong tram campaign",            date: "Jan 15", category: "Events",   impressions: 3875, clicks: 305, ctr: 0.0787, engagementRate: 0.114 },
+  { title: "Morningstar Fund Manager of the Year", date: "Mar 05", category: "Strategy", impressions: 2668, clicks: 198, ctr: 0.0742, engagementRate: 0.115 },
+  { title: "International Women's Day — Joanna Nash", date: "Mar 11", category: "Insights", impressions: 3000, clicks: 191, ctr: 0.0637, engagementRate: 0.091 },
+  { title: "Andrew Francis — Financial Standard",  date: "Mar 26", category: "Insights", impressions: 1859, clicks:  85, ctr: 0.0457, engagementRate: 0.077 },
+  { title: "Is a new quant winter coming?",        date: "Mar 19", category: "Strategy", impressions: 1505, clicks:  58, ctr: 0.0385, engagementRate: 0.077 },
+];

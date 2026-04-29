@@ -19,7 +19,6 @@ function getUniqueValues(events: EventItem[], key: keyof EventItem): string[] {
 export default function EventsFilterBar({ events, activeFilters, onToggleFilter, onClearAll }: EventsFilterBarProps) {
   const categories = getUniqueValues(events, "category");
   const regions = getUniqueValues(events, "region");
-  const quarters = getUniqueValues(events, "quarter");
   const statuses = ["committed", "proposed", "proprietary", "distribution-owned"];
 
   const hasActiveFilters = Object.values(activeFilters).some((arr) => arr.length > 0);
@@ -38,11 +37,6 @@ export default function EventsFilterBar({ events, activeFilters, onToggleFilter,
 
       {/* Region pills */}
       <FilterGroup label="Region" values={regions} active={activeFilters.region} onToggle={(v) => onToggleFilter("region", v)} />
-
-      <div className="w-px h-6 bg-secondary-foreground/10" />
-
-      {/* Quarter pills */}
-      <FilterGroup label="Quarter" values={quarters} active={activeFilters.quarter} onToggle={(v) => onToggleFilter("quarter", v)} />
 
       {hasActiveFilters && (
         <button

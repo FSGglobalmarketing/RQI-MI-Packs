@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import type { EventItem } from "@/data/igneo-report";
-import { Mic, DollarSign, Users, CalendarDays } from "lucide-react";
+import { Mic, Users, CalendarDays } from "lucide-react";
 
 interface EventsKPIsProps {
   events: EventItem[];
@@ -35,18 +35,6 @@ export default function EventsKPIs({ events }: EventsKPIsProps) {
       .map(([name, value]) => ({ name, value }))
       .sort((a, b) => b.value - a.value);
 
-    // Spend by region
-    const regionSpend: Record<string, number> = {};
-    events.forEach((e) => {
-      if (e.sponsorshipCost) {
-        const multiplier = e.currency === "GBP" ? 1.95 : e.currency === "EUR" ? 1.65 : e.currency === "CAD" ? 1.1 : 1;
-        regionSpend[e.region] = (regionSpend[e.region] || 0) + Math.round(e.sponsorshipCost * multiplier);
-      }
-    });
-    const spendData = Object.entries(regionSpend)
-      .map(([name, value]) => ({ name, value }))
-      .sort((a, b) => b.value - a.value);
-
     // Monthly density
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const monthCounts = new Array(12).fill(0);
@@ -58,14 +46,11 @@ export default function EventsKPIs({ events }: EventsKPIsProps) {
     });
     const monthlyData = monthNames.map((name, i) => ({ name, events: monthCounts[i] }));
 
-    // Total estimated spend
-    const totalSpend = Object.values(regionSpend).reduce((a, b) => a + b, 0);
-
-    return { speakingRatio, withSpeaking, audienceData, spendData, monthlyData, totalSpend };
+    return { speakingRatio, withSpeaking, audienceData, monthlyData };
   }, [events]);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
       {/* Speaking Slots */}
       <div className="glass-card-cream flow-corner-br p-5 rounded-2xl">
         <div className="flex items-center gap-2 mb-3">
@@ -76,25 +61,6 @@ export default function EventsKPIs({ events }: EventsKPIsProps) {
         <p className="text-xs text-secondary-foreground/50 mt-1">
           {stats.withSpeaking.length} of {events.length} events
         </p>
-      </div>
-
-      {/* Estimated Spend */}
-      <div className="glass-card-cream p-5 rounded-2xl">
-        <div className="flex items-center gap-2 mb-3">
-          <DollarSign className="w-4 h-4 text-primary" />
-          <h4 className="text-xs font-bold uppercase tracking-wider text-secondary-foreground/50">Est. Spend (AUD)</h4>
-        </div>
-        <p className="text-3xl font-extrabold text-secondary-foreground">
-          ${(stats.totalSpend / 1000).toFixed(0)}k
-        </p>
-        <div className="mt-2 space-y-1">
-          {stats.spendData.slice(0, 3).map((d) => (
-            <div key={d.name} className="flex justify-between text-xs text-secondary-foreground/60">
-              <span>{d.name}</span>
-              <span className="font-medium">${(d.value / 1000).toFixed(0)}k</span>
-            </div>
-          ))}
-        </div>
       </div>
 
       {/* Audience Mix */}

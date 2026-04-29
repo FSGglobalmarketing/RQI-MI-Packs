@@ -34,8 +34,11 @@ export default function EventsSection() {
 
   const clearAll = () => setFilters({ category: [], region: [], quarter: [], status: [] });
 
-  // Only show RQI brand events
-  const rqiEvents = useMemo(() => e.list.filter((ev) => ev.brand === "RQI"), [e.list]);
+  // Only show RQI brand events for Q1
+  const rqiEvents = useMemo(
+    () => e.list.filter((ev) => ev.brand === "RQI" && ev.quarter === "Q1"),
+    [e.list],
+  );
 
   const filteredEvents = useMemo(() => {
     return rqiEvents.filter((ev) => {

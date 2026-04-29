@@ -12,7 +12,6 @@ const navItems = [
   { id: "website", label: "Website" },
   { id: "linkedin", label: "LinkedIn" },
   { id: "events", label: "Events" },
-  { id: "sentiment", label: "Sentiment" },
 ];
 
 /* Funnel stage groupings — indices into navItems */
@@ -21,7 +20,6 @@ const funnelStages = [
   { label: "Awareness", startIdx: 3, endIdx: 6 },
   { label: "Consideration", startIdx: 7, endIdx: 8 },
   { label: "Conversion", startIdx: 9, endIdx: 9 },
-  { label: "Monitoring", startIdx: 10, endIdx: 10 },
 ];
 
 export default function ReportNav() {

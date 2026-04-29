@@ -99,7 +99,7 @@ function RegionDropdown({ region, setRegion }: { region: SearchRegion; setRegion
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="region-pulse-btn flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all"
+        className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all bg-primary/10 text-primary border border-primary/20 hover:bg-primary/15"
       >
         {REGION_META[region].label}
         <ChevronDown className={`w-4 h-4 transition-transform ${open ? "rotate-180" : ""}`} />
