@@ -1,9 +1,18 @@
-name: Build Single HTML
+name: Build & Deploy to Pages
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -21,8 +30,28 @@ jobs:
       - run: npm ci
       - run: npm run build
 
-      - name: Upload artifact
+      - name: Add SPA fallback and .nojekyll
+        run: |
+          cp dist/index.html dist/404.html
+          touch dist/.nojekyll
+
+      - name: Upload single-file artifact
         uses: actions/upload-artifact@v4
         with:
           name: RQI-Marketing-Impact-Report
           path: dist/
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -457,7 +457,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
     >
       <canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
 
-      {!unlocked && <PasswordGate onUnlock={() => setUnlocked(true)} />}
+      {!unlocked && <PasswordGate onUnlock={finish} />}
 
       {/* Loading UI - only shown after password unlock */}
       <div style={{ position: 'absolute', inset: 0, zIndex: 20, opacity: unlocked ? 1 : 0, transition: 'opacity 0.8s cubic-bezier(.4,0,.2,1)', pointerEvents: unlocked ? 'auto' : 'none' }}>
