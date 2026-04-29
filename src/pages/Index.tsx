@@ -12,6 +12,7 @@ import EventsSection from "@/components/report/EventsSection";
 import SalesforceSection from "@/components/report/SalesforceSection";
 import SplashScreen from "@/components/report/SplashScreen";
 import VideoCarousel from "@/components/report/VideoCarousel";
+import FmotyCarousel from "@/components/report/FmotyCarousel";
 import SneakPeekSection from "@/components/report/SneakPeekSection";
 import AsiaMediaShowcase from "@/components/report/AsiaMediaShowcase";
 import { reportData } from "@/data/igneo-report";
@@ -69,6 +70,7 @@ const Index = () => {
         formats={d.highlights.fundManagerOfYear.formats}
         keyResults={d.highlights.fundManagerOfYear.keyResults}
         variant="dark"
+        phoneImage={<FmotyCarousel />}
       />
 
       {/* Highlight 4: RQI Demystified */}

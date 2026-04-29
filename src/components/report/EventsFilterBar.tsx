@@ -19,17 +19,11 @@ function getUniqueValues(events: EventItem[], key: keyof EventItem): string[] {
 export default function EventsFilterBar({ events, activeFilters, onToggleFilter, onClearAll }: EventsFilterBarProps) {
   const categories = getUniqueValues(events, "category");
   const regions = getUniqueValues(events, "region");
-  const statuses = ["committed", "proposed", "proprietary", "distribution-owned"];
 
   const hasActiveFilters = Object.values(activeFilters).some((arr) => arr.length > 0);
 
   return (
     <div className="flex flex-wrap items-center gap-3 mb-6">
-      {/* Status pills */}
-      <FilterGroup label="Status" values={statuses} active={activeFilters.status} onToggle={(v) => onToggleFilter("status", v)} />
-
-      <div className="w-px h-6 bg-secondary-foreground/10" />
-
       {/* Category pills */}
       <FilterGroup label="Type" values={categories} active={activeFilters.category} onToggle={(v) => onToggleFilter("category", v)} />
 
