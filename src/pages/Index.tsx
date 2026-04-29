@@ -19,11 +19,11 @@ import { reportData } from "@/data/igneo-report";
 import rqiLogoWhite from "@/assets/RQI_Positive_White.svg";
 
 const Index = () => {
-  const [showSplash, setShowSplash] = useState(false); // temporarily disabled for testing
+  const [showSplash, setShowSplash] = useState(true);
   const d = reportData;
   return (
     <div className="min-h-screen bg-background">
-      {/* {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />} */}
+      {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
       <ReportNav />
       <HeroSection />
       <GlobalFocus />
