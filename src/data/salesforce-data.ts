@@ -81,3 +81,49 @@ export const topCampaigns = [
   { campaign: "Morningstar FMOTY Award", interactions: 5 },
   { campaign: "LinkedIn", interactions: 3 },
 ];
+
+// ── Email performance: Q4 2025 vs Q1 2026 ─────────────────────────────
+// Source: Raw Data/Email/Q4 vs Q1 email campaign data.csv
+// Q4 = 11 sends, Q1 = 6 sends. Open / click rates computed against
+// delivered (sent − bounces).
+
+export interface EmailPeriodStats {
+  quarter: string;
+  campaigns: number;
+  sent: number;
+  delivered: number;
+  uniqueOpens: number;
+  openRate: number;       // unique opens / delivered
+  uniqueClicks: number;
+  ctr: number;            // unique clicks / delivered
+  ctor: number;           // unique clicks / unique opens
+  optOuts: number;
+}
+
+export const emailQuarterCompare: EmailPeriodStats[] = [
+  { quarter: "Q4 2025", campaigns: 11, sent: 3113, delivered: 3061, uniqueOpens: 1033, openRate: 0.3375, uniqueClicks: 204, ctr: 0.0666, ctor: 0.1975, optOuts: 33 },
+  { quarter: "Q1 2026", campaigns:  6, sent: 2928, delivered: 2910, uniqueOpens: 1040, openRate: 0.3574, uniqueClicks: 237, ctr: 0.0814, ctor: 0.2279, optOuts: 17 },
+];
+
+// ── Top Q1 email sends (ranked by unique opens) ───────────────────────
+// "WS" = Wholesale, "Insto" = Institutional. Display names are
+// shortened/cleaned versions of the raw Pardot campaign filenames.
+
+export interface TopEmail {
+  name: string;            // clean display name shown in the table
+  campaign: string;        // parent campaign / programme
+  sent: number;
+  uniqueOpens: number;
+  uniqueClicks: number;
+  openRate: number;        // decimal
+  ctor: number;            // decimal
+}
+
+export const topEmailsQ1: TopEmail[] = [
+  { name: "RQI Morningstar FMOTY award win",        campaign: "ANZ — Award announcement",          sent: 1056, uniqueOpens: 365, uniqueClicks: 20, openRate: 0.347,  ctor: 0.0548 },
+  { name: "RQI Wholesale quarterly newsletter",      campaign: "ANZ — WS quarterly newsletter",     sent:  589, uniqueOpens: 223, uniqueClicks: 51, openRate: 0.3818, ctor: 0.2287 },
+  { name: "RQI Institutional newsletter — Jan",      campaign: "ANZ — Insto monthly newsletter",    sent:  313, uniqueOpens: 117, uniqueClicks: 50, openRate: 0.3774, ctor: 0.4274 },
+  { name: "RQI Institutional newsletter — Mar",      campaign: "ANZ — Insto monthly newsletter",    sent:  309, uniqueOpens: 117, uniqueClicks: 56, openRate: 0.3811, ctor: 0.4786 },
+  { name: "RQI Institutional newsletter — Feb",      campaign: "ANZ — Insto monthly newsletter",    sent:  311, uniqueOpens: 113, uniqueClicks: 50, openRate: 0.3645, ctor: 0.4425 },
+  { name: "RQI Morningstar FMOTY award (NSW only)", campaign: "ANZ — Award announcement",          sent:  350, uniqueOpens: 105, uniqueClicks: 10, openRate: 0.3026, ctor: 0.0952 },
+];

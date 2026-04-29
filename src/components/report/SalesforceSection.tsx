@@ -7,6 +7,7 @@ import { CheckCircle2 } from "lucide-react";
 import {
   salesforceMarketingKpis, activityBreakdown, monthlyTrend,
   jobTitleBreakdown, topEngagedAccounts, oppAccountMatches, topCampaigns,
+  emailQuarterCompare, topEmailsQ1,
 } from "@/data/salesforce-data";
 
 const TABS = ["Activity", "Email", "Engagement", "Campaigns"] as const;
@@ -149,20 +150,105 @@ function ActivityTab() {
   );
 }
 
-/* ── Email — awaiting refreshed Pardot data ── */
+/* ── Email — Q4 2025 vs Q1 2026 (Pardot) ── */
 function EmailTab() {
+  const q4 = emailQuarterCompare[0];
+  const q1 = emailQuarterCompare[1];
+  const pct = (a: number, b: number) =>
+    b === 0 ? "—" : `${a >= b ? "+" : ""}${Math.round(((a - b) / b) * 100)}%`;
+  const ratePts = (a: number, b: number) =>
+    `${a >= b ? "+" : ""}${((a - b) * 100).toFixed(1)} pts`;
+
+  const headlineKpis = [
+    { label: "Emails sent",        q1: q1.sent.toLocaleString(),                 q4: q4.sent.toLocaleString(),                 delta: pct(q1.sent, q4.sent) },
+    { label: "Unique opens",       q1: q1.uniqueOpens.toLocaleString(),          q4: q4.uniqueOpens.toLocaleString(),          delta: pct(q1.uniqueOpens, q4.uniqueOpens) },
+    { label: "Open rate",          q1: `${(q1.openRate * 100).toFixed(1)}%`,     q4: `${(q4.openRate * 100).toFixed(1)}%`,     delta: ratePts(q1.openRate, q4.openRate) },
+    { label: "Click-to-open rate", q1: `${(q1.ctor * 100).toFixed(1)}%`,         q4: `${(q4.ctor * 100).toFixed(1)}%`,         delta: ratePts(q1.ctor, q4.ctor) },
+  ];
+
+  const openChart = [
+    { metric: "Opens",    q1: q1.uniqueOpens,  q4: q4.uniqueOpens },
+    { metric: "Clicks",   q1: q1.uniqueClicks, q4: q4.uniqueClicks },
+    { metric: "Opt-outs", q1: q1.optOuts,      q4: q4.optOuts },
+  ];
+
   return (
-    <div className="space-y-4">
-      <h3 className="text-lg font-semibold text-white">Email performance — Q4 2025 vs Q1 2026</h3>
-      <p className="text-xs text-white/70">
-        Detailed email metrics (sends, unique opens, open rate, CTOR, top campaigns) will populate this tab once the refreshed Pardot export has been supplied.
-      </p>
-      <div
-        className="rounded-xl px-6 py-12 text-center"
-        style={{ background: "rgba(255,255,255,0.03)", border: "1px dashed rgba(255,255,255,0.12)" }}
-      >
-        <p className="text-sm font-semibold text-white mb-1">Email data — pending</p>
-        <p className="text-xs text-white/60">Awaiting Q4 vs Q1 Pardot comparison + top sends list.</p>
+    <div className="space-y-8">
+      <div>
+        <h3 className="text-lg font-semibold mb-1 text-white">Email performance — Q4 2025 vs Q1 2026</h3>
+        <p className="text-xs text-white/70 mb-4">
+          RQI/Realindex Pardot sends. Q1 sent <span className="text-white font-semibold">5.9% fewer emails</span> than Q4 but unique opens held flat, open rate edged up <span className="text-white font-semibold">+2.0 pts</span> and click-to-open rate jumped <span className="text-white font-semibold">+3.0 pts</span> — fewer-but-better engagements. Opt-outs nearly halved.
+        </p>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+          {headlineKpis.map((k) => {
+            const isPositive = !k.delta.startsWith("-");
+            return (
+              <div
+                key={k.label}
+                className="rounded-lg px-4 py-3"
+                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
+              >
+                <div className="text-[10px] tracking-wider text-white/55">{k.label}</div>
+                <div className="flex items-baseline gap-2 mt-1">
+                  <span className="text-xl font-extrabold text-white tabular-nums">{k.q1}</span>
+                  <span className={`text-[11px] font-semibold tabular-nums ${isPositive ? "text-primary" : "text-white/55"}`}>
+                    {k.delta}
+                  </span>
+                </div>
+                <div className="text-[10px] text-white/45 mt-0.5">Q4: {k.q4}</div>
+              </div>
+            );
+          })}
+        </div>
+
+        <ResponsiveContainer width="100%" height={240}>
+          <BarChart data={openChart} margin={{ left: 0, right: 30, top: 5, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={CHART_GRID} />
+            <XAxis dataKey="metric" tick={{ fontSize: 12, fill: CHART_TICK_LIGHT }} />
+            <YAxis tick={{ fontSize: 12, fill: CHART_TICK_DIM }} />
+            <Tooltip contentStyle={CHART_TOOLTIP} cursor={CHART_CURSOR} />
+            <Legend wrapperStyle={{ color: "rgba(255,255,255,0.75)", paddingTop: 4 }} />
+            <Bar dataKey="q1" name="Q1 2026" fill={BAR_Q1} radius={[6, 6, 0, 0]} barSize={32} />
+            <Bar dataKey="q4" name="Q4 2025" fill={BAR_Q4} radius={[6, 6, 0, 0]} barSize={32} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+
+      <div>
+        <h3 className="text-lg font-semibold mb-1 text-white">Top Q1 sends</h3>
+        <p className="text-xs text-white/70 mb-4">
+          Ranked by unique opens. The Institutional monthly newsletters punch above their weight on click-to-open rate (43–48%), suggesting strong content–audience fit even on smaller lists.
+        </p>
+        <div className="overflow-hidden rounded-xl border" style={{ borderColor: "rgba(255,255,255,0.1)" }}>
+          <table className="w-full text-sm">
+            <thead>
+              <tr style={{ background: "rgba(255,255,255,0.04)" }}>
+                <th className="text-left p-3 font-medium text-white/70">Email</th>
+                <th className="text-right p-3 font-medium text-white/70">Sent</th>
+                <th className="text-right p-3 font-medium text-white/70">Opens</th>
+                <th className="text-right p-3 font-medium text-white/70">Clicks</th>
+                <th className="text-right p-3 font-medium text-white/70">Open rate</th>
+                <th className="text-right p-3 font-medium text-white/70">CTOR</th>
+              </tr>
+            </thead>
+            <tbody>
+              {topEmailsQ1.map((e) => (
+                <tr key={e.name} className="border-t" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+                  <td className="p-3 text-white">
+                    <div className="font-medium">{e.name}</div>
+                    <div className="text-[10px] text-white/45 mt-0.5">{e.campaign}</div>
+                  </td>
+                  <td className="p-3 text-right tabular-nums text-white">{e.sent.toLocaleString()}</td>
+                  <td className="p-3 text-right tabular-nums text-white">{e.uniqueOpens.toLocaleString()}</td>
+                  <td className="p-3 text-right tabular-nums text-white">{e.uniqueClicks.toLocaleString()}</td>
+                  <td className="p-3 text-right tabular-nums text-white">{(e.openRate * 100).toFixed(1)}%</td>
+                  <td className="p-3 text-right tabular-nums font-bold text-primary">{(e.ctor * 100).toFixed(1)}%</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
