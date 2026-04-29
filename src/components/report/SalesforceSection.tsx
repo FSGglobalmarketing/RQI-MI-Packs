@@ -6,12 +6,18 @@ import {
 import { CheckCircle2 } from "lucide-react";
 import {
   salesforceMarketingKpis, activityBreakdown, monthlyTrend,
-  jobTitleBreakdown, topEngagedAccounts, oppAccountMatches, topCampaigns,
+  topCampaigns, engagementByCompany,
   emailQuarterCompare, topEmailsQ1,
 } from "@/data/salesforce-data";
 
-const TABS = ["Activity", "Email", "Engagement", "Campaigns"] as const;
+const TABS = ["Activity", "Email", "Engagement", "Strategies", "Campaigns"] as const;
 type Tab = (typeof TABS)[number];
+
+// Channel colours for company × channel stack
+const BAR_CHANNEL_EMAIL = "hsl(var(--primary))";   // mint
+const BAR_CHANNEL_FORM  = "#56658B";               // slate
+const BAR_CHANNEL_LINK  = "#F99C46";               // brand orange
+const BAR_CHANNEL_WEB   = "#D37669";               // coral
 
 const SECTION_BG = "hsl(var(--ash))";
 const INNER_BG   = "hsl(0 0% 12%)";
@@ -102,6 +108,7 @@ export default function SalesforceSection() {
           {activeTab === "Activity" && <ActivityTab />}
           {activeTab === "Email" && <EmailTab />}
           {activeTab === "Engagement" && <EngagementTab />}
+          {activeTab === "Strategies" && <StrategiesTab />}
           {activeTab === "Campaigns" && <CampaignsTab />}
         </div>
       </div>
@@ -254,22 +261,34 @@ function EmailTab() {
   );
 }
 
-/* ── Engagement — top accounts + opp pipeline ── */
+/* ── Engagement — Contact engagement by company × channel ── */
 function EngagementTab() {
   return (
     <div className="space-y-8">
       <div>
-        <h3 className="text-lg font-semibold mb-1 text-white">Who are we reaching? — Job title breakdown</h3>
+        <h3 className="text-lg font-semibold mb-1 text-white">Contact engagement by company × channel</h3>
         <p className="text-xs text-white mb-4">
-          Q1 contact interactions by job title. Directors and Principals dominate — aligned with our wholesale-gatekeeper targeting. CIOs and Portfolio Managers confirm institutional reach.
+          Top 15 Salesforce accounts by Q1 RQI-tagged contact interactions, split by channel
+          (email opens + clicks, file views / form submissions, tracked custom-URL clicks,
+          Pardot-tagged web visits). Source: Salesforce Activity export, filtered to assets
+          containing "RQI" or "Realindex".
         </p>
-        <ResponsiveContainer width="100%" height={340}>
-          <BarChart data={jobTitleBreakdown} layout="vertical" margin={{ left: 10, right: 30, top: 5, bottom: 5 }}>
+        <ResponsiveContainer width="100%" height={520}>
+          <BarChart data={engagementByCompany} layout="vertical" margin={{ left: 20, right: 30, top: 5, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke={CHART_GRID} />
             <XAxis type="number" tick={{ fontSize: 11, fill: CHART_TICK_DIM }} />
-            <YAxis type="category" dataKey="title" width={160} tick={{ fontSize: 11, fill: CHART_TICK_LIGHT }} />
+            <YAxis
+              type="category"
+              dataKey="account"
+              width={200}
+              tick={{ fontSize: 11, fill: CHART_TICK_LIGHT }}
+            />
             <Tooltip contentStyle={CHART_TOOLTIP} cursor={CHART_CURSOR} />
-            <Bar dataKey="count" name="Interactions" fill={BAR_Q1} radius={[0, 6, 6, 0]} barSize={16} />
+            <Legend wrapperStyle={{ color: "rgba(255,255,255,0.75)", paddingTop: 4 }} />
+            <Bar dataKey="email" name="Email"        stackId="a" fill={BAR_CHANNEL_EMAIL} />
+            <Bar dataKey="form"  name="Form / File"  stackId="a" fill={BAR_CHANNEL_FORM} />
+            <Bar dataKey="link"  name="Link click"   stackId="a" fill={BAR_CHANNEL_LINK} />
+            <Bar dataKey="web"   name="Web"          stackId="a" fill={BAR_CHANNEL_WEB} radius={[0, 6, 6, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -278,69 +297,94 @@ function EngagementTab() {
         <div className="flex items-center gap-2 mb-3">
           <CheckCircle2 className="w-4 h-4 text-primary" />
           <p className="text-xs text-white">
-            Rows with a primary dot indicate accounts that have a <span className="text-white font-semibold">live (non-lost) Salesforce opportunity</span>.
+            Rows with a mint dot indicate accounts that have a <span className="text-white font-semibold">live (non-lost) Salesforce opportunity</span>.
           </p>
         </div>
         <div className="overflow-hidden rounded-xl border" style={{ borderColor: "rgba(255,255,255,0.1)" }}>
-          <table className="w-full text-sm table-fixed">
+          <table className="w-full text-sm">
             <thead>
               <tr style={{ background: "rgba(255,255,255,0.04)" }}>
-                <th className="text-left p-3 font-medium text-white w-[45%]">Account</th>
-                <th className="text-left p-3 font-medium text-white w-[35%]">Opp Stage</th>
-                <th className="text-right p-3 font-medium text-white w-[20%]">Interactions</th>
+                <th className="text-left  p-3 font-medium text-white/70">Account</th>
+                <th className="text-left  p-3 font-medium text-white/70">Opp Stage</th>
+                <th className="text-right p-3 font-medium text-white/70">Email</th>
+                <th className="text-right p-3 font-medium text-white/70">Form / File</th>
+                <th className="text-right p-3 font-medium text-white/70">Link</th>
+                <th className="text-right p-3 font-medium text-white/70">Web</th>
+                <th className="text-right p-3 font-medium text-white/70">Total</th>
               </tr>
             </thead>
             <tbody>
-              {topEngagedAccounts.map((row) => {
-                const opp = oppAccountMatches.find((o) => o.account === row.account);
-                return (
-                  <tr
-                    key={row.account}
-                    className="border-t"
-                    style={{
-                      borderColor: "rgba(255,255,255,0.06)",
-                      background: row.isOpp ? "hsl(var(--primary) / 0.08)" : undefined,
-                    }}
-                  >
-                    <td className="p-3 font-medium text-white">
-                      <div className="flex items-center gap-2">
-                        {row.isOpp && (
-                          <span
-                            title="Live Salesforce opportunity"
-                            className="inline-block w-2 h-2 rounded-full shrink-0"
-                            style={{ background: "hsl(var(--primary))" }}
-                          />
-                        )}
-                        <span className="truncate">{row.account}</span>
-                      </div>
-                    </td>
-                    <td className="p-3 text-xs">
-                      {row.isOpp && opp ? (
+              {engagementByCompany.map((row) => (
+                <tr
+                  key={row.account}
+                  className="border-t"
+                  style={{
+                    borderColor: "rgba(255,255,255,0.06)",
+                    background: row.isOpp ? "hsl(var(--primary) / 0.06)" : undefined,
+                  }}
+                >
+                  <td className="p-3 font-medium text-white">
+                    <div className="flex items-center gap-2">
+                      {row.isOpp && (
                         <span
-                          className="inline-block px-2 py-0.5 rounded-full font-semibold"
-                          style={{
-                            background: opp.stage.includes("Won") || opp.stage.includes("Funded") ? "hsl(var(--success) / 0.18)" :
-                                        opp.stage.includes("Active") ? "hsl(var(--primary) / 0.18)" :
-                                        "rgba(255,255,255,0.08)",
-                            color: opp.stage.includes("Won") || opp.stage.includes("Funded") ? "hsl(var(--success))" :
-                                   opp.stage.includes("Active") ? "hsl(var(--primary))" :
-                                   "rgba(255,255,255,0.7)",
-                            fontSize: 10,
-                          }}
-                        >
-                          {opp.stage}
-                        </span>
-                      ) : (
-                        <span className="text-white/30">—</span>
+                          title="Live Salesforce opportunity"
+                          className="inline-block w-2 h-2 rounded-full shrink-0"
+                          style={{ background: "hsl(var(--primary))" }}
+                        />
                       )}
-                    </td>
-                    <td className="p-3 text-right tabular-nums font-bold text-primary">{row.interactions.toLocaleString()}</td>
-                  </tr>
-                );
-              })}
+                      <span>{row.account}</span>
+                    </div>
+                  </td>
+                  <td className="p-3 text-xs">
+                    {row.isOpp && row.oppStage ? (
+                      <span
+                        className="inline-block px-2 py-0.5 rounded-full font-semibold"
+                        style={{
+                          background: row.oppStage.includes("Won") || row.oppStage.includes("Funded") ? "hsl(var(--success) / 0.18)" :
+                                      row.oppStage.includes("Active") ? "hsl(var(--primary) / 0.18)" :
+                                      "rgba(255,255,255,0.08)",
+                          color: row.oppStage.includes("Won") || row.oppStage.includes("Funded") ? "hsl(var(--success))" :
+                                 row.oppStage.includes("Active") ? "hsl(var(--primary))" :
+                                 "rgba(255,255,255,0.85)",
+                          fontSize: 10,
+                        }}
+                      >
+                        {row.oppStage}
+                      </span>
+                    ) : (
+                      <span className="text-white/30">—</span>
+                    )}
+                  </td>
+                  <td className="p-3 text-right tabular-nums text-white">{row.email.toLocaleString()}</td>
+                  <td className="p-3 text-right tabular-nums text-white">{row.form.toLocaleString()}</td>
+                  <td className="p-3 text-right tabular-nums text-white">{row.link.toLocaleString()}</td>
+                  <td className="p-3 text-right tabular-nums text-white">{row.web.toLocaleString()}</td>
+                  <td className="p-3 text-right tabular-nums font-bold text-primary">{row.total.toLocaleString()}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Strategies — pending email→strategy mapping ── */
+function StrategiesTab() {
+  return (
+    <div className="space-y-4">
+      <h3 className="text-lg font-semibold text-white">Contact engagement by strategy</h3>
+      <p className="text-xs text-white/70">
+        Q1 RQI-tagged interactions classified by strategy. Will populate once each Q1 send /
+        asset is tagged to its underlying strategy (e.g. Global Value, Indices, Demystified).
+      </p>
+      <div
+        className="rounded-xl px-6 py-12 text-center"
+        style={{ background: "rgba(255,255,255,0.03)", border: "1px dashed rgba(255,255,255,0.12)" }}
+      >
+        <p className="text-sm font-semibold text-white mb-1">Strategy mapping — pending</p>
+        <p className="text-xs text-white/60">Awaiting strategy + campaign tagging for each Q1 email.</p>
       </div>
     </div>
   );

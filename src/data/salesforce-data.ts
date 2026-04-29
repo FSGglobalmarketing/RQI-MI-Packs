@@ -42,19 +42,61 @@ export const jobTitleBreakdown = [
 ];
 
 // Top engaged accounts (external only, excluding RQI Investors)
+// Legacy export retained for any callers; superseded by engagementByCompany.
 export const topEngagedAccounts = [
   { account: "Mercer Investments", interactions: 261, isOpp: true },
   { account: "HUB24", interactions: 77, isOpp: false },
   { account: "Team Super", interactions: 51, isOpp: true },
-  { account: "Funds SA", interactions: 42, isOpp: false },
+  { account: "Funds SA", interactions: 42, isOpp: true },
   { account: "Commonwealth Super", interactions: 42, isOpp: false },
-  { account: "CBUS Super", interactions: 41, isOpp: false },
-  { account: "JANA Investment Advisers", interactions: 35, isOpp: false },
-  { account: "St Peter's College", interactions: 33, isOpp: false },
+  { account: "CBUS Super", interactions: 41, isOpp: true },
+  { account: "JANA Investment Advisers", interactions: 35, isOpp: true },
+  { account: "St Peter's College", interactions: 32, isOpp: false },
   { account: "ANZ Staff Super", interactions: 23, isOpp: false },
   { account: "Future Group", interactions: 23, isOpp: false },
   { account: "Fiducian Financial", interactions: 22, isOpp: false },
   { account: "Evidentia Group", interactions: 20, isOpp: true },
+];
+
+// ── Contact engagement by company × channel (Q1 2026) ──
+// Source: Raw Data/CRM/Salesforce Activity.xlsx (Prospect Activity sheet),
+// filtered to Asset Name containing "RQI" or "Realindex" and Activity Date
+// in Q1 2026. RQI Investors (self-account) excluded. Channel mapping:
+//   Email   = Activity in {Open, Email Click}
+//   Form    = Asset Type = File   (file views / downloads)
+//   Link    = Activity = Custom URL Click
+//   Web     = Asset Type in {Web Page, Page View, Visitor Page View}
+// 559 unique external accounts engaged in Q1; top 15 shown below.
+// Opportunity stage from RQI Opportunities Report (live opps only —
+// "Lost" excluded). "Won / Funded" includes stages 5 & 7.
+
+export interface CompanyChannelRow {
+  account: string;
+  email: number;
+  web: number;
+  form: number;
+  link: number;
+  total: number;
+  isOpp?: boolean;
+  oppStage?: string;
+}
+
+export const engagementByCompany: CompanyChannelRow[] = [
+  { account: "Mercer Investments",         email: 258, web: 0, form:  3, link: 0, total: 261, isOpp: true,  oppStage: "Won / Funded"       },
+  { account: "HUB24",                      email:  57, web: 0, form: 20, link: 0, total:  77, isOpp: false },
+  { account: "Team Super",                 email:  40, web: 0, form: 11, link: 0, total:  51, isOpp: true,  oppStage: "Initiated Dialogue" },
+  { account: "Funds SA",                   email:  26, web: 0, form: 16, link: 0, total:  42, isOpp: true,  oppStage: "DD Long List"       },
+  { account: "Commonwealth Super",         email:  30, web: 0, form: 12, link: 0, total:  42, isOpp: false },
+  { account: "CBUS Super",                 email:  38, web: 0, form:  3, link: 0, total:  41, isOpp: true,  oppStage: "Won / Funded"       },
+  { account: "JANA Investment Advisers",   email:  22, web: 0, form: 13, link: 0, total:  35, isOpp: true,  oppStage: "Initiated Dialogue" },
+  { account: "St Peter's College",         email:  32, web: 0, form:  0, link: 0, total:  32, isOpp: false },
+  { account: "ANZ Staff Super",            email:  23, web: 0, form:  0, link: 0, total:  23, isOpp: false },
+  { account: "Future Group",               email:  23, web: 0, form:  0, link: 0, total:  23, isOpp: false },
+  { account: "Fiducian Financial",         email:  22, web: 0, form:  0, link: 0, total:  22, isOpp: false },
+  { account: "Financial Guidance",         email:  22, web: 0, form:  0, link: 0, total:  22, isOpp: false },
+  { account: "Fire & Emergency Super",     email:  21, web: 0, form:  0, link: 0, total:  21, isOpp: false },
+  { account: "Resolution Life / Acenda",   email:   9, web: 0, form: 11, link: 0, total:  20, isOpp: false },
+  { account: "Evidentia Group",            email:  20, web: 0, form:  0, link: 0, total:  20, isOpp: true,  oppStage: "Won / Funded"       },
 ];
 
 // Opportunity accounts that had marketing touches in Q1
