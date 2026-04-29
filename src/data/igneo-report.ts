@@ -133,8 +133,8 @@ export const reportData = {
   },
 
   searchVisibility: {
-    description: "Our global brand visibility is increasing significantly. We are seeing a noticeable improvement to page rankings in Hong Kong and are increasing our share of voice in the UK and Nordics.",
-    goal: "See a noticeable improvement to page rankings in Hong Kong, increase our share of voice in the UK and Nordics, and gather benchmark data for Germany.",
+    description: "Q1 non-branded keyword count held flat QoQ at 78 across AU / DE / SG / UK, but is down 15% YoY (-14 keywords) following a sharp Q4 2025 drop. The UK (39) and Singapore (28) carry most of our visibility; Australia (10) edged up +1 QoQ and Germany has been a single-keyword presence for over a year. Every tracked peer — Robeco, Macquarie, Acadian, PIMCO and AQR — has grown its footprint over the same period, putting real share-of-voice pressure on us.",
+    goal: "Stabilise the keyword base after the Q4 fall and start rebuilding share of voice. The UK is our largest market by far (39 keywords vs Robeco's 586) and Singapore is still slipping (-5 YoY) — both need focused content velocity. Germany remains a benchmark-only market until we have a reason to invest, and Australia is the small bright spot we should build on.",
     marketingActivities: [
       "Display Ads (HK Brand Campaign)",
       "Sponsored press (HK Brand Campaign)",
