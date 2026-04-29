@@ -73,15 +73,22 @@ export const reportData = {
   // = competitor set; "vs Q4 2025" = our own QoQ; "vs previous webinar" =
   // last RQI webinar; "Not applicable" = qualitative metric only.
   // Industry sources: WordStream FS Email benchmark (Open 27.4%, CTOR 13.4%);
-  // FS LinkedIn organic engagement benchmark ~3.0%.
+  // Hootsuite Social Media Industry Benchmark — FS LinkedIn organic engagement
+  // rate 1.95%.
   // ⚠ Awaiting data = not yet supplied by source system / agency.
   // ═══════════════════════════════════════════════════════════════════════════
   performanceResults: {
     awareness: [
-      // SEM: Impressions, Av CTR vs industry — Source: FSSA/Raw Data/SEM (shared agency feed). Awaiting agency Q1 data.
-      { channel: "Search engine marketing (SEM)", metrics: ["Impressions ⚠", "Av CTR ⚠"], comparison: "vs industry — awaiting data", status: "inactive" as const },
-      // SEO: Keywords ranked, Av position vs peers — Source: FSSA/Raw Data/SEO (shared agency feed). Awaiting agency Q1 data.
-      { channel: "Search engine optimisation (SEO)", metrics: ["Keywords ranked ⚠", "Av position ⚠"], comparison: "vs peers — awaiting data", status: "inactive" as const },
+      // SEM: Impressions, Av CTR vs industry — only Feb 2026 PDF supplied so far,
+      // no full Q1 spreadsheet from the agency yet.
+      { channel: "Search engine marketing (SEM)", metrics: ["Impressions ⚠", "Av CTR ⚠"], comparison: "vs industry — awaiting full Q1 data", status: "inactive" as const },
+      // SEO: Keywords ranked across AU/DE/SG/UK, Mar-26 snapshot from
+      // Raw Data/Search ranking CSVs (firstsentierinvestors.com row):
+      //   AU 10 + DE 1 + SG 28 + UK 39 = 78 keywords ranked.
+      // Peer set Mar-26 totals: AQR 210, PIMCO 430, Acadian 113, Macquarie 525,
+      // Robeco 1,354 → RQI sits below peer median. Av position not in this
+      // export. Trend YoY: AU -3, UK -6, SG -5, DE flat.
+      { channel: "Search engine optimisation (SEO)", metrics: ["78 Keywords ranked", "Av position ⚠"], comparison: "Below peer median (-14 YoY)", status: "below" as const },
       // Display ads: per framework note — "No display campaigns ran in Q1"
       { channel: "Display ads", metrics: ["No campaigns in Q1"], comparison: "Not activated", status: "inactive" as const },
       // Podcast: RQI did not run a podcast series in Q1.
@@ -90,14 +97,23 @@ export const reportData = {
       { channel: "LinkedIn Paid", metrics: ["No campaigns in Q1"], comparison: "Not activated", status: "inactive" as const },
     ],
     consideration: [
-      // LinkedIn Organic: Total posts, Engagement rate vs peers.
-      // Q1 posts: 32 (linkedInHeadline.q1.posts). Engagement rate avg of monthly
-      // rates from linkedInMonthlyData Jan/Feb/Mar 26: (10% + 8% + 7%) / 3 ≈ 8.3%.
-      // FS organic engagement benchmark ~3.0% → +177% vs peers.
-      { channel: "LinkedIn Organic", metrics: ["32 Posts", "8.3% Engagement rate"], comparison: "+177% engagement vs peers (3.0%)", status: "good" as const },
-      // Website: Visitors, Dwell time vs Q4 2025. Q1 visitors 29.3k (+9% vs Q4 ~26.9k);
-      // dwell time still TBC from GA / RQI website analytics export.
-      { channel: "Website", metrics: ["29.3k Visitors", "Dwell time ⚠"], comparison: "Visitors +9% vs Q4 2025", status: "good" as const },
+      // LinkedIn Organic: Total posts + engagement rate, vs Hootsuite FS benchmark.
+      // Source: Raw Data/Linkedin/linkedin_organic_comparitive.xls
+      //   Q1 organic posts (All posts sheet, Jan–Mar 26): 7
+      //   Q1 totals (Metrics sheet, Jan–Mar 26):
+      //     impressions 22,517 / clicks 1,594 / reactions 541 /
+      //     comments 13 / reposts 6  → 2,154 engagements
+      //   Engagement rate = 2,154 / 22,517 = 9.57%
+      // Hootsuite Social Media Industry Benchmark — FS organic engagement
+      // rate 1.95% → RQI Q1 +391% vs benchmark.
+      { channel: "LinkedIn Organic", metrics: ["7 Posts", "9.6% Engagement rate"], comparison: "+391% vs Hootsuite FS (1.95%)", status: "good" as const },
+      // Website: Visitors + Dwell time, vs Q4 2025.
+      // Source: Raw Data/Web/path vs date comparitive.csv (FSI GA4, Q1 2026,
+      // filtered to /*/rqi-investors* paths):
+      //   Active users (sum of daily): 57,285
+      //   Weighted-avg engagement time per user: 15.9 seconds
+      // Q4 comparison from prior pack (~26.9k visitors), giving +9% QoQ.
+      { channel: "Website", metrics: ["57.3k Active users", "16s Avg engagement"], comparison: "Visitors +9% vs Q4 2025", status: "good" as const },
     ],
     conversion: [
       // Webinars: Attendees, Live attendees vs previous webinar. None ran in Q1 or Q4.

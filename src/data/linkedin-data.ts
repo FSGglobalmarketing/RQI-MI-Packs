@@ -102,20 +102,21 @@ export const q4DailyEngagement: DailyEngagement[] = [
 ];
 
 // ── Headline KPIs: Q4 2025 vs Q1 2026 (matches FSSA/Igneo methodology) ──
-// Computed from linkedInMonthlyData totals.
-// Q4: Oct + Nov + Dec 25; Q1: Jan + Feb + Mar 26.
+// Source: Raw Data/Linkedin/linkedin_organic_comparitive.xls (organic only).
+// Post counts from "All posts" sheet; impressions/clicks from "Metrics" sheet
+// daily totals summed by quarter.
 export const linkedInHeadline = {
   q4: {
-    impressions: 118345,   // 14,910 organic + 103,435 sponsored
-    clicks: 1805,
-    avgCtr: 0.0153,        // 1,805 / 118,345
-    posts: 28,             // approx organic post count for Q4 2025
+    impressions: 17878,    // organic Q4 2025 (Oct–Dec)
+    clicks: 826,
+    avgCtr: 0.0462,        // 826 / 17,878
+    posts: 6,              // organic posts created Oct–Dec 25
   },
   q1: {
-    impressions: 45855,    // 22,517 organic + 23,338 sponsored
+    impressions: 22517,    // organic Q1 2026 (Jan–Mar)
     clicks: 1594,
-    avgCtr: 0.0348,        // 1,594 / 45,855
-    posts: 32,             // approx organic post count for Q1 2026
+    avgCtr: 0.0708,        // 1,594 / 22,517
+    posts: 7,              // organic posts created Jan–Mar 26
   },
 };
 
