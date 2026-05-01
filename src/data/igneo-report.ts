@@ -82,13 +82,17 @@ export const reportData = {
       // SEM: Impressions, Av CTR vs industry — only Feb 2026 PDF supplied so far,
       // no full Q1 spreadsheet from the agency yet.
       { channel: "Search engine marketing (SEM)", metrics: ["Impressions ⚠", "Av CTR ⚠"], comparison: "vs industry — awaiting full Q1 data", status: "inactive" as const },
-      // SEO: Keywords ranked across AU/DE/SG/UK, Mar-26 snapshot from
-      // Raw Data/Search ranking CSVs (firstsentierinvestors.com row):
-      //   AU 10 + DE 1 + SG 28 + UK 39 = 78 keywords ranked.
-      // Peer set Mar-26 totals: AQR 210, PIMCO 430, Acadian 113, Macquarie 525,
-      // Robeco 1,354 → RQI sits below peer median. Av position not in this
-      // export. Trend YoY: AU -3, UK -6, SG -5, DE flat.
-      { channel: "Search engine optimisation (SEO)", metrics: ["78 Keywords ranked", "Av position ⚠"], comparison: "Below peer median (-14 YoY)", status: "below" as const },
+      // SEO: Australia refreshed Q1 2026 from BrightEdge AU export
+      // (firstsentierinvestors.com.au). Mar-26 snapshot:
+      //   66 non-branded keywords ranked
+      //   Av position: 14 (median 13)
+      //   Page-1 share: 30 of 67 = 45%
+      //   YoY: +22 keywords (+50% from 44 in Mar-25)
+      // Now leads tracked AU peer set (Robeco 60, Macquarie 59, PIMCO 19,
+      // Acadian 14, Plato 10, Platinum 9, AQR 8). UK / SG / DE still on
+      // legacy dataset — pending refresh, so cross-region totals are
+      // mixed-methodology and not used here.
+      { channel: "Search engine optimisation (SEO)", metrics: ["66 AU keywords (Av pos 14)", "+50% YoY"], comparison: "RQI leads AU peer set; UK/SG/DE refreshing", status: "good" as const },
       // Display ads: per framework note — "No display campaigns ran in Q1"
       { channel: "Display ads", metrics: ["No campaigns in Q1"], comparison: "Not activated", status: "inactive" as const },
       // Podcast: RQI did not run a podcast series in Q1.
@@ -133,8 +137,8 @@ export const reportData = {
   },
 
   searchVisibility: {
-    description: "Q1 non-branded keyword count held flat QoQ at 78 across AU / DE / SG / UK, but is down 15% YoY (-14 keywords) following a sharp Q4 2025 drop. The UK (39) and Singapore (28) carry most of our visibility; Australia (10) edged up +1 QoQ and Germany has been a single-keyword presence for over a year. Every tracked peer — Robeco, Macquarie, Acadian, PIMCO and AQR — has grown its footprint over the same period, putting real share-of-voice pressure on us.",
-    goal: "Stabilise the keyword base after the Q4 fall and start rebuilding share of voice. The UK is our largest market by far (39 keywords vs Robeco's 586) and Singapore is still slipping (-5 YoY) — both need focused content velocity. Germany remains a benchmark-only market until we have a reason to invest, and Australia is the small bright spot we should build on.",
+    description: "Australia data refreshed for Q1 (firstsentierinvestors.com.au): RQI ranks 66 non-branded keywords, up +50% YoY from 44 in Mar 2025. 30 of those (45%) sit on Page 1 of Google with an average position of 14. RQI now leads the tracked AU peer set — ahead of Robeco (60), Macquarie (59), PIMCO (19), Acadian (14), Plato (10), Platinum (9) and AQR (8). UK, Singapore and Germany still show the legacy dataset and will refresh on the same methodology shortly.",
+    goal: "Build on Australia's strong Q1 momentum — particularly the page-1 quant-fund queries we already lead — while the agency refreshes UK / SG / DE on the same BrightEdge methodology. Once all four markets are on the new dataset we'll have a clean cross-region picture and can re-set targets.",
     marketingActivities: [
       "Display Ads (HK Brand Campaign)",
       "Sponsored press (HK Brand Campaign)",

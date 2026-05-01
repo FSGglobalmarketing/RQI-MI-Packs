@@ -1,7 +1,10 @@
 /**
  * Organic search keyword ranking data by region.
  * Source: BrightEdge non-branded keyword positions (pages 1-3).
- * Domain www.firstsentierinvestors.com = RQI Investors.
+ * Domain firstsentierinvestors.com.au (AU) — other regions still on
+ * the global firstsentierinvestors.com domain pending refresh.
+ * AU refreshed Q1 2026; UK / SG / DE pending refresh on the same
+ * methodology and may show different peer-set / scale once updated.
  */
 
 const MONTHS = [
@@ -53,18 +56,21 @@ const UK_RAW: Record<string, number[]> = {
   Fidelity: [312, 320, 335, 342, 350, 358, 365, 370, 362, 355, 348, 352, 360],
 };
 
+// Australia — refreshed Q1 2026 from BrightEdge AU export
+// (Raw Data/Search/Aus Ranking Keywords.xlsx). Tracks
+// firstsentierinvestors.com.au (the AU-specific domain) — peer set and
+// methodology are different from the legacy CSV: RQI now leads the
+// AU peer set on ranked-keyword count.
 const AUS_RAW: Record<string, number[]> = {
-  AQR: [28, 29, 30, 34, 33, 34, 34, 34, 34, 34, 30, 31, 34],
-  Acadian: [60, 59, 68, 82, 93, 115, 129, 130, 137, 145, 145, 148, 156],
-  RQI: [13, 18, 14, 12, 14, 13, 13, 13, 11, 9, 10, 11, 10],
-  Arrowstreet: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  Osmosis: [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  Macquarie: [194, 209, 214, 219, 228, 246, 256, 257, 244, 248, 253, 258, 267],
-  Robeco: [76, 80, 85, 82, 88, 99, 107, 106, 97, 93, 99, 102, 109],
-  Platinum: [17, 18, 17, 17, 24, 17, 20, 22, 23, 28, 28, 27, 27],
-  PIMCO: [20, 25, 23, 25, 28, 21, 21, 20, 19, 19, 20, 18, 29],
-  Plato: [34, 32, 30, 30, 29, 28, 29, 27, 28, 28, 28, 27, 26],
-  Fidelity: [145, 150, 155, 160, 158, 162, 168, 172, 170, 165, 163, 160, 165],
+  RQI:         [44, 41, 40, 53, 59, 67, 66, 65, 64, 67, 67, 69, 66],
+  Robeco:      [41, 42, 43, 43, 46, 52, 52, 48, 46, 49, 50, 55, 60],
+  Macquarie:   [53, 59, 60, 63, 67, 71, 70, 64, 62, 63, 61, 57, 59],
+  PIMCO:       [15, 13, 15, 17, 13, 13, 12, 12, 11, 11,  9, 19, 19],
+  Acadian:     [ 3,  3,  5,  8, 10, 12, 13, 14, 12, 13, 14, 14, 14],
+  Plato:       [17, 15, 16, 16, 13, 14, 11, 11, 11, 11, 11, 11, 10],
+  Platinum:    [ 7,  4,  5, 10,  6,  7,  7,  7,  8,  8,  9,  9,  9],
+  AQR:         [ 5,  5,  6,  6,  6,  6,  7,  7,  7,  5,  5,  7,  8],
+  Arrowstreet: [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
 };
 
 const DE_RAW: Record<string, number[]> = {
