@@ -46,8 +46,8 @@ export default function SalesforceSection() {
     >
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <span className="stage-badge text-xs inline-block mb-3">Marketing Funnel</span>
-        <h2 className="text-2xl sm:text-3xl font-bold text-white">Client Engagement.</h2>
-        <p className="text-sm leading-relaxed text-white mb-6">Tracking Salesforce contact activity across marketing</p>
+        <h2 className="text-2xl sm:text-3xl font-bold text-white">Client Engagement</h2>
+        <p className="text-sm leading-relaxed text-white mb-6">Tracking Salesforce contact activity across marketing.</p>
 
         {/* Two-column hero: narrative left, KPI 2×2 right */}
         <div className="grid lg:grid-cols-2 gap-8 mb-6 items-start">
@@ -121,9 +121,9 @@ function ActivityTab() {
   return (
     <div className="space-y-8">
       <div>
-        <h3 className="text-lg font-semibold mb-1 text-white">Contact engagement types — Q1 vs Q4</h3>
+        <h3 className="text-lg font-semibold mb-1 text-white">Email engagement types — Q1 vs Q4</h3>
         <p className="text-xs text-white mb-4">
-          Salesforce contact activity on RQI/Realindex-tagged assets and campaigns: email opens, email clicks, file downloads, website visits, etc. Q1 grew +11.5% vs Q4 with file downloads up +73%.
+          Email-driven engagement on RQI / Realindex campaigns: opens, clicks, file downloads attached to eDMs, plus the trickle of CRM-tracked web visits. Q1 grew +11.5% vs Q4 with file downloads up +73%.
         </p>
         <ResponsiveContainer width="100%" height={280}>
           <BarChart data={activityBreakdown} margin={{ left: 0, right: 30, top: 5, bottom: 5 }}>
@@ -139,7 +139,7 @@ function ActivityTab() {
       </div>
 
       <div>
-        <h3 className="text-lg font-semibold mb-1 text-white">Monthly contact-engagement volume</h3>
+        <h3 className="text-lg font-semibold mb-1 text-white">Monthly email engagement volume</h3>
         <p className="text-xs text-white mb-4">
           March spike driven by the Morningstar FMOTY announcement and newsletter distribution. February dip is typical seasonally.
         </p>
@@ -199,7 +199,7 @@ function EmailTab() {
                 <div className="text-[10px] tracking-wider text-white/55">{k.label}</div>
                 <div className="flex items-baseline gap-2 mt-1">
                   <span className="text-xl font-extrabold text-white tabular-nums">{k.q1}</span>
-                  <span className={`text-[11px] font-semibold tabular-nums ${isPositive ? "text-primary" : "text-white/55"}`}>
+                  <span className={`text-[11px] font-semibold tabular-nums ${isPositive ? "text-primary" : "text-accent-orange"}`}>
                     {k.delta}
                   </span>
                 </div>
@@ -266,12 +266,13 @@ function EngagementTab() {
   return (
     <div className="space-y-8">
       <div>
-        <h3 className="text-lg font-semibold mb-1 text-white">Contact engagement by company × channel</h3>
+        <h3 className="text-lg font-semibold mb-1 text-white">Email engagement by company</h3>
         <p className="text-xs text-white mb-4">
-          Top 15 Salesforce accounts by Q1 RQI-tagged contact interactions, split by channel
-          (email opens + clicks, file views / form submissions, tracked custom-URL clicks,
-          Pardot-tagged web visits). Source: Salesforce Activity export, filtered to assets
-          containing "RQI" or "Realindex".
+          Top 15 Salesforce accounts by Q1 email-driven engagement on RQI / Realindex
+          campaigns. The bulk of activity (89%) is email opens and clicks; the small
+          form / file slice is downloads attached to the same eDM sends. Source:
+          Salesforce contact-activity export, filtered to assets tagged "RQI" or
+          "Realindex".
         </p>
         <ResponsiveContainer width="100%" height={520}>
           <BarChart data={engagementByCompany} layout="vertical" margin={{ left: 20, right: 30, top: 5, bottom: 5 }}>
@@ -374,10 +375,10 @@ function EngagementTab() {
 function StrategiesTab() {
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-semibold text-white">Contact engagement by strategy</h3>
+      <h3 className="text-lg font-semibold text-white">Email engagement by strategy</h3>
       <p className="text-xs text-white/70">
-        Q1 RQI-tagged interactions classified by strategy. Will populate once each Q1 send /
-        asset is tagged to its underlying strategy (e.g. Global Value, Indices, Demystified).
+        Q1 email engagement classified by underlying strategy. Will populate once each Q1
+        send is tagged to its strategy (e.g. Global Value, Indices, Demystified).
       </p>
       <div
         className="rounded-xl px-6 py-12 text-center"
@@ -394,7 +395,7 @@ function StrategiesTab() {
 function CampaignsTab() {
   return (
     <div>
-      <h3 className="text-lg font-semibold mb-1 text-white">Top campaigns driving contact engagement</h3>
+      <h3 className="text-lg font-semibold mb-1 text-white">Top campaigns driving email engagement</h3>
       <p className="text-xs text-white mb-4">
         Always-on ANZ campaigns drive the bulk of interactions. The Morningstar FMOTY campaign is early but showing traction. Newsletter engagement remains strong with institutional contacts.
       </p>

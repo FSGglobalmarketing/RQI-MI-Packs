@@ -314,14 +314,17 @@ export const reportData = {
       { month: "Feb 26", users: 5013, sessions: 6552, pageViews: 6552, bounceRate: 0, avgDuration: 0 },
       { month: "Mar 26", users: 5165, sessions: 7172, pageViews: 7172, bounceRate: 0, avgDuration: 0 },
     ],
+    // Top RQI child / insight pages — homepage / fund-landing pages excluded.
+    // Source: Raw Data/Web/path vs date comparitive.csv (Q1 2026 GA4),
+    // aggregated across regions where the same content is duplicated.
     topPages: [
-      { page: "HK Retail (Chinese)", views: 13980, q4Views: 1759, change: "+695%" },
-      { page: "AU Adviser", views: 8696, q4Views: 8733, change: "~0%" },
-      { page: "HK Retail (English)", views: 7715, q4Views: 1042, change: "+640%" },
-      { page: "AU Institutional", views: 664, q4Views: 369, change: "+80%" },
-      { page: "AU Individual", views: 603, q4Views: 522, change: "+16%" },
-      { page: "AU Team Members", views: 573, q4Views: 470, change: "+22%" },
-      { page: "SG Retail", views: 468, q4Views: 17552, change: "-97%" },
+      { page: "Quantitative Value Strategy", views: 1668, change: "AU 821 · HK 430 · others" },
+      { page: "Team members", views: 1492, change: "AU 1230 · HK 118 · others" },
+      { page: "Diversified Alpha — Long-Short Fund", views: 457, change: "Insto AU" },
+      { page: "Diversified Alpha Strategy", views: 364, change: "Adviser AU" },
+      { page: "Responsible Investment", views: 178, change: "Adviser AU" },
+      { page: "RQI Insights (landing)", views: 146, change: "Adviser AU" },
+      { page: "In Search of Alpha — RQI Long-Short & Adaptive Leverage", views: 111, change: "Insight article" },
     ],
     trafficSources: [
       { source: "Paid / Display", percentage: 57 },

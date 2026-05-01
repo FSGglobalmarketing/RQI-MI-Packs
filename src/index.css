@@ -288,7 +288,7 @@
   }
 
   .stat-negative {
-    color: hsl(var(--primary));
+    color: hsl(var(--accent-orange));
     @apply font-semibold text-sm;
   }
 

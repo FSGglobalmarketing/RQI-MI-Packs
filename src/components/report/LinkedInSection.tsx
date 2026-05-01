@@ -14,14 +14,14 @@ import KpiRow from "./KpiRow";
 const TABS = ["Timeline", "Content Mix", "Org vs Spn", "Top Posts"] as const;
 type Tab = typeof TABS[number];
 
-// LinkedIn section is on dark Ash; use high-contrast brand colours
+// LinkedIn section is on cream/white bg; chart uses high-contrast brand colours
 const COLOR_ORGANIC = "#0F9AFF";       // RQI Blue (primary on dark — pops on ash)
 const COLOR_SPONSORED = "#F99C46";     // Brand orange (secondary)
 const COLOR_IMPRESSIONS = "#53b8bb";   // Mint
 
-const CHART_GRID = "rgba(255,255,255,0.06)";
-const CHART_TICK = "rgba(255,255,255,0.85)";
-const LEGEND_TEXT = "#ffffff";
+const CHART_GRID = "rgba(0,0,0,0.07)";
+const CHART_TICK = "rgba(0,0,0,0.7)";
+const LEGEND_TEXT = "#0f172a";
 const CHART_TOOLTIP = {
   background: "hsl(0 0% 8%)",
   border: "1px solid rgba(255,255,255,0.1)",
@@ -105,7 +105,7 @@ function ContentMixChart() {
 
   return (
     <div className="space-y-4">
-      <p className="text-[11px] text-white/70">
+      <p className="text-[11px] text-secondary-foreground/70">
         Average post performance by content category. Engagement and CTR on the left axis (%);
         impressions on the right axis.
       </p>
@@ -141,18 +141,18 @@ function ContentMixChart() {
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {contentMixData.map((c) => (
-          <div key={c.category} className="rounded-lg p-3" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
-            <div className="flex items-center gap-1.5 mb-2 text-xs font-semibold text-foreground">
+          <div key={c.category} className="rounded-lg p-3" style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.08)" }}>
+            <div className="flex items-center gap-1.5 mb-2 text-xs font-semibold text-secondary-foreground">
               <span className="w-2 h-2 rounded-full" style={{ background: CATEGORY_COLORS[c.category] || "#888" }} />
               {c.category}
             </div>
-            <p className="text-lg font-bold text-foreground">{c.posts}</p>
-            <p className="text-[10px] tracking-wider text-white/70">posts</p>
-            <p className="text-[11px] text-white/70 mt-1">
-              Avg CTR: <span className="text-foreground">{(c.avgCtr * 100).toFixed(2)}%</span>
+            <p className="text-lg font-bold text-secondary-foreground">{c.posts}</p>
+            <p className="text-[10px] tracking-wider text-secondary-foreground/70">posts</p>
+            <p className="text-[11px] text-secondary-foreground/70 mt-1">
+              Avg CTR: <span className="text-secondary-foreground">{(c.avgCtr * 100).toFixed(2)}%</span>
             </p>
-            <p className="text-[11px] text-white/70">
-              Avg Eng: <span className="text-foreground">{(c.avgEngagement * 100).toFixed(2)}%</span>
+            <p className="text-[11px] text-secondary-foreground/70">
+              Avg Eng: <span className="text-secondary-foreground">{(c.avgEngagement * 100).toFixed(2)}%</span>
             </p>
           </div>
         ))}
@@ -185,43 +185,43 @@ function TopPostsTable() {
   const sorted = [...topPostsQ1].sort((a, b) => b.ctr - a.ctr);
   return (
     <div>
-      <p className="text-[11px] text-white/70 mb-3">
+      <p className="text-[11px] text-secondary-foreground/70 mb-3">
         Top {sorted.length} Q1 posts ranked by click-through rate.
       </p>
-      <div className="overflow-hidden rounded-xl border" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+      <div className="overflow-hidden rounded-xl border" style={{ borderColor: "rgba(0,0,0,0.08)" }}>
         <table className="w-full text-xs">
           <thead>
-            <tr style={{ background: "rgba(255,255,255,0.04)" }}>
-              <th className="text-left p-3 font-semibold text-white">Post</th>
-              <th className="text-left p-3 font-semibold text-white">Category</th>
-              <th className="text-right p-3 font-semibold text-white">CTR</th>
-              <th className="text-right p-3 font-semibold text-white">Impressions</th>
-              <th className="text-right p-3 font-semibold text-white">Clicks</th>
-              <th className="text-right p-3 font-semibold text-white">Eng Rate</th>
+            <tr style={{ background: "rgba(0,0,0,0.03)" }}>
+              <th className="text-left p-3 font-semibold text-secondary-foreground">Post</th>
+              <th className="text-left p-3 font-semibold text-secondary-foreground">Category</th>
+              <th className="text-right p-3 font-semibold text-secondary-foreground">CTR</th>
+              <th className="text-right p-3 font-semibold text-secondary-foreground">Impressions</th>
+              <th className="text-right p-3 font-semibold text-secondary-foreground">Clicks</th>
+              <th className="text-right p-3 font-semibold text-secondary-foreground">Eng Rate</th>
               {sorted.some((p) => p.link) && (
-                <th className="text-center p-3 font-semibold text-white">Link</th>
+                <th className="text-center p-3 font-semibold text-secondary-foreground">Link</th>
               )}
             </tr>
           </thead>
           <tbody>
             {sorted.map((post, i) => (
-              <tr key={i} className="border-t" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-                <td className="p-3 text-white max-w-[240px]">
+              <tr key={i} className="border-t" style={{ borderColor: "rgba(0,0,0,0.06)" }}>
+                <td className="p-3 text-secondary-foreground max-w-[240px]">
                   <div className="font-medium leading-snug">{post.title}</div>
-                  <div className="text-[10px] text-white/50 mt-1">{post.date}</div>
+                  <div className="text-[10px] text-secondary-foreground/50 mt-1">{post.date}</div>
                 </td>
                 <td className="p-3">
-                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold" style={{ background: "rgba(255,255,255,0.06)", color: "hsl(0 0% 85%)" }}>
+                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold" style={{ background: "rgba(0,0,0,0.05)", color: "hsl(0 0% 85%)" }}>
                     <span className="w-1.5 h-1.5 rounded-full" style={{ background: CATEGORY_COLORS[post.category] || "#888" }} />
                     {post.category}
                   </span>
                 </td>
-                <td className="p-3 text-right tabular-nums text-foreground font-bold">
+                <td className="p-3 text-right tabular-nums text-secondary-foreground font-bold">
                   {(post.ctr * 100).toFixed(2)}%
                 </td>
-                <td className="p-3 text-right tabular-nums text-white">{post.impressions.toLocaleString()}</td>
-                <td className="p-3 text-right tabular-nums text-white">{post.clicks.toLocaleString()}</td>
-                <td className="p-3 text-right tabular-nums text-white">{(post.engagementRate * 100).toFixed(2)}%</td>
+                <td className="p-3 text-right tabular-nums text-secondary-foreground">{post.impressions.toLocaleString()}</td>
+                <td className="p-3 text-right tabular-nums text-secondary-foreground">{post.clicks.toLocaleString()}</td>
+                <td className="p-3 text-right tabular-nums text-secondary-foreground">{(post.engagementRate * 100).toFixed(2)}%</td>
                 {sorted.some((p) => p.link) && (
                   <td className="p-3 text-center">
                     {post.link ? (
@@ -230,13 +230,13 @@ function TopPostsTable() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex w-6 h-6 rounded-full items-center justify-center"
-                        style={{ background: "rgba(255,255,255,0.06)", color: "hsl(0 0% 80%)" }}
+                        style={{ background: "rgba(0,0,0,0.05)", color: "hsl(0 0% 80%)" }}
                         aria-label="Open post"
                       >
                         <ExternalLink className="w-3 h-3" />
                       </a>
                     ) : (
-                      <span className="text-white/30">—</span>
+                      <span className="text-secondary-foreground/30">—</span>
                     )}
                   </td>
                 )}
@@ -266,19 +266,19 @@ export default function LinkedInSection() {
   ];
 
   return (
-    <section id="linkedin" className="section-dark py-24 flow-section-dark relative">
+    <section id="linkedin" className="section-cream py-24 flow-section-cream relative">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-[1]">
         <span className="stage-badge text-xs inline-block mb-3">{d.stage}</span>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground mb-2">{d.title}.</h2>
-        <p className="text-sm leading-relaxed text-white mb-8">{d.subtitle}</p>
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-secondary-foreground mb-2">{d.title}</h2>
+        <p className="text-sm leading-relaxed text-secondary-foreground mb-8">{d.subtitle}.</p>
 
         <div className="grid lg:grid-cols-2 gap-10">
           {/* Left — info */}
           <div className="space-y-6">
-            <p className="text-sm leading-relaxed text-white">{d.description}</p>
+            <p className="text-sm leading-relaxed text-secondary-foreground">{d.description}</p>
 
             <div>
-              <h4 className="text-sm font-bold mb-3 text-foreground">Key Results</h4>
+              <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Key Results</h4>
               <div className="space-y-3">
                 {kpis.map((k) => (
                   <KpiRow key={k.label} value={k.value} label={k.label} comparison={k.comparison} variant="dark" />
@@ -288,23 +288,23 @@ export default function LinkedInSection() {
 
             {d.activities && (
               <div>
-                <h4 className="text-sm font-bold mb-3 text-foreground">Activities</h4>
+                <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Activities</h4>
                 <div className="flex flex-wrap gap-2">
                   {d.activities.map((a) => (
-                    <span key={a} className="text-xs px-3 py-1 rounded-full bg-white/5 text-white/80 border border-white/10">{a}</span>
+                    <span key={a} className="text-xs px-3 py-1 rounded-full bg-secondary-foreground/5 text-secondary-foreground/80 border border-secondary-foreground/10">{a}</span>
                   ))}
                 </div>
               </div>
             )}
 
             <div>
-              <h4 className="text-sm font-bold mb-3 text-foreground">Our focus in</h4>
+              <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Our focus in</h4>
               <div className="grid grid-cols-2 gap-4">
-                <div className="glass-card-dark flow-corner-bl">
-                  <h4 className="text-sm font-bold mb-3 text-foreground">Q1</h4>
+                <div className="glass-card-cream flow-corner-bl">
+                  <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Q1</h4>
                   <ul className="space-y-2">
                     {d.focusQ4.map((f) => (
-                      <li key={f} className="text-sm flex items-start gap-2 text-white">
+                      <li key={f} className="text-sm flex items-start gap-2 text-secondary-foreground">
                         <svg className="w-4 h-4 text-primary shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
@@ -313,11 +313,11 @@ export default function LinkedInSection() {
                     ))}
                   </ul>
                 </div>
-                <div className="glass-card-dark flow-corner-tr">
-                  <h4 className="text-sm font-bold mb-3 text-foreground">Q2</h4>
+                <div className="glass-card-cream flow-corner-tr">
+                  <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Q2</h4>
                   <ul className="space-y-2">
                     {d.focusQ1.map((f) => (
-                      <li key={f} className="text-sm flex items-start gap-2 text-white">
+                      <li key={f} className="text-sm flex items-start gap-2 text-secondary-foreground">
                         <span className="text-primary mt-0.5 shrink-0">+</span>{f}
                       </li>
                     ))}
@@ -328,7 +328,7 @@ export default function LinkedInSection() {
           </div>
 
           {/* Right — charts */}
-          <div className="glass-card-dark flow-corner-br min-h-[540px] flex flex-col">
+          <div className="glass-card-cream flow-corner-br min-h-[540px] flex flex-col">
             <div className="flex gap-1 mb-4 overflow-x-auto">
               {TABS.map((t) => (
                 <button
@@ -337,7 +337,7 @@ export default function LinkedInSection() {
                   className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all whitespace-nowrap ${
                     tab === t
                       ? "bg-primary text-primary-foreground"
-                      : "text-white hover:bg-white/10"
+                      : "text-secondary-foreground hover:bg-secondary-foreground/10"
                   }`}
                 >
                   {t}
@@ -347,7 +347,7 @@ export default function LinkedInSection() {
 
             {tab === "Timeline" && (
               <div className="flex-1 flex flex-col">
-                <p className="text-xs text-white/70 mb-3">Impressions by month — last 12 months (organic + sponsored)</p>
+                <p className="text-xs text-secondary-foreground/70 mb-3">Impressions by month — last 12 months (organic + sponsored)</p>
                 <div className="flex-1 min-h-0">
                   <TimelineChart />
                 </div>
@@ -356,14 +356,14 @@ export default function LinkedInSection() {
 
             {tab === "Content Mix" && (
               <div>
-                <p className="text-xs text-white/70 mb-3">Post performance by content category — engagement rate vs CTR vs reach</p>
+                <p className="text-xs text-secondary-foreground/70 mb-3">Post performance by content category — engagement rate vs CTR vs reach</p>
                 <ContentMixChart />
               </div>
             )}
 
             {tab === "Org vs Spn" && (
               <div>
-                <p className="text-xs text-white/70 mb-3">Quarterly impressions split: organic vs sponsored</p>
+                <p className="text-xs text-secondary-foreground/70 mb-3">Quarterly impressions split: organic vs sponsored</p>
                 <OrgVsSpnChart />
               </div>
             )}

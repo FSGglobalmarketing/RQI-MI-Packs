@@ -167,10 +167,10 @@ export default function SneakPeekSection() {
         <div className="text-center mb-12">
           <span className="stage-badge inline-block mb-3">Coming Soon</span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground">
-            Sneak Peek: RQI's Dedicated Website.
+            Sneak Peek: RQI's Dedicated Website
           </h2>
           <p className="mt-3 text-sm text-white max-w-xl mx-auto">
-            Drag the slider to compare the current website with the new design
+            Drag the slider to compare the current website with the new design.
           </p>
         </div>
 

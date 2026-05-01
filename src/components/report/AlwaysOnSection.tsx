@@ -188,24 +188,32 @@ type Tab = typeof TABS[number];
 function TopPagesChart({ data, variant }: { data: TopPageItem[]; variant: "dark" | "cream" }) {
   const isDark = variant === "dark";
   const maxViews = Math.max(...data.map((p) => (p.views || 0) + (p.q4Views || 0)));
+  const anyHasQ4 = data.some((p) => (p.q4Views || 0) > 0);
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-4 mb-1">
-        <span className="flex items-center gap-1.5 text-[10px] font-semibold"><span className="w-3 h-3 rounded-sm inline-block" style={{ backgroundColor: "#0F9AFF" }} /> Q1 2026</span>
-        <span className="flex items-center gap-1.5 text-[10px] font-semibold"><span className="w-3 h-3 rounded-sm inline-block" style={{ backgroundColor: "#56658B" }} /> Q4 2025</span>
-      </div>
+      {anyHasQ4 && (
+        <div className="flex items-center gap-4 mb-1">
+          <span className="flex items-center gap-1.5 text-[10px] font-semibold"><span className="w-3 h-3 rounded-sm inline-block" style={{ backgroundColor: "#0F9AFF" }} /> Q1 2026</span>
+          <span className="flex items-center gap-1.5 text-[10px] font-semibold"><span className="w-3 h-3 rounded-sm inline-block" style={{ backgroundColor: "#56658B" }} /> Q4 2025</span>
+        </div>
+      )}
       {data.map((page) => {
         const q1Pct = (page.views / maxViews) * 100;
         const q4Pct = ((page.q4Views || 0) / maxViews) * 100;
-        const changeColor = page.change.startsWith("-") ? "text-[hsl(0_70%_55%)]" : "text-[hsl(142_60%_45%)]";
+        const isPercentChange = /^[+-]/.test(page.change);
+        const changeColor = page.change.startsWith("-")
+          ? "text-accent-orange"
+          : isPercentChange
+            ? "text-[hsl(142_60%_45%)]"
+            : (isDark ? "text-white/50" : "text-secondary-foreground/50");
         return (
           <div key={page.page} className="space-y-1">
             <div className="flex justify-between items-baseline">
               <span className={`text-xs font-medium ${isDark ? "text-white" : "text-secondary-foreground/70"}`}>{page.page}</span>
               <div className="flex items-center gap-2">
                 <span className={`text-xs font-semibold tabular-nums ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{formatK(page.views)}</span>
-                <span className={`text-xs font-bold tabular-nums w-14 text-right ${changeColor}`}>{page.change}</span>
+                <span className={`text-[10px] font-medium tabular-nums text-right ${changeColor}`}>{page.change}</span>
               </div>
             </div>
             <div className="relative h-5 rounded-full overflow-hidden" style={{ backgroundColor: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)" }}>
@@ -253,8 +261,8 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
     <section id={id} className={`${isDark ? "section-dark flow-section-dark" : "section-cream flow-section-cream"} py-24 relative`}>
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-[1]">
         <span className="stage-badge text-xs inline-block mb-3">{stage}</span>
-        <h2 className={`text-3xl sm:text-4xl font-extrabold mb-2 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{title}.</h2>
-        <p className={`mb-8 ${isDark ? "text-white" : "text-secondary-foreground/70"}`}>{subtitle}</p>
+        <h2 className={`text-3xl sm:text-4xl font-extrabold mb-2 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{title}</h2>
+        <p className={`mb-8 ${isDark ? "text-white" : "text-secondary-foreground/70"}`}>{subtitle}.</p>
 
         <div className="grid lg:grid-cols-2 gap-10">
           <div className="space-y-6">

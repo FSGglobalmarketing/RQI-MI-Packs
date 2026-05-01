@@ -111,7 +111,7 @@ function RegionDropdown({ region, setRegion }: { region: SearchRegion; setRegion
               key={r}
               onClick={() => { setRegion(r); setOpen(false); }}
               className={`w-full text-left px-4 py-2.5 text-sm flex items-center gap-2 hover:bg-muted transition-colors ${
-                region === r ? "font-bold text-primary" : "text-secondary-foreground"
+                region === r ? "font-bold text-primary" : "text-foreground"
               }`}
             >
               {REGION_META[r].label}
@@ -216,25 +216,25 @@ export default function SearchVisibility() {
   const vsPeerAvg = globalPeerAvg > 0 ? Math.round(((rqiGlobal - globalPeerAvg) / globalPeerAvg) * 100) : 0;
 
   return (
-    <section id="search-visibility" className="section-cream py-24 flow-section-cream relative">
+    <section id="search-visibility" className="section-dark py-24 flow-section-dark relative">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-[1]">
         {/* Header */}
         <span className="stage-badge text-xs inline-block mb-3">Awareness</span>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-secondary-foreground mb-2">
-          Organic search performance.
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground mb-2">
+          Organic search performance
         </h2>
-        <p className="text-secondary-foreground/70 mb-8">{s.description}</p>
+        <p className="text-white/70 mb-8">{s.description}</p>
 
         <div className="grid lg:grid-cols-2 gap-10">
           {/* Left column */}
           <div className="space-y-6">
-            <p className="text-sm leading-relaxed text-secondary-foreground/70">{s.goal}</p>
+            <p className="text-sm leading-relaxed text-white/70">{s.goal}</p>
 
             <div>
-              <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Marketing Activities</h4>
+              <h4 className="text-sm font-bold mb-3 text-foreground">Marketing Activities</h4>
               <ul className="space-y-2">
                 {s.marketingActivities.map((a) => (
-                  <li key={a} className="text-sm flex items-start gap-2 text-secondary-foreground/70">
+                  <li key={a} className="text-sm flex items-start gap-2 text-white/70">
                     <span className="text-primary mt-0.5 shrink-0">+</span>{a}
                   </li>
                 ))}
@@ -242,24 +242,24 @@ export default function SearchVisibility() {
             </div>
 
             <div>
-              <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Our focus in</h4>
+              <h4 className="text-sm font-bold mb-3 text-foreground">Our focus in</h4>
               <div className="grid grid-cols-2 gap-4">
-              <div className="glass-card-cream flow-corner-bl">
-                <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Q1</h4>
+              <div className="glass-card-dark flow-corner-bl">
+                <h4 className="text-sm font-bold mb-3 text-foreground">Q1</h4>
                 <ul className="space-y-2">
                   {s.focusQ1.map((item) => (
-                    <li key={item} className="text-sm flex items-start gap-2 text-secondary-foreground/70">
+                    <li key={item} className="text-sm flex items-start gap-2 text-white/70">
                       <svg className="w-4 h-4 text-primary shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
                       {item}
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="glass-card-cream flow-corner-tr">
-                <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Q2</h4>
+              <div className="glass-card-dark flow-corner-tr">
+                <h4 className="text-sm font-bold mb-3 text-foreground">Q2</h4>
                 <ul className="space-y-2">
                   {s.focusQ2.map((item) => (
-                    <li key={item} className="text-sm flex items-start gap-2 text-secondary-foreground/70">
+                    <li key={item} className="text-sm flex items-start gap-2 text-white/70">
                       <span className="text-primary mt-0.5 shrink-0">+</span>{item}
                     </li>
                   ))}
@@ -270,11 +270,11 @@ export default function SearchVisibility() {
           </div>
 
           {/* Right column — chart */}
-          <div className="glass-card-cream flow-corner-br min-h-[540px] flex flex-col">
+          <div className="glass-card-dark flow-corner-br min-h-[540px] flex flex-col">
             <div className="flex items-start justify-between mb-1">
               <div>
-                <h4 className="text-sm font-bold text-secondary-foreground mb-1">Non-branded keyword positions</h4>
-                <p className="text-xs text-secondary-foreground/50 mb-4">Number of non-branded keywords ranking on pages 1–3 of Google.</p>
+                <h4 className="text-sm font-bold text-foreground mb-1">Non-branded keyword positions</h4>
+                <p className="text-xs text-white/50 mb-4">Number of non-branded keywords ranking on pages 1–3 of Google.</p>
               </div>
               <div className="flex items-center gap-3 shrink-0">
                 {isZoomed && (
@@ -285,12 +285,12 @@ export default function SearchVisibility() {
             </div>
             <div className="flex items-center gap-2 mb-4">
               <Switch checked={showPeers} onCheckedChange={setShowPeers} className="scale-75" />
-              <span className="text-xs text-secondary-foreground/50">Show peers</span>
+              <span className="text-xs text-white/50">Show peers</span>
             </div>
             <ChartScrollContainer onWheelHandler={handleWheel}>
               <ResponsiveContainer width="100%" height={500}>
                 <LineChart data={visibleData} onMouseDown={onMouseDown} onMouseMove={onMouseMove} onMouseUp={onMouseUp}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.07)" />
                   <XAxis dataKey="month" tick={<SearchQuarterTick />} height={45} />
                   <YAxis tick={{ fontSize: 10, fill: "#94a3b8" }} domain={[0, yMax]} />
                   <Tooltip content={<CustomTooltip />} />
@@ -315,7 +315,7 @@ export default function SearchVisibility() {
                                 onClick={() => handleLegendClick(entry)}
                                 className="cursor-pointer font-medium"
                                 style={{
-                                  color: isHidden ? "rgba(0,0,0,0.15)" : entry.color,
+                                  color: isHidden ? "rgba(255,255,255,0.18)" : entry.color,
                                   textDecoration: isHidden ? "line-through" : undefined,
                                 }}
                               >
@@ -349,7 +349,7 @@ export default function SearchVisibility() {
                 </LineChart>
               </ResponsiveContainer>
             </ChartScrollContainer>
-            <p className="text-[10px] text-secondary-foreground/30 mt-2 text-center">Scroll to zoom · Drag to select range · Click legend to toggle</p>
+            <p className="text-[10px] text-foreground/30 mt-2 text-center">Scroll to zoom · Drag to select range · Click legend to toggle</p>
           </div>
         </div>
       </div>

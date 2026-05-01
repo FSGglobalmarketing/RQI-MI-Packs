@@ -54,7 +54,7 @@ export default function EventsSection() {
     <section id="events" className="section-cream py-24 flow-section-cream relative">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-[1]">
         <span className="stage-badge text-xs inline-block mb-3">{e.stage}</span>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-secondary-foreground mb-6">{e.title}.</h2>
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-secondary-foreground mb-6">{e.title}</h2>
 
         <EventsFilterBar
           events={rqiEvents}
