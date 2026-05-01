@@ -54,7 +54,7 @@ export default function EventsSection() {
     <section id="events" className="section-cream py-24 flow-section-cream relative">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-[1]">
         <span className="stage-badge text-xs inline-block mb-3">{e.stage}</span>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-secondary-foreground mb-6">{e.title}</h2>
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-secondary-foreground mb-6">{e.title}.</h2>
 
         <EventsFilterBar
           events={rqiEvents}
@@ -77,7 +77,6 @@ export default function EventsSection() {
                 <th className="text-left py-3 px-4 text-secondary-foreground font-semibold">Format</th>
                 <th className="text-left py-3 px-4 text-secondary-foreground font-semibold">Audience</th>
                 <th className="text-left py-3 px-4 text-secondary-foreground font-semibold">Region</th>
-                <th className="text-left py-3 px-4 text-secondary-foreground font-semibold">Status</th>
               </tr>
             </thead>
             <tbody>
@@ -118,17 +117,6 @@ export default function EventsSection() {
                   <td className="py-3 px-4 text-secondary-foreground/70">{ev.audience}</td>
                   <td className="py-3 px-4">
                     <span className="text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary font-medium">{ev.region}</span>
-                  </td>
-                  <td className="py-3 px-4">
-                    <span className={`text-xs px-2.5 py-1 rounded-full font-medium capitalize ${
-                      ev.status === "committed"
-                        ? "bg-primary/10 text-primary"
-                        : ev.status === "proposed"
-                        ? "bg-amber-500/10 text-amber-600"
-                        : "bg-violet-500/10 text-violet-600"
-                    }`}>
-                      {ev.status.replace("-", " ")}
-                    </span>
                   </td>
                 </tr>
               ))}

@@ -269,7 +269,7 @@ export default function LinkedInSection() {
     <section id="linkedin" className="section-dark py-24 flow-section-dark relative">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-[1]">
         <span className="stage-badge text-xs inline-block mb-3">{d.stage}</span>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground mb-2">{d.title}</h2>
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground mb-2">{d.title}.</h2>
         <p className="text-sm leading-relaxed text-white mb-8">{d.subtitle}</p>
 
         <div className="grid lg:grid-cols-2 gap-10">

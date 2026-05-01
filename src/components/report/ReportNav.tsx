@@ -3,23 +3,24 @@ import rqiLogo from "@/assets/RQI_Positive_White.svg";
 
 const navItems = [
   { id: "overview", label: "Overview" },
-  { id: "performance", label: "KPI Framework" },
-  { id: "salesforce", label: "Engagement" },
-  { id: "search-visibility", label: "Search" },
   { id: "asia-campaign", label: "Asia Campaign" },
   { id: "fmoty", label: "FMOTY" },
   { id: "demystified", label: "Demystified" },
+  { id: "search-visibility", label: "Search" },
   { id: "website", label: "Website" },
   { id: "linkedin", label: "LinkedIn" },
+  { id: "salesforce", label: "Engagement" },
   { id: "events", label: "Events" },
+  { id: "performance", label: "KPI Framework" },
 ];
 
 /* Funnel stage groupings — indices into navItems */
 const funnelStages = [
-  { label: "Summary", startIdx: 0, endIdx: 2 },
-  { label: "Awareness", startIdx: 3, endIdx: 6 },
-  { label: "Consideration", startIdx: 7, endIdx: 8 },
-  { label: "Conversion", startIdx: 9, endIdx: 9 },
+  { label: "Summary", startIdx: 0, endIdx: 0 },
+  { label: "Awareness", startIdx: 1, endIdx: 4 },
+  { label: "Consideration", startIdx: 5, endIdx: 6 },
+  { label: "Conversion", startIdx: 7, endIdx: 8 },
+  { label: "Framework", startIdx: 9, endIdx: 9 },
 ];
 
 export default function ReportNav() {

@@ -253,7 +253,7 @@ export default function AlwaysOnSection({ id, title, stage, subtitle, descriptio
     <section id={id} className={`${isDark ? "section-dark flow-section-dark" : "section-cream flow-section-cream"} py-24 relative`}>
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-[1]">
         <span className="stage-badge text-xs inline-block mb-3">{stage}</span>
-        <h2 className={`text-3xl sm:text-4xl font-extrabold mb-2 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{title}</h2>
+        <h2 className={`text-3xl sm:text-4xl font-extrabold mb-2 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{title}.</h2>
         <p className={`mb-8 ${isDark ? "text-white" : "text-secondary-foreground/70"}`}>{subtitle}</p>
 
         <div className="grid lg:grid-cols-2 gap-10">

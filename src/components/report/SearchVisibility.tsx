@@ -221,7 +221,7 @@ export default function SearchVisibility() {
         {/* Header */}
         <span className="stage-badge text-xs inline-block mb-3">Awareness</span>
         <h2 className="text-3xl sm:text-4xl font-extrabold text-secondary-foreground mb-2">
-          Organic search performance
+          Organic search performance.
         </h2>
         <p className="text-secondary-foreground/70 mb-8">{s.description}</p>
 

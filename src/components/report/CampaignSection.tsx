@@ -76,7 +76,7 @@ export function CampaignSection({ id, title, stage, subtitle, description, goals
           <div className="space-y-6">
             <div>
               <span className="stage-badge text-xs inline-block mb-3">{stage}</span>
-              <h2 className={`text-3xl sm:text-4xl font-extrabold mb-2 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{title}</h2>
+              <h2 className={`text-3xl sm:text-4xl font-extrabold mb-2 ${isDark ? "text-foreground" : "text-secondary-foreground"}`}>{title}.</h2>
               <p className={`mb-0 ${isDark ? "text-white" : "text-secondary-foreground/70"}`}>{subtitle}</p>
             </div>
 

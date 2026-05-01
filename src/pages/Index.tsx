@@ -27,9 +27,6 @@ const Index = () => {
       <ReportNav />
       <HeroSection />
       <GlobalFocus />
-      <PerformanceResults />
-      <SalesforceSection />
-      <SearchVisibility />
 
       {/* Highlight 1: RQI Asia Campaign Phase II */}
       <CampaignSection
@@ -87,7 +84,7 @@ const Index = () => {
         phoneImage={<VideoCarousel />}
       />
 
-      <SneakPeekSection />
+      <SearchVisibility />
 
       <AlwaysOnSection
         id="website"
@@ -104,8 +101,12 @@ const Index = () => {
         trafficSources={d.website.trafficSources}
       />
 
+      <SneakPeekSection />
+
       <LinkedInSection />
+      <SalesforceSection />
       <EventsSection />
+      <PerformanceResults />
 
       <footer className="section-dark py-10 border-t border-border">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-4">

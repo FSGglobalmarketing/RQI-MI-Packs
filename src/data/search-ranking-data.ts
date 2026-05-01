@@ -1,10 +1,10 @@
 /**
  * Organic search keyword ranking data by region.
- * Source: BrightEdge non-branded keyword positions (pages 1-3).
- * Domain firstsentierinvestors.com.au (AU) — other regions still on
- * the global firstsentierinvestors.com domain pending refresh.
- * AU refreshed Q1 2026; UK / SG / DE pending refresh on the same
- * methodology and may show different peer-set / scale once updated.
+ * Source: BrightEdge ranked-keyword counts (Mar 25 → Mar 26).
+ *   AU: firstsentierinvestors.com.au
+ *   DE / SG / UK: firstsentierinvestors.com
+ * All four markets refreshed Q1 2026 on the same methodology.
+ * Fidelity dropped from peer set (not in new BrightEdge tracking).
  */
 
 const MONTHS = [
@@ -29,31 +29,29 @@ export const REGION_META: Record<SearchRegion, SearchRegionMeta> = {
 
 /* Raw data per region — keys are clean brand names */
 const SG_RAW: Record<string, number[]> = {
-  AQR: [38, 36, 35, 34, 34, 35, 37, 37, 37, 37, 37, 38, 38],
-  RQI: [33, 34, 34, 33, 33, 35, 36, 33, 32, 30, 30, 30, 28],
-  Osmosis: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  Acadian: [2, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0],
-  Arrowstreet: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  PIMCO: [29, 29, 36, 37, 31, 34, 32, 29, 28, 24, 26, 31, 33],
-  Robeco: [100, 101, 100, 101, 103, 108, 112, 114, 110, 105, 103, 101, 102],
-  Macquarie: [48, 49, 49, 48, 47, 49, 49, 51, 52, 51, 50, 60, 60],
-  Platinum: [6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 6, 6, 7],
-  Plato: [0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  Fidelity: [85, 88, 90, 92, 89, 91, 94, 96, 93, 90, 88, 87, 89],
+  RQI:         [ 8,  8,  9,  9, 10, 10, 10,  9,  9,  9, 10,  8,  8],
+  Robeco:      [60, 61, 61, 61, 62, 63, 62, 62, 61, 61, 59, 60, 59],
+  PIMCO:       [ 7, 10, 11,  9,  9,  9,  9, 10,  7,  8, 13, 12, 13],
+  Macquarie:   [ 7,  7,  7,  7,  7,  6,  8,  9,  8,  8, 11, 11, 11],
+  AQR:         [10,  9,  8,  8,  8,  8,  7,  7,  7,  7,  7,  7,  7],
+  Acadian:     [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+  Osmosis:     [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+  Platinum:    [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+  Plato:       [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+  Arrowstreet: [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
 };
 
 const UK_RAW: Record<string, number[]> = {
-  AQR: [109, 113, 117, 121, 125, 132, 135, 134, 136, 146, 143, 143, 136],
-  RQI: [45, 55, 49, 51, 45, 47, 50, 46, 43, 38, 38, 38, 39],
-  Acadian: [18, 17, 16, 21, 21, 32, 36, 35, 35, 33, 32, 31, 29],
-  Osmosis: [12, 14, 14, 13, 13, 17, 18, 17, 18, 19, 19, 18, 18],
-  Arrowstreet: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  Robeco: [442, 461, 490, 514, 543, 554, 581, 591, 545, 517, 543, 566, 586],
-  Macquarie: [137, 145, 160, 153, 143, 142, 143, 145, 150, 148, 142, 141, 126],
-  PIMCO: [107, 107, 98, 96, 85, 91, 86, 90, 90, 88, 96, 103, 117],
-  Platinum: [3, 3, 5, 7, 5, 4, 3, 3, 5, 6, 6, 6, 4],
-  Plato: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  Fidelity: [312, 320, 335, 342, 350, 358, 365, 370, 362, 355, 348, 352, 360],
+  RQI:         [ 11,   9,   8,   8,   9,   9,   9,  10,   8,   8,   8,   8,   7],
+  Robeco:      [274, 280, 289, 295, 293, 298, 305, 282, 278, 287, 289, 297, 288],
+  PIMCO:       [ 46,  44,  42,  42,  42,  42,  44,  44,  39,  41,  45,  50,  47],
+  AQR:         [ 39,  38,  42,  43,  45,  45,  46,  45,  46,  44,  44,  42,  43],
+  Macquarie:   [ 39,  42,  48,  43,  46,  47,  48,  54,  55,  52,  52,  46,  40],
+  Acadian:     [  8,   9,  10,   9,  11,  12,  12,  12,  12,  12,  12,  14,  15],
+  Osmosis:     [  1,   1,   1,   1,   3,   3,   3,   4,   4,   4,   4,   4,   3],
+  Platinum:    [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+  Plato:       [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
+  Arrowstreet: [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
 };
 
 // Australia — refreshed Q1 2026 from BrightEdge AU export
@@ -74,17 +72,16 @@ const AUS_RAW: Record<string, number[]> = {
 };
 
 const DE_RAW: Record<string, number[]> = {
-  AQR: [4, 9, 9, 4, 8, 8, 8, 8, 8, 8, 8, 8, 8],
-  RQI: [1, 2, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  Acadian: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  Arrowstreet: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  Osmosis: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  Robeco: [409, 431, 427, 466, 490, 524, 560, 541, 406, 350, 431, 485, 557],
-  PIMCO: [236, 193, 195, 212, 218, 205, 211, 205, 190, 205, 231, 230, 251],
-  Macquarie: [55, 67, 63, 61, 58, 62, 63, 60, 73, 77, 77, 76, 72],
-  Platinum: [5, 6, 6, 6, 4, 6, 7, 7, 5, 6, 6, 4, 4],
-  Plato: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  Fidelity: [180, 185, 190, 195, 200, 205, 210, 215, 208, 202, 198, 195, 200],
+  RQI:         [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+  Robeco:      [21, 22, 20, 18, 21, 22, 22, 19, 18, 19, 22, 23, 21],
+  PIMCO:       [ 8,  6,  8,  7,  5,  5,  6,  5,  5,  5,  6,  7,  8],
+  AQR:         [ 5,  4,  4,  6,  8,  7,  8,  8,  5,  4,  4,  4,  4],
+  Macquarie:   [ 2,  2,  2,  1,  1,  1,  1,  1,  2,  2,  2,  2,  0],
+  Acadian:     [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+  Osmosis:     [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+  Platinum:    [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+  Plato:       [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
+  Arrowstreet: [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
 };
 
 function rawToChart(raw: Record<string, number[]>): Record<string, string | number>[] {

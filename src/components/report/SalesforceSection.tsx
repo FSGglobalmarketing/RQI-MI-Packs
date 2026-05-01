@@ -46,7 +46,7 @@ export default function SalesforceSection() {
     >
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <span className="stage-badge text-xs inline-block mb-3">Marketing Funnel</span>
-        <h2 className="text-2xl sm:text-3xl font-bold text-white">Client Engagement</h2>
+        <h2 className="text-2xl sm:text-3xl font-bold text-white">Client Engagement.</h2>
         <p className="text-sm leading-relaxed text-white mb-6">Tracking Salesforce contact activity across marketing</p>
 
         {/* Two-column hero: narrative left, KPI 2×2 right */}

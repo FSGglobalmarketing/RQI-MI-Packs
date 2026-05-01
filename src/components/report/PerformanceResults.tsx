@@ -115,7 +115,7 @@ export default function PerformanceResults() {
           {/* Left text block */}
           <div className="lg:w-[280px] shrink-0">
             <h2 className="text-4xl sm:text-5xl font-extrabold text-foreground mb-4 leading-tight">
-              Performance<br />& Results
+              Performance<br />& Results.
             </h2>
             <h3 className="text-lg font-bold text-foreground mb-3">What does good look like?</h3>
             <p className="text-sm text-white mb-8">
