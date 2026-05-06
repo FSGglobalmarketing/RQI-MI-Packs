@@ -1,133 +1,117 @@
 // ═══════════════════════════════════════════════════════════════════════
-// SOURCE: Salesforce_Activity.xlsx (Prospect Activity + Prospect Data)
-// + RQI_Opportunities_Report CSV for opportunity cross-reference
-// Filtered: RQI/Realindex campaigns only, external accounts only
+// CLIENT ENGAGEMENT — EMAIL-DRIVEN (FSSA / Igneo methodology)
+// Source: Raw Data/Email/* (Pardot per-recipient Sent / Opens / Clicks
+// exports, 1 file per send). Q4 = 11 Q4-2025 sends, Q1 = 6 Q1-2026
+// sends, taken from Raw Data/Email/Q4 vs Q1 email campaign data.csv.
+// Per-company / per-strategy / per-campaign aggregates parsed from the
+// per-recipient files (Sent / Opens / Clicks sheets, Company column).
+// Opportunity stage joined from Raw Data/RQI Opportunities Report.csv,
+// excluding stage "Lost".
 // ═══════════════════════════════════════════════════════════════════════
 
+// Headline KPI cards on the section hero. Numbers chosen to mirror
+// the FSSA layout: total interactions / share of mix / peak month /
+// concentration.
 export const salesforceMarketingKpis = [
-  { value: "2,434", label: "Marketing interactions (Q1)", comparison: "+11.5% vs Q4 (2,178)" },
-  { value: "709", label: "Unique contacts engaged", comparison: "-7.6% vs Q4 (767)" },
-  { value: "559", label: "Unique accounts reached", comparison: "-3.8% vs Q4 (581)" },
-  { value: "19", label: "Opp accounts w/ marketing touch", comparison: "Active pipeline match" },
+  // Q1 unique opens + unique clicks across all 6 Q1 sends.
+  { value: "1,277", label: "Email engagements (Q1)",  comparison: "+2.4% vs Q4 (1,237)" },
+  // Email is essentially 100% of the mix (no other Pardot channels in Q1).
+  { value: "100%",  label: "Email share of mix",       comparison: "RQI ran no paid / web sends" },
+  // Peak Q1 send-month (Mar 26: FMOTY national + Insto + FMOTY NSW).
+  { value: "Mar",   label: "Peak month",               comparison: "1,715 sends · FMOTY launch" },
+  // Top engaged opp account in Q1 by opens.
+  { value: "47",    label: "Mercer opens",             comparison: "Mercer Investments — Won / Funded" },
 ];
 
-// Activity breakdown Q1 vs Q4
+// ── Activity tab: Q4 vs Q1 email metrics ──
+// Sums from emailQuarterCompare; "Other" left out — RQI Q1 was email-only.
 export const activityBreakdown = [
-  { type: "Email Opens", q1: 1593, q4: 1518 },
-  { type: "Email Clicks", q1: 614, q4: 524 },
-  { type: "File Downloads", q1: 262, q4: 151 },
-  { type: "Website Visits", q1: 3, q4: 1 },
-  { type: "Other", q1: 9, q4: 31 },
+  { type: "Sent",     q1: 2928, q4: 3113 },
+  { type: "Opens",    q1: 1040, q4: 1033 },
+  { type: "Clicks",   q1:  237, q4:  204 },
+  { type: "Opt-outs", q1:   17, q4:   33 },
 ];
 
-// Monthly trend Q1
+// ── Activity tab: monthly Q1 send volume ──
+// Computed from the Q1 sends in the CSV, grouped by send-month:
+//   Jan 26 — WS quarterly (589) + Insto Jan (313) = 902
+//   Feb 26 — Insto Feb (311) = 311
+//   Mar 26 — Insto Mar (309) + FMOTY NSW (350) + FMOTY national (1,056) = 1,715
 export const monthlyTrend = [
-  { month: "Jan 26", interactions: 921 },
-  { month: "Feb 26", interactions: 369 },
-  { month: "Mar 26", interactions: 1144 },
+  { month: "Jan 26", interactions:  902 },
+  { month: "Feb 26", interactions:  311 },
+  { month: "Mar 26", interactions: 1715 },
 ];
 
-// Job title targeting effectiveness
-export const jobTitleBreakdown = [
-  { title: "Director", count: 404 },
-  { title: "Principal", count: 199 },
-  { title: "Financial Advisor", count: 158 },
-  { title: "Financial Planner", count: 94 },
-  { title: "Managing Director", count: 79 },
-  { title: "Fund Research Manager", count: 77 },
-  { title: "Investment Analyst", count: 65 },
-  { title: "Portfolio Manager", count: 62 },
-  { title: "Partner", count: 47 },
-  { title: "Chief Investment Officer", count: 43 },
-];
+// ── Engagement tab: per-company Q1 email engagement ──
+// Each row: aggregated Sent / Opens / Clicks across the Q1 Pardot
+// recipient files. RQI Investors / First Sentier Investors (internal
+// accounts) excluded. Top 15 by Q1 unique opens. Opp stage from
+// RQI Opportunities Report (live opps only). NB: two Q1 sends
+// (Insto Mar newsletter and FMOTY NSW-only) were not present in
+// the recipient export at parse time, so per-company opens for those
+// two sends are not reflected in these rows.
 
-// Top engaged accounts (external only, excluding RQI Investors)
-// Legacy export retained for any callers; superseded by engagementByCompany.
-export const topEngagedAccounts = [
-  { account: "Mercer Investments", interactions: 261, isOpp: true },
-  { account: "HUB24", interactions: 77, isOpp: false },
-  { account: "Team Super", interactions: 51, isOpp: true },
-  { account: "Funds SA", interactions: 42, isOpp: true },
-  { account: "Commonwealth Super", interactions: 42, isOpp: false },
-  { account: "CBUS Super", interactions: 41, isOpp: true },
-  { account: "JANA Investment Advisers", interactions: 35, isOpp: true },
-  { account: "St Peter's College", interactions: 32, isOpp: false },
-  { account: "ANZ Staff Super", interactions: 23, isOpp: false },
-  { account: "Future Group", interactions: 23, isOpp: false },
-  { account: "Fiducian Financial", interactions: 22, isOpp: false },
-  { account: "Evidentia Group", interactions: 20, isOpp: true },
-];
-
-// ── Contact engagement by company × channel (Q1 2026) ──
-// Source: Raw Data/CRM/Salesforce Activity.xlsx (Prospect Activity sheet),
-// filtered to Asset Name containing "RQI" or "Realindex" and Activity Date
-// in Q1 2026. RQI Investors (self-account) excluded. Channel mapping:
-//   Email   = Activity in {Open, Email Click}
-//   Form    = Asset Type = File   (file views / downloads)
-//   Link    = Activity = Custom URL Click
-//   Web     = Asset Type in {Web Page, Page View, Visitor Page View}
-// 559 unique external accounts engaged in Q1; top 15 shown below.
-// Opportunity stage from RQI Opportunities Report (live opps only —
-// "Lost" excluded). "Won / Funded" includes stages 5 & 7.
-
-export interface CompanyChannelRow {
+export interface CompanyEmailRow {
   account: string;
-  email: number;
-  web: number;
-  form: number;
-  link: number;
+  sent: number;
+  opens: number;
+  clicks: number;
   total: number;
   isOpp?: boolean;
   oppStage?: string;
 }
 
-export const engagementByCompany: CompanyChannelRow[] = [
-  { account: "Mercer Investments",         email: 258, web: 0, form:  3, link: 0, total: 261, isOpp: true,  oppStage: "Won / Funded"       },
-  { account: "HUB24",                      email:  57, web: 0, form: 20, link: 0, total:  77, isOpp: false },
-  { account: "Team Super",                 email:  40, web: 0, form: 11, link: 0, total:  51, isOpp: true,  oppStage: "Initiated Dialogue" },
-  { account: "Funds SA",                   email:  26, web: 0, form: 16, link: 0, total:  42, isOpp: true,  oppStage: "DD Long List"       },
-  { account: "Commonwealth Super",         email:  30, web: 0, form: 12, link: 0, total:  42, isOpp: false },
-  { account: "CBUS Super",                 email:  38, web: 0, form:  3, link: 0, total:  41, isOpp: true,  oppStage: "Won / Funded"       },
-  { account: "JANA Investment Advisers",   email:  22, web: 0, form: 13, link: 0, total:  35, isOpp: true,  oppStage: "Initiated Dialogue" },
-  { account: "St Peter's College",         email:  32, web: 0, form:  0, link: 0, total:  32, isOpp: false },
-  { account: "ANZ Staff Super",            email:  23, web: 0, form:  0, link: 0, total:  23, isOpp: false },
-  { account: "Future Group",               email:  23, web: 0, form:  0, link: 0, total:  23, isOpp: false },
-  { account: "Fiducian Financial",         email:  22, web: 0, form:  0, link: 0, total:  22, isOpp: false },
-  { account: "Financial Guidance",         email:  22, web: 0, form:  0, link: 0, total:  22, isOpp: false },
-  { account: "Fire & Emergency Super",     email:  21, web: 0, form:  0, link: 0, total:  21, isOpp: false },
-  { account: "Resolution Life / Acenda",   email:   9, web: 0, form: 11, link: 0, total:  20, isOpp: false },
-  { account: "Evidentia Group",            email:  20, web: 0, form:  0, link: 0, total:  20, isOpp: true,  oppStage: "Won / Funded"       },
+export const engagementByCompany: CompanyEmailRow[] = [
+  { account: "Mercer Investments",                   sent: 52, opens: 47, clicks: 47, total: 146, isOpp: true,  oppStage: "Won / Funded"       },
+  { account: "CBUS Super",                           sent: 30, opens: 15, clicks:  1, total:  46, isOpp: true,  oppStage: "Won / Funded"       },
+  { account: "NSW Treasury Corporation",             sent:  8, opens:  7, clicks:  1, total:  16, isOpp: false },
+  { account: "QIC",                                  sent: 22, opens:  7, clicks:  0, total:  29, isOpp: false },
+  { account: "Lonsec",                               sent:  9, opens:  6, clicks:  0, total:  15, isOpp: true,  oppStage: "DD Long List"       },
+  { account: "Team Super",                           sent:  6, opens:  6, clicks:  1, total:  13, isOpp: true,  oppStage: "Initiated Dialogue" },
+  { account: "RSM Financial Services",               sent: 10, opens:  6, clicks:  0, total:  16, isOpp: true,  oppStage: "DD Long List"       },
+  { account: "Pgfs",                                 sent:  6, opens:  6, clicks:  0, total:  12, isOpp: false },
+  { account: "HESTA",                                sent: 20, opens:  6, clicks:  1, total:  27, isOpp: false },
+  { account: "Frontier Advisors",                    sent: 30, opens:  5, clicks:  1, total:  36, isOpp: false },
+  { account: "Funds SA",                             sent:  8, opens:  5, clicks:  1, total:  14, isOpp: true,  oppStage: "DD Long List"       },
+  { account: "CARE Super",                           sent: 16, opens:  5, clicks:  3, total:  24, isOpp: false },
+  { account: "Peritus Private Wealth",               sent:  5, opens:  5, clicks:  1, total:  11, isOpp: true,  oppStage: "Initiated Dialogue" },
+  { account: "Preston Wealth",                       sent:  6, opens:  5, clicks:  0, total:  11, isOpp: false },
+  { account: "Cambridge Associates (Australia)",     sent:  6, opens:  4, clicks:  0, total:  10, isOpp: false },
 ];
 
-// Opportunity accounts that had marketing touches in Q1
-export const oppAccountMatches = [
-  { account: "Mercer Investments", interactions: 261, stage: "Active Engagement" },
-  { account: "Team Super", interactions: 51, stage: "Active Engagement" },
-  { account: "Evidentia Group", interactions: 20, stage: "Won" },
-  { account: "Equipsuper", interactions: 16, stage: "DD Long List" },
-  { account: "Hostplus Super", interactions: 12, stage: "Initiated Dialogue" },
-  { account: "Emergency Services & State Super", interactions: 10, stage: "Funded" },
-  { account: "REST Industry Super", interactions: 9, stage: "Active Engagement" },
-  { account: "Infocus Securities", interactions: 8, stage: "Funded" },
-  { account: "Forward Financial Group", interactions: 7, stage: "DD Long List" },
-  { account: "Bastion Financial Group", interactions: 6, stage: "DD Long List" },
-  { account: "Lonsec", interactions: 5, stage: "Initiated Dialogue" },
-  { account: "Catapult Wealth", interactions: 4, stage: "DD Long List" },
+// ── Strategies tab: Q1 email engagement by strategy ──
+// Strategy classification derived from filename keywords:
+//   Brand / General      → monthly + quarterly newsletters
+//   FMOTY / Brand        → Morningstar Fund-Manager-of-the-Year sends
+//   Global Value         → Global Value Campaign + ratings announcements
+//   Asia campaign        → HK / Asia event eDMs
+//   Cross-brand events   → Igneo Roundtable invites cross-promoted via RQI list
+// "interactions" = unique opens + unique clicks for the period.
+
+export interface StrategyRow { strategy: string; interactions: number; sent: number; opens: number; clicks: number; }
+
+export const interactionsByStrategy: StrategyRow[] = [
+  { strategy: "Brand / Newsletter",        sent: 1213, opens: 453, clicks: 151, interactions: 604 },
+  { strategy: "FMOTY / Brand",             sent: 1406, opens: 470, clicks:  30, interactions: 500 },
+  { strategy: "Global Value",              sent:    0, opens:   0, clicks:   0, interactions:   0 },
+  { strategy: "Asia campaign",             sent:    0, opens:   0, clicks:   0, interactions:   0 },
+  { strategy: "Cross-brand events",        sent:    0, opens:   0, clicks:   0, interactions:   0 },
 ];
 
-// Top campaigns driving activity
+// ── Campaigns tab: top Q1 campaigns by engagement ──
+// "interactions" = unique opens + unique clicks (per the Pardot export).
+// Sent comes from emailQuarterCompare-aligned CSV totals.
 export const topCampaigns = [
-  { campaign: "ANZ Campaigns (always-on)", interactions: 2140 },
-  { campaign: "RQI Monthly Newsletter (Dec)", interactions: 33 },
-  { campaign: "RQI Monthly Newsletter (Nov)", interactions: 15 },
-  { campaign: "Morningstar FMOTY Award", interactions: 5 },
-  { campaign: "LinkedIn", interactions: 3 },
+  { campaign: "Morningstar FMOTY (national)",      sent: 1056, opens: 365, clicks: 20, interactions: 385 },
+  { campaign: "Insto monthly newsletter (Jan/Feb/Mar)", sent: 933,  opens: 347, clicks: 156, interactions: 503 },
+  { campaign: "Wholesale quarterly newsletter",     sent:  589, opens: 223, clicks: 51, interactions: 274 },
+  { campaign: "Morningstar FMOTY (NSW only)",       sent:  350, opens: 105, clicks: 10, interactions: 115 },
 ];
 
-// ── Email performance: Q4 2025 vs Q1 2026 ─────────────────────────────
-// Source: Raw Data/Email/Q4 vs Q1 email campaign data.csv
-// Q4 = 11 sends, Q1 = 6 sends. Open / click rates computed against
-// delivered (sent − bounces).
+// ── Email performance: Q4 2025 vs Q1 2026 ──
+// Trusted totals from Raw Data/Email/Q4 vs Q1 email campaign data.csv.
+// Open / click rates computed against delivered (sent − bounces).
 
 export interface EmailPeriodStats {
   quarter: string;
@@ -147,25 +131,30 @@ export const emailQuarterCompare: EmailPeriodStats[] = [
   { quarter: "Q1 2026", campaigns:  6, sent: 2928, delivered: 2910, uniqueOpens: 1040, openRate: 0.3574, uniqueClicks: 237, ctr: 0.0814, ctor: 0.2279, optOuts: 17 },
 ];
 
-// ── Top Q1 email sends (ranked by unique opens) ───────────────────────
+// ── Top Q1 email sends (ranked by unique opens) ──
 // "WS" = Wholesale, "Insto" = Institutional. Display names are
 // shortened/cleaned versions of the raw Pardot campaign filenames.
 
 export interface TopEmail {
-  name: string;            // clean display name shown in the table
-  campaign: string;        // parent campaign / programme
+  name: string;
+  campaign: string;
   sent: number;
   uniqueOpens: number;
   uniqueClicks: number;
-  openRate: number;        // decimal
-  ctor: number;            // decimal
+  openRate: number;
+  ctor: number;
 }
 
 export const topEmailsQ1: TopEmail[] = [
-  { name: "RQI Morningstar FMOTY award win",        campaign: "ANZ — Award announcement",          sent: 1056, uniqueOpens: 365, uniqueClicks: 20, openRate: 0.347,  ctor: 0.0548 },
-  { name: "RQI Wholesale quarterly newsletter",      campaign: "ANZ — WS quarterly newsletter",     sent:  589, uniqueOpens: 223, uniqueClicks: 51, openRate: 0.3818, ctor: 0.2287 },
-  { name: "RQI Institutional newsletter — Jan",      campaign: "ANZ — Insto monthly newsletter",    sent:  313, uniqueOpens: 117, uniqueClicks: 50, openRate: 0.3774, ctor: 0.4274 },
-  { name: "RQI Institutional newsletter — Mar",      campaign: "ANZ — Insto monthly newsletter",    sent:  309, uniqueOpens: 117, uniqueClicks: 56, openRate: 0.3811, ctor: 0.4786 },
-  { name: "RQI Institutional newsletter — Feb",      campaign: "ANZ — Insto monthly newsletter",    sent:  311, uniqueOpens: 113, uniqueClicks: 50, openRate: 0.3645, ctor: 0.4425 },
-  { name: "RQI Morningstar FMOTY award (NSW only)", campaign: "ANZ — Award announcement",          sent:  350, uniqueOpens: 105, uniqueClicks: 10, openRate: 0.3026, ctor: 0.0952 },
+  { name: "RQI Morningstar FMOTY award win",         campaign: "ANZ — Award announcement",          sent: 1056, uniqueOpens: 365, uniqueClicks: 20, openRate: 0.347,  ctor: 0.0548 },
+  { name: "RQI Wholesale quarterly newsletter",       campaign: "ANZ — WS quarterly newsletter",     sent:  589, uniqueOpens: 223, uniqueClicks: 51, openRate: 0.3818, ctor: 0.2287 },
+  { name: "RQI Institutional newsletter — Jan",       campaign: "ANZ — Insto monthly newsletter",    sent:  313, uniqueOpens: 117, uniqueClicks: 50, openRate: 0.3774, ctor: 0.4274 },
+  { name: "RQI Institutional newsletter — Mar",       campaign: "ANZ — Insto monthly newsletter",    sent:  309, uniqueOpens: 117, uniqueClicks: 56, openRate: 0.3811, ctor: 0.4786 },
+  { name: "RQI Institutional newsletter — Feb",       campaign: "ANZ — Insto monthly newsletter",    sent:  311, uniqueOpens: 113, uniqueClicks: 50, openRate: 0.3645, ctor: 0.4425 },
+  { name: "RQI Morningstar FMOTY award (NSW only)",  campaign: "ANZ — Award announcement",          sent:  350, uniqueOpens: 105, uniqueClicks: 10, openRate: 0.3026, ctor: 0.0952 },
 ];
+
+// ── Legacy exports (kept for any stale imports) ──
+export const topEngagedAccounts: { account: string; interactions: number; isOpp: boolean }[] = [];
+export const oppAccountMatches: { account: string; interactions: number; stage: string }[] = [];
+export const jobTitleBreakdown: { title: string; count: number }[] = [];

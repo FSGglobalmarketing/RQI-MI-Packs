@@ -6,18 +6,18 @@ import {
 import { CheckCircle2 } from "lucide-react";
 import {
   salesforceMarketingKpis, activityBreakdown, monthlyTrend,
-  topCampaigns, engagementByCompany,
+  topCampaigns, engagementByCompany, interactionsByStrategy,
   emailQuarterCompare, topEmailsQ1,
 } from "@/data/salesforce-data";
 
 const TABS = ["Activity", "Email", "Engagement", "Strategies", "Campaigns"] as const;
 type Tab = (typeof TABS)[number];
 
-// Channel colours for company × channel stack
-const BAR_CHANNEL_EMAIL = "hsl(var(--primary))";   // mint
-const BAR_CHANNEL_FORM  = "#56658B";               // slate
-const BAR_CHANNEL_LINK  = "#F99C46";               // brand orange
-const BAR_CHANNEL_WEB   = "#D37669";               // coral
+// Per-channel colours kept in case future quarters reintroduce a multi-
+// channel split. Currently the Engagement table is email-only.
+const BAR_OPENS  = "hsl(var(--primary))";   // mint
+const BAR_CLICKS = "#F99C46";               // brand orange
+const BAR_SENT   = "#56658B";               // slate
 
 const SECTION_BG = "hsl(var(--ash))";
 const INNER_BG   = "hsl(0 0% 12%)";
@@ -47,19 +47,19 @@ export default function SalesforceSection() {
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <span className="stage-badge text-xs inline-block mb-3">Marketing Funnel</span>
         <h2 className="text-2xl sm:text-3xl font-bold text-white">Client Engagement</h2>
-        <p className="text-sm leading-relaxed text-white mb-6">Tracking Salesforce contact activity across marketing.</p>
+        <p className="text-sm leading-relaxed text-white mb-6">Q1 client engagement across our RQI / Realindex Pardot email campaigns.</p>
 
         {/* Two-column hero: narrative left, KPI 2×2 right */}
         <div className="grid lg:grid-cols-2 gap-8 mb-6 items-start">
           <div className="space-y-4">
             <p className="text-sm leading-relaxed text-white">
-              Q1 saw 2,434 marketing interactions from 709 unique contacts across 559 accounts — a +11.5% increase in activity vs Q4. File downloads grew +73%, signalling deeper content engagement off the back of Morningstar FMOTY and the Demystified campaigns.
+              Q1 had 6 RQI / Realindex sends totalling 2,928 emails. Unique opens held flat at 1,040 (+0.7% vs Q4) but the open rate edged up to <span className="text-white font-semibold">35.7%</span> and the click-to-open rate jumped to <span className="text-white font-semibold">22.8% (+3.0 pts)</span> — fewer-but-better engagements. Opt-outs nearly halved (33 → 17).
             </p>
             <p className="text-sm leading-relaxed text-white">
-              Mercer Investments was by far the most engaged account (261 interactions) and is in active DD. 19 accounts in the live Salesforce pipeline had direct marketing touches in Q1 — evidence that campaigns are reaching prospects that matter.
+              Mercer Investments was by far the most engaged account — 47 unique opens off 52 sends (90% open rate) and is in <span className="text-white font-semibold">Won / Funded</span>. CBUS Super and Evidentia (also Won / Funded), plus Funds SA, Lonsec and RSM Financial Services (DD Long List) round out the engaged opp set.
             </p>
             <p className="text-sm leading-relaxed text-white">
-              Always-on ANZ campaigns dominate absolute volume. Newsletter engagement remains strong with institutional contacts, while the FMOTY campaign is early but already showing pull.
+              The Institutional monthly newsletter cluster carried the highest CTOR at 43–48% — small lists but tight content–audience fit. The Morningstar FMOTY launch was the single biggest send by reach (1,056 national + 350 NSW-only) and pulled 470 opens in March alone.
             </p>
           </div>
           <div className="grid grid-cols-2 gap-3">
@@ -121,9 +121,9 @@ function ActivityTab() {
   return (
     <div className="space-y-8">
       <div>
-        <h3 className="text-lg font-semibold mb-1 text-white">Email engagement types — Q1 vs Q4</h3>
+        <h3 className="text-lg font-semibold mb-1 text-white">Email volume — Q1 vs Q4</h3>
         <p className="text-xs text-white mb-4">
-          Email-driven engagement on RQI / Realindex campaigns: opens, clicks, file downloads attached to eDMs, plus the trickle of CRM-tracked web visits. Q1 grew +11.5% vs Q4 with file downloads up +73%.
+          Pardot Q4 2025 vs Q1 2026: total Sent / unique Opens / unique Clicks / Opt-outs across all RQI / Realindex campaigns. Q1 sent 5.9% fewer emails but unique opens held flat and clicks grew +16%; opt-outs nearly halved (33 → 17).
         </p>
         <ResponsiveContainer width="100%" height={280}>
           <BarChart data={activityBreakdown} margin={{ left: 0, right: 30, top: 5, bottom: 5 }}>
@@ -139,9 +139,9 @@ function ActivityTab() {
       </div>
 
       <div>
-        <h3 className="text-lg font-semibold mb-1 text-white">Monthly email engagement volume</h3>
+        <h3 className="text-lg font-semibold mb-1 text-white">Monthly Q1 send volume</h3>
         <p className="text-xs text-white mb-4">
-          March spike driven by the Morningstar FMOTY announcement and newsletter distribution. February dip is typical seasonally.
+          Q1 emails sent by month. March spike driven by the Morningstar FMOTY launch (1,056 national + 350 NSW-only) on top of the regular Insto monthly newsletter. February was Insto-only.
         </p>
         <ResponsiveContainer width="100%" height={200}>
           <BarChart data={monthlyTrend} margin={{ left: 0, right: 30, top: 5, bottom: 5 }}>
@@ -149,7 +149,7 @@ function ActivityTab() {
             <XAxis dataKey="month" tick={{ fontSize: 12, fill: CHART_TICK_LIGHT }} />
             <YAxis tick={{ fontSize: 12, fill: CHART_TICK_DIM }} />
             <Tooltip contentStyle={CHART_TOOLTIP} cursor={CHART_CURSOR} />
-            <Bar dataKey="interactions" name="Interactions" fill={BAR_Q1} radius={[6, 6, 0, 0]} barSize={40} />
+            <Bar dataKey="interactions" name="Sent" fill={BAR_Q1} radius={[6, 6, 0, 0]} barSize={40} />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -261,18 +261,18 @@ function EmailTab() {
   );
 }
 
-/* ── Engagement — Contact engagement by company × channel ── */
+/* ── Engagement — per-company email engagement (Sent / Opens / Clicks) ── */
 function EngagementTab() {
   return (
     <div className="space-y-8">
       <div>
         <h3 className="text-lg font-semibold mb-1 text-white">Email engagement by company</h3>
         <p className="text-xs text-white mb-4">
-          Top 15 Salesforce accounts by Q1 email-driven engagement on RQI / Realindex
-          campaigns. The bulk of activity (89%) is email opens and clicks; the small
-          form / file slice is downloads attached to the same eDM sends. Source:
-          Salesforce contact-activity export, filtered to assets tagged "RQI" or
-          "Realindex".
+          Top 15 external accounts by Q1 unique email opens on RQI / Realindex sends.
+          Each row aggregates Sent / Opens / Clicks across the Pardot per-recipient
+          exports for Q1. Internal accounts (RQI Investors, First Sentier Investors)
+          are excluded. Source: Raw Data/Email/* — Pardot recipient sheets, Company
+          column.
         </p>
         <ResponsiveContainer width="100%" height={520}>
           <BarChart data={engagementByCompany} layout="vertical" margin={{ left: 20, right: 30, top: 5, bottom: 5 }}>
@@ -281,15 +281,14 @@ function EngagementTab() {
             <YAxis
               type="category"
               dataKey="account"
-              width={200}
+              width={210}
               tick={{ fontSize: 11, fill: CHART_TICK_LIGHT }}
             />
             <Tooltip contentStyle={CHART_TOOLTIP} cursor={CHART_CURSOR} />
             <Legend wrapperStyle={{ color: "rgba(255,255,255,0.75)", paddingTop: 4 }} />
-            <Bar dataKey="email" name="Email"        stackId="a" fill={BAR_CHANNEL_EMAIL} />
-            <Bar dataKey="form"  name="Form / File"  stackId="a" fill={BAR_CHANNEL_FORM} />
-            <Bar dataKey="link"  name="Link click"   stackId="a" fill={BAR_CHANNEL_LINK} />
-            <Bar dataKey="web"   name="Web"          stackId="a" fill={BAR_CHANNEL_WEB} radius={[0, 6, 6, 0]} />
+            <Bar dataKey="sent"   name="Sent"   stackId="a" fill={BAR_SENT} />
+            <Bar dataKey="opens"  name="Opens"  stackId="a" fill={BAR_OPENS} />
+            <Bar dataKey="clicks" name="Clicks" stackId="a" fill={BAR_CLICKS} radius={[0, 6, 6, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -307,62 +306,63 @@ function EngagementTab() {
               <tr style={{ background: "rgba(255,255,255,0.04)" }}>
                 <th className="text-left  p-3 font-medium text-white/70">Account</th>
                 <th className="text-left  p-3 font-medium text-white/70">Opp Stage</th>
-                <th className="text-right p-3 font-medium text-white/70">Email</th>
-                <th className="text-right p-3 font-medium text-white/70">Form / File</th>
-                <th className="text-right p-3 font-medium text-white/70">Link</th>
-                <th className="text-right p-3 font-medium text-white/70">Web</th>
-                <th className="text-right p-3 font-medium text-white/70">Total</th>
+                <th className="text-right p-3 font-medium text-white/70">Sent</th>
+                <th className="text-right p-3 font-medium text-white/70">Opens</th>
+                <th className="text-right p-3 font-medium text-white/70">Clicks</th>
+                <th className="text-right p-3 font-medium text-white/70">Open rate</th>
               </tr>
             </thead>
             <tbody>
-              {engagementByCompany.map((row) => (
-                <tr
-                  key={row.account}
-                  className="border-t"
-                  style={{
-                    borderColor: "rgba(255,255,255,0.06)",
-                    background: row.isOpp ? "hsl(var(--primary) / 0.06)" : undefined,
-                  }}
-                >
-                  <td className="p-3 font-medium text-white">
-                    <div className="flex items-center gap-2">
-                      {row.isOpp && (
+              {engagementByCompany.map((row) => {
+                const openRate = row.sent > 0 ? row.opens / row.sent : 0;
+                return (
+                  <tr
+                    key={row.account}
+                    className="border-t"
+                    style={{
+                      borderColor: "rgba(255,255,255,0.06)",
+                      background: row.isOpp ? "hsl(var(--primary) / 0.06)" : undefined,
+                    }}
+                  >
+                    <td className="p-3 font-medium text-white">
+                      <div className="flex items-center gap-2">
+                        {row.isOpp && (
+                          <span
+                            title="Live Salesforce opportunity"
+                            className="inline-block w-2 h-2 rounded-full shrink-0"
+                            style={{ background: "hsl(var(--primary))" }}
+                          />
+                        )}
+                        <span>{row.account}</span>
+                      </div>
+                    </td>
+                    <td className="p-3 text-xs">
+                      {row.isOpp && row.oppStage ? (
                         <span
-                          title="Live Salesforce opportunity"
-                          className="inline-block w-2 h-2 rounded-full shrink-0"
-                          style={{ background: "hsl(var(--primary))" }}
-                        />
+                          className="inline-block px-2 py-0.5 rounded-full font-semibold"
+                          style={{
+                            background: row.oppStage.includes("Won") || row.oppStage.includes("Funded") ? "hsl(var(--success) / 0.18)" :
+                                        row.oppStage.includes("Active") ? "hsl(var(--primary) / 0.18)" :
+                                        "rgba(255,255,255,0.08)",
+                            color: row.oppStage.includes("Won") || row.oppStage.includes("Funded") ? "hsl(var(--success))" :
+                                   row.oppStage.includes("Active") ? "hsl(var(--primary))" :
+                                   "rgba(255,255,255,0.85)",
+                            fontSize: 10,
+                          }}
+                        >
+                          {row.oppStage}
+                        </span>
+                      ) : (
+                        <span className="text-white/30">—</span>
                       )}
-                      <span>{row.account}</span>
-                    </div>
-                  </td>
-                  <td className="p-3 text-xs">
-                    {row.isOpp && row.oppStage ? (
-                      <span
-                        className="inline-block px-2 py-0.5 rounded-full font-semibold"
-                        style={{
-                          background: row.oppStage.includes("Won") || row.oppStage.includes("Funded") ? "hsl(var(--success) / 0.18)" :
-                                      row.oppStage.includes("Active") ? "hsl(var(--primary) / 0.18)" :
-                                      "rgba(255,255,255,0.08)",
-                          color: row.oppStage.includes("Won") || row.oppStage.includes("Funded") ? "hsl(var(--success))" :
-                                 row.oppStage.includes("Active") ? "hsl(var(--primary))" :
-                                 "rgba(255,255,255,0.85)",
-                          fontSize: 10,
-                        }}
-                      >
-                        {row.oppStage}
-                      </span>
-                    ) : (
-                      <span className="text-white/30">—</span>
-                    )}
-                  </td>
-                  <td className="p-3 text-right tabular-nums text-white">{row.email.toLocaleString()}</td>
-                  <td className="p-3 text-right tabular-nums text-white">{row.form.toLocaleString()}</td>
-                  <td className="p-3 text-right tabular-nums text-white">{row.link.toLocaleString()}</td>
-                  <td className="p-3 text-right tabular-nums text-white">{row.web.toLocaleString()}</td>
-                  <td className="p-3 text-right tabular-nums font-bold text-primary">{row.total.toLocaleString()}</td>
-                </tr>
-              ))}
+                    </td>
+                    <td className="p-3 text-right tabular-nums text-white">{row.sent.toLocaleString()}</td>
+                    <td className="p-3 text-right tabular-nums text-white">{row.opens.toLocaleString()}</td>
+                    <td className="p-3 text-right tabular-nums text-white">{row.clicks.toLocaleString()}</td>
+                    <td className="p-3 text-right tabular-nums font-bold text-primary">{(openRate * 100).toFixed(0)}%</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -371,22 +371,36 @@ function EngagementTab() {
   );
 }
 
-/* ── Strategies — pending email→strategy mapping ── */
+/* ── Strategies — Q1 email engagement by strategy ── */
 function StrategiesTab() {
+  // Only show strategies that actually had Q1 sends.
+  const data = interactionsByStrategy.filter((s) => s.sent > 0);
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-semibold text-white">Email engagement by strategy</h3>
-      <p className="text-xs text-white/70">
-        Q1 email engagement classified by underlying strategy. Will populate once each Q1
-        send is tagged to its strategy (e.g. Global Value, Indices, Demystified).
+      <h3 className="text-lg font-semibold mb-1 text-white">Email engagement by strategy</h3>
+      <p className="text-xs text-white mb-4">
+        Q1 email engagement classified by underlying strategy (filename keywords).
+        "Brand / Newsletter" covers the always-on Insto monthly + WS quarterly
+        sends; "FMOTY / Brand" is the Morningstar Fund-Manager-of-the-Year
+        announcement campaign. Other strategy buckets (Global Value, Asia campaign,
+        Cross-brand events) had no Q1 sends.
       </p>
-      <div
-        className="rounded-xl px-6 py-12 text-center"
-        style={{ background: "rgba(255,255,255,0.03)", border: "1px dashed rgba(255,255,255,0.12)" }}
-      >
-        <p className="text-sm font-semibold text-white mb-1">Strategy mapping — pending</p>
-        <p className="text-xs text-white/60">Awaiting strategy + campaign tagging for each Q1 email.</p>
-      </div>
+      <ResponsiveContainer width="100%" height={Math.max(220, data.length * 80)}>
+        <BarChart data={data} layout="vertical" margin={{ left: 20, right: 30, top: 5, bottom: 5 }}>
+          <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke={CHART_GRID} />
+          <XAxis type="number" tick={{ fontSize: 11, fill: CHART_TICK_DIM }} />
+          <YAxis type="category" dataKey="strategy" width={180} tick={{ fontSize: 11, fill: CHART_TICK_LIGHT }} />
+          <Tooltip contentStyle={CHART_TOOLTIP} cursor={CHART_CURSOR} />
+          <Legend wrapperStyle={{ color: "rgba(255,255,255,0.75)", paddingTop: 4 }} />
+          <Bar dataKey="opens"  name="Opens"  stackId="b" fill={BAR_OPENS} />
+          <Bar dataKey="clicks" name="Clicks" stackId="b" fill={BAR_CLICKS} radius={[0, 6, 6, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+      <p className="text-[10px] text-white/55 mt-2">
+        Awaiting per-email strategy/campaign tagging from the marketing team to refine
+        these buckets — particularly to split out the FMOTY NSW-only send and the
+        Mar Insto newsletter (recipient files weren't included in this Q1 export).
+      </p>
     </div>
   );
 }
@@ -397,15 +411,19 @@ function CampaignsTab() {
     <div>
       <h3 className="text-lg font-semibold mb-1 text-white">Top campaigns driving email engagement</h3>
       <p className="text-xs text-white mb-4">
-        Always-on ANZ campaigns drive the bulk of interactions. The Morningstar FMOTY campaign is early but showing traction. Newsletter engagement remains strong with institutional contacts.
+        Top Q1 RQI / Realindex campaigns by total engagements (unique opens + clicks).
+        The Morningstar FMOTY launch was the single biggest send by reach but the
+        Institutional newsletter cluster carried the highest CTOR (43–48%).
       </p>
       <ResponsiveContainer width="100%" height={260}>
         <BarChart data={topCampaigns} layout="vertical" margin={{ left: 10, right: 30, top: 5, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke={CHART_GRID} />
           <XAxis type="number" tick={{ fontSize: 12, fill: CHART_TICK_DIM }} />
-          <YAxis type="category" dataKey="campaign" width={220} tick={{ fontSize: 11, fill: CHART_TICK_LIGHT }} />
+          <YAxis type="category" dataKey="campaign" width={240} tick={{ fontSize: 11, fill: CHART_TICK_LIGHT }} />
           <Tooltip contentStyle={CHART_TOOLTIP} cursor={CHART_CURSOR} />
-          <Bar dataKey="interactions" name="Interactions" fill={BAR_Q1} radius={[0, 6, 6, 0]} barSize={18} />
+          <Legend wrapperStyle={{ color: "rgba(255,255,255,0.75)", paddingTop: 4 }} />
+          <Bar dataKey="opens"  name="Opens"  stackId="c" fill={BAR_OPENS} />
+          <Bar dataKey="clicks" name="Clicks" stackId="c" fill={BAR_CLICKS} radius={[0, 6, 6, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>
