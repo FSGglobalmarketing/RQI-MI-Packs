@@ -9,18 +9,31 @@
 // excluding stage "Lost".
 // ═══════════════════════════════════════════════════════════════════════
 
-// Headline KPI cards on the section hero. Numbers chosen to mirror
-// the FSSA layout: total interactions / share of mix / peak month /
-// concentration.
+// Headline KPI cards on the section hero — mirrors the Igneo layout:
+// Total engagements / Emails delivered / Peak month / Click-to-open rate.
+// Numbers from emailQuarterCompare (which in turn comes from
+// Raw Data/Email/Q4 vs Q1 email campaign data.csv).
+//
+// Q4 sends by month (CSV):
+//   Oct 25 — 870  (Brisbane luncheons + Asia HK + Insto Oct + WS quarterly)
+//   Nov 25 — 1,929 (Global Value ratings 1,486 dominant + Adelaide + Insto Nov)
+//   Dec 25 — 314  (Insto Dec)
+// Q4 peak = Nov 25 at 1,929 sends.
+//
+// Q1 sends by month (CSV):
+//   Jan 26 —   902  (WS quarterly 589 + Insto Jan 313)
+//   Feb 26 —   311  (Insto Feb)
+//   Mar 26 — 1,715  (FMOTY national 1,056 + FMOTY NSW 350 + Insto Mar 309)
+// Q1 peak = Mar 26 at 1,715 sends → -11% vs Q4 peak.
 export const salesforceMarketingKpis = [
-  // Q1 unique opens + unique clicks across all 6 Q1 sends.
-  { value: "1,277", label: "Email engagements (Q1)",  comparison: "+2.4% vs Q4 (1,237)" },
-  // Email is essentially 100% of the mix (no other Pardot channels in Q1).
-  { value: "100%",  label: "Email share of mix",       comparison: "RQI ran no paid / web sends" },
-  // Peak Q1 send-month (Mar 26: FMOTY national + Insto + FMOTY NSW).
-  { value: "Mar",   label: "Peak month",               comparison: "1,715 sends · FMOTY launch" },
-  // Top engaged opp account in Q1 by opens.
-  { value: "47",    label: "Mercer opens",             comparison: "Mercer Investments — Won / Funded" },
+  // Q1 unique opens (1,040) + unique clicks (237) = 1,277 vs Q4 (1,033 + 204 = 1,237) → +3%
+  { value: "1,277", label: "Total engagements (Q1) — opens + clicks", comparison: "+3% vs Q4 (1,237)" },
+  // Q1 delivered = sent − bounces (2,928 − 18 = 2,910). Q4 delivered (3,113 − 52 = 3,061).
+  { value: "2,910", label: "Emails delivered (Q1)",                    comparison: "-5% vs Q4 (3,061)" },
+  // Peak month: Mar 26 (1,715 sends) vs Q4 peak Nov 25 (1,929) → -11%.
+  { value: "Mar",   label: "Peak month",                                comparison: "1,715 · -11% vs Q4 peak (Nov 1,929)" },
+  // CTOR Q1 22.79% vs Q4 19.75% → +3.0 pts.
+  { value: "22.8%", label: "Click-to-open rate (Q1)",                   comparison: "+3.0 pts vs Q4 (19.8%)" },
 ];
 
 // ── Activity tab: Q4 vs Q1 email metrics ──

@@ -281,7 +281,7 @@ export default function LinkedInSection() {
               <h4 className="text-sm font-bold mb-3 text-secondary-foreground">Key Results</h4>
               <div className="space-y-3">
                 {kpis.map((k) => (
-                  <KpiRow key={k.label} value={k.value} label={k.label} comparison={k.comparison} variant="dark" />
+                  <KpiRow key={k.label} value={k.value} label={k.label} comparison={k.comparison} variant="cream" />
                 ))}
               </div>
             </div>

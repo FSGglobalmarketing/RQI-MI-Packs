@@ -105,13 +105,13 @@ function RegionDropdown({ region, setRegion }: { region: SearchRegion; setRegion
         <ChevronDown className={`w-4 h-4 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
       {open && (
-        <div className="absolute right-0 top-full mt-2 bg-white rounded-xl shadow-lg border border-secondary-foreground/10 py-1 z-50 min-w-[180px]">
+        <div className="absolute right-0 top-full mt-2 bg-white rounded-xl shadow-lg border border-black/10 py-1 z-50 min-w-[180px]">
           {(Object.keys(REGION_META) as SearchRegion[]).map((r) => (
             <button
               key={r}
               onClick={() => { setRegion(r); setOpen(false); }}
-              className={`w-full text-left px-4 py-2.5 text-sm flex items-center gap-2 hover:bg-muted transition-colors ${
-                region === r ? "font-bold text-primary" : "text-foreground"
+              className={`w-full text-left px-4 py-2.5 text-sm flex items-center gap-2 hover:bg-black/5 transition-colors ${
+                region === r ? "font-bold text-primary" : "text-secondary-foreground"
               }`}
             >
               {REGION_META[r].label}

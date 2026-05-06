@@ -5,12 +5,12 @@ import {
 } from "recharts";
 import { CheckCircle2 } from "lucide-react";
 import {
-  salesforceMarketingKpis, activityBreakdown, monthlyTrend,
+  salesforceMarketingKpis,
   topCampaigns, engagementByCompany, interactionsByStrategy,
   emailQuarterCompare, topEmailsQ1,
 } from "@/data/salesforce-data";
 
-const TABS = ["Activity", "Email", "Engagement", "Strategies", "Campaigns"] as const;
+const TABS = ["Email", "Engagement", "Strategies", "Campaigns"] as const;
 type Tab = (typeof TABS)[number];
 
 // Per-channel colours kept in case future quarters reintroduce a multi-
@@ -36,7 +36,7 @@ const BAR_Q1 = "hsl(var(--primary))";
 const BAR_Q4 = "rgba(255,255,255,0.22)";
 
 export default function SalesforceSection() {
-  const [activeTab, setActiveTab] = useState<Tab>("Activity");
+  const [activeTab, setActiveTab] = useState<Tab>("Email");
 
   return (
     <section
@@ -105,7 +105,6 @@ export default function SalesforceSection() {
           className="rounded-2xl p-6 overflow-hidden"
           style={{ backgroundColor: INNER_BG, border: "1px solid rgba(255,255,255,0.08)" }}
         >
-          {activeTab === "Activity" && <ActivityTab />}
           {activeTab === "Email" && <EmailTab />}
           {activeTab === "Engagement" && <EngagementTab />}
           {activeTab === "Strategies" && <StrategiesTab />}
@@ -113,47 +112,6 @@ export default function SalesforceSection() {
         </div>
       </div>
     </section>
-  );
-}
-
-/* ── Activity ── */
-function ActivityTab() {
-  return (
-    <div className="space-y-8">
-      <div>
-        <h3 className="text-lg font-semibold mb-1 text-white">Email volume — Q1 vs Q4</h3>
-        <p className="text-xs text-white mb-4">
-          Pardot Q4 2025 vs Q1 2026: total Sent / unique Opens / unique Clicks / Opt-outs across all RQI / Realindex campaigns. Q1 sent 5.9% fewer emails but unique opens held flat and clicks grew +16%; opt-outs nearly halved (33 → 17).
-        </p>
-        <ResponsiveContainer width="100%" height={280}>
-          <BarChart data={activityBreakdown} margin={{ left: 0, right: 30, top: 5, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke={CHART_GRID} />
-            <XAxis dataKey="type" tick={{ fontSize: 11, fill: CHART_TICK_LIGHT }} />
-            <YAxis tick={{ fontSize: 12, fill: CHART_TICK_DIM }} />
-            <Tooltip contentStyle={CHART_TOOLTIP} cursor={CHART_CURSOR} />
-            <Legend wrapperStyle={{ color: "rgba(255,255,255,0.7)" }} />
-            <Bar dataKey="q1" name="Q1 2026" fill={BAR_Q1} radius={[6, 6, 0, 0]} barSize={28} />
-            <Bar dataKey="q4" name="Q4 2025" fill={BAR_Q4} radius={[6, 6, 0, 0]} barSize={28} />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-
-      <div>
-        <h3 className="text-lg font-semibold mb-1 text-white">Monthly Q1 send volume</h3>
-        <p className="text-xs text-white mb-4">
-          Q1 emails sent by month. March spike driven by the Morningstar FMOTY launch (1,056 national + 350 NSW-only) on top of the regular Insto monthly newsletter. February was Insto-only.
-        </p>
-        <ResponsiveContainer width="100%" height={200}>
-          <BarChart data={monthlyTrend} margin={{ left: 0, right: 30, top: 5, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke={CHART_GRID} />
-            <XAxis dataKey="month" tick={{ fontSize: 12, fill: CHART_TICK_LIGHT }} />
-            <YAxis tick={{ fontSize: 12, fill: CHART_TICK_DIM }} />
-            <Tooltip contentStyle={CHART_TOOLTIP} cursor={CHART_CURSOR} />
-            <Bar dataKey="interactions" name="Sent" fill={BAR_Q1} radius={[6, 6, 0, 0]} barSize={40} />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
   );
 }
 
