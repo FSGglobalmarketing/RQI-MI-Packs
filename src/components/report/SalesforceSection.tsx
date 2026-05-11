@@ -56,7 +56,7 @@ export default function SalesforceSection() {
               Q1 engagement improved despite fewer sends. Open rate reached <span className="text-white font-semibold">35.7%</span> and click-to-open rate jumped to <span className="text-white font-semibold">22.8%</span> — both well above industry benchmarks — while opt-outs nearly halved from 33 to 17. Fewer contacts, but a more engaged audience.
             </p>
             <p className="text-sm leading-relaxed text-white">
-              At account level, Mercer Investments led with a 90% open rate across 52 sends and carries a <span className="text-white font-semibold">Won / Funded</span> opportunity. CBUS Super is also Won / Funded. Funds SA, Lonsec and RSM Financial Services are all actively engaged and sitting at DD Long List stage — a strong pipeline signal from the email programme.
+              At account level, Mercer Investments led with 47 unique opens from 52 sends — a 90% open rate. Super funds and investment consultants dominated the top-engaged accounts, with CBUS Super, HESTA, Frontier Advisors and CARE Super all featuring in the top 15. Engagement spanned both institutional and wholesale audiences.
             </p>
             <p className="text-sm leading-relaxed text-white">
               The Morningstar Fund Manager of the Year win was the biggest single send of the quarter — 1,056 national plus 350 NSW-only — generating 470 opens in March. The Institutional monthly newsletters delivered the sharpest click-to-open rates at 43–48%, reflecting tight content–audience fit across that segment.
@@ -83,7 +83,7 @@ export default function SalesforceSection() {
                     </span>
                   </div>
                   <div className="text-[11px] font-semibold text-white mt-1">{kpi.label}</div>
-                  <div className={`text-[10px] mt-0.5 ${isUp ? "text-white/55" : "text-accent-orange/70"}`}>{kpi.comparison}</div>
+                  <div className="text-[10px] mt-0.5" style={{ color: isUp ? "rgba(255,255,255,0.55)" : "#F99C46" }}>{kpi.comparison}</div>
                 </div>
               );
             })}
