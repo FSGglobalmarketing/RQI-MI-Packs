@@ -77,68 +77,90 @@ export const reportData = {
   // rate 1.95%.
   // ⚠ Awaiting data = not yet supplied by source system / agency.
   // ═══════════════════════════════════════════════════════════════════════════
+  // ── KPI Framework — per KPI_Framework_Q1_2026_RQI.xlsx ──────────────────
+  // metrics[] items use ONLY the metric names and comparison language from
+  // the framework spreadsheet. Each item has its own comparison benchmark.
+  // Sources: WordStream FS Email (Open 27.4%, CTOR 13.4%); Hootsuite FS
+  // LinkedIn Organic engagement rate 1.95%; BrightEdge AU avg pos 14;
+  // PPC report Q1 60.6k impressions, 4.13% CTR (+42% vs WordStream 2.91%).
   performanceResults: {
     awareness: [
-      // SEM: Impressions + Av CTR vs Industry. From Raw Data/PPC/FSIG Q4 2025
-      // & Q1 2026 Report.xlsx (RQI columns):
-      //   Q1 60,640 impressions · 4.13% CTR · 2,506 clicks · 289.66 conversions
-      //   Q4 87,378 impressions · 3.76% CTR · 3,286 clicks · 122    conversions
-      // WordStream FS Search-Ads benchmark CTR 2.91% → RQI +42% vs Industry.
-      { channel: "Search engine marketing (SEM)", metrics: ["60.6k Impressions", "4.13% Av CTR"], comparison: "+42% CTR vs Industry (2.91%)", status: "good" as const },
-      // SEO: All four markets now on the new BrightEdge methodology.
-      // Mar-26 snapshot:
-      //   AU 66 (firstsentierinvestors.com.au) — leads peer set, +50% YoY
-      //   SG  8 (firstsentierinvestors.com)
-      //   UK  7 (firstsentierinvestors.com)
-      //   DE  0
-      //   Total: 81 keywords ranked across the four markets.
-      // AU avg position 14, page-1 share 45%. UK / SG are small fish
-      // vs Robeco (UK 288, SG 59); DE is zero-presence.
-      { channel: "Search engine optimisation (SEO)", metrics: ["81 Keywords ranked", "AU avg pos. 14"], comparison: "vs peers — AU leads (Robeco 60)", status: "good" as const },
-      // Display ads: per framework note — "No display campaigns ran in Q1"
-      { channel: "Display ads", metrics: ["No campaigns in Q1"], comparison: "Not activated", status: "inactive" as const },
-      // Podcast: RQI did not run a podcast series in Q1.
-      { channel: "Podcast", metrics: ["No streams in Q1"], comparison: "Not activated", status: "inactive" as const },
-      // LinkedIn Paid: per framework note — "No paid campaigns ran in Q1"
-      { channel: "LinkedIn Paid", metrics: ["No campaigns in Q1"], comparison: "Not activated", status: "inactive" as const },
+      {
+        channel: "Search engine marketing",
+        metrics: [
+          { label: "60.6k Impressions", comparison: "vs industry" },
+          { label: "4.13% Av CTR",      comparison: "+42% vs industry" },
+        ],
+        status: "good" as const,
+      },
+      {
+        channel: "Search engine optimisation",
+        metrics: [
+          { label: "81 Keywords ranked", comparison: "vs peers" },
+          { label: "14 Av position",     comparison: "vs peers" },
+        ],
+        status: "good" as const,
+      },
+      {
+        channel: "Display ads",
+        metrics: [{ label: "No campaigns in Q1", comparison: "Not activated" }],
+        status: "inactive" as const,
+      },
+      {
+        channel: "Podcast",
+        metrics: [{ label: "No streams in Q1", comparison: "Not activated" }],
+        status: "inactive" as const,
+      },
+      {
+        channel: "LinkedIn Paid",
+        metrics: [{ label: "No campaigns in Q1", comparison: "Not activated" }],
+        status: "inactive" as const,
+      },
     ],
     consideration: [
-      // LinkedIn Organic: Total posts + engagement rate, vs Hootsuite FS benchmark.
-      // Source: Raw Data/Linkedin/linkedin_organic_comparitive.xls
-      //   Q1 organic posts (All posts sheet, Jan–Mar 26): 7
-      //   Q1 totals (Metrics sheet, Jan–Mar 26):
-      //     impressions 22,517 / clicks 1,594 / reactions 541 /
-      //     comments 13 / reposts 6  → 2,154 engagements
-      //   Engagement rate = 2,154 / 22,517 = 9.57%
-      // Hootsuite Social Media Industry Benchmark — FS organic engagement
-      // rate 1.95% → RQI Q1 +391% vs benchmark.
-      // Numbers must match the LinkedIn section's headline KPI cards:
-      //   Q1: 7 posts · 22,517 impressions · 1,594 clicks → 7.08% Avg CTR
-      //   Q4: 6 posts · 17,878 impressions ·   826 clicks → 4.62% Avg CTR
-      //   Avg CTR delta = (7.08 - 4.62) / 4.62 = +53% vs Q4.
-      // Framework: Total posts + Engagement rate vs peers (Hootsuite FS benchmark 1.95%).
-      // Engagement rate = 2,154 engagements / 22,517 impressions = 9.57% ≈ 9.6%.
-      { channel: "LinkedIn Organic", metrics: ["7 Posts", "9.6% Engagement rate"], comparison: "+391% vs peers (1.95%)", status: "good" as const },
-      // Framework: Visitors + Dwell time vs Q4 2025.
-      // Visitors = Active users from GA4 = 29.3k. Dwell time not yet extracted from GA4.
-      { channel: "Website", metrics: ["29.3k Visitors", "Dwell time TBC"], comparison: "+3.7% vs Q4 2025", status: "good" as const },
+      {
+        channel: "LinkedIn Organic",
+        metrics: [
+          { label: "7 Total posts",        comparison: "vs peers" },
+          { label: "9.6% Engagement rate", comparison: "+391% vs peers" },
+        ],
+        status: "good" as const,
+      },
+      {
+        channel: "Website",
+        metrics: [
+          { label: "29.3k Visitors", comparison: "+3.7% vs Q4 2025" },
+          { label: "Dwell time TBC", comparison: "vs Q4 2025" },
+        ],
+        status: "good" as const,
+      },
     ],
     conversion: [
-      // Webinars: Attendees, Live attendees vs previous webinar. None ran in Q1 or Q4.
-      { channel: "Webinars", metrics: ["No webinars in Q1 or Q4"], comparison: "Not activated", status: "inactive" as const },
-      // Events: Client feedback (qualitative). Not applicable for quantitative comparison.
-      { channel: "Events", metrics: ["Client feedback"], comparison: "Not applicable", status: "inactive" as const },
-      // Email: Open rate, CTOR vs industry.
-      // Computed from emailQuarterCompare Q1: 1,040 unique opens / 2,910 delivered = 35.7%
-      // open rate; 237 unique clicks / 1,040 unique opens = 22.8% CTOR. FS benchmarks:
-      // 27.4% open / 13.4% CTOR → +30% open, +70% CTOR vs industry.
-      { channel: "Email", metrics: ["35.7% Open rate", "22.8% CTOR"], comparison: "+70% CTOR vs Industry (13.4%)", status: "good" as const },
+      {
+        channel: "Webinars",
+        metrics: [{ label: "No webinars in Q1", comparison: "Not activated" }],
+        status: "inactive" as const,
+      },
+      {
+        channel: "Events",
+        metrics: [{ label: "Client feedback", comparison: "Not applicable" }],
+        status: "inactive" as const,
+      },
+      {
+        channel: "Email",
+        metrics: [
+          { label: "35.7% Open rate", comparison: "+30% vs industry" },
+          { label: "22.8% CTOR",      comparison: "+70% vs industry" },
+        ],
+        status: "good" as const,
+      },
     ],
     serviceLoyalty: [
-      // Data capture: Key events vs Q4 — matches the Always-on Website
-      // KPI card (29 Key events, -61.3% vs Q4 (75)). Status flagged
-      // "below" since the QoQ swing is meaningful.
-      { channel: "Data capture", metrics: ["29 Conversions"], comparison: "-61.3% vs Q4 2025 (75)", status: "below" as const },
+      {
+        channel: "Data capture",
+        metrics: [{ label: "29 Conversions", comparison: "-61% vs Q4 2025" }],
+        status: "below" as const,
+      },
     ],
   },
 

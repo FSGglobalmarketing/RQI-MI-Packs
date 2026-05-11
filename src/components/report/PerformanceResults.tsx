@@ -31,10 +31,14 @@ const stageBottomGap: Record<string, number> = {
   "Service & Loyalty": 12,
 };
 
+interface MetricItem {
+  label: string;
+  comparison: string;
+}
+
 interface Row {
   channel: string;
-  metrics: string[];
-  comparison: string;
+  metrics: MetricItem[];
   status: Status;
   stage: string;
   id: string;
@@ -241,22 +245,19 @@ export default function PerformanceResults() {
                             {row.channel}
                           </text>
 
-                          {/* Metric pills with curved connecting lines */}
+                          {/* Metric pills with per-metric benchmark */}
                           {row.metrics.map((m, mi) => {
                             const pillY = y + rowPadding + mi * (metricPillH + metricGap);
                             const pillMidY = pillY + metricPillH / 2;
                             const startX = channelX + channelPillW;
                             const endX = metricX;
-                            const midX = startX + (endX - startX) / 2;
                             const r = 10;
 
                             // Curved path from channel pill to metric pill
                             let pathD: string;
                             if (pillMidY === rowMidY) {
-                              // Straight horizontal
                               pathD = `M ${startX} ${rowMidY} L ${endX} ${rowMidY}`;
                             } else {
-                              // Elbow with rounded corner
                               const dir = pillMidY > rowMidY ? 1 : -1;
                               const cornerX = startX + 12;
                               const clampedR = Math.min(r, Math.abs(pillMidY - rowMidY));
@@ -265,51 +266,19 @@ export default function PerformanceResults() {
 
                             return (
                               <g key={mi}>
-                                <path
-                                  d={pathD}
-                                  stroke={statusFill[row.status]}
-                                  strokeWidth={2}
-                                  fill="none"
-                                  opacity={0.5}
-                                />
-                                <rect
-                                  x={metricX}
-                                  y={pillY}
-                                  width={metricPillW}
-                                  height={metricPillH}
-                                  rx={14}
-                                  fill={statusBg[row.status]}
-                                  stroke={statusFill[row.status]}
-                                  strokeWidth={1}
-                                />
-                                <text
-                                  x={metricX + metricPillW / 2}
-                                  y={pillMidY}
-                                  textAnchor="middle"
-                                  dominantBaseline="central"
-                                  fontSize={12}
-                                  fontWeight={600}
-                                  fill={statusFill[row.status]}
-                                >
-                                  {m}
+                                <path d={pathD} stroke={statusFill[row.status]} strokeWidth={2} fill="none" opacity={0.5} />
+                                <rect x={metricX} y={pillY} width={metricPillW} height={metricPillH} rx={14} fill={statusBg[row.status]} stroke={statusFill[row.status]} strokeWidth={1} />
+                                <text x={metricX + metricPillW / 2} y={pillMidY} textAnchor="middle" dominantBaseline="central" fontSize={12} fontWeight={600} fill={statusFill[row.status]}>
+                                  {m.label}
                                 </text>
+                                {m.comparison && (
+                                  <text x={compX} y={pillMidY} dominantBaseline="central" fontSize={12} fontWeight={600} fill={statusFill[row.status]}>
+                                    {m.comparison}
+                                  </text>
+                                )}
                               </g>
                             );
                           })}
-
-                          {/* Comparison text */}
-                          {row.comparison && (
-                            <text
-                              x={compX}
-                              y={rowMidY}
-                              dominantBaseline="central"
-                              fontSize={13}
-                              fontWeight={600}
-                              fill={row.status === "good" ? "hsl(var(--success))" : row.status === "below" ? "hsl(var(--accent-orange))" : "hsl(var(--muted-foreground))"}
-                            >
-                              {row.comparison}
-                            </text>
-                          )}
 
                           {/* Invisible hover target */}
                           <rect
@@ -343,7 +312,7 @@ export default function PerformanceResults() {
                       <span className={`inline-block w-2 h-2 rounded-full ${item.status === "good" ? "bg-success" : item.status === "below" ? "bg-accent-orange" : "bg-muted-foreground"}`} />
                       <span className="text-xs font-semibold text-foreground">{item.channel}</span>
                     </div>
-                    <span className="text-xs text-white">{item.metrics.join(" · ")}{item.comparison && ` · ${item.comparison}`}</span>
+                    <span className="text-xs text-white">{item.metrics.map((m) => `${m.label} — ${m.comparison}`).join(" · ")}</span>
                   </div>
                 ))}
               </div>
