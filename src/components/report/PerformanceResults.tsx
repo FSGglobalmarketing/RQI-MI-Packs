@@ -34,6 +34,7 @@ const stageBottomGap: Record<string, number> = {
 interface MetricItem {
   label: string;
   comparison: string;
+  status?: Status; // overrides row-level status for this pill only
 }
 
 interface Row {
@@ -247,6 +248,7 @@ export default function PerformanceResults() {
 
                           {/* Metric pills with per-metric benchmark */}
                           {row.metrics.map((m, mi) => {
+                            const mStatus = m.status ?? row.status;
                             const pillY = y + rowPadding + mi * (metricPillH + metricGap);
                             const pillMidY = pillY + metricPillH / 2;
                             const startX = channelX + channelPillW;
@@ -266,13 +268,13 @@ export default function PerformanceResults() {
 
                             return (
                               <g key={mi}>
-                                <path d={pathD} stroke={statusFill[row.status]} strokeWidth={2} fill="none" opacity={0.5} />
-                                <rect x={metricX} y={pillY} width={metricPillW} height={metricPillH} rx={14} fill={statusBg[row.status]} stroke={statusFill[row.status]} strokeWidth={1} />
-                                <text x={metricX + metricPillW / 2} y={pillMidY} textAnchor="middle" dominantBaseline="central" fontSize={12} fontWeight={600} fill={statusFill[row.status]}>
+                                <path d={pathD} stroke={statusFill[mStatus]} strokeWidth={2} fill="none" opacity={0.5} />
+                                <rect x={metricX} y={pillY} width={metricPillW} height={metricPillH} rx={14} fill={statusBg[mStatus]} stroke={statusFill[mStatus]} strokeWidth={1} />
+                                <text x={metricX + metricPillW / 2} y={pillMidY} textAnchor="middle" dominantBaseline="central" fontSize={12} fontWeight={600} fill={statusFill[mStatus]}>
                                   {m.label}
                                 </text>
                                 {m.comparison && (
-                                  <text x={compX} y={pillMidY} dominantBaseline="central" fontSize={12} fontWeight={600} fill={statusFill[row.status]}>
+                                  <text x={compX} y={pillMidY} dominantBaseline="central" fontSize={12} fontWeight={600} fill={statusFill[mStatus]}>
                                     {m.comparison}
                                   </text>
                                 )}

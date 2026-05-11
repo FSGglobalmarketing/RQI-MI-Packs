@@ -103,7 +103,7 @@ export const reportData = {
         //   Robeco:  12, PIMCO: 23, Macquarie: 27, AQR: 24 → weighted peer avg 19
         metrics: [
           { label: "81 Keywords ranked", comparison: "+10% vs peers" },
-          { label: "23 Av position",     comparison: "-21% vs peers" },
+          { label: "23 Av position",     comparison: "-21% vs peers", status: "below" as const },
         ],
         status: "good" as const,
       },
@@ -129,7 +129,7 @@ export const reportData = {
         // Source: LinkedIn Competitors analytics Jan 1 – Mar 31 2026.
         // 8 total posts: -82.1% vs competitors. Engagement rate 4.8%: +26.7% vs competitors.
         metrics: [
-          { label: "8 Total posts",        comparison: "-82.1% vs peers" },
+          { label: "8 Total posts",        comparison: "-82.1% vs peers", status: "below" as const },
           { label: "4.8% Engagement rate", comparison: "+26.7% vs peers" },
         ],
         status: "good" as const,
