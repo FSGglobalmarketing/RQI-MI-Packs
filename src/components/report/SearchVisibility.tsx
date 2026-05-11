@@ -223,12 +223,10 @@ export default function SearchVisibility() {
         <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground mb-2">
           Organic search performance
         </h2>
-        <p className="text-white/70 mb-8">{s.description}</p>
-
         <div className="grid lg:grid-cols-2 gap-10">
           {/* Left column */}
           <div className="space-y-6">
-            <p className="text-sm leading-relaxed text-white/70">{s.goal}</p>
+            <p className="text-sm leading-relaxed text-white/70">{s.description}</p>
 
             <div>
               <h4 className="text-sm font-bold mb-3 text-foreground">Marketing Activities</h4>
