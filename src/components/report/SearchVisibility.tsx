@@ -226,7 +226,11 @@ export default function SearchVisibility() {
         <div className="grid lg:grid-cols-2 gap-10">
           {/* Left column */}
           <div className="space-y-6">
-            <p className="text-sm leading-relaxed text-white/70">{s.description}</p>
+            <div className="space-y-3">
+              {s.description.map((para, i) => (
+                <p key={i} className="text-sm leading-relaxed text-white/70">{para}</p>
+              ))}
+            </div>
 
             <div>
               <h4 className="text-sm font-bold mb-3 text-foreground">Marketing Activities</h4>

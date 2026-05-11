@@ -7,6 +7,7 @@ import {
 import {
   AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, Legend,
+  RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
 } from "recharts";
 import { ExternalLink } from "lucide-react";
 import KpiRow from "./KpiRow";
@@ -92,51 +93,29 @@ function TimelineChart() {
   );
 }
 
-/* ── Content Mix (grouped bars + cards) ── */
+/* ── Content Mix (polar / radar chart — Q1 2026) ── */
 function ContentMixChart() {
-  const chartData = contentMixData
-    .filter((d) => d.posts > 0)
-    .map((d) => ({
-      category: d.category,
-      "Avg Engagement %": +(d.avgEngagement * 100).toFixed(2),
-      "Avg CTR %": +(d.avgCtr * 100).toFixed(2),
-      "Avg Impressions": d.avgImpressions,
-    }));
+  const radarData = contentMixData.map((d) => ({
+    category: d.category,
+    "Engagement %": +(d.avgEngagement * 100).toFixed(1),
+    "CTR %": +(d.avgCtr * 100).toFixed(1),
+  }));
 
   return (
     <div className="space-y-4">
       <p className="text-[11px] text-secondary-foreground/70">
-        Average post performance by content category. Engagement and CTR on the left axis (%);
-        impressions on the right axis.
+        Q1 2026 — average engagement rate vs CTR by content category.
       </p>
       <ResponsiveContainer width="100%" height={280}>
-        <BarChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke={CHART_GRID} />
-          <XAxis dataKey="category" tick={{ fontSize: 12, fill: CHART_TICK }} />
-          <YAxis
-            yAxisId="pct"
-            tick={{ fontSize: 10, fill: CHART_TICK }}
-            tickFormatter={(v) => `${v}%`}
-          />
-          <YAxis
-            yAxisId="imp"
-            orientation="right"
-            tick={{ fontSize: 10, fill: CHART_TICK }}
-            tickFormatter={(v) => v >= 1000 ? `${(v / 1000).toFixed(1)}k` : String(v)}
-          />
-          <Tooltip
-            contentStyle={CHART_TOOLTIP}
-            formatter={(value: number, name: string) =>
-              name === "Avg Impressions"
-                ? [value.toLocaleString(), name]
-                : [`${value.toFixed(2)}%`, name]
-            }
-          />
+        <RadarChart data={radarData} margin={{ top: 10, right: 30, bottom: 10, left: 30 }}>
+          <PolarGrid stroke={CHART_GRID} />
+          <PolarAngleAxis dataKey="category" tick={{ fontSize: 12, fill: CHART_TICK }} />
+          <PolarRadiusAxis angle={30} tick={{ fontSize: 9, fill: CHART_TICK }} tickFormatter={(v) => `${v}%`} />
+          <Radar name="Engagement %" dataKey="Engagement %" stroke={COLOR_ORGANIC} fill={COLOR_ORGANIC} fillOpacity={0.35} strokeWidth={2} />
+          <Radar name="CTR %" dataKey="CTR %" stroke={COLOR_SPONSORED} fill={COLOR_SPONSORED} fillOpacity={0.25} strokeWidth={2} />
           <Legend iconType="circle" wrapperStyle={{ fontSize: 12 }} formatter={(v: string) => <span style={{ color: LEGEND_TEXT }}>{v}</span>} />
-          <Bar yAxisId="pct" dataKey="Avg Engagement %" fill={COLOR_ORGANIC} radius={[4, 4, 0, 0]} />
-          <Bar yAxisId="pct" dataKey="Avg CTR %" fill={COLOR_SPONSORED} radius={[4, 4, 0, 0]} />
-          <Bar yAxisId="imp" dataKey="Avg Impressions" fill={COLOR_IMPRESSIONS} radius={[4, 4, 0, 0]} />
-        </BarChart>
+          <Tooltip contentStyle={CHART_TOOLTIP} formatter={(v: number, name: string) => [`${v}%`, name]} />
+        </RadarChart>
       </ResponsiveContainer>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
