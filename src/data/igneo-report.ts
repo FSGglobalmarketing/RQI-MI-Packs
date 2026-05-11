@@ -87,17 +87,23 @@ export const reportData = {
     awareness: [
       {
         channel: "Search engine marketing",
+        // Impressions: no industry benchmark available — comparison dropped per instruction.
+        // Av CTR: WordStream FS benchmark 2.91% → RQI 4.13% = +42%.
         metrics: [
-          { label: "60.6k Impressions", comparison: "vs industry" },
+          { label: "60.6k Impressions", comparison: "" },
           { label: "4.13% Av CTR",      comparison: "+42% vs industry" },
         ],
         status: "good" as const,
       },
       {
         channel: "Search engine optimisation",
+        // Keywords ranked: AU RQI 66 vs Robeco 60 (nearest peer) = +10%.
+        // Av position (global weighted): RQI 23 vs peer avg 19 = -21% vs peers.
+        //   RQI:     AU 17.1×144 + SG 18.8×9 + UK 47.4×37 = 23
+        //   Robeco:  12, PIMCO: 23, Macquarie: 27, AQR: 24 → weighted peer avg 19
         metrics: [
-          { label: "81 Keywords ranked", comparison: "vs peers" },
-          { label: "14 Av position",     comparison: "vs peers" },
+          { label: "81 Keywords ranked", comparison: "+10% vs peers" },
+          { label: "23 Av position",     comparison: "-21% vs peers" },
         ],
         status: "good" as const,
       },
@@ -120,17 +126,21 @@ export const reportData = {
     consideration: [
       {
         channel: "LinkedIn Organic",
+        // Source: LinkedIn Competitors analytics Jan 1 – Mar 31 2026.
+        // 8 total posts: -82.1% vs competitors. Engagement rate 4.8%: +26.7% vs competitors.
         metrics: [
-          { label: "7 Total posts",        comparison: "vs peers" },
-          { label: "9.6% Engagement rate", comparison: "+391% vs peers" },
+          { label: "8 Total posts",        comparison: "-82.1% vs peers" },
+          { label: "4.8% Engagement rate", comparison: "+26.7% vs peers" },
         ],
         status: "good" as const,
       },
       {
         channel: "Website",
+        // Dwell time: GA4 Page_path_and_Dwell_Time.csv weighted avg.
+        //   Q4 2025: 54.6s · Q1 2026: 88.1s → +61% QoQ.
         metrics: [
-          { label: "29.3k Visitors", comparison: "+3.7% vs Q4 2025" },
-          { label: "Dwell time TBC", comparison: "vs Q4 2025" },
+          { label: "29.3k Visitors",  comparison: "+3.7% vs Q4 2025" },
+          { label: "88.1s Dwell time", comparison: "+61% vs Q4 2025" },
         ],
         status: "good" as const,
       },
