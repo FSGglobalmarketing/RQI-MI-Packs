@@ -94,7 +94,7 @@ export const reportData = {
       //   Total: 81 keywords ranked across the four markets.
       // AU avg position 14, page-1 share 45%. UK / SG are small fish
       // vs Robeco (UK 288, SG 59); DE is zero-presence.
-      { channel: "Search engine optimisation (SEO)", metrics: ["81 Keywords ranked", "AU 66 / SG 8 / UK 7 / DE 0"], comparison: "vs peers — AU 66 leads (Robeco 60)", status: "good" as const },
+      { channel: "Search engine optimisation (SEO)", metrics: ["81 Keywords ranked", "AU avg pos. 14"], comparison: "vs peers — AU leads (Robeco 60)", status: "good" as const },
       // Display ads: per framework note — "No display campaigns ran in Q1"
       { channel: "Display ads", metrics: ["No campaigns in Q1"], comparison: "Not activated", status: "inactive" as const },
       // Podcast: RQI did not run a podcast series in Q1.
@@ -116,11 +116,12 @@ export const reportData = {
       //   Q1: 7 posts · 22,517 impressions · 1,594 clicks → 7.08% Avg CTR
       //   Q4: 6 posts · 17,878 impressions ·   826 clicks → 4.62% Avg CTR
       //   Avg CTR delta = (7.08 - 4.62) / 4.62 = +53% vs Q4.
-      { channel: "LinkedIn Organic", metrics: ["7 Posts", "7.1% Avg CTR"], comparison: "+53% CTR vs Q4", status: "good" as const },
-      // Website: Active users + Page views vs Q4. Numbers must match the
-      // Always-on Website KPI cards (29.3k Active users +3.7% vs Q4 2025;
-      // 39.3k Page views +9.0% vs Q4 2025).
-      { channel: "Website", metrics: ["29.3k Active users", "39.3k Page views"], comparison: "+3.7% Active users vs Q4", status: "good" as const },
+      // Framework: Total posts + Engagement rate vs peers (Hootsuite FS benchmark 1.95%).
+      // Engagement rate = 2,154 engagements / 22,517 impressions = 9.57% ≈ 9.6%.
+      { channel: "LinkedIn Organic", metrics: ["7 Posts", "9.6% Engagement rate"], comparison: "+391% vs peers (1.95%)", status: "good" as const },
+      // Framework: Visitors + Dwell time vs Q4 2025.
+      // Visitors = Active users from GA4 = 29.3k. Dwell time not yet extracted from GA4.
+      { channel: "Website", metrics: ["29.3k Visitors", "Dwell time TBC"], comparison: "+3.7% vs Q4 2025", status: "good" as const },
     ],
     conversion: [
       // Webinars: Attendees, Live attendees vs previous webinar. None ran in Q1 or Q4.
@@ -137,7 +138,7 @@ export const reportData = {
       // Data capture: Key events vs Q4 — matches the Always-on Website
       // KPI card (29 Key events, -61.3% vs Q4 (75)). Status flagged
       // "below" since the QoQ swing is meaningful.
-      { channel: "Data capture", metrics: ["29 Key events"], comparison: "-61.3% vs Q4 (75)", status: "below" as const },
+      { channel: "Data capture", metrics: ["29 Conversions"], comparison: "-61.3% vs Q4 2025 (75)", status: "below" as const },
     ],
   },
 

@@ -7,7 +7,7 @@ import { ChevronDown } from "lucide-react";
 
 /* Brand-aligned palette — RQI uses primary Racing teal, peers get muted tones */
 const PEER_COLORS: Record<string, string> = {
-  RQI: "hsl(181 39% 35%)",
+  RQI: "hsl(181 75% 65%)",
   AQR: "#56658B",
   Robeco: "#D37669",
   Macquarie: "#F99C46",

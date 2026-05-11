@@ -83,7 +83,7 @@ export default function SalesforceSection() {
                     </span>
                   </div>
                   <div className="text-[11px] font-semibold text-white mt-1">{kpi.label}</div>
-                  <div className="text-[10px] mt-0.5" style={{ color: isUp ? "rgba(255,255,255,0.55)" : "#F99C46" }}>{kpi.comparison}</div>
+                  <div className="text-[10px] mt-0.5" style={{ color: isUp ? "hsl(var(--primary))" : "#F99C46" }}>{kpi.comparison}</div>
                 </div>
               );
             })}
