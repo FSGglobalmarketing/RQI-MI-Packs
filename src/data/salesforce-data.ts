@@ -27,13 +27,13 @@
 // Q1 peak = Mar 26 at 1,715 sends → -11% vs Q4 peak.
 export const salesforceMarketingKpis = [
   // Q1 unique opens (1,040) + unique clicks (237) = 1,277 vs Q4 (1,033 + 204 = 1,237) → +3%
-  { value: "1,277", label: "Total engagements (Q1) — opens + clicks", comparison: "+3% vs Q4 (1,237)" },
+  { value: "1,277", label: "Total engagements (Q1) — opens + clicks", comparison: "+3% vs Q4 (1,237)",               trend: "up"   as const },
   // Q1 delivered = sent − bounces (2,928 − 18 = 2,910). Q4 delivered (3,113 − 52 = 3,061).
-  { value: "2,910", label: "Emails delivered (Q1)",                    comparison: "-5% vs Q4 (3,061)" },
+  { value: "2,910", label: "Emails delivered (Q1)",                    comparison: "-5% vs Q4 (3,061)",               trend: "down" as const },
   // Peak month: Mar 26 (1,715 sends) vs Q4 peak Nov 25 (1,929) → -11%.
-  { value: "Mar",   label: "Peak month",                                comparison: "1,715 · -11% vs Q4 peak (Nov 1,929)" },
+  { value: "Mar",   label: "Peak month",                                comparison: "1,715 · -11% vs Q4 peak (Nov 1,929)", trend: "down" as const },
   // CTOR Q1 22.79% vs Q4 19.75% → +3.0 pts.
-  { value: "22.8%", label: "Click-to-open rate (Q1)",                   comparison: "+3.0 pts vs Q4 (19.8%)" },
+  { value: "22.8%", label: "Click-to-open rate (Q1)",                   comparison: "+3.0 pts vs Q4 (19.8%)",          trend: "up"   as const },
 ];
 
 // ── Activity tab: Q4 vs Q1 email metrics ──

@@ -47,41 +47,46 @@ export default function SalesforceSection() {
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <span className="stage-badge text-xs inline-block mb-3">Marketing Funnel</span>
         <h2 className="text-2xl sm:text-3xl font-bold text-white">Client Engagement</h2>
-        <p className="text-sm leading-relaxed text-white mb-6">Q1 client engagement across our RQI / Realindex Pardot email campaigns.</p>
+        <p className="text-sm leading-relaxed text-white mb-6">Q1 client engagement across our RQI Pardot email campaigns.</p>
 
         {/* Two-column hero: narrative left, KPI 2×2 right */}
         <div className="grid lg:grid-cols-2 gap-8 mb-6 items-start">
           <div className="space-y-4">
             <p className="text-sm leading-relaxed text-white">
-              Q1 had 6 RQI / Realindex sends totalling 2,928 emails. Unique opens held flat at 1,040 (+0.7% vs Q4) but the open rate edged up to <span className="text-white font-semibold">35.7%</span> and the click-to-open rate jumped to <span className="text-white font-semibold">22.8% (+3.0 pts)</span> — fewer-but-better engagements. Opt-outs nearly halved (33 → 17).
+              Q1 engagement improved despite fewer sends. Open rate reached <span className="text-white font-semibold">35.7%</span> and click-to-open rate jumped to <span className="text-white font-semibold">22.8%</span> — both well above industry benchmarks — while opt-outs nearly halved from 33 to 17. Fewer contacts, but a more engaged audience.
             </p>
             <p className="text-sm leading-relaxed text-white">
-              Mercer Investments was by far the most engaged account — 47 unique opens off 52 sends (90% open rate) and is in <span className="text-white font-semibold">Won / Funded</span>. CBUS Super and Evidentia (also Won / Funded), plus Funds SA, Lonsec and RSM Financial Services (DD Long List) round out the engaged opp set.
+              At account level, Mercer Investments led with a 90% open rate across 52 sends and carries a <span className="text-white font-semibold">Won / Funded</span> opportunity. CBUS Super is also Won / Funded. Funds SA, Lonsec and RSM Financial Services are all actively engaged and sitting at DD Long List stage — a strong pipeline signal from the email programme.
             </p>
             <p className="text-sm leading-relaxed text-white">
-              The Institutional monthly newsletter cluster carried the highest CTOR at 43–48% — small lists but tight content–audience fit. The Morningstar FMOTY launch was the single biggest send by reach (1,056 national + 350 NSW-only) and pulled 470 opens in March alone.
+              The Morningstar Fund Manager of the Year win was the biggest single send of the quarter — 1,056 national plus 350 NSW-only — generating 470 opens in March. The Institutional monthly newsletters delivered the sharpest click-to-open rates at 43–48%, reflecting tight content–audience fit across that segment.
             </p>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            {salesforceMarketingKpis.map((kpi) => (
-              <div
-                key={kpi.label}
-                className="rounded-lg px-4 py-3"
-                style={{
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                }}
-              >
-                <div className="flex items-baseline gap-2">
-                  <span className="text-primary text-sm">+</span>
-                  <span className="text-xl sm:text-2xl font-extrabold text-white tabular-nums">
-                    {kpi.value}
-                  </span>
+            {salesforceMarketingKpis.map((kpi) => {
+              const isUp = kpi.trend === "up";
+              return (
+                <div
+                  key={kpi.label}
+                  className="rounded-lg px-4 py-3"
+                  style={{
+                    background: "rgba(255,255,255,0.04)",
+                    border: "1px solid rgba(255,255,255,0.08)",
+                  }}
+                >
+                  <div className="flex items-baseline gap-2">
+                    <span className={`text-sm ${isUp ? "text-primary" : "text-accent-orange"}`}>
+                      {isUp ? "+" : "−"}
+                    </span>
+                    <span className="text-xl sm:text-2xl font-extrabold text-white tabular-nums">
+                      {kpi.value}
+                    </span>
+                  </div>
+                  <div className="text-[11px] font-semibold text-white mt-1">{kpi.label}</div>
+                  <div className={`text-[10px] mt-0.5 ${isUp ? "text-white/55" : "text-accent-orange/70"}`}>{kpi.comparison}</div>
                 </div>
-                <div className="text-[11px] font-semibold text-white mt-1">{kpi.label}</div>
-                <div className="text-[10px] text-white/55">{kpi.comparison}</div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -142,7 +147,7 @@ function EmailTab() {
       <div>
         <h3 className="text-lg font-semibold mb-1 text-white">Email performance — Q4 2025 vs Q1 2026</h3>
         <p className="text-xs text-white/70 mb-4">
-          RQI/Realindex Pardot sends. Q1 sent <span className="text-white font-semibold">5.9% fewer emails</span> than Q4 but unique opens held flat, open rate edged up <span className="text-white font-semibold">+2.0 pts</span> and click-to-open rate jumped <span className="text-white font-semibold">+3.0 pts</span> — fewer-but-better engagements. Opt-outs nearly halved.
+          RQI Pardot sends. Q1 sent <span className="text-white font-semibold">5.9% fewer emails</span> than Q4 but unique opens held flat, open rate edged up <span className="text-white font-semibold">+2.0 pts</span> and click-to-open rate jumped <span className="text-white font-semibold">+3.0 pts</span> — fewer-but-better engagements. Opt-outs nearly halved.
         </p>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
@@ -226,7 +231,7 @@ function EngagementTab() {
       <div>
         <h3 className="text-lg font-semibold mb-1 text-white">Email engagement by company</h3>
         <p className="text-xs text-white mb-4">
-          Top 15 external accounts by Q1 unique email opens on RQI / Realindex sends.
+          Top 15 external accounts by Q1 unique email opens on RQI sends.
           Each row aggregates Sent / Opens / Clicks across the Pardot per-recipient
           exports for Q1. Internal accounts (RQI Investors, First Sentier Investors)
           are excluded. Source: Raw Data/Email/* — Pardot recipient sheets, Company
@@ -369,7 +374,7 @@ function CampaignsTab() {
     <div>
       <h3 className="text-lg font-semibold mb-1 text-white">Top campaigns driving email engagement</h3>
       <p className="text-xs text-white mb-4">
-        Top Q1 RQI / Realindex campaigns by total engagements (unique opens + clicks).
+        Top Q1 RQI campaigns by total engagements (unique opens + clicks).
         The Morningstar FMOTY launch was the single biggest send by reach but the
         Institutional newsletter cluster carried the highest CTOR (43–48%).
       </p>
