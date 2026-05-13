@@ -308,23 +308,28 @@ export default function SearchVisibility() {
                         return (Number(lastDataPoint[b.dataKey as string]) || 0) - (Number(lastDataPoint[a.dataKey as string]) || 0);
                       });
                       return (
-                        <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 pt-2 text-[10px]">
-                          {sorted.map((entry: any) => {
-                            const isHidden = hiddenLines.has(entry.dataKey) || (entry.dataKey !== "RQI" && !showPeers);
-                            return (
-                              <span
-                                key={entry.dataKey}
-                                onClick={() => handleLegendClick(entry)}
-                                className="cursor-pointer font-medium"
-                                style={{
-                                  color: isHidden ? "rgba(255,255,255,0.18)" : entry.color,
-                                  textDecoration: isHidden ? "line-through" : undefined,
-                                }}
-                              >
-                                ● {entry.dataKey}
-                              </span>
-                            );
-                          })}
+                        <div className="flex flex-col items-center gap-1 pt-2">
+                          <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 text-[10px]">
+                            {sorted.map((entry: any) => {
+                              const isHidden = hiddenLines.has(entry.dataKey) || (entry.dataKey !== "RQI" && !showPeers);
+                              return (
+                                <span
+                                  key={entry.dataKey}
+                                  onClick={() => handleLegendClick(entry)}
+                                  className="cursor-pointer font-medium"
+                                  style={{
+                                    color: isHidden ? "rgba(255,255,255,0.18)" : entry.color,
+                                    textDecoration: isHidden ? "line-through" : undefined,
+                                  }}
+                                >
+                                  ● {entry.dataKey}
+                                </span>
+                              );
+                            })}
+                          </div>
+                          <p className="text-[10px] italic mt-1 text-center" style={{ color: "rgba(255,255,255,0.35)" }}>
+                            We are working to secure search data from Hong Kong, which is restricted by Chinese Government.
+                          </p>
                         </div>
                       );
                     }}
