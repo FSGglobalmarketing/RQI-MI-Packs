@@ -273,10 +273,11 @@ export const reportData = {
       ],
       formats: [
         "Client emails, website updates and email signatures",
-        "\"Far from normal\" insight piece & AI-generated \"listen now\" version",
         "Quarterly Global Value fund flyer (Asia only)",
         "Andrew Francis Profile in Australian Financial Standard",
-        "Corporate Culture paper in Journal of Portfolio Management",
+        "Andrew Francis Ausbiz interview",
+        "LinkedIn social post",
+        "Website page",
         "Always on SEM",
       ],
       keyResults: [
