@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import fmotyPhoto from "@/assets/fmoty-photo.jpg";
 import fmotyTrophy from "@/assets/fmoty-trophy.png";
 
-const TABS = ["Event", "Interview", "Sponsored Content", "Website"] as const;
+const TABS = ["Event", "Interview"] as const;
 type Tab = typeof TABS[number];
 
 const EVENT_IMAGES = [
