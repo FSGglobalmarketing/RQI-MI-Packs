@@ -7,9 +7,7 @@ import asiaAdv1 from "@/assets/asia-advertorial-1.jpg";
 import asiaAdv2 from "@/assets/asia-advertorial-2.jpg";
 import asiaAdv3 from "@/assets/asia-advertorial-3.jpg";
 import asiaAdv4 from "@/assets/asia-advertorial-4.jpg";
-import asiaNative1 from "@/assets/asia-native-1.jpg";
-import asiaNative2 from "@/assets/asia-native-2.jpg";
-const MEDIA_TABS = ["Out of Home", "Advertorial", "Native"] as const;
+const MEDIA_TABS = ["Out of Home", "Advertorial"] as const;
 type MediaTab = typeof MEDIA_TABS[number];
 type DeviceType = "laptop" | "phone" | "none";
 
@@ -23,13 +21,11 @@ interface AdInfo {
 const AD_INFO: Record<MediaTab, AdInfo> = {
   "Out of Home": { market: "Hong Kong", platform: "Outdoor", format: "Tram Wrap", liveDate: "Q1 2026" },
   "Advertorial": { market: "Hong Kong", platform: "Desktop & Mobile", format: "Online Advertorial", liveDate: "23 Mar 2026" },
-  "Native": { market: "Hong Kong", platform: "Desktop & Mobile", format: "Native Ad", liveDate: "23 Mar 2026" },
 };
 
 const TAB_CONFIG: Record<MediaTab, { device: DeviceType; images: string[] }> = {
   "Out of Home": { device: "none", images: [asiaOoh] },
   "Advertorial": { device: "laptop", images: [asiaAdv1, asiaAdv2, asiaAdv3, asiaAdv4] },
-  "Native": { device: "phone", images: [asiaNative1, asiaNative2] },
 };
 
 export default function AsiaMediaShowcase() {
