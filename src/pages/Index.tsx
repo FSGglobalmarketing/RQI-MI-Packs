@@ -110,7 +110,7 @@ const Index = () => {
 
       <footer className="section-dark py-10 border-t border-border">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-4">
-          <img src={rqiLogoWhite} alt="RQI Investors" className="h-[3.6rem] w-auto" />
+          <img src={rqiLogoWhite} alt="RQI Investors" className="h-[4.5rem] w-auto" />
           <p className="text-xs text-muted-foreground">{d.quarter} Marketing Impact Report · Internal Use</p>
         </div>
       </footer>

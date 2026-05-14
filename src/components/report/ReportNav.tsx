@@ -77,7 +77,7 @@ export default function ReportNav() {
     >
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-[67px]">
-          <img src={rqiLogo} alt="RQI Investors" className="h-[4.2rem] w-auto" />
+          <img src={rqiLogo} alt="RQI Investors" className="h-[5.25rem] w-auto" />
 
           {/* Desktop nav */}
           <div className="hidden lg:flex flex-col items-end">
