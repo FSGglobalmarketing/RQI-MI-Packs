@@ -60,7 +60,7 @@ interface Ring { r: number; w: number; color: string; a: number; spd: number; da
 interface Planet { r: number; sz: number; color: string; spd: number; angle: number; }
 interface DataNode { angle: number; orbitR: number; spd: number; label: string; o: number; color: string; sz: number; tw: number; ts: number; }
 
-const PASSWORD = "RQI2026";
+const PASSWORD = "FSG2026!";
 
 function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
   const [value, setValue] = useState("");

@@ -178,7 +178,6 @@ export const reportData = {
     description: [
       "Australia shows the clearest evidence that our marketing activity is translating into brand visibility. RQI now appears in search results for 66 terms, up 50% year-on-year and ahead of every direct competitor (Robeco 60, Macquarie 59, PIMCO 19, Acadian 14), holding the lead throughout every month of Q1.",
       "Singapore is more nuanced. The Phase II Asia brand push across Q4 and Q1 has been substantial and is building awareness among the right audience, but that recognition has not yet translated into broader search visibility, where RQI shows up for just 8 terms compared to Robeco's 59. Where RQI does appear, it is for the right topics: quantitative value strategy and infrastructure investing. Robeco dominates the wider quant investing conversation in the market, and PIMCO has also grown its presence over the same period.",
-      "The UK (7) and Germany (0) follow a similar pattern.",
       "The new dedicated RQI website will be key to converting that brand awareness into lasting search presence.",
     ],
     goal: "Carry the Australian approach into our other markets once the dedicated RQI website launches. Owned insights, clear fund-page content and consistent quant-equities positioning are enough to outrank every direct peer in Aus. Singapore and the UK are the natural follow-ons; Germany remains on watch.",
