@@ -3,7 +3,6 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, Legend,
 } from "recharts";
-import { CheckCircle2 } from "lucide-react";
 import {
   salesforceMarketingKpis,
   topCampaigns, engagementByCompany, interactionsByStrategy,
@@ -257,18 +256,11 @@ function EngagementTab() {
       </div>
 
       <div>
-        <div className="flex items-center gap-2 mb-3">
-          <CheckCircle2 className="w-4 h-4 text-primary" />
-          <p className="text-xs text-white">
-            Rows with a mint dot indicate accounts that have a <span className="text-white font-semibold">live (non-lost) Salesforce opportunity</span>.
-          </p>
-        </div>
         <div className="overflow-hidden rounded-xl border" style={{ borderColor: "rgba(255,255,255,0.1)" }}>
           <table className="w-full text-sm">
             <thead>
               <tr style={{ background: "rgba(255,255,255,0.04)" }}>
                 <th className="text-left  p-3 font-medium text-white/70">Account</th>
-                <th className="text-left  p-3 font-medium text-white/70">Opp Stage</th>
                 <th className="text-right p-3 font-medium text-white/70">Sent</th>
                 <th className="text-right p-3 font-medium text-white/70">Opens</th>
                 <th className="text-right p-3 font-medium text-white/70">Clicks</th>
@@ -282,43 +274,9 @@ function EngagementTab() {
                   <tr
                     key={row.account}
                     className="border-t"
-                    style={{
-                      borderColor: "rgba(255,255,255,0.06)",
-                      background: row.isOpp ? "hsl(var(--primary) / 0.06)" : undefined,
-                    }}
+                    style={{ borderColor: "rgba(255,255,255,0.06)" }}
                   >
-                    <td className="p-3 font-medium text-white">
-                      <div className="flex items-center gap-2">
-                        {row.isOpp && (
-                          <span
-                            title="Live Salesforce opportunity"
-                            className="inline-block w-2 h-2 rounded-full shrink-0"
-                            style={{ background: "hsl(var(--primary))" }}
-                          />
-                        )}
-                        <span>{row.account}</span>
-                      </div>
-                    </td>
-                    <td className="p-3 text-xs">
-                      {row.isOpp && row.oppStage ? (
-                        <span
-                          className="inline-block px-2 py-0.5 rounded-full font-semibold"
-                          style={{
-                            background: row.oppStage.includes("Won") || row.oppStage.includes("Funded") ? "hsl(var(--success) / 0.18)" :
-                                        row.oppStage.includes("Active") ? "hsl(var(--primary) / 0.18)" :
-                                        "rgba(255,255,255,0.08)",
-                            color: row.oppStage.includes("Won") || row.oppStage.includes("Funded") ? "hsl(var(--success))" :
-                                   row.oppStage.includes("Active") ? "hsl(var(--primary))" :
-                                   "rgba(255,255,255,0.85)",
-                            fontSize: 10,
-                          }}
-                        >
-                          {row.oppStage}
-                        </span>
-                      ) : (
-                        <span className="text-white/30">—</span>
-                      )}
-                    </td>
+                    <td className="p-3 font-medium text-white">{row.account}</td>
                     <td className="p-3 text-right tabular-nums text-white">{row.sent.toLocaleString()}</td>
                     <td className="p-3 text-right tabular-nums text-white">{row.opens.toLocaleString()}</td>
                     <td className="p-3 text-right tabular-nums text-white">{row.clicks.toLocaleString()}</td>
